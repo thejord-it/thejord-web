@@ -32,12 +32,9 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
       'fullscreen',
       '|',
       'guide',
-    ],
-    status: ['lines', 'words', 'cursor'],
+    ] as const,
+    status: ['lines', 'words', 'cursor'] as const,
     autofocus: false,
-    autosave: {
-      enabled: false,
-    },
   }), [])
 
   return (

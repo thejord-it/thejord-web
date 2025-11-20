@@ -1,10 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 
 export default function PreviewPage() {
-  const searchParams = useSearchParams()
   const [previewData, setPreviewData] = useState<any>(null)
 
   useEffect(() => {

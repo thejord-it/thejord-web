@@ -41,7 +41,7 @@ export default function ImageUpload({
   const [tempImage, setTempImage] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const getAuthHeader = () => {
+  const getAuthHeader = (): Record<string, string> => {
     if (typeof window !== 'undefined') {
       const token = document.cookie.split('; ').find(row => row.startsWith('thejord_admin_token='))
       if (token) {
