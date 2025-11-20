@@ -23,6 +23,7 @@ const config: Config = {
         bg: {
           darkest: '#0A0F1A',
           dark: '#151B2B',
+          surface: '#1E2637',
           DEFAULT: '#1E2637',
         },
         text: {
