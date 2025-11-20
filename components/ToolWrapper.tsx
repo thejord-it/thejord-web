@@ -3,6 +3,7 @@
 import { lazy, Suspense } from 'react'
 import Link from 'next/link'
 import type { ToolConfig } from '@/lib/tools-config'
+import { ToastProvider } from './ToastProvider'
 
 // Lazy load all tool components
 const JsonFormatter = lazy(() => import('./tools/pages/JsonFormatter'))
@@ -84,9 +85,11 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
       </div>
 
       {/* Tool component */}
-      <Suspense fallback={<ToolLoader />}>
-        <ToolComponent />
-      </Suspense>
+      <ToastProvider>
+        <Suspense fallback={<ToolLoader />}>
+          <ToolComponent />
+        </Suspense>
+      </ToastProvider>
 
       {/* Footer with privacy notice */}
       <div className="bg-bg-dark border-t border-border mt-12">
