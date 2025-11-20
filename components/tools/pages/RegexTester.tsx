@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
-import { REGEX_PATTERNS, CATEGORIES, RegexPattern } from '@/lib/tools/regex-patterns';
 import Layout from '@/components/tools/Layout';
 import SEO from '@/components/tools/SEO';
+import Toast from '@/components/tools/Toast';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { REGEX_PATTERNS, CATEGORIES, RegexPattern } from '@/lib/tools/regex-patterns';
 
 interface Match {
   match: string;
@@ -79,12 +81,12 @@ export default function RegexTester() {
     return matchesCategory && matchesSearch;
   });
 
-  const highlightMatches = (text: string): JSX.Element[] => {
+  const highlightMatches = (text: string): React.ReactElement[] => {
     if (matches.length === 0) {
       return [<span key={0}>{text}</span>];
     }
 
-    const parts: JSX.Element[] = [];
+    const parts: React.ReactElement[] = [];
     let lastIndex = 0;
 
     matches.forEach((match, idx) => {

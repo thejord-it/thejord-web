@@ -51,6 +51,9 @@ export interface BlogPost {
   publishedAt?: string
   createdAt: string
   updatedAt: string
+
+  // Editor type
+  editorType?: 'markdown' | 'wysiwyg'
 }
 
 export interface BlogPostListItem extends Omit<BlogPost, 'content'> {}
@@ -99,7 +102,7 @@ export async function getAllBlogPostSlugs(language: string = 'it'): Promise<stri
 }
 
 // Admin API functions
-const getAuthHeader = () => {
+const getAuthHeader = (): Record<string, string> => {
   if (typeof window !== 'undefined') {
     const token = document.cookie.split('; ').find(row => row.startsWith('thejord_admin_token='))
     if (token) {

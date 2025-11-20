@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import Layout from '@/components/tools/Layout';
 import SEO from '@/components/tools/SEO';
+import Toast from '@/components/tools/Toast';
+import { useState } from 'react';
 
 interface DiffLine {
   type: 'equal' | 'added' | 'removed';

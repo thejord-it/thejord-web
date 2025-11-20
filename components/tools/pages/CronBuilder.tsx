@@ -1,5 +1,6 @@
-import Layout from '@/components/tools/Layout'
+import Layout from '@/components/tools/Layout';
 import SEO from '@/components/tools/SEO';
+import Toast from '@/components/tools/Toast';
 import { useState, useEffect } from 'react'
 import {
   parseCronExpression,

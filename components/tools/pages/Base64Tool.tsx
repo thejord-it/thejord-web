@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
 import Layout from '@/components/tools/Layout';
 import SEO from '@/components/tools/SEO';
 import Toast from '@/components/tools/Toast';
+import { useState, useRef } from 'react';
 import { detectFileType, getFileIcon, DetectedFileType } from '@/lib/tools/file-detection';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

@@ -1,5 +1,6 @@
-import Layout from '@/components/tools/Layout'
+import Layout from '@/components/tools/Layout';
 import SEO from '@/components/tools/SEO';
+import Toast from '@/components/tools/Toast';
 import { useState } from 'react'
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor'
 import { jsonToJsonSchema, validateJSON, type JsonSchemaOptions } from '@/lib/tools/schema-generator'
