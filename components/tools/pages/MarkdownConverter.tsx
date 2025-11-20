@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
@@ -95,12 +92,6 @@ export default function MarkdownConverter() {
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="Markdown to HTML Converter - THEJORD.IT"
-        description="Convert Markdown to HTML online with live preview. Free Markdown converter with syntax highlighting support."
-        path="/markdown-converter"
-      />
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-8">
@@ -233,6 +224,5 @@ export default function MarkdownConverter() {
           </div>
         </div>
       </div>
-    </Layout>
   );
 }

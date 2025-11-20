@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState } from 'react';
 
 export default function UrlTool() {
@@ -69,12 +66,6 @@ export default function UrlTool() {
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="URL Encoder/Decoder - THEJORD.IT"
-        description="Encode and decode URLs and URL components online. Free URL encoder/decoder tool with query string parsing."
-        path="/url-encoder-decoder"
-      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">
@@ -248,6 +239,5 @@ export default function UrlTool() {
           </div>
         </div>
       </main>
-    </Layout>
   );
 }
