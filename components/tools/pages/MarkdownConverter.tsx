@@ -1,8 +1,9 @@
+import Layout from '@/components/tools/Layout';
+import SEO from '@/components/tools/SEO';
+import Toast from '@/components/tools/Toast';
 import { useState } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
 
 const EXAMPLE_MARKDOWN = `# Markdown Example
 

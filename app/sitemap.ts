@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
-import { getBlogPosts } from '@/lib/api'
+import { getBlogPosts, BlogPostListItem } from '@/lib/api'
 import { TOOLS } from '@/lib/tools-config'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://thejord.it'
 
   // Fetch all published blog posts
-  let posts = []
+  let posts: BlogPostListItem[] = []
   try {
     posts = await getBlogPosts('it')
   } catch (error) {
