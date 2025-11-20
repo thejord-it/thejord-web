@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { REGEX_PATTERNS, CATEGORIES, RegexPattern } from '@/lib/tools/regex-patterns';
@@ -109,12 +106,6 @@ export default function RegexTester() {
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="RegEx Tester - THEJORD.IT"
-        description="Test regular expressions online with 30+ predefined patterns. Real-time regex testing for email, URL, phone numbers, and more."
-        path="/regex-tester"
-      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">
@@ -304,6 +295,5 @@ export default function RegexTester() {
           </div>
         </div>
       </main>
-    </Layout>
   );
 }

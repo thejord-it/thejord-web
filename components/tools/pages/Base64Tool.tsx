@@ -1,7 +1,5 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState, useRef } from 'react';
+import { useToast } from '@/components/ToastProvider';
 import { detectFileType, getFileIcon, DetectedFileType } from '@/lib/tools/file-detection';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -11,7 +9,7 @@ export default function Base64Tool() {
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [error, setError] = useState('');
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const { showToast } = useToast();
   const [detectedType, setDetectedType] = useState<DetectedFileType | null>(null);
   const [decodedBase64, setDecodedBase64] = useState<string>(''); // Store clean Base64 for binary downloads
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -94,9 +92,9 @@ export default function Base64Tool() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(output);
-      setToast({ message: 'Copied to clipboard!', type: 'success' });
+      showToast('Copied to clipboard!', 'success');
     } catch (error) {
-      setToast({ message: 'Failed to copy', type: 'error' });
+      showToast('Failed to copy', 'error');
     }
   };
 
@@ -124,7 +122,7 @@ export default function Base64Tool() {
 
     if (file.size > MAX_FILE_SIZE) {
       setError(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
-      setToast({ message: `File too large! Max ${MAX_FILE_SIZE / (1024 * 1024)}MB`, type: 'error' });
+      showToast(`File too large! Max ${MAX_FILE_SIZE / (1024 * 1024)}MB`, 'error');
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -147,7 +145,7 @@ export default function Base64Tool() {
           if (typeof result === 'string') {
             setInput(result);
             setError('');
-            setToast({ message: 'File loaded successfully!', type: 'success' });
+            showToast('File loaded successfully!', 'success');
           }
         };
         reader.readAsText(file);
@@ -165,7 +163,7 @@ export default function Base64Tool() {
             const base64 = btoa(binary);
             setInput(base64);
             setError('');
-            setToast({ message: `Binary file loaded (${file.type || 'unknown type'})`, type: 'success' });
+            showToast(`Binary file loaded (${file.type || 'unknown type'})`, 'success');
           }
         };
         reader.readAsArrayBuffer(file);
@@ -179,7 +177,7 @@ export default function Base64Tool() {
           const base64 = result.includes(',') ? result.split(',')[1] : result;
           setInput(base64);
           setError('');
-          setToast({ message: 'File loaded successfully!', type: 'success' });
+          showToast('File loaded successfully!', 'success');
         }
       };
       reader.readAsDataURL(file);
@@ -187,7 +185,7 @@ export default function Base64Tool() {
 
     reader.onerror = () => {
       setError('Failed to read file');
-      setToast({ message: 'Failed to read file', type: 'error' });
+      showToast('Failed to read file', 'error');
     };
   };
 
@@ -229,16 +227,10 @@ export default function Base64Tool() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    setToast({ message: 'File downloaded successfully!', type: 'success' });
+    showToast('File downloaded successfully!', 'success');
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="Base64 Encoder/Decoder - THEJORD.IT"
-        description="Encode and decode Base64 strings online. Free Base64 tool with file upload support and automatic file type detection."
-        path="/base64"
-      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">
@@ -435,13 +427,5 @@ export default function Base64Tool() {
           </div>
         </div>
       </main>
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
-    </Layout>
   );
 }

@@ -1,7 +1,5 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState, useEffect } from 'react';
+import { useToast } from '@/components/ToastProvider';
 import CryptoJS from 'crypto-js';
 
 type HashAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'SHA512' | 'SHA3';
@@ -18,7 +16,7 @@ export default function HashGenerator() {
   const [results, setResults] = useState<HashResult[]>([]);
   const [hmacKey, setHmacKey] = useState('');
   const [useHMAC, setUseHMAC] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const { showToast } = useToast();
 
   const algorithms: { name: HashAlgorithm; description: string }[] = [
     { name: 'MD5', description: '128-bit hash (not cryptographically secure)' },
@@ -94,9 +92,9 @@ export default function HashGenerator() {
   const handleCopy = async (hash: string) => {
     try {
       await navigator.clipboard.writeText(hash);
-      setToast({ message: 'Hash copied to clipboard!', type: 'success' });
+      showToast('Hash copied to clipboard!', 'success');
     } catch (error) {
-      setToast({ message: 'Failed to copy', type: 'error' });
+      showToast('Failed to copy', 'error');
     }
   };
 
@@ -114,12 +112,6 @@ export default function HashGenerator() {
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="Hash Generator - THEJORD.IT"
-        description="Generate MD5, SHA-1, SHA-256, SHA-512 hashes online. Free hash generator for text and files with instant results."
-        path="/hash-generator"
-      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">
@@ -285,13 +277,5 @@ export default function HashGenerator() {
           </div>
         </div>
       </main>
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
-    </Layout>
   );
 }

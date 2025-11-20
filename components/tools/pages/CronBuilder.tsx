@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState, useEffect } from 'react'
 import {
   parseCronExpression,
@@ -94,12 +91,6 @@ export default function CronBuilder() {
   }
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="Cron Expression Builder - THEJORD.IT"
-        description="Build and validate cron expressions visually. Free cron builder with predefined patterns and next execution preview."
-        path="/cron-builder"
-      />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
@@ -391,9 +382,6 @@ export default function CronBuilder() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-    </Layout>
   )
 }
 

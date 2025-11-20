@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState } from 'react'
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor'
 import { jsonToJsonSchema, validateJSON, type JsonSchemaOptions } from '@/lib/tools/schema-generator'
@@ -94,12 +91,6 @@ export default function JsonSchemaConverter() {
   }
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="JSON Schema Converter - THEJORD.IT"
-        description="Convert JSON to JSON Schema automatically. Free JSON Schema generator with Draft 2020-12 and Draft 07 support."
-        path="/json-schema"
-      />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
@@ -333,8 +324,5 @@ export default function JsonSchemaConverter() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-    </Layout>
   )
 }

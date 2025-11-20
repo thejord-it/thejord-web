@@ -1,6 +1,3 @@
-import Layout from '@/components/tools/Layout';
-import SEO from '@/components/tools/SEO';
-import Toast from '@/components/tools/Toast';
 import { useState, useEffect } from 'react';
 import { validateJSON, formatJSON, minifyJSON, getJSONStats, FormatOptions } from '@/lib/tools/json-utils';
 import { jsonToCSV, jsonToXML, jsonToYAML, jsonToTypeScript } from '@/lib/tools/json-converters';
@@ -148,12 +145,6 @@ export default function JsonFormatter() {
   };
 
   return (
-    <Layout showFullNav={false}>
-      <SEO
-        title="JSON Formatter - THEJORD.IT"
-        description="Format, validate, and beautify JSON online. Free JSON formatter with syntax highlighting, tree view, and conversion to CSV, XML, YAML."
-        path="/json-formatter"
-      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">
@@ -494,6 +485,5 @@ export default function JsonFormatter() {
           </div>
         </div>
       </main>
-    </Layout>
   );
 }
