@@ -22,12 +22,12 @@ export default function HomePage() {
             Read the Blog →
           </Link>
 
-          <a
-            href="https://tools.thejord.it"
+          <Link
+            href="/tools"
             className="px-8 py-3 border border-border hover:border-primary text-text-primary font-semibold rounded-lg transition-colors"
           >
             Developer Tools
-          </a>
+          </Link>
         </div>
 
         <div className="pt-12 text-sm text-text-muted">

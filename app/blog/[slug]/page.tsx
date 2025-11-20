@@ -87,8 +87,46 @@ export default async function BlogPostPage({ params }: Props) {
     notFound()
   }
 
+  // Schema.org JSON-LD for rich snippets
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image || post.ogImage || 'https://thejord.it/og-image.png',
+    datePublished: post.publishedAt || post.createdAt,
+    dateModified: post.updatedAt || post.publishedAt || post.createdAt,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'THEJORD',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://thejord.it/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://thejord.it/blog/${post.slug}`,
+    },
+    keywords: post.keywords.join(', '),
+    articleSection: post.tags.join(', '),
+    wordCount: post.content.split(/\s+/).length,
+    timeRequired: post.readTime,
+    inLanguage: 'it-IT',
+  }
+
   return (
     <div className="min-h-screen bg-bg-darkest">
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <article className="max-w-4xl mx-auto px-4 py-16">
         {/* Back link */}
         <Link
@@ -135,6 +173,24 @@ export default async function BlogPostPage({ params }: Props) {
             {post.excerpt}
           </p>
         </header>
+
+        {/* Featured Image with responsive srcset */}
+        {post.image && (post.image.startsWith('http://') || post.image.startsWith('https://')) && (
+          <div className="w-full mb-12 rounded-lg bg-white p-8 flex items-center justify-center overflow-hidden">
+            <img
+              src={post.image}
+              srcSet={`
+                ${post.image.replace('.webp', '-small.webp')} 640w,
+                ${post.image.replace('.webp', '-medium.webp')} 1024w,
+                ${post.image} 1920w
+              `}
+              sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1920px"
+              alt={post.title}
+              style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain' }}
+              loading="eager"
+            />
+          </div>
+        )}
 
         {/* Article Content */}
         <div
