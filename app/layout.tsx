@@ -2,16 +2,18 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import CookieConsent from '@/components/CookieConsent'
 
 export const metadata: Metadata = {
   title: {
     default: 'THEJORD - Developer Tools & Blog',
     template: '%s | THEJORD',
   },
-  description: 'Free developer tools and technical blog by Il Giordano. JSON formatter, Base64 encoder, Cron builder, and more. 100% privacy-first.',
+  description: 'Free developer tools and technical blog by The Jord. JSON formatter, Base64 encoder, Cron builder, and more. 100% privacy-first.',
   keywords: ['developer tools', 'json formatter', 'base64', 'cron', 'blog', 'programming'],
-  authors: [{ name: 'Il Giordano' }],
-  creator: 'Il Giordano',
+  authors: [{ name: 'The Jord' }],
+  creator: 'The Jord',
   metadataBase: new URL('https://thejord.it'),
   openGraph: {
     type: 'website',
@@ -44,14 +46,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
   return (
     <html lang="it">
       <body className="antialiased flex flex-col min-h-screen">
+        {gaId && <GoogleAnalytics gaId={gaId} />}
         <Header />
         <main className="flex-1">
           {children}
         </main>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   )
