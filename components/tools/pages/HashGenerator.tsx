@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ToastProvider';
 import CryptoJS from 'crypto-js';
+import { trackToolUsage, trackCopy, trackButtonClick } from '@/lib/tools/analytics';
 
 type HashAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'SHA512' | 'SHA3';
 
@@ -87,11 +88,15 @@ export default function HashGenerator() {
     });
 
     setResults(newResults);
+    if (input && newResults.length > 0) {
+      trackToolUsage('Hash Generator', 'generate_hash', selectedAlgorithms.join(','));
+    }
   }, [input, selectedAlgorithms, useHMAC, hmacKey]);
 
-  const handleCopy = async (hash: string) => {
+  const handleCopy = async (hash: string, algorithm: string) => {
     try {
       await navigator.clipboard.writeText(hash);
+      trackCopy(`hash_${algorithm.toLowerCase()}`, 'Hash Generator');
       showToast('Hash copied to clipboard!', 'success');
     } catch (error) {
       showToast('Failed to copy', 'error');
@@ -183,7 +188,7 @@ export default function HashGenerator() {
                           <span className="text-text-muted text-sm ml-3">({result.length} chars)</span>
                         </div>
                         <button
-                          onClick={() => handleCopy(result.hash)}
+                          onClick={() => handleCopy(result.hash, result.algorithm)}
                           className="px-3 py-1 bg-accent text-white rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-accent/40 transition-all"
                         >
                           📋 Copy

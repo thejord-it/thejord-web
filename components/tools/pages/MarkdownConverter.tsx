@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
@@ -83,6 +84,7 @@ export default function MarkdownConverter() {
 
   const copyHtml = () => {
     navigator.clipboard.writeText(html);
+    trackCopy('markdown_html', 'Markdown Converter');
   };
 
   const clear = () => {

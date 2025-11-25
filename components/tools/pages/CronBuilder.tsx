@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState, useEffect } from 'react'
 import {
   parseCronExpression,
@@ -65,6 +66,7 @@ export default function CronBuilder() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(expression)
+      trackCopy('cron_expression', 'Cron Builder')
       setCopySuccess(true)
       setTimeout(() => setCopySuccess(false), 2000)
     } catch (err) {
@@ -77,6 +79,7 @@ export default function CronBuilder() {
     setCronFields(defaultCron)
     setDirectInput('* * * * *')
     setExpression('* * * * *')
+    trackButtonClick('Clear', 'Cron Builder')
   }
 
   const formatDate = (date: Date): string => {

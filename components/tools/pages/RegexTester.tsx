@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { REGEX_PATTERNS, CATEGORIES, RegexPattern } from '@/lib/tools/regex-patterns';
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
 interface Match {
   match: string;
@@ -58,9 +59,15 @@ export default function RegexTester() {
 
       setMatches(foundMatches);
       setError('');
+      if (pattern && testString && foundMatches.length > 0) {
+        trackToolUsage('RegEx Tester', 'test_regex', `${foundMatches.length}_matches`);
+      }
     } catch (err: any) {
       setError(err.message || 'Invalid regular expression');
       setMatches([]);
+      if (pattern) {
+        trackError('regex_error', err.message || 'Invalid regular expression', 'RegEx Tester');
+      }
     }
   }, [pattern, flags, testString]);
 
@@ -68,6 +75,7 @@ export default function RegexTester() {
     setPattern(regexPattern.pattern);
     setTestString(regexPattern.example);
     setFlags({ g: true, i: false, m: false, s: false, u: false });
+    trackButtonClick(`Load Pattern: ${regexPattern.name}`, 'RegEx Tester');
   };
 
   const filteredPatterns = REGEX_PATTERNS.filter(p => {

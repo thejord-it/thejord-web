@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
 export default function UrlTool() {
   const [input, setInput] = useState('');
@@ -27,15 +28,18 @@ export default function UrlTool() {
       }
 
       setOutput(result);
+      trackToolUsage('URL Tool', mode, 'success');
     } catch (err: any) {
       setError(err.message || 'Error processing URL');
       setOutput('');
+      trackError(`${mode}_error`, err.message || 'Error processing URL', 'URL Tool');
     }
   };
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(output);
+      trackCopy(`url_${mode}`, 'URL Tool');
       alert('Copied to clipboard!');
     } catch (error) {
       alert('Failed to copy');
@@ -46,6 +50,7 @@ export default function UrlTool() {
     setInput('');
     setOutput('');
     setError('');
+    trackButtonClick('Clear', 'URL Tool');
   };
 
   const handleSwap = () => {
@@ -58,6 +63,8 @@ export default function UrlTool() {
     else if (mode === 'decode') setMode('encode');
     else if (mode === 'encodeComponent') setMode('decodeComponent');
     else setMode('encodeComponent');
+
+    trackButtonClick('Swap', 'URL Tool');
   };
 
   const examples = {
