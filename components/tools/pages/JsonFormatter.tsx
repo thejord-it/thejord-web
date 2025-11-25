@@ -4,6 +4,7 @@ import { jsonToCSV, jsonToXML, jsonToYAML, jsonToTypeScript } from '@/lib/tools/
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor';
 import JsonTree from '@/components/tools/JsonTree';
 import JsonDiff from '@/components/tools/JsonDiff';
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
 const DEFAULT_OPTIONS: FormatOptions = {
   indent: 4,
@@ -72,8 +73,10 @@ export default function JsonFormatter() {
     try {
       const formatted = formatJSON(input, options);
       setOutput(formatted);
+      trackToolUsage('JSON Formatter', 'format', 'success');
     } catch (error) {
       setOutput('Error: Invalid JSON');
+      trackError('format_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
     }
   };
 
@@ -88,8 +91,10 @@ export default function JsonFormatter() {
       const savings = ((1 - minifiedSize / originalSize) * 100).toFixed(1);
 
       console.log(`Minification complete: ${originalSize} → ${minifiedSize} bytes (${savings}% reduction)`);
+      trackToolUsage('JSON Formatter', 'minify', `${savings}% compression`);
     } catch (error) {
       setOutput('Error: Invalid JSON');
+      trackError('minify_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
     }
   };
 
@@ -114,14 +119,17 @@ export default function JsonFormatter() {
       }
 
       setOutput(converted);
+      trackToolUsage('JSON Formatter', 'convert', `to_${format}`);
     } catch (error) {
       setOutput('Error: Invalid JSON');
+      trackError('convert_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
     }
   };
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(output);
+      trackCopy('formatted_json', 'JSON Formatter');
       alert('Copied to clipboard!');
     } catch (error) {
       alert('Failed to copy');
@@ -136,12 +144,14 @@ export default function JsonFormatter() {
     a.download = 'formatted.json';
     a.click();
     URL.revokeObjectURL(url);
+    trackButtonClick('Download', 'JSON Formatter');
   };
 
   const handleClear = () => {
     setInput('');
     setOutput('');
     setCompareInput('');
+    trackButtonClick('Clear', 'JSON Formatter');
   };
 
   return (

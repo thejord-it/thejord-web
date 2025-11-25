@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState, useEffect } from 'react';
 
 interface ColorFormats {
@@ -107,6 +108,7 @@ export default function ColorConverter() {
 
   const copyFormat = (value: string) => {
     navigator.clipboard.writeText(value);
+    trackCopy('color_value', 'Color Converter');
   };
 
   const presetColors = [

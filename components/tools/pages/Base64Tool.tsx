@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useToast } from '@/components/ToastProvider';
 import { detectFileType, getFileIcon, DetectedFileType } from '@/lib/tools/file-detection';
+import { trackToolUsage, trackCopy, trackError, trackButtonClick, trackFileUpload } from '@/lib/tools/analytics';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -21,9 +22,11 @@ export default function Base64Tool() {
       setDecodedBase64(''); // Clear decoded Base64
       const encoded = btoa(unescape(encodeURIComponent(input)));
       setOutput(encoded);
+      trackToolUsage('Base64 Tool', 'encode', 'success');
     } catch (err) {
       setError('Error encoding: Invalid input');
       setOutput('');
+      trackError('encode_error', err instanceof Error ? err.message : 'Invalid input', 'Base64 Tool');
     }
   };
 
@@ -72,12 +75,14 @@ export default function Base64Tool() {
       if (fileType) {
         console.log('Detected file type:', fileType);
       }
+      trackToolUsage('Base64 Tool', 'decode', fileType?.mime || 'text');
     } catch (err) {
       console.error('Decode error:', err);
       setError('Error decoding: Invalid Base64 string');
       setOutput('');
       setDetectedType(null);
       setDecodedBase64('');
+      trackError('decode_error', err instanceof Error ? err.message : 'Invalid Base64 string', 'Base64 Tool');
     }
   };
 
@@ -92,6 +97,7 @@ export default function Base64Tool() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(output);
+      trackCopy(mode === 'encode' ? 'base64_encoded' : 'base64_decoded', 'Base64 Tool');
       showToast('Copied to clipboard!', 'success');
     } catch (error) {
       showToast('Failed to copy', 'error');
@@ -107,6 +113,7 @@ export default function Base64Tool() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    trackButtonClick('Clear', 'Base64 Tool');
   };
 
   const handleSwap = () => {
@@ -114,6 +121,7 @@ export default function Base64Tool() {
     setInput(output);
     setOutput(temp);
     setMode(mode === 'encode' ? 'decode' : 'encode');
+    trackButtonClick('Swap', 'Base64 Tool');
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,11 +131,14 @@ export default function Base64Tool() {
     if (file.size > MAX_FILE_SIZE) {
       setError(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
       showToast(`File too large! Max ${MAX_FILE_SIZE / (1024 * 1024)}MB`, 'error');
+      trackError('file_size_error', `File exceeds ${MAX_FILE_SIZE / (1024 * 1024)}MB limit`, 'Base64 Tool');
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
       return;
     }
+
+    trackFileUpload(file.type || 'unknown', file.size, 'Base64 Tool');
 
     const reader = new FileReader();
 

@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
 
 interface DiffLine {

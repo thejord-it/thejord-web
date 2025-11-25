@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react'
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor'
 import { jsonToJsonSchema, validateJSON, type JsonSchemaOptions } from '@/lib/tools/schema-generator'
@@ -51,14 +52,17 @@ export default function JsonSchemaConverter() {
 
       const schema = jsonToJsonSchema(validation.parsed, options)
       setOutputSchema(JSON.stringify(schema, null, 2))
+      trackToolUsage('JSON Schema Converter', 'generate_schema', 'success')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate schema')
+      trackError('schema_generation_error', err instanceof Error ? err.message : 'Failed to generate schema', 'JSON Schema Converter')
     }
   }
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(outputSchema)
+      trackCopy('json_schema', 'JSON Schema Converter')
       setCopySuccess(true)
       setTimeout(() => setCopySuccess(false), 2000)
     } catch {
