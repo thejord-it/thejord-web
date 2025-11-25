@@ -1,3 +1,4 @@
+import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
 
 const LOREM_WORDS = [
@@ -75,10 +76,12 @@ export default function LoremIpsumGenerator() {
         break;
     }
     setOutput(result);
+    trackToolUsage('Lorem Ipsum Generator', 'generate', `${count}_${unit}s`);
   };
 
   const copyOutput = () => {
     navigator.clipboard.writeText(output);
+    trackCopy('lorem_ipsum', 'Lorem Ipsum Generator');
   };
 
   const clear = () => {
