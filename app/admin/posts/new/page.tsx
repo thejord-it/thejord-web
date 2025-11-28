@@ -245,6 +245,8 @@ export default function NewPostPage() {
               value={formData.image}
               onChange={(url) => handleChange('image', url)}
               preset="featured-image"
+              postTitle={formData.title}
+              postTags={formData.tags}
             />
 
             <TagInput
@@ -342,6 +344,8 @@ export default function NewPostPage() {
               value={formData.ogImage}
               onChange={(url) => handleChange('ogImage', url)}
               preset="og-image"
+              postTitle={formData.title}
+              postTags={formData.tags}
             />
 
             <div>

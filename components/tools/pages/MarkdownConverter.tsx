@@ -94,7 +94,7 @@ export default function MarkdownConverter() {
   };
 
   return (
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="max-w-7xl mx-auto p-4 md:p-6">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-transparent bg-clip-text">
@@ -147,9 +147,9 @@ export default function MarkdownConverter() {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:p-6">
           {/* Markdown Input */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 shadow-2xl">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-blue-400">📝</span>
               Markdown Input
@@ -158,13 +158,13 @@ export default function MarkdownConverter() {
               value={markdown}
               onChange={(e) => convertMarkdown(e.target.value)}
               placeholder="Enter your Markdown here..."
-              className="w-full h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               spellCheck={false}
             />
           </div>
 
           {/* HTML Output */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 shadow-2xl">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-green-400">💻</span>
               HTML Output
@@ -173,7 +173,7 @@ export default function MarkdownConverter() {
               value={html}
               readOnly
               placeholder="HTML will appear here..."
-              className="w-full h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none resize-none"
+              className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none resize-none"
               spellCheck={false}
             />
           </div>
@@ -181,20 +181,20 @@ export default function MarkdownConverter() {
 
         {/* Preview */}
         {preview && (
-          <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 shadow-2xl">
+          <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-cyan-400">👁️</span>
               Live Preview
             </h2>
             <div
-              className="prose prose-invert max-w-none bg-white text-gray-900 rounded-lg p-6"
+              className="prose prose-invert max-w-none bg-white text-gray-900 rounded-lg p-4 md:p-6"
               dangerouslySetInnerHTML={{ __html: preview }}
             />
           </div>
         )}
 
         {/* Help Section */}
-        <div className="mt-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6">
+        <div className="mt-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
           <h3 className="text-lg font-semibold text-white mb-3">
             Markdown Syntax Quick Reference
           </h3>

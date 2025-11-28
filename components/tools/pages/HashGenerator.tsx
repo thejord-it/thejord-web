@@ -119,7 +119,7 @@ export default function HashGenerator() {
   return (
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">
             🔑 <span className="bg-gradient-to-r from-primary-light to-secondary-light bg-clip-text text-transparent">
               Hash
             </span> Generator
@@ -129,10 +129,10 @@ export default function HashGenerator() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:p-6">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-              <div className="bg-bg-elevated px-6 py-4 border-b border-border flex justify-between items-center">
+              <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
                 <h2 className="font-semibold text-text-primary text-lg">Input Text</h2>
                 <button
                   onClick={handleClear}
@@ -141,7 +141,7 @@ export default function HashGenerator() {
                   🗑️ Clear
                 </button>
               </div>
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -156,10 +156,10 @@ export default function HashGenerator() {
 
             {useHMAC && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-                <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+                <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                   <h2 className="font-semibold text-text-primary text-lg">HMAC Secret Key</h2>
                 </div>
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   <input
                     type="text"
                     value={hmacKey}
@@ -176,13 +176,13 @@ export default function HashGenerator() {
 
             {results.length > 0 && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-                <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+                <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                   <h2 className="font-semibold text-text-primary text-lg">Hash Results</h2>
                 </div>
-                <div className="p-6 space-y-4">
+                <div className="p-4 md:p-6 space-y-4">
                   {results.map((result, idx) => (
                     <div key={idx} className="p-4 bg-bg-elevated rounded-lg border border-border">
-                      <div className="flex justify-between items-center mb-2">
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center mb-2">
                         <div>
                           <span className="font-semibold text-primary-light">{result.algorithm}</span>
                           <span className="text-text-muted text-sm ml-3">({result.length} chars)</span>
@@ -206,10 +206,10 @@ export default function HashGenerator() {
 
           <div className="space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-              <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+              <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                 <h2 className="font-semibold text-text-primary text-lg">Algorithms</h2>
               </div>
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 <div className="mb-4">
                   <label className="flex items-center gap-2 text-text-secondary cursor-pointer p-3 bg-bg-elevated rounded-lg border border-border hover:border-primary transition-all">
                     <input
@@ -249,7 +249,7 @@ export default function HashGenerator() {
               </div>
             </div>
 
-            <div className="bg-bg-surface rounded-xl border border-border p-6">
+            <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6">
               <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
                 ℹ️ About Hashing
               </h3>

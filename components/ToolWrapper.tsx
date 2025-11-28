@@ -69,7 +69,7 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
     <div className="min-h-screen bg-bg-darkest">
       {/* Header with breadcrumbs */}
       <div className="bg-bg-dark border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 text-sm text-text-muted">
             <Link href="/" className="hover:text-primary transition-colors">
               Home
@@ -92,8 +92,8 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
       </ToastProvider>
 
       {/* Footer with privacy notice */}
-      <div className="bg-bg-dark border-t border-border mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-8 text-center">
+      <div className="bg-bg-dark border-t border-border mt-8 md:mt-12">
+        <div className="max-w-7xl mx-auto px-4 py-6 md:py-8 text-center">
           <div className="text-sm text-text-muted">
             <p className="mb-2">
               <span className="text-primary">🔒 Privacy-First:</span> All processing happens in your browser.

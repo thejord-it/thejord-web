@@ -9,29 +9,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // THEJORD color palette (from existing project)
+        // THEJORD accessible color palette
         primary: {
-          DEFAULT: '#00C9FF',
-          light: '#4DD8FF',
-          dark: '#0099CC',
+          DEFAULT: '#3B82F6', // Blue - accessible for colorblind users
+          light: '#60A5FA',
         },
         secondary: {
-          DEFAULT: '#FF00E5',
-          light: '#FF4DEB',
-          dark: '#CC00B8',
+          DEFAULT: '#06B6D4', // Cyan
+          light: '#22D3EE',
+        },
+        accent: {
+          DEFAULT: '#10B981', // Green
+          light: '#34D399',
         },
         bg: {
           darkest: '#0A0F1A',
-          dark: '#151B2B',
-          surface: '#1E2637',
-          DEFAULT: '#1E2637',
+          dark: '#111827',
+          elevated: '#374151',
+          surface: '#1F2937',
+          DEFAULT: '#1F2937',
         },
         text: {
-          primary: '#FFFFFF',
-          secondary: '#B8C5D6',
-          muted: '#6B7A90',
+          primary: '#F9FAFB',
+          secondary: '#D1D5DB',
+          muted: '#9CA3AF',
         },
-        border: '#2A3447',
+        border: {
+          DEFAULT: '#374151',
+          light: '#4B5563',
+        },
       },
     },
   },
