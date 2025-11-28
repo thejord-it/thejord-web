@@ -281,6 +281,8 @@ export default function EditPostPage() {
                   value={formData.image}
                   onChange={(url) => handleChange('image', url)}
                   preset="featured-image"
+                  postTitle={formData.title}
+                  postTags={formData.tags}
                 />
               </div>
             </div>
@@ -377,6 +379,8 @@ export default function EditPostPage() {
                 value={formData.ogImage}
                 onChange={(url) => handleChange('ogImage', url)}
                 preset="og-image"
+                postTitle={formData.title}
+                postTags={formData.tags}
               />
             </div>
 

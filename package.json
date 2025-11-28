@@ -19,7 +19,7 @@
     "ssr",
     "seo"
   ],
-  "author": "Il Giordano",
+  "author": "The Jord",
   "license": "MIT",
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",

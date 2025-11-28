@@ -127,7 +127,7 @@ export default function ColorConverter() {
   ];
 
   return (
-      <div className="max-w-6xl mx-auto p-6">
+      <div className="max-w-6xl mx-auto p-4 md:p-6">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
@@ -140,7 +140,7 @@ export default function ColorConverter() {
 
         {/* Color Picker */}
         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-8 mb-6 shadow-2xl">
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-4 md:p-6">
             {/* Color Preview */}
             <div
               className="w-full h-48 rounded-lg shadow-2xl border-4 border-white"
@@ -192,7 +192,7 @@ export default function ColorConverter() {
         </div>
 
         {/* Preset Colors */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 shadow-2xl">
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
           <h3 className="text-lg font-semibold text-white mb-4">Preset Colors</h3>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-3">
             {presetColors.map((presetColor) => (
@@ -208,7 +208,7 @@ export default function ColorConverter() {
         </div>
 
         {/* Color Info */}
-        <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6">
+        <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
           <h3 className="text-lg font-semibold text-white mb-3">Color Format Guide</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
             <div>

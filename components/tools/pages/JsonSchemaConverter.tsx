@@ -100,7 +100,7 @@ export default function JsonSchemaConverter() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">📋</div>
-          <h1 className="text-4xl font-bold mb-3">
+          <h1 className="text-2xl md:text-4xl font-bold mb-3">
             <span className="bg-gradient-to-r from-primary-light to-secondary-light bg-clip-text text-transparent">
               JSON to JSON Schema Converter
             </span>
@@ -111,7 +111,7 @@ export default function JsonSchemaConverter() {
         </div>
 
         {/* Configuration */}
-        <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+        <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
           <h2 className="text-xl font-bold text-text-primary mb-4">Configuration</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
@@ -165,10 +165,10 @@ export default function JsonSchemaConverter() {
         </div>
 
         {/* Editors */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:p-6 mb-6">
           {/* Input JSON */}
-          <div className="bg-bg-surface border border-border rounded-xl p-6">
-            <div className="flex justify-between items-center mb-4">
+          <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center mb-4">
               <h2 className="text-xl font-bold text-text-primary">Input JSON</h2>
               <button
                 onClick={handleLoadExample}
@@ -177,7 +177,7 @@ export default function JsonSchemaConverter() {
                 Load Example
               </button>
             </div>
-            <div className="h-96">
+            <div className="h-64 md:h-96">
               <MonacoJsonEditor
                 value={inputJson}
                 onChange={setInputJson}
@@ -187,9 +187,9 @@ export default function JsonSchemaConverter() {
           </div>
 
           {/* Output Schema */}
-          <div className="bg-bg-surface border border-border rounded-xl p-6">
+          <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
             <h2 className="text-xl font-bold text-text-primary mb-4">Generated Schema</h2>
-            <div className="h-96">
+            <div className="h-64 md:h-96">
               <MonacoJsonEditor
                 value={outputSchema}
                 onChange={() => {}}
@@ -210,7 +210,7 @@ export default function JsonSchemaConverter() {
         <div className="flex flex-wrap gap-3 justify-center">
           <button
             onClick={handleGenerate}
-            className="px-6 py-3 bg-primary hover:bg-primary-light text-bg-darkest rounded-lg font-semibold transition-colors flex items-center gap-2"
+            className="px-4 md:px-6 py-2 md:py-3 bg-primary hover:bg-primary-light text-bg-darkest rounded-lg font-semibold transition-colors flex items-center gap-2"
           >
             ✨ Generate Schema
           </button>
@@ -219,14 +219,14 @@ export default function JsonSchemaConverter() {
             <>
               <button
                 onClick={handleCopy}
-                className="px-6 py-3 bg-bg-elevated border border-border hover:border-primary text-text-primary rounded-lg font-semibold transition-colors flex items-center gap-2"
+                className="px-4 md:px-6 py-2 md:py-3 bg-bg-elevated border border-border hover:border-primary text-text-primary rounded-lg font-semibold transition-colors flex items-center gap-2"
               >
                 {copySuccess ? '✓ Copied!' : '📋 Copy'}
               </button>
 
               <button
                 onClick={handleDownload}
-                className="px-6 py-3 bg-bg-elevated border border-border hover:border-primary text-text-primary rounded-lg font-semibold transition-colors flex items-center gap-2"
+                className="px-4 md:px-6 py-2 md:py-3 bg-bg-elevated border border-border hover:border-primary text-text-primary rounded-lg font-semibold transition-colors flex items-center gap-2"
               >
                 ⬇️ Download
               </button>
@@ -235,14 +235,14 @@ export default function JsonSchemaConverter() {
 
           <button
             onClick={handleClear}
-            className="px-6 py-3 bg-bg-elevated border border-border hover:border-red-500 text-text-primary rounded-lg font-semibold transition-colors"
+            className="px-4 md:px-6 py-2 md:py-3 bg-bg-elevated border border-border hover:border-red-500 text-text-primary rounded-lg font-semibold transition-colors"
           >
             🗑️ Clear
           </button>
         </div>
 
         {/* Format Detection Reference */}
-        <div className="mt-8 bg-bg-surface border border-border rounded-xl p-6">
+        <div className="mt-8 bg-bg-surface border border-border rounded-xl p-4 md:p-6">
           <h2 className="text-xl font-bold text-text-primary mb-4">Format Detection</h2>
           <p className="text-text-secondary mb-4">
             When "Add format hints" is enabled, the converter automatically detects and adds format specifications:
@@ -276,7 +276,7 @@ export default function JsonSchemaConverter() {
         </div>
 
         {/* Type Mapping Reference */}
-        <div className="mt-6 bg-bg-surface border border-border rounded-xl p-6">
+        <div className="mt-6 bg-bg-surface border border-border rounded-xl p-4 md:p-6">
           <h2 className="text-xl font-bold text-text-primary mb-4">JSON to JSON Schema Type Mapping</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left">

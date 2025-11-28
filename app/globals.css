@@ -8,9 +8,39 @@
   }
 }
 
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
 /* Markdown Editor Styles */
 .markdown-editor .EasyMDEContainer {
-  @apply border border-border rounded-lg overflow-hidden;
+  @apply border border-border rounded-lg;
+  overflow: visible !important;
 }
 
 .markdown-editor .CodeMirror {
@@ -24,14 +54,38 @@
 
 .markdown-editor .editor-toolbar {
   @apply bg-bg-dark border-b border-border;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .markdown-editor .editor-toolbar button {
   @apply text-text-secondary hover:bg-bg-surface hover:text-text-primary;
+  display: inline-block !important;
+  color: #9ca3af !important; /* text-secondary fallback */
+}
+
+.markdown-editor .editor-toolbar button:hover {
+  color: #e5e7eb !important; /* text-primary fallback */
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .markdown-editor .editor-toolbar button.active {
-  @apply bg-primary text-bg-darkest;
+  @apply bg-primary;
+  color: #0f172a !important; /* bg-darkest fallback */
+}
+
+.markdown-editor .editor-toolbar button::before,
+.markdown-editor .editor-toolbar button::after,
+.markdown-editor .editor-toolbar a::before,
+.markdown-editor .editor-toolbar a::after {
+  color: inherit !important;
+}
+
+.markdown-editor .editor-toolbar i.separator {
+  @apply border-l border-border;
+  display: inline-block !important;
+  border-color: #374151 !important; /* border color */
 }
 
 .markdown-editor .editor-statusbar {
@@ -136,4 +190,13 @@
   .prose pre {
     @apply bg-bg-dark border border-border rounded-lg p-4 overflow-x-auto;
   }
+}
+
+/* Hide scrollbar for horizontal scroll on mobile */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

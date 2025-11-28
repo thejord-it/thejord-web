@@ -34,7 +34,7 @@ export default function Footer() {
               Free developer tools and technical blog. 100% privacy-first, all processing happens in your browser.
             </p>
             <p className="text-text-muted text-xs">
-              Made in Italy 🇮🇹 by Il Giordano
+              Made in Italy 🇮🇹 by The Jord
             </p>
           </div>
 

@@ -380,4 +380,4 @@ ls uploads/*.webp | grep -v '\-' | wc -l  # Large
 
 **Ultimo aggiornamento**: 19 Novembre 2025
 **Versione**: 1.0
-**Autore**: Claude Code + Il Giordano
+**Autore**: Claude Code + The Jord

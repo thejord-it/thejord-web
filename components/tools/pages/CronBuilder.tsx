@@ -99,7 +99,7 @@ export default function CronBuilder() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">🕐</div>
-          <h1 className="text-4xl font-bold mb-3">
+          <h1 className="text-2xl md:text-4xl font-bold mb-3">
             <span className="bg-gradient-to-r from-primary-light to-secondary-light bg-clip-text text-transparent">
               Cron Expression Builder
             </span>
@@ -110,10 +110,10 @@ export default function CronBuilder() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6 border-b border-border">
+        <div className="flex flex-wrap gap-2 mb-6 border-b border-border">
           <button
             onClick={() => setActiveTab('visual')}
-            className={`px-6 py-3 font-semibold transition-colors relative ${
+            className={`px-4 md:px-6 py-2 md:py-3 font-semibold transition-colors relative ${
               activeTab === 'visual'
                 ? 'text-primary-light'
                 : 'text-text-secondary hover:text-text-primary'
@@ -126,7 +126,7 @@ export default function CronBuilder() {
           </button>
           <button
             onClick={() => setActiveTab('direct')}
-            className={`px-6 py-3 font-semibold transition-colors relative ${
+            className={`px-4 md:px-6 py-2 md:py-3 font-semibold transition-colors relative ${
               activeTab === 'direct'
                 ? 'text-primary-light'
                 : 'text-text-secondary hover:text-text-primary'
@@ -139,7 +139,7 @@ export default function CronBuilder() {
           </button>
           <button
             onClick={() => setActiveTab('patterns')}
-            className={`px-6 py-3 font-semibold transition-colors relative ${
+            className={`px-4 md:px-6 py-2 md:py-3 font-semibold transition-colors relative ${
               activeTab === 'patterns'
                 ? 'text-primary-light'
                 : 'text-text-secondary hover:text-text-primary'
@@ -154,7 +154,7 @@ export default function CronBuilder() {
 
         {/* Visual Builder Tab */}
         {activeTab === 'visual' && (
-          <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+          <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
             <div className="space-y-4">
               <CronField
                 label="Minute"
@@ -197,7 +197,7 @@ export default function CronBuilder() {
 
         {/* Direct Input Tab */}
         {activeTab === 'direct' && (
-          <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+          <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
             <label className="block text-sm font-semibold text-text-secondary mb-2">
               Cron Expression
             </label>
@@ -216,7 +216,7 @@ export default function CronBuilder() {
 
         {/* Pattern Library Tab */}
         {activeTab === 'patterns' && (
-          <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+          <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
             <p className="text-text-secondary mb-4">
               Click on a pattern to apply it to the builder:
             </p>
@@ -243,10 +243,10 @@ export default function CronBuilder() {
         )}
 
         {/* Expression Output */}
-        <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+        <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-text-primary">Cron Expression</h2>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleCopy}
                 className="px-4 py-2 bg-primary hover:bg-primary-light text-bg-darkest rounded-lg font-semibold transition-colors flex items-center gap-2"
@@ -302,7 +302,7 @@ export default function CronBuilder() {
         </div>
 
         {/* Special Characters Guide */}
-        <div className="bg-bg-surface border border-border rounded-xl p-6 mb-6">
+        <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
           <h2 className="text-xl font-bold text-text-primary mb-4">Special Characters Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-bg-elevated border border-border rounded-lg p-4">
@@ -337,7 +337,7 @@ export default function CronBuilder() {
         </div>
 
         {/* Field Format Reference */}
-        <div className="bg-bg-surface border border-border rounded-xl p-6">
+        <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
           <h2 className="text-xl font-bold text-text-primary mb-4">Cron Format Reference</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left">

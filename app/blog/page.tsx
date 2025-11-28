@@ -1,38 +1,71 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Metadata } from 'next'
 import { getBlogPosts } from '@/lib/api'
+import BlogSearch from '@/components/blog/BlogSearch'
+import TagFilter from '@/components/blog/TagFilter'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Technical articles about web development, tools, and programming by Il Giordano',
+  description: 'Technical articles about web development, tools, and programming by The Jord',
 }
 
-export default async function BlogPage() {
-  const posts = await getBlogPosts('it')
+interface BlogPageProps {
+  searchParams: Promise<{ search?: string; tags?: string }>
+}
+
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const params = await searchParams
+  const search = params.search || ''
+  const selectedTags = params.tags?.split(',').filter(Boolean) || []
+
+  const posts = await getBlogPosts('it', {
+    search: search || undefined,
+    tags: selectedTags.length > 0 ? selectedTags : undefined
+  })
+
+  const allPosts = await getBlogPosts('it')
+  const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags))).sort()
+
+  const hasFilters = search || selectedTags.length > 0
 
   return (
     <div className="min-h-screen bg-bg-darkest">
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Blog
           </h1>
-          <p className="text-xl text-text-secondary">
+          <p className="text-base md:text-xl text-text-secondary">
             Technical articles, tutorials, and insights about web development
           </p>
         </div>
 
-        {/* Blog Posts Grid */}
+        <div className="mb-6 md:mb-8 space-y-3 md:space-y-4">
+          <BlogSearch initialSearch={search} />
+          <TagFilter availableTags={allTags} selectedTags={selectedTags} />
+        </div>
+
+        {hasFilters && (
+          <div className="mb-4 md:mb-6 text-text-muted text-sm">
+            {posts.length === 0 ? (
+              <p>Nessun articolo trovato per i filtri selezionati</p>
+            ) : (
+              <p>{posts.length} articol{posts.length === 1 ? 'o' : 'i'} trovat{posts.length === 1 ? 'o' : 'i'}</p>
+            )}
+          </div>
+        )}
+
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-text-muted text-lg">No blog posts yet. Check back soon!</p>
+            <p className="text-text-muted text-lg">
+              {hasFilters
+                ? 'Prova a modificare i filtri di ricerca'
+                : 'No blog posts yet. Check back soon!'}
+            </p>
           </div>
         ) : (
-          <div className="grid gap-8">
+          <div className="space-y-4 md:space-y-6">
             {posts.map((post) => {
-              // Generate thumbnail URL from image URL
               const thumbnailUrl = post.image
                 ? post.image.replace(/\.webp$/i, '-thumb.webp')
                 : null
@@ -40,55 +73,56 @@ export default async function BlogPage() {
               return (
                 <Link
                   key={post.id}
-                  href={`/blog/${post.slug}`}
-                  className="group bg-bg-dark border border-border hover:border-primary rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
+                  href={'/blog/' + post.slug}
+                  className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
                 >
-                  <div className="flex gap-6 p-6">
-                    {/* Thumbnail on left (1:1 square) */}
+                  <div className="flex gap-4 md:gap-6 p-4 md:p-6">
                     {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) && (
                       <div className="flex-shrink-0">
                         <img
                           src={thumbnailUrl}
                           alt={post.title}
-                          className="w-32 h-32 object-cover rounded-lg"
+                          className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
                           loading="lazy"
                         />
                       </div>
                     )}
 
-                    {/* Content on right */}
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2">
-                        {post.title}
-                      </h2>
-                      <p className="text-text-secondary mb-4 line-clamp-2">
-                        {post.excerpt}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-text-muted">
-                        <span>{post.author}</span>
-                        <span>•</span>
-                        <span>{post.readTime}</span>
-                        <span>•</span>
-                        <span>
-                          {new Date(post.publishedAt || post.createdAt).toLocaleDateString('it-IT', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
-                        </span>
-                      </div>
                       {post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {post.tags.map((tag) => (
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {post.tags.slice(0, 4).map((tag) => (
                             <span
                               key={tag}
-                              className="px-3 py-1 bg-bg-darkest text-primary text-xs rounded-full border border-border"
+                              className="px-2 py-0.5 bg-primary/20 text-primary text-xs rounded-full"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
                       )}
+
+                      <h2 className="text-lg md:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2 line-clamp-2">
+                        {post.title}
+                      </h2>
+
+                      <p className="text-text-secondary text-sm mb-3 line-clamp-2">
+                        {post.excerpt}
+                      </p>
+
+                      <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-text-muted">
+                        <span>{post.author}</span>
+                        <span>-</span>
+                        <span>
+                          {new Date(post.publishedAt || post.createdAt).toLocaleDateString('it-IT', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                          })}
+                        </span>
+                        <span className="hidden md:inline">-</span>
+                        <span className="hidden md:inline">{post.readTime}</span>
+                      </div>
                     </div>
                   </div>
                 </Link>

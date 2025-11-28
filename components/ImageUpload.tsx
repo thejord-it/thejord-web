@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import ImageCropper from './ImageCropper'
+import UnsplashImagePicker from './UnsplashImagePicker'
 import { getCroppedImg } from '@/lib/cropImage'
 import { Area } from 'react-easy-crop'
 
@@ -15,6 +16,8 @@ interface ImageUploadProps {
   label?: string
   preset?: ImagePreset
   aspectRatio?: number // Used only if preset is 'custom'
+  postTitle?: string // For Unsplash search
+  postTags?: string[] // For Unsplash search
 }
 
 const PRESETS = {
@@ -30,7 +33,9 @@ export default function ImageUpload({
   onChange,
   label,
   preset = 'featured-image',
-  aspectRatio
+  aspectRatio,
+  postTitle,
+  postTags
 }: ImageUploadProps) {
   const presetConfig = PRESETS[preset]
   const finalAspectRatio = preset === 'custom' && aspectRatio ? aspectRatio : presetConfig.ratio
@@ -38,6 +43,7 @@ export default function ImageUpload({
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState<string>(value)
   const [showCropper, setShowCropper] = useState(false)
+  const [showUnsplashPicker, setShowUnsplashPicker] = useState(false)
   const [tempImage, setTempImage] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -148,6 +154,15 @@ export default function ImageUpload({
             className="flex-1 px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary"
             placeholder="https://... or upload an image"
           />
+          {postTitle && (
+            <button
+              type="button"
+              onClick={() => setShowUnsplashPicker(true)}
+              className="px-4 py-2 bg-secondary hover:bg-secondary/80 text-text-primary font-medium rounded-lg transition-colors"
+            >
+              Generate
+            </button>
+          )}
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
@@ -195,6 +210,19 @@ export default function ImageUpload({
           onCropComplete={handleCropComplete}
           onCancel={handleCropCancel}
           aspectRatio={finalAspectRatio}
+        />
+      )}
+
+      {/* Unsplash Image Picker Modal */}
+      {showUnsplashPicker && postTitle && (
+        <UnsplashImagePicker
+          title={postTitle}
+          tags={postTags || []}
+          onSelect={(url) => {
+            handleUrlChange(url)
+            setShowUnsplashPicker(false)
+          }}
+          onClose={() => setShowUnsplashPicker(false)}
         />
       )}
     </>

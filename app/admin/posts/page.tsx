@@ -203,6 +203,7 @@ export default function PostsListPage() {
                     className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
                   />
                 </th>
+                <th className="text-left px-3 py-4 text-text-secondary text-sm font-medium">Image</th>
                 <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Title</th>
                 <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Status</th>
                 <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Language</th>
@@ -220,6 +221,19 @@ export default function PostsListPage() {
                       onChange={() => toggleSelectPost(post.id)}
                       className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
                     />
+                  </td>
+                  <td className="px-3 py-4">
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-16 h-16 object-cover rounded-lg border border-border"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-bg-darkest rounded-lg border border-border flex items-center justify-center">
+                        <span className="text-text-muted text-xs">No image</span>
+                      </div>
+                    )}
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-text-primary font-medium">{post.title}</div>
