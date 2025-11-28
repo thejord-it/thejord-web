@@ -89,7 +89,7 @@ export default function LoremIpsumGenerator() {
   };
 
   return (
-      <div className="max-w-5xl mx-auto p-6">
+      <div className="max-w-5xl mx-auto p-4 md:p-6">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 text-transparent bg-clip-text">
@@ -101,14 +101,14 @@ export default function LoremIpsumGenerator() {
         </div>
 
         {/* Controls */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 mb-6 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 mb-6 shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:p-6">
             {/* Type Selection */}
             <div>
               <label className="block text-gray-300 text-sm font-semibold mb-3">
                 Generate
               </label>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {(['paragraphs', 'sentences', 'words'] as const).map((t) => (
                   <button
                     key={t}
@@ -168,20 +168,20 @@ export default function LoremIpsumGenerator() {
           <div className="mt-6 flex gap-3">
             <button
               onClick={generate}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-purple-500/50"
+              className="flex-1 px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-purple-500/50"
             >
               Generate Lorem Ipsum
             </button>
             <button
               onClick={copyOutput}
               disabled={!output}
-              className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-green-500/50"
+              className="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-green-500/50"
             >
               Copy
             </button>
             <button
               onClick={clear}
-              className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-red-500/50"
+              className="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-red-500/50"
             >
               Clear
             </button>
@@ -215,7 +215,7 @@ export default function LoremIpsumGenerator() {
         </div>
 
         {/* Output */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 shadow-2xl">
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <span className="text-purple-400">📄</span>
             Generated Text
@@ -224,13 +224,13 @@ export default function LoremIpsumGenerator() {
             value={output}
             readOnly
             placeholder="Click 'Generate Lorem Ipsum' to create placeholder text..."
-            className="w-full h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 text-sm leading-relaxed focus:outline-none resize-none"
+            className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 text-sm leading-relaxed focus:outline-none resize-none"
             spellCheck={false}
           />
         </div>
 
         {/* Info */}
-        <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6">
+        <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
           <h3 className="text-lg font-semibold text-white mb-3">What is Lorem Ipsum?</h3>
           <p className="text-gray-300 text-sm leading-relaxed">
             Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing

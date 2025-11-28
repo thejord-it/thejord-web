@@ -88,7 +88,7 @@ Sitemap: https://thejord.it/sitemap.xml
   "dateModified": "2025-01-16T14:30:00Z",
   "author": {
     "@type": "Person",
-    "name": "Il Giordano"
+    "name": "The Jord"
   },
   "publisher": {
     "@type": "Organization",
@@ -135,7 +135,7 @@ Sitemap: https://thejord.it/sitemap.xml
 <meta property="og:image:height" content="630" />
 <meta property="article:published_time" content="2025-01-15T10:00:00Z" />
 <meta property="article:modified_time" content="2025-01-16T14:30:00Z" />
-<meta property="article:author" content="Il Giordano" />
+<meta property="article:author" content="The Jord" />
 <meta property="article:tag" content="nextjs" />
 <meta property="article:tag" content="seo" />
 ```
@@ -465,4 +465,4 @@ image: `https://thejord.it${post.image}`
 
 **Ultimo aggiornamento**: 19 Novembre 2025
 **Versione**: 1.0
-**Autore**: Claude Code + Il Giordano
+**Autore**: Claude Code + The Jord

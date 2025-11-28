@@ -116,7 +116,7 @@ export default function RegexTester() {
   return (
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">
             🔍 <span className="bg-gradient-to-r from-primary-light to-secondary-light bg-clip-text text-transparent">
               RegExp
             </span> Tester
@@ -126,13 +126,13 @@ export default function RegexTester() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:p-6 mb-6">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-              <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+              <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                 <h2 className="font-semibold text-text-primary text-lg">Regular Expression</h2>
               </div>
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-text-muted font-mono text-lg">/</span>
                   <input
@@ -143,7 +143,7 @@ export default function RegexTester() {
                     className="flex-1 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   />
                   <span className="text-text-muted font-mono text-lg">/</span>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {Object.entries(flags).map(([flag, enabled]) => (
                       <button
                         key={flag}
@@ -194,10 +194,10 @@ export default function RegexTester() {
             </div>
 
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-              <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+              <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                 <h2 className="font-semibold text-text-primary text-lg">Test String</h2>
               </div>
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 <textarea
                   value={testString}
                   onChange={(e) => setTestString(e.target.value)}
@@ -217,10 +217,10 @@ export default function RegexTester() {
 
             {matches.length > 0 && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-                <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+                <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                   <h2 className="font-semibold text-text-primary text-lg">Match Details</h2>
                 </div>
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   <div className="space-y-3">
                     {matches.map((match, idx) => (
                       <div key={idx} className="p-4 bg-bg-elevated rounded-lg border border-border">
@@ -249,7 +249,7 @@ export default function RegexTester() {
 
           <div className="space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
-              <div className="bg-bg-elevated px-6 py-4 border-b border-border">
+              <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
                 <h2 className="font-semibold text-text-primary text-lg">Pattern Library</h2>
               </div>
               <div className="p-4">

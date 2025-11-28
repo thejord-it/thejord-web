@@ -63,11 +63,19 @@ npm run test:e2e:ui  # Run E2E tests with Playwright UI
 
 ## Environment Variables
 
-Create `.env.local`:
+Create `.env.local` (see `.env.local.example`):
 
 ```env
+# Required for blog functionality
 API_URL=http://localhost:4000
+NEXT_PUBLIC_API_URL=http://localhost:4000
+REVALIDATE_TOKEN=dev-token-change-in-production
+
+# Optional: Google Analytics 4 (production only)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
+
+**Note:** Google Analytics is automatically enabled when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set. Leave it unset for development.
 
 ## Features
 
@@ -111,4 +119,4 @@ All tools process data 100% client-side for maximum privacy:
 
 ## License
 
-MIT © Il Giordano
+MIT © The Jord

@@ -157,7 +157,7 @@ export default function JsonFormatter() {
   return (
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">
             📄 <span className="bg-gradient-to-r from-primary-light to-secondary-light bg-clip-text text-transparent">
               JSON Formatter
             </span> & Validator
@@ -168,7 +168,7 @@ export default function JsonFormatter() {
         </div>
 
         <div className="bg-bg-surface rounded-xl p-3 mb-6 border border-border">
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             {[
               { id: 'format', icon: '✨', label: 'Format & Beautify' },
               { id: 'tree', icon: '🌲', label: 'Tree View' },
@@ -190,11 +190,11 @@ export default function JsonFormatter() {
         </div>
 
         <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl mb-6">
-          <div className="bg-bg-elevated px-6 py-4 border-b border-border flex justify-between items-center">
+          <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
             <h2 className="font-semibold text-text-primary text-lg">
               {activeTab === 'compare' ? 'JSON Comparison' : 'JSON Editor'}
             </h2>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleClear}
                 className="px-4 py-2 bg-bg-elevated border border-border rounded-lg text-text-secondary hover:bg-bg-dark hover:border-primary hover:text-primary-light transition-all"
@@ -252,11 +252,11 @@ export default function JsonFormatter() {
             <div>
               <div className="grid grid-cols-1 lg:grid-cols-2 divide-x divide-border">
                 <div className="bg-bg-surface">
-                  <div className="bg-bg-elevated px-6 py-3 border-b border-border flex items-center gap-2">
+                  <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
                     <span className="font-semibold text-text-secondary">Input JSON</span>
                   </div>
-                  <div className="p-6">
+                  <div className="p-4 md:p-6">
                     <div className="border border-border rounded-lg overflow-hidden">
                       <MonacoJsonEditor
                         value={input}
@@ -265,7 +265,7 @@ export default function JsonFormatter() {
                       />
                     </div>
                   </div>
-                  <div className="bg-bg-dark px-6 py-3 border-t border-border flex justify-between items-center text-sm">
+                  <div className="bg-bg-dark px-4 md:px-6 py-2 md:py-3 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center text-sm">
                     <div className="flex items-center gap-2">
                       {validation.valid ? (
                         <>
@@ -293,11 +293,11 @@ export default function JsonFormatter() {
                 </div>
 
                 <div className="bg-bg-surface">
-                  <div className="bg-bg-elevated px-6 py-3 border-b border-border flex items-center gap-2">
+                  <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
                     <span className="font-semibold text-text-secondary">Compare JSON</span>
                   </div>
-                  <div className="p-6">
+                  <div className="p-4 md:p-6">
                     <div className="border border-border rounded-lg overflow-hidden">
                       <MonacoJsonEditor
                         value={compareInput}
@@ -306,7 +306,7 @@ export default function JsonFormatter() {
                       />
                     </div>
                   </div>
-                  <div className="bg-bg-dark px-6 py-3 border-t border-border flex justify-between items-center text-sm">
+                  <div className="bg-bg-dark px-4 md:px-6 py-2 md:py-3 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center text-sm">
                     <div className="flex items-center gap-2">
                       {compareInput ? (
                         compareValidation?.valid ? (
@@ -335,18 +335,18 @@ export default function JsonFormatter() {
                 </div>
               </div>
 
-              <div className="border-t border-border p-6">
+              <div className="border-t border-border p-4 md:p-6">
                 <JsonDiff left={parsedData} right={compareParsedData} />
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 divide-x divide-border">
               <div className="bg-bg-surface">
-                <div className="bg-bg-elevated px-6 py-3 border-b border-border flex items-center gap-2">
+                <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
                   <span className="font-semibold text-text-secondary">Input JSON</span>
                 </div>
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   <div className="border border-border rounded-lg overflow-hidden">
                     <MonacoJsonEditor
                       value={input}
@@ -355,7 +355,7 @@ export default function JsonFormatter() {
                     />
                   </div>
                 </div>
-                <div className="bg-bg-dark px-6 py-3 border-t border-border flex justify-between items-center text-sm">
+                <div className="bg-bg-dark px-4 md:px-6 py-2 md:py-3 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center text-sm">
                   <div className="flex items-center gap-2">
                     {validation.valid ? (
                       <>
@@ -383,18 +383,18 @@ export default function JsonFormatter() {
               </div>
 
               <div className="bg-bg-surface">
-                <div className="bg-bg-elevated px-6 py-3 border-b border-border flex items-center gap-2">
+                <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
                   <span className="font-semibold text-text-secondary">
                     {activeTab === 'tree' ? 'JSON Tree View' : 'Formatted Output'}
                   </span>
                 </div>
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   {activeTab === 'tree' ? (
                     parsedData ? (
                       <JsonTree data={parsedData} />
                     ) : (
-                      <div className="h-96 flex items-center justify-center text-text-muted">
+                      <div className="h-64 md:h-96 flex items-center justify-center text-text-muted">
                         Enter valid JSON to see tree view
                       </div>
                     )
@@ -409,8 +409,8 @@ export default function JsonFormatter() {
                     </div>
                   )}
                 </div>
-                <div className="bg-bg-dark px-6 py-3 border-t border-border flex justify-between items-center">
-                  <div className="flex gap-2">
+                <div className="bg-bg-dark px-4 md:px-6 py-2 md:py-3 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
+                  <div className="flex flex-wrap gap-2">
                     <button
                       onClick={handleCopy}
                       disabled={!output}
@@ -435,7 +435,7 @@ export default function JsonFormatter() {
           )}
         </div>
 
-        <div className="bg-bg-surface rounded-xl border border-border p-6 mb-6">
+        <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6 mb-6">
           <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
             ⚙️ Formatting Options
           </h3>
