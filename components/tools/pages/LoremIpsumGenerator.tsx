@@ -76,7 +76,7 @@ export default function LoremIpsumGenerator() {
         break;
     }
     setOutput(result);
-    trackToolUsage('Lorem Ipsum Generator', 'generate', `${count}_${unit}s`);
+    trackToolUsage('Lorem Ipsum Generator', 'generate', `${count}_${type}s`);
   };
 
   const copyOutput = () => {

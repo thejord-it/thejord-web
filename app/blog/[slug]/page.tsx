@@ -13,6 +13,9 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }))
 }
 
+// Allow dynamic generation of pages not in generateStaticParams
+export const dynamicParams = true
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
