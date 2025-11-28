@@ -19,11 +19,12 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
-              "style-src 'self' 'unsafe-inline'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net",
+              "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
               "img-src 'self' data: http://localhost:4000 https: blob:",
               "font-src 'self' data:",
-              "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com",
+              "worker-src 'self' blob:",
+              "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com https://cdn.jsdelivr.net",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'"

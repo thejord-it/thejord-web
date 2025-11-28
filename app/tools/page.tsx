@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { Metadata } from 'next'
+import ToolsSearch from '@/components/tools/ToolsSearch'
 
 export const metadata: Metadata = {
   title: 'Developer Tools - THEJORD',
@@ -104,8 +104,6 @@ const tools = [
 ]
 
 export default function ToolsPage() {
-  const categories = Array.from(new Set(tools.map(t => t.category)))
-
   return (
     <div className="min-h-screen bg-bg-darkest">
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
@@ -118,47 +116,7 @@ export default function ToolsPage() {
           </p>
         </div>
 
-        {categories.map(category => (
-          <div key={category} className="mb-6 md:mb-12">
-            <h2 className="text-lg md:text-2xl font-bold text-text-primary mb-3 md:mb-6 border-l-4 border-primary pl-3 md:pl-4">
-              {category}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-              {tools
-                .filter(tool => tool.category === category)
-                .map(tool => (
-                  <Link
-                    key={tool.slug}
-                    href={"/tools/" + tool.slug}
-                    className="group relative bg-bg-dark border border-border hover:border-primary rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 active:scale-[0.98]"
-                  >
-                    <div className={"absolute top-0 left-0 w-full h-1 bg-gradient-to-r " + tool.color + " rounded-t-xl"}></div>
-
-                    <div className="flex items-center gap-3 md:gap-4">
-                      <div className={"text-2xl md:text-3xl flex-shrink-0 bg-gradient-to-br " + tool.color + " bg-clip-text text-transparent font-bold"}>
-                        {tool.icon}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base md:text-xl font-bold text-text-primary group-hover:text-primary transition-colors">
-                          {tool.name}
-                        </h3>
-                        <p className="text-text-secondary text-xs md:text-sm line-clamp-1 md:line-clamp-none">
-                          {tool.description}
-                        </p>
-                      </div>
-
-                      <div className="text-text-muted group-hover:text-primary transition-colors">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </div>
-        ))}
+        <ToolsSearch tools={tools} />
 
         <div className="hidden md:block mt-16 pt-12 border-t border-border">
           <h2 className="text-2xl font-bold text-text-primary mb-8 text-center">
