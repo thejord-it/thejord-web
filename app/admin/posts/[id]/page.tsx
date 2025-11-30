@@ -143,6 +143,7 @@ export default function EditPostPage() {
     try {
       const post: Partial<BlogPost> = {
         ...formData,
+        icon: formData.icon || undefined,
         editorType: editorType,
         published: publish,
         publishedAt: publish && !formData.published ? new Date().toISOString() : undefined,
@@ -224,7 +225,7 @@ export default function EditPostPage() {
           readTime: formData.readTime,
           tags: formData.tags,
           image: formData.image,
-          icon: formData.icon,
+          icon: formData.icon || undefined,
           keywords: formData.keywords,
           ogImage: formData.ogImage,
           editorType: editorType,
