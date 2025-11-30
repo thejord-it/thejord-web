@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { useToast } from '@/components/ToastProvider';
 import { detectFileType, getFileIcon, DetectedFileType } from '@/lib/tools/file-detection';
 import { trackToolUsage, trackCopy, trackError, trackButtonClick, trackFileUpload } from '@/lib/tools/analytics';
@@ -6,6 +7,7 @@ import { trackToolUsage, trackCopy, trackError, trackButtonClick, trackFileUploa
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export default function Base64Tool() {
+  const t = useTranslations('toolPages.base64Tool');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -250,7 +252,7 @@ export default function Base64Tool() {
             </span> Encoder/Decoder
           </h1>
           <p className="text-text-muted text-lg">
-            Encode or decode Base64 strings. All processing happens in your browser.
+            {t('description')}
           </p>
         </div>
 
@@ -278,7 +280,7 @@ export default function Base64Tool() {
         <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl mb-6">
           <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
             <h2 className="font-semibold text-text-primary text-lg">
-              {mode === 'encode' ? 'Text to Base64' : 'Base64 to Text'}
+              {mode === 'encode' ? t('textToBase64') : t('base64ToText')}
             </h2>
             <div className="flex flex-wrap gap-2">
               <button
@@ -308,20 +310,20 @@ export default function Base64Tool() {
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
                 <span className="font-semibold text-text-secondary">
-                  {mode === 'encode' ? 'Plain Text Input' : 'Base64 Input'}
+                  {mode === 'encode' ? t('plainTextInput') : t('base64Input')}
                 </span>
               </div>
               <div className="p-4 md:p-6">
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 string to decode...'}
+                  placeholder={mode === 'encode' ? t('enterTextToEncode') : t('enterBase64ToDecode')}
                   className="w-full h-64 md:h-96 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                 />
               </div>
               <div className="bg-bg-dark px-4 md:px-6 py-2 md:py-3 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center text-sm">
                 <div className="text-text-muted">
-                  {input.length} characters • {new Blob([input]).size} bytes
+                  {input.length} {t('characters')} • {new Blob([input]).size} {t('bytes')}
                 </div>
                 <div>
                   <input
@@ -335,9 +337,9 @@ export default function Base64Tool() {
                     htmlFor="file-upload"
                     className="px-4 py-2 bg-accent text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-accent/40 transition-all cursor-pointer inline-block"
                   >
-                    📁 Upload File
+                    📁 {t('uploadFile')}
                   </label>
-                  <p className="text-xs text-text-muted mt-1">Max {MAX_FILE_SIZE / (1024 * 1024)}MB</p>
+                  <p className="text-xs text-text-muted mt-1">{t('maxSize')} {MAX_FILE_SIZE / (1024 * 1024)}MB</p>
                 </div>
               </div>
             </div>
@@ -346,14 +348,14 @@ export default function Base64Tool() {
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
                 <span className="font-semibold text-text-secondary">
-                  {mode === 'encode' ? 'Base64 Output' : 'Decoded Text Output'}
+                  {mode === 'encode' ? t('base64Output') : t('decodedTextOutput')}
                 </span>
               </div>
               <div className="p-4 md:p-6">
                 <textarea
                   value={output}
                   readOnly
-                  placeholder="Output will appear here..."
+                  placeholder={t('outputPlaceholder')}
                   className="w-full h-64 md:h-96 px-4 py-3 bg-bg-dark border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none resize-none"
                 />
                 {error && (
@@ -385,7 +387,7 @@ export default function Base64Tool() {
                 <div className="flex flex-col items-end gap-1">
                   {output && (
                     <div className="text-text-muted text-sm">
-                      {output.length} characters • {new Blob([output]).size} bytes
+                      {output.length} {t('characters')} • {new Blob([output]).size} {t('bytes')}
                     </div>
                   )}
                   {detectedType && (
@@ -401,9 +403,9 @@ export default function Base64Tool() {
                               detectedType.confidence === 'medium' ? 'bg-yellow-900/30 text-yellow-400' :
                               'bg-gray-900/30 text-gray-400'
                             }`}>
-                              {detectedType.confidence === 'high' ? '✓ High confidence' :
-                               detectedType.confidence === 'medium' ? '~ Medium confidence' :
-                               '? Low confidence'}
+                              {detectedType.confidence === 'high' ? `✓ ${t('highConfidence')}` :
+                               detectedType.confidence === 'medium' ? `~ ${t('mediumConfidence')}` :
+                               `? ${t('lowConfidence')}`}
                             </span>
                           )}
                         </div>
@@ -418,21 +420,20 @@ export default function Base64Tool() {
 
         <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6">
           <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
-            ℹ️ About Base64
+            ℹ️ {t('aboutBase64')}
           </h3>
           <div className="text-text-secondary space-y-2">
             <p>
-              Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format.
-              It's commonly used to encode data that needs to be stored or transferred over media designed to handle text.
+              {t('aboutBase64Text')}
             </p>
             <div className="mt-4">
-              <h4 className="font-semibold text-text-primary mb-2">Common Use Cases:</h4>
+              <h4 className="font-semibold text-text-primary mb-2">{t('commonUseCases')}</h4>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>Encoding images for data URIs in HTML/CSS</li>
-                <li>Storing complex data in cookies or URLs</li>
-                <li>Email attachments (MIME)</li>
-                <li>API authentication tokens</li>
-                <li>Embedding binary data in JSON or XML</li>
+                <li>{t('useCase1')}</li>
+                <li>{t('useCase2')}</li>
+                <li>{t('useCase3')}</li>
+                <li>{t('useCase4')}</li>
+                <li>{t('useCase5')}</li>
               </ul>
             </div>
           </div>

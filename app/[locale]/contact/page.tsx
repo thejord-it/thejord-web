@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function Contact() {
+  const t = useTranslations('contact')
+  const locale = useLocale()
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,15 +18,14 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Construct email mailto link
     const subject = encodeURIComponent(`[THEJORD.IT] ${formData.type.toUpperCase()}: ${formData.subject}`)
     const body = encodeURIComponent(
-      `Nome: ${formData.name}\n` +
-      `Email: ${formData.email}\n` +
-      `Tipo: ${formData.type}\n\n` +
-      `Messaggio:\n${formData.message}\n\n` +
+      `${t('form.name')}: ${formData.name}\n` +
+      `${t('form.email')}: ${formData.email}\n` +
+      `${t('form.type')}: ${formData.type}\n\n` +
+      `${t('form.message')}:\n${formData.message}\n\n` +
       `---\n` +
-      `Inviato da thejord.it/contact`
+      `${locale === 'it' ? 'Inviato da' : 'Sent from'} thejord.it/contact`
     )
 
     window.location.href = `mailto:admin@thejord.it?subject=${subject}&body=${body}`
@@ -42,11 +45,11 @@ export default function Contact() {
         <div className="text-center mb-6 md:mb-12">
           <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Contact Us
+              {t('title')}
             </span>
           </h1>
           <p className="text-base md:text-xl text-text-secondary max-w-2xl mx-auto">
-            Questions, feedback, or bug reports? We'd love to hear from you!
+            {t('description')}
           </p>
         </div>
 
@@ -54,7 +57,7 @@ export default function Contact() {
           {/* Contact Methods */}
           <div className="space-y-6">
             <div className="bg-bg-dark border border-border rounded-xl p-4 md:p-6">
-              <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">Contact Methods</h2>
+              <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">{t('methods.title')}</h2>
 
               <div className="space-y-4">
                 <a
@@ -63,37 +66,37 @@ export default function Contact() {
                 >
                   <span className="text-2xl">📧</span>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-1">Email</h3>
-                    <p className="text-text-secondary text-sm mb-2">Per domande generali e supporto</p>
+                    <h3 className="font-bold text-text-primary mb-1">{t('methods.email.title')}</h3>
+                    <p className="text-text-secondary text-sm mb-2">{t('methods.email.description')}</p>
                     <p className="text-primary">admin@thejord.it</p>
                   </div>
                 </a>
 
                 <a
-                  href="https://github.com/thejord-it/thejord-tools/issues/new"
+                  href="https://github.com/thejord-it/thejord-web/issues/new"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 p-4 bg-bg-darkest border border-border rounded-lg hover:border-primary transition-colors"
                 >
                   <span className="text-2xl">🐛</span>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-1">GitHub Issues</h3>
-                    <p className="text-text-secondary text-sm mb-2">Segnala bug o richiedi nuove funzionalità</p>
-                    <p className="text-primary">github.com/thejord-it/thejord-tools</p>
+                    <h3 className="font-bold text-text-primary mb-1">{t('methods.github.title')}</h3>
+                    <p className="text-text-secondary text-sm mb-2">{t('methods.github.description')}</p>
+                    <p className="text-primary">github.com/thejord-it/thejord-web</p>
                   </div>
                 </a>
 
                 <a
-                  href="https://github.com/thejord-it/thejord-tools/discussions"
+                  href="https://github.com/thejord-it/thejord-web/discussions"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 p-4 bg-bg-darkest border border-border rounded-lg hover:border-primary transition-colors"
                 >
                   <span className="text-2xl">💭</span>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-1">GitHub Discussions</h3>
-                    <p className="text-text-secondary text-sm mb-2">Partecipa alle discussioni della community</p>
-                    <p className="text-primary">Join the conversation</p>
+                    <h3 className="font-bold text-text-primary mb-1">{t('methods.discussions.title')}</h3>
+                    <p className="text-text-secondary text-sm mb-2">{t('methods.discussions.description')}</p>
+                    <p className="text-primary">{t('methods.discussions.cta')}</p>
                   </div>
                 </a>
               </div>
@@ -103,25 +106,27 @@ export default function Contact() {
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 md:p-6">
               <h3 className="font-bold text-red-400 mb-3 flex items-center gap-2">
                 <span>🔒</span>
-                Security Issues
+                {t('security.title')}
               </h3>
               <p className="text-text-secondary text-sm mb-3">
-                Se hai scoperto una vulnerabilità di sicurezza, NON aprire una issue pubblica.
+                {t('security.warning')}
               </p>
               <p className="text-text-secondary text-sm">
-                Invia una email a <a href="mailto:security@thejord.it" className="text-red-400 hover:underline">security@thejord.it</a> con i dettagli.
+                {t('security.instruction')}
+                <a href="mailto:security@thejord.it" className="text-red-400 hover:underline">security@thejord.it</a>
+                {t('security.instructionSuffix')}
               </p>
             </div>
           </div>
 
           {/* Contact Form */}
           <div className="bg-bg-dark border border-border rounded-xl p-4 md:p-6">
-            <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">Send a Message</h2>
+            <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">{t('form.title')}</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-2">
-                  Name
+                  {t('form.name')}
                 </label>
                 <input
                   type="text"
@@ -131,13 +136,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full bg-bg-darkest border border-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
-                  placeholder="Your name"
+                  placeholder={t('form.namePlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
-                  Email
+                  {t('form.email')}
                 </label>
                 <input
                   type="email"
@@ -147,13 +152,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full bg-bg-darkest border border-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
-                  placeholder="your.email@example.com"
+                  placeholder={t('form.emailPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="type" className="block text-sm font-medium text-text-secondary mb-2">
-                  Type
+                  {t('form.type')}
                 </label>
                 <select
                   id="type"
@@ -162,17 +167,17 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full bg-bg-darkest border border-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
                 >
-                  <option value="question">Question</option>
-                  <option value="bug">Bug Report</option>
-                  <option value="feature">Feature Request</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="other">Other</option>
+                  <option value="question">{t('form.types.question')}</option>
+                  <option value="bug">{t('form.types.bug')}</option>
+                  <option value="feature">{t('form.types.feature')}</option>
+                  <option value="feedback">{t('form.types.feedback')}</option>
+                  <option value="other">{t('form.types.other')}</option>
                 </select>
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-text-secondary mb-2">
-                  Subject
+                  {t('form.subject')}
                 </label>
                 <input
                   type="text"
@@ -182,13 +187,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full bg-bg-darkest border border-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
-                  placeholder="Brief description"
+                  placeholder={t('form.subjectPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-text-secondary mb-2">
-                  Message
+                  {t('form.message')}
                 </label>
                 <textarea
                   id="message"
@@ -198,7 +203,7 @@ export default function Contact() {
                   required
                   rows={6}
                   className="w-full bg-bg-darkest border border-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors resize-none"
-                  placeholder="Your message..."
+                  placeholder={t('form.messagePlaceholder')}
                 />
               </div>
 
@@ -206,11 +211,11 @@ export default function Contact() {
                 type="submit"
                 className="w-full bg-primary hover:bg-primary-light text-bg-darkest font-semibold py-3 px-6 rounded-lg transition-colors"
               >
-                Send Message
+                {t('form.send')}
               </button>
 
               <p className="text-xs text-text-muted text-center">
-                Clicking "Send Message" will open your default email client
+                {t('form.note')}
               </p>
             </form>
           </div>
@@ -218,41 +223,41 @@ export default function Contact() {
 
         {/* FAQ Section */}
         <section className="bg-bg-dark border border-border rounded-xl p-4 md:p-8">
-          <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-4 md:mb-6 text-text-primary">{t('faq.title')}</h2>
 
           <div className="space-y-6">
             <div>
-              <h3 className="font-bold text-text-primary mb-2">How can I contribute to the project?</h3>
+              <h3 className="font-bold text-text-primary mb-2">{t('faq.contribute.question')}</h3>
               <p className="text-text-secondary">
-                Visit our GitHub repository, fork it, make your changes, and submit a pull request. We welcome all contributions!
+                {t('faq.contribute.answer')}
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-text-primary mb-2">How do I report a security vulnerability?</h3>
+              <h3 className="font-bold text-text-primary mb-2">{t('faq.security.question')}</h3>
               <p className="text-text-secondary">
-                Please DO NOT open a public issue. Instead, email us at security@thejord.it with details about the vulnerability.
+                {t('faq.security.answer')}
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-text-primary mb-2">Can I self-host THEJORD?</h3>
+              <h3 className="font-bold text-text-primary mb-2">{t('faq.selfhost.question')}</h3>
               <p className="text-text-secondary">
-                Yes! The project is open source and can be self-hosted. Check our GitHub repository for deployment instructions.
+                {t('faq.selfhost.answer')}
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-text-primary mb-2">Is THEJORD really free?</h3>
+              <h3 className="font-bold text-text-primary mb-2">{t('faq.free.question')}</h3>
               <p className="text-text-secondary">
-                Yes, 100% free forever. No subscriptions, no hidden costs, no limits.
+                {t('faq.free.answer')}
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-text-primary mb-2">Can I request a new tool?</h3>
+              <h3 className="font-bold text-text-primary mb-2">{t('faq.request.question')}</h3>
               <p className="text-text-secondary">
-                Absolutely! Open an issue on GitHub with the "feature request" label and describe the tool you'd like to see.
+                {t('faq.request.answer')}
               </p>
             </div>
           </div>

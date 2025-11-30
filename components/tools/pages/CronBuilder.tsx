@@ -1,5 +1,6 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import {
   parseCronExpression,
   buildCronExpression,
@@ -13,6 +14,7 @@ import {
 type Tab = 'visual' | 'direct' | 'patterns'
 
 export default function CronBuilder() {
+  const t = useTranslations('toolPages.cronBuilder');
   const [activeTab, setActiveTab] = useState<Tab>('visual')
   const [expression, setExpression] = useState<string>('* * * * *')
   const [cronFields, setCronFields] = useState<CronExpression>({
@@ -105,7 +107,7 @@ export default function CronBuilder() {
             </span>
           </h1>
           <p className="text-text-muted text-lg">
-            Build and validate cron schedules with a visual interface
+            {t('description')}
           </p>
         </div>
 
@@ -119,7 +121,7 @@ export default function CronBuilder() {
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            🎨 Visual Builder
+            🎨 {t('visualBuilder')}
             {activeTab === 'visual' && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-light"></div>
             )}
@@ -132,7 +134,7 @@ export default function CronBuilder() {
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            ⌨️ Direct Input
+            ⌨️ {t('directInput')}
             {activeTab === 'direct' && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-light"></div>
             )}
@@ -145,7 +147,7 @@ export default function CronBuilder() {
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            📚 Pattern Library
+            📚 {t('patternLibrary')}
             {activeTab === 'patterns' && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-light"></div>
             )}
@@ -199,7 +201,7 @@ export default function CronBuilder() {
         {activeTab === 'direct' && (
           <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
             <label className="block text-sm font-semibold text-text-secondary mb-2">
-              Cron Expression
+              {t('cronExpression')}
             </label>
             <input
               type="text"
@@ -209,7 +211,7 @@ export default function CronBuilder() {
               placeholder="* * * * *"
             />
             <p className="text-text-muted text-sm mt-2">
-              Enter a cron expression with 5 fields: minute hour day month weekday
+              {t('enterCronExpression')}
             </p>
           </div>
         )}
@@ -218,7 +220,7 @@ export default function CronBuilder() {
         {activeTab === 'patterns' && (
           <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
             <p className="text-text-secondary mb-4">
-              Click on a pattern to apply it to the builder:
+              {t('clickPattern')}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {CRON_PATTERNS.map((pattern, index) => (
@@ -245,7 +247,7 @@ export default function CronBuilder() {
         {/* Expression Output */}
         <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-text-primary">Cron Expression</h2>
+            <h2 className="text-xl font-bold text-text-primary">{t('cronExpression')}</h2>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleCopy}
@@ -268,7 +270,7 @@ export default function CronBuilder() {
 
           <div className="space-y-3">
             <div>
-              <h3 className="text-sm font-semibold text-text-secondary mb-1">Description:</h3>
+              <h3 className="text-sm font-semibold text-text-secondary mb-1">{t('descriptionLabel')}:</h3>
               <p className={`text-lg ${validation.valid ? 'text-text-primary' : 'text-red-500'}`}>
                 {description}
               </p>
@@ -276,7 +278,7 @@ export default function CronBuilder() {
 
             {!validation.valid && validation.errors.length > 0 && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
-                <h3 className="text-sm font-semibold text-red-400 mb-1">Validation Errors:</h3>
+                <h3 className="text-sm font-semibold text-red-400 mb-1">{t('validationErrors')}:</h3>
                 <ul className="list-disc list-inside space-y-1">
                   {validation.errors.map((error, index) => (
                     <li key={index} className="text-sm text-red-400">{error}</li>
@@ -287,7 +289,7 @@ export default function CronBuilder() {
 
             {validation.valid && nextRuns.length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-text-secondary mb-2">Next 5 Executions:</h3>
+                <h3 className="text-sm font-semibold text-text-secondary mb-2">{t('nextExecutions')}:</h3>
                 <ul className="space-y-1">
                   {nextRuns.map((date, index) => (
                     <li key={index} className="text-text-primary font-mono flex items-center gap-2">
@@ -303,80 +305,80 @@ export default function CronBuilder() {
 
         {/* Special Characters Guide */}
         <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
-          <h2 className="text-xl font-bold text-text-primary mb-4">Special Characters Guide</h2>
+          <h2 className="text-xl font-bold text-text-primary mb-4">{t('specialCharsGuide')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-bg-elevated border border-border rounded-lg p-4">
               <code className="text-lg font-bold text-primary-light">*</code>
               <p className="text-text-secondary mt-1">
-                <strong className="text-text-primary">Wildcard</strong> - Any value
+                <strong className="text-text-primary">{t('wildcard')}</strong> - {t('anyValue')}
               </p>
-              <p className="text-text-muted text-sm">Example: * in minute = every minute</p>
+              <p className="text-text-muted text-sm">{t('wildcardExample')}</p>
             </div>
             <div className="bg-bg-elevated border border-border rounded-lg p-4">
               <code className="text-lg font-bold text-primary-light">,</code>
               <p className="text-text-secondary mt-1">
-                <strong className="text-text-primary">List</strong> - Multiple values
+                <strong className="text-text-primary">{t('list')}</strong> - {t('multipleValues')}
               </p>
-              <p className="text-text-muted text-sm">Example: 0,15,30,45 = at 0, 15, 30, and 45</p>
+              <p className="text-text-muted text-sm">{t('listExample')}</p>
             </div>
             <div className="bg-bg-elevated border border-border rounded-lg p-4">
               <code className="text-lg font-bold text-primary-light">-</code>
               <p className="text-text-secondary mt-1">
-                <strong className="text-text-primary">Range</strong> - Range of values
+                <strong className="text-text-primary">{t('range')}</strong> - {t('rangeOfValues')}
               </p>
-              <p className="text-text-muted text-sm">Example: 1-5 = from 1 to 5</p>
+              <p className="text-text-muted text-sm">{t('rangeExample')}</p>
             </div>
             <div className="bg-bg-elevated border border-border rounded-lg p-4">
               <code className="text-lg font-bold text-primary-light">/</code>
               <p className="text-text-secondary mt-1">
-                <strong className="text-text-primary">Step</strong> - Step values
+                <strong className="text-text-primary">{t('step')}</strong> - {t('stepValues')}
               </p>
-              <p className="text-text-muted text-sm">Example: */5 = every 5 units</p>
+              <p className="text-text-muted text-sm">{t('stepExample')}</p>
             </div>
           </div>
         </div>
 
         {/* Field Format Reference */}
         <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
-          <h2 className="text-xl font-bold text-text-primary mb-4">Cron Format Reference</h2>
+          <h2 className="text-xl font-bold text-text-primary mb-4">{t('formatReference')}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Position</th>
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Field</th>
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Allowed Values</th>
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Special Characters</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('position')}</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('field')}</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('allowedValues')}</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('specialChars')}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-border/50">
                   <td className="py-3 px-4 font-mono text-primary-light">1</td>
-                  <td className="py-3 px-4 text-text-primary">Minute</td>
+                  <td className="py-3 px-4 text-text-primary">{t('minute')}</td>
                   <td className="py-3 px-4 text-text-secondary">0-59</td>
                   <td className="py-3 px-4 text-text-muted font-mono">* , - /</td>
                 </tr>
                 <tr className="border-b border-border/50">
                   <td className="py-3 px-4 font-mono text-primary-light">2</td>
-                  <td className="py-3 px-4 text-text-primary">Hour</td>
+                  <td className="py-3 px-4 text-text-primary">{t('hour')}</td>
                   <td className="py-3 px-4 text-text-secondary">0-23</td>
                   <td className="py-3 px-4 text-text-muted font-mono">* , - /</td>
                 </tr>
                 <tr className="border-b border-border/50">
                   <td className="py-3 px-4 font-mono text-primary-light">3</td>
-                  <td className="py-3 px-4 text-text-primary">Day of Month</td>
+                  <td className="py-3 px-4 text-text-primary">{t('dayOfMonth')}</td>
                   <td className="py-3 px-4 text-text-secondary">1-31</td>
                   <td className="py-3 px-4 text-text-muted font-mono">* , - /</td>
                 </tr>
                 <tr className="border-b border-border/50">
                   <td className="py-3 px-4 font-mono text-primary-light">4</td>
-                  <td className="py-3 px-4 text-text-primary">Month</td>
+                  <td className="py-3 px-4 text-text-primary">{t('month')}</td>
                   <td className="py-3 px-4 text-text-secondary">1-12</td>
                   <td className="py-3 px-4 text-text-muted font-mono">* , - /</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4 font-mono text-primary-light">5</td>
-                  <td className="py-3 px-4 text-text-primary">Day of Week</td>
+                  <td className="py-3 px-4 text-text-primary">{t('dayOfWeek')}</td>
                   <td className="py-3 px-4 text-text-secondary">0-7 (0 and 7 = Sunday)</td>
                   <td className="py-3 px-4 text-text-muted font-mono">* , - /</td>
                 </tr>

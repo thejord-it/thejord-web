@@ -2,6 +2,7 @@
 
 import { lazy, Suspense } from 'react'
 import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 import type { ToolConfig } from '@/lib/tools-config'
 import { ToastProvider } from './ToastProvider'
 
@@ -32,12 +33,12 @@ const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   JsonSchemaConverter,
 }
 
-function ToolLoader() {
+function ToolLoader({ loadingText }: { loadingText: string }) {
   return (
     <div className="min-h-screen bg-bg-darkest flex items-center justify-center">
       <div className="text-center">
         <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-text-secondary">Loading tool...</p>
+        <p className="text-text-secondary">{loadingText}</p>
       </div>
     </div>
   )
@@ -49,16 +50,23 @@ interface ToolWrapperProps {
 }
 
 export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) {
+  const t = useTranslations('toolPages.common')
+  const tTools = useTranslations('tools.list')
+  const locale = useLocale()
   const ToolComponent = toolComponents[toolConfig.component]
+
+  // Get tool name from translations based on component name
+  const toolKey = toolConfig.component.charAt(0).toLowerCase() + toolConfig.component.slice(1)
+  const toolName = tTools.has(`${toolKey}.name`) ? tTools(`${toolKey}.name`) : toolConfig.name
 
   if (!ToolComponent) {
     return (
       <div className="min-h-screen bg-bg-darkest flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-text-primary mb-4">Tool Not Found</h1>
-          <p className="text-text-secondary mb-8">Component {toolConfig.component} not available.</p>
-          <Link href="/tools" className="text-primary hover:text-primary-light">
-            ← Back to Tools
+          <h1 className="text-4xl font-bold text-text-primary mb-4">{t('toolNotFound')}</h1>
+          <p className="text-text-secondary mb-8">{t('componentNotAvailable')}</p>
+          <Link href={`/${locale}/tools`} className="text-primary hover:text-primary-light">
+            {t('backToTools')}
           </Link>
         </div>
       </div>
@@ -71,22 +79,22 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
       <div className="bg-bg-dark border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 text-sm text-text-muted">
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
+            <Link href={`/${locale}`} className="hover:text-primary transition-colors">
+              {t('home')}
             </Link>
             <span>/</span>
-            <Link href="/tools" className="hover:text-primary transition-colors">
-              Tools
+            <Link href={`/${locale}/tools`} className="hover:text-primary transition-colors">
+              {t('tools')}
             </Link>
             <span>/</span>
-            <span className="text-text-primary">{toolConfig.name}</span>
+            <span className="text-text-primary">{toolName}</span>
           </div>
         </div>
       </div>
 
       {/* Tool component */}
       <ToastProvider>
-        <Suspense fallback={<ToolLoader />}>
+        <Suspense fallback={<ToolLoader loadingText={t('loading')} />}>
           <ToolComponent />
         </Suspense>
       </ToastProvider>
@@ -96,12 +104,11 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
         <div className="max-w-7xl mx-auto px-4 py-6 md:py-8 text-center">
           <div className="text-sm text-text-muted">
             <p className="mb-2">
-              <span className="text-primary">🔒 Privacy-First:</span> All processing happens in your browser.
-              Your data never leaves your device.
+              <span className="text-primary">🔒 {t('privacyFirst')}</span> {t('privacyNotice')}
             </p>
             <p>
-              <Link href="/tools" className="text-primary hover:text-primary-light">
-                ← Back to All Tools
+              <Link href={`/${locale}/tools`} className="text-primary hover:text-primary-light">
+                {t('backToTools')}
               </Link>
             </p>
           </div>
