@@ -6,7 +6,8 @@ import UnsplashImagePicker from './UnsplashImagePicker'
 import { getCroppedImg } from '@/lib/cropImage'
 import { Area } from 'react-easy-crop'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+// Use proxy for client-side API calls (keeps backend internal)
+const API_URL = '/api/proxy'
 
 type ImagePreset = 'featured-image' | 'og-image' | 'square' | 'portrait' | 'custom'
 
@@ -100,7 +101,8 @@ export default function ImageUpload({
       if (!res.ok) throw new Error('Upload failed')
 
       const data = await res.json()
-      const imageUrl = `${API_URL}${data.data.url}`
+      // Use proxy URL for images too
+      const imageUrl = `/api/proxy${data.data.url}`
 
       setPreview(imageUrl)
       onChange(imageUrl)

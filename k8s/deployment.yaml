@@ -25,11 +25,6 @@ spec:
               value: "production"
             - name: API_URL
               value: "http://thejord-api:4000"
-            - name: NEXT_PUBLIC_API_URL
-              valueFrom:
-                secretKeyRef:
-                  name: thejord-secrets
-                  key: public-api-url
           resources:
             requests:
               memory: "256Mi"
