@@ -22,6 +22,7 @@ export default function NewPostPage() {
     title: '',
     slug: '',
     language: 'it',
+    translationGroup: '',
     excerpt: '',
     content: '',
     author: '',
@@ -178,7 +179,7 @@ export default function NewPostPage() {
               {errors.slug && <p className="text-red-500 text-sm mt-1">{errors.slug}</p>}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-2">
                   Language *
@@ -191,6 +192,20 @@ export default function NewPostPage() {
                   <option value="it">Italian</option>
                   <option value="en">English</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">
+                  Translation Group
+                </label>
+                <input
+                  type="text"
+                  value={formData.translationGroup}
+                  onChange={(e) => handleChange('translationGroup', e.target.value)}
+                  className="w-full px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary"
+                  placeholder="es: git-tutorial"
+                />
+                <p className="text-text-muted text-xs mt-1">Stesso ID per collegare traduzioni</p>
               </div>
 
               <div>
