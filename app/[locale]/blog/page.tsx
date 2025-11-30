@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { getBlogPosts } from '@/lib/api'
+import { getIconEmoji } from '@/lib/icons'
 import BlogSearch from '@/components/blog/BlogSearch'
 import TagFilter from '@/components/blog/TagFilter'
 
@@ -84,16 +85,21 @@ export default async function BlogPage({ params, searchParams }: Props) {
                   className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <div className="flex gap-4 md:gap-6 p-4 md:p-6">
-                    {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) && (
-                      <div className="flex-shrink-0">
-                        <img
-                          src={thumbnailUrl}
-                          alt={post.title}
-                          className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
-                          loading="lazy"
-                        />
+                    {(thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://'))) || getIconEmoji(post.icon) ? (
+                      <div className="flex-shrink-0 flex items-center gap-2">
+                        {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) && (
+                          <img
+                            src={thumbnailUrl}
+                            alt={post.title}
+                            className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
+                            loading="lazy"
+                          />
+                        )}
+                        {getIconEmoji(post.icon) && (
+                          <span className="text-6xl md:text-7xl">{getIconEmoji(post.icon)}</span>
+                        )}
                       </div>
-                    )}
+                    ) : null}
 
                     <div className="flex-1 min-w-0">
                       {post.tags.length > 0 && (

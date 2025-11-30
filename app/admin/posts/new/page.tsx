@@ -1,22 +1,45 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createPost, BlogPost } from '@/lib/api'
 import MarkdownEditor from '@/components/MarkdownEditor'
 import WysiwygEditor from '@/components/WysiwygEditor'
 import ImageUpload from '@/components/ImageUpload'
 import TagInput from '@/components/TagInput'
 import ErrorModal from '@/components/ErrorModal'
+import IconPicker from '@/components/IconPicker'
 
 type EditorType = 'markdown' | 'wysiwyg'
 
+interface TranslatedPost {
+  title: string
+  slug: string
+  language: string
+  translationGroup: string
+  excerpt: string
+  content: string
+  author: string
+  readTime: string
+  tags: string[]
+  image: string
+  icon?: string
+  metaTitle: string
+  metaDescription: string
+  keywords: string[]
+  ogImage: string
+  originalPostId?: string
+}
+
 export default function NewPostPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [editorType, setEditorType] = useState<EditorType>('markdown')
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const [showErrorModal, setShowErrorModal] = useState(false)
+  const [isFromTranslation, setIsFromTranslation] = useState(false)
+  const [originalLanguage, setOriginalLanguage] = useState<string>('')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -29,6 +52,7 @@ export default function NewPostPage() {
     readTime: '',
     tags: [] as string[],
     image: '',
+    icon: null as string | null,
     metaTitle: '',
     metaDescription: '',
     keywords: [] as string[],
@@ -36,6 +60,44 @@ export default function NewPostPage() {
     canonicalUrl: '',
     published: false,
   })
+
+  // Load translated data from sessionStorage if coming from translation
+  useEffect(() => {
+    const fromTranslation = searchParams.get('fromTranslation') === 'true'
+    if (fromTranslation) {
+      const translatedData = sessionStorage.getItem('translatedPost')
+      if (translatedData) {
+        try {
+          const parsed: TranslatedPost = JSON.parse(translatedData)
+          setFormData(prev => ({
+            ...prev,
+            title: parsed.title || '',
+            slug: parsed.slug || '',
+            language: parsed.language || 'en',
+            translationGroup: parsed.translationGroup || '',
+            excerpt: parsed.excerpt || '',
+            content: parsed.content || '',
+            author: parsed.author || '',
+            readTime: parsed.readTime || '',
+            tags: parsed.tags || [],
+            image: parsed.image || '',
+            icon: parsed.icon || null,
+            metaTitle: parsed.metaTitle || '',
+            metaDescription: parsed.metaDescription || '',
+            keywords: parsed.keywords || [],
+            ogImage: parsed.ogImage || '',
+          }))
+          setIsFromTranslation(true)
+          // Determine original language
+          setOriginalLanguage(parsed.language === 'en' ? 'it' : 'en')
+          // Clear sessionStorage after loading
+          sessionStorage.removeItem('translatedPost')
+        } catch (error) {
+          console.error('Error parsing translated post data:', error)
+        }
+      }
+    }
+  }, [searchParams])
 
   const handleChange = (field: string, value: string | boolean | string[]) => {
     setFormData(prev => {
@@ -130,7 +192,9 @@ export default function NewPostPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-text-primary">New Post</h1>
+        <h1 className="text-3xl font-bold text-text-primary">
+          {isFromTranslation ? 'New Translation' : 'New Post'}
+        </h1>
         <button
           onClick={() => router.back()}
           className="text-text-secondary hover:text-text-primary"
@@ -138,6 +202,23 @@ export default function NewPostPage() {
           ← Back
         </button>
       </div>
+
+      {/* Translation Banner */}
+      {isFromTranslation && (
+        <div className="mb-6 bg-blue-900/30 border border-blue-500/50 rounded-lg p-4">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            <span className="text-blue-200 font-medium">
+              Auto-translated from {originalLanguage === 'it' ? 'Italian' : 'English'}
+            </span>
+          </div>
+          <p className="text-blue-300/70 text-sm mt-1">
+            Review and edit the translated content before saving. The translation group has been automatically set.
+          </p>
+        </div>
+      )}
 
       <div className="space-y-6">
         {/* Basic Info */}
@@ -179,7 +260,7 @@ export default function NewPostPage() {
               {errors.slug && <p className="text-red-500 text-sm mt-1">{errors.slug}</p>}
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-2">
                   Language *
@@ -256,13 +337,21 @@ export default function NewPostPage() {
               />
             </div>
 
-            <ImageUpload
-              value={formData.image}
-              onChange={(url) => handleChange('image', url)}
-              preset="featured-image"
-              postTitle={formData.title}
-              postTags={formData.tags}
-            />
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              <ImageUpload
+                value={formData.image}
+                onChange={(url) => handleChange('image', url)}
+                preset="featured-image"
+                postTitle={formData.title}
+                postTags={formData.tags}
+              />
+
+              <IconPicker
+                value={formData.icon}
+                onChange={(iconId) => handleChange('icon', iconId || '')}
+                label="Post Icon (optional)"
+              />
+            </div>
 
             <TagInput
               value={formData.tags}
@@ -276,13 +365,13 @@ export default function NewPostPage() {
         <div className={`bg-bg-surface border rounded-lg p-6 ${
           errors.content ? 'border-red-500' : 'border-border'
         }`}>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <h2 className="text-xl font-bold text-text-primary">Content *</h2>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => setEditorType('markdown')}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 rounded-lg transition-colors text-sm md:text-base ${
                   editorType === 'markdown'
                     ? 'bg-primary text-bg-darkest'
                     : 'bg-bg-dark text-text-secondary hover:text-text-primary'
@@ -293,7 +382,7 @@ export default function NewPostPage() {
               <button
                 type="button"
                 onClick={() => setEditorType('wysiwyg')}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 rounded-lg transition-colors text-sm md:text-base ${
                   editorType === 'wysiwyg'
                     ? 'bg-primary text-bg-darkest'
                     : 'bg-bg-dark text-text-secondary hover:text-text-primary'
@@ -379,34 +468,34 @@ export default function NewPostPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-between bg-bg-surface border border-border rounded-lg p-6">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-bg-surface border border-border rounded-lg p-4 md:p-6">
           <button
             onClick={() => router.back()}
-            className="text-text-secondary hover:text-text-primary"
+            className="text-text-secondary hover:text-text-primary order-last md:order-first"
             disabled={loading}
           >
             Cancel
           </button>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-3">
             <button
               type="button"
               onClick={handlePreview}
-              className="border border-border hover:bg-bg-dark text-text-primary font-medium px-6 py-2 rounded-lg transition-colors"
+              className="border border-border hover:bg-bg-dark text-text-primary font-medium px-4 md:px-6 py-2 rounded-lg transition-colors text-sm md:text-base"
             >
               Preview
             </button>
             <button
               onClick={() => handleSubmit(false)}
               disabled={loading}
-              className="bg-bg-dark hover:bg-bg-darkest text-text-primary font-medium px-6 py-2 rounded-lg transition-colors disabled:opacity-50"
+              className="bg-bg-dark hover:bg-bg-darkest text-text-primary font-medium px-4 md:px-6 py-2 rounded-lg transition-colors disabled:opacity-50 text-sm md:text-base"
             >
               {loading ? 'Saving...' : 'Save as Draft'}
             </button>
             <button
               onClick={() => handleSubmit(true)}
               disabled={loading}
-              className="bg-primary hover:bg-primary-dark text-bg-darkest font-medium px-6 py-2 rounded-lg transition-colors disabled:opacity-50"
+              className="bg-primary hover:bg-primary-dark text-bg-darkest font-medium px-4 md:px-6 py-2 rounded-lg transition-colors disabled:opacity-50 text-sm md:text-base"
             >
               {loading ? 'Publishing...' : 'Publish'}
             </button>

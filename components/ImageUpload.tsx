@@ -146,31 +146,33 @@ export default function ImageUpload({
         </label>
 
         {/* URL Input */}
-        <div className="flex gap-2">
+        <div className="flex flex-col lg:flex-row gap-2">
           <input
             type="text"
             value={value}
             onChange={(e) => handleUrlChange(e.target.value)}
-            className="flex-1 px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary"
-            placeholder="https://... or upload an image"
+            className="flex-1 px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary text-sm"
+            placeholder="https://... or upload"
           />
-          {postTitle && (
+          <div className="flex gap-2">
+            {postTitle && (
+              <button
+                type="button"
+                onClick={() => setShowUnsplashPicker(true)}
+                className="flex-1 lg:flex-none px-3 py-2 bg-secondary hover:bg-secondary/80 text-text-primary font-medium rounded-lg transition-colors text-sm"
+              >
+                Generate
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => setShowUnsplashPicker(true)}
-              className="px-4 py-2 bg-secondary hover:bg-secondary/80 text-text-primary font-medium rounded-lg transition-colors"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="flex-1 lg:flex-none px-3 py-2 bg-primary hover:bg-primary-dark text-bg-darkest font-medium rounded-lg transition-colors disabled:opacity-50 text-sm"
             >
-              Generate
+              {uploading ? '...' : 'Upload'}
             </button>
-          )}
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploading}
-            className="px-4 py-2 bg-primary hover:bg-primary-dark text-bg-darkest font-medium rounded-lg transition-colors disabled:opacity-50"
-          >
-            {uploading ? 'Uploading...' : 'Upload'}
-          </button>
+          </div>
         </div>
 
         {/* Hidden file input */}
