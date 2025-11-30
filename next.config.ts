@@ -23,9 +23,9 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net",
-              "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+              "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com",
               "img-src 'self' data: http://localhost:4000 https: blob:",
-              "font-src 'self' data:",
+              "font-src 'self' data: https://maxcdn.bootstrapcdn.com",
               "worker-src 'self' blob:",
               "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com https://cdn.jsdelivr.net",
               "frame-ancestors 'none'",
