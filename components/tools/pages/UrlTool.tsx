@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
 export default function UrlTool() {
+  const t = useTranslations('toolPages.urlTool');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode' | 'encodeComponent' | 'decodeComponent'>('encode');
@@ -81,7 +83,7 @@ export default function UrlTool() {
             </span> Encoder/Decoder
           </h1>
           <p className="text-text-muted text-lg">
-            Encode or decode URLs and URI components.
+            {t('description')}
           </p>
         </div>
 
@@ -125,7 +127,7 @@ export default function UrlTool() {
         <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl mb-6">
           <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
             <h2 className="font-semibold text-text-primary text-lg">
-              {mode.includes('encode') ? 'Text to URL' : 'URL to Text'}
+              {mode.includes('encode') ? t('textToUrl') : t('urlToText')}
             </h2>
             <div className="flex flex-wrap gap-2">
               <button
@@ -154,7 +156,7 @@ export default function UrlTool() {
             <div className="bg-bg-surface">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
-                <span className="font-semibold text-text-secondary">Input</span>
+                <span className="font-semibold text-text-secondary">{t('input')}</span>
               </div>
               <div className="p-4 md:p-6">
                 <textarea
@@ -162,7 +164,7 @@ export default function UrlTool() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={mode.includes('encode') ?
                     (mode === 'encode' ? examples.encode : examples.encodeComponent) :
-                    'Enter encoded URL or component to decode...'}
+                    t('enterEncodedUrl')}
                   className="w-full h-64 md:h-96 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                 />
               </div>
@@ -176,13 +178,13 @@ export default function UrlTool() {
             <div className="bg-bg-surface">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
-                <span className="font-semibold text-text-secondary">Output</span>
+                <span className="font-semibold text-text-secondary">{t('output')}</span>
               </div>
               <div className="p-4 md:p-6">
                 <textarea
                   value={output}
                   readOnly
-                  placeholder="Output will appear here..."
+                  placeholder={t('outputPlaceholder')}
                   className="w-full h-64 md:h-96 px-4 py-3 bg-bg-dark border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none resize-none"
                 />
                 {error && (
@@ -215,16 +217,16 @@ export default function UrlTool() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:p-6">
           <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6">
             <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
-              ℹ️ encodeURI() vs encodeURIComponent()
+              ℹ️ {t('encodeVsComponent')}
             </h3>
             <div className="text-text-secondary space-y-3 text-sm">
               <div>
                 <h4 className="font-semibold text-accent-light mb-2">encodeURI()</h4>
-                <p className="mb-2">Encodes a complete URL. Preserves URL structure characters:</p>
+                <p className="mb-2">{t('encodeUriDesc')}</p>
                 <code className="block bg-bg-dark p-2 rounded font-mono text-xs text-primary-light">
                   : / ? # [ ] @ ! $ & ' ( ) * + , ; =
                 </code>
-                <p className="mt-2 text-xs">Use for full URLs</p>
+                <p className="mt-2 text-xs">{t('useForFullUrls')}</p>
               </div>
             </div>
           </div>
@@ -236,11 +238,11 @@ export default function UrlTool() {
             <div className="text-text-secondary space-y-3 text-sm">
               <div>
                 <h4 className="font-semibold text-secondary-light mb-2">encodeURIComponent()</h4>
-                <p className="mb-2">Encodes URI components. Encodes ALL special characters including:</p>
+                <p className="mb-2">{t('encodeComponentDesc')}</p>
                 <code className="block bg-bg-dark p-2 rounded font-mono text-xs text-primary-light">
                   : / ? # [ ] @ ! $ & ' ( ) * + , ; =
                 </code>
-                <p className="mt-2 text-xs">Use for query parameters and path segments</p>
+                <p className="mt-2 text-xs">{t('useForParams')}</p>
               </div>
             </div>
           </div>

@@ -1,21 +1,27 @@
+'use client'
+
 import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function Footer() {
+  const t = useTranslations('footer')
+  const tTools = useTranslations('tools.list')
+  const locale = useLocale()
   const currentYear = new Date().getFullYear()
 
   const footerLinks = {
     tools: [
-      { href: '/tools/json-formatter', label: 'JSON Formatter' },
-      { href: '/tools/base64', label: 'Base64 Encoder' },
-      { href: '/tools/regex-tester', label: 'RegEx Tester' },
-      { href: '/tools/hash-generator', label: 'Hash Generator' },
+      { href: 'tools/json-formatter', key: 'jsonFormatter' },
+      { href: 'tools/base64', key: 'base64' },
+      { href: 'tools/regex-tester', key: 'regexTester' },
+      { href: 'tools/hash-generator', key: 'hashGenerator' },
     ],
     resources: [
-      { href: '/blog', label: 'Blog' },
-      { href: '/tools', label: 'All Tools' },
-      { href: '/about', label: 'About' },
-      { href: '/contact', label: 'Contact' },
-      { href: '/changelog', label: 'Changelog' },
+      { href: 'blog', labelKey: 'blog' },
+      { href: 'tools', labelKey: 'tools' },
+      { href: 'about', labelKey: 'about' },
+      { href: 'contact', labelKey: 'contact' },
+      { href: 'changelog', labelKey: 'changelog' },
     ],
   }
 
@@ -25,30 +31,30 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link href="/" className="inline-block mb-4">
+            <Link href={`/${locale}`} className="inline-block mb-4">
               <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 THEJORD
               </span>
             </Link>
             <p className="text-text-secondary text-sm mb-4 max-w-md">
-              Free developer tools and technical blog. 100% privacy-first, all processing happens in your browser.
+              {t('tagline')}
             </p>
             <p className="text-text-muted text-xs">
-              Made in Italy 🇮🇹 by The Jord
+              Made in Italy by The Jord
             </p>
           </div>
 
           {/* Popular Tools */}
           <div>
-            <h3 className="text-text-primary font-semibold mb-4">Popular Tools</h3>
+            <h3 className="text-text-primary font-semibold mb-4">{t('tools')}</h3>
             <ul className="space-y-2">
               {footerLinks.tools.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={`/${locale}/${link.href}`}
                     className="text-text-secondary hover:text-primary text-sm transition-colors"
                   >
-                    {link.label}
+                    {tTools(`${link.key}.name`)}
                   </Link>
                 </li>
               ))}
@@ -57,15 +63,15 @@ export default function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="text-text-primary font-semibold mb-4">Resources</h3>
+            <h3 className="text-text-primary font-semibold mb-4">{t('navigation')}</h3>
             <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={`/${locale}/${link.href}`}
                     className="text-text-secondary hover:text-primary text-sm transition-colors"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -79,16 +85,16 @@ export default function Footer() {
             <div className="flex items-center gap-4 text-text-muted text-sm">
               <span>© {currentYear} THEJORD</span>
               <span>•</span>
-              <Link href="/privacy" className="hover:text-primary transition-colors">
-                Privacy Policy
+              <Link href={`/${locale}/privacy`} className="hover:text-primary transition-colors">
+                {t('privacy')}
               </Link>
             </div>
             <div className="flex items-center gap-4 text-text-muted text-sm">
-              <span>🚀 Built with Next.js</span>
+              <span>Next.js</span>
               <span>•</span>
-              <span>🔒 Privacy-first</span>
+              <span>Privacy-first</span>
               <span>•</span>
-              <span>⚡ Server-side rendering</span>
+              <span>SSR</span>
             </div>
           </div>
         </div>

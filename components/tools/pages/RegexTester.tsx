@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { REGEX_PATTERNS, CATEGORIES, RegexPattern } from '@/lib/tools/regex-patterns';
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
@@ -10,6 +11,7 @@ interface Match {
 }
 
 export default function RegexTester() {
+  const t = useTranslations('toolPages.regexTester');
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState({ g: true, i: false, m: false, s: false, u: false });
   const [testString, setTestString] = useState('');
@@ -17,6 +19,14 @@ export default function RegexTester() {
   const [error, setError] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const flagTitles: Record<string, string> = {
+    g: t('flagGlobal'),
+    i: t('flagCaseInsensitive'),
+    m: t('flagMultiline'),
+    s: t('flagDotall'),
+    u: t('flagUnicode')
+  };
 
   useEffect(() => {
     if (!pattern || !testString) {
@@ -122,7 +132,7 @@ export default function RegexTester() {
             </span> Tester
           </h1>
           <p className="text-text-muted text-lg">
-            Test regular expressions with real-time matching and highlighting.
+            {t('description')}
           </p>
         </div>
 
@@ -130,7 +140,7 @@ export default function RegexTester() {
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                <h2 className="font-semibold text-text-primary text-lg">Regular Expression</h2>
+                <h2 className="font-semibold text-text-primary text-lg">{t('regularExpression')}</h2>
               </div>
               <div className="p-4 md:p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -139,7 +149,7 @@ export default function RegexTester() {
                     type="text"
                     value={pattern}
                     onChange={(e) => setPattern(e.target.value)}
-                    placeholder="Enter your regex pattern..."
+                    placeholder={t('patternPlaceholder')}
                     className="flex-1 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   />
                   <span className="text-text-muted font-mono text-lg">/</span>
@@ -153,13 +163,7 @@ export default function RegexTester() {
                             ? 'bg-primary text-white shadow-lg shadow-primary/40'
                             : 'bg-bg-elevated text-text-muted border border-border hover:border-primary'
                         }`}
-                        title={
-                          flag === 'g' ? 'Global' :
-                          flag === 'i' ? 'Case insensitive' :
-                          flag === 'm' ? 'Multiline' :
-                          flag === 's' ? 'Dotall' :
-                          'Unicode'
-                        }
+                        title={flagTitles[flag]}
                       >
                         {flag}
                       </button>
@@ -178,14 +182,14 @@ export default function RegexTester() {
 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between text-text-secondary">
-                    <span>Flags:</span>
+                    <span>{t('flags')}</span>
                     <span className="font-mono">
                       {Object.entries(flags).filter(([_, v]) => v).map(([k]) => k).join('') || 'none'}
                     </span>
                   </div>
                   {matches.length > 0 && (
                     <div className="flex justify-between text-accent-light font-semibold">
-                      <span>Matches found:</span>
+                      <span>{t('matchesFound')}</span>
                       <span>{matches.length}</span>
                     </div>
                   )}
@@ -195,18 +199,18 @@ export default function RegexTester() {
 
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                <h2 className="font-semibold text-text-primary text-lg">Test String</h2>
+                <h2 className="font-semibold text-text-primary text-lg">{t('testString')}</h2>
               </div>
               <div className="p-4 md:p-6">
                 <textarea
                   value={testString}
                   onChange={(e) => setTestString(e.target.value)}
-                  placeholder="Enter text to test against your regex..."
+                  placeholder={t('testStringPlaceholder')}
                   className="w-full h-48 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                 />
                 {testString && (
                   <div className="mt-4 p-4 bg-bg-dark rounded-lg border border-border">
-                    <div className="text-sm text-text-secondary mb-2">Highlighted Matches:</div>
+                    <div className="text-sm text-text-secondary mb-2">{t('highlightedMatches')}</div>
                     <div className="font-mono text-sm text-text-primary leading-relaxed whitespace-pre-wrap break-words">
                       {highlightMatches(testString)}
                     </div>
@@ -218,23 +222,23 @@ export default function RegexTester() {
             {matches.length > 0 && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
                 <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                  <h2 className="font-semibold text-text-primary text-lg">Match Details</h2>
+                  <h2 className="font-semibold text-text-primary text-lg">{t('matchDetails')}</h2>
                 </div>
                 <div className="p-4 md:p-6">
                   <div className="space-y-3">
                     {matches.map((match, idx) => (
                       <div key={idx} className="p-4 bg-bg-elevated rounded-lg border border-border">
                         <div className="flex justify-between items-start mb-2">
-                          <span className="text-text-secondary text-sm">Match #{idx + 1}</span>
-                          <span className="text-text-muted text-xs">Index: {match.index}</span>
+                          <span className="text-text-secondary text-sm">{t('matchNumber', { number: idx + 1 })}</span>
+                          <span className="text-text-muted text-xs">{t('index')}: {match.index}</span>
                         </div>
                         <div className="font-mono text-accent-light font-semibold mb-2">{match.match}</div>
                         {match.groups && match.groups.length > 0 && match.groups.some(g => g) && (
                           <div className="text-sm">
-                            <div className="text-text-secondary mb-1">Capture Groups:</div>
+                            <div className="text-text-secondary mb-1">{t('captureGroups')}</div>
                             {match.groups.map((group, gIdx) => group && (
                               <div key={gIdx} className="ml-4 text-text-muted">
-                                Group {gIdx + 1}: <span className="text-primary-light font-mono">{group}</span>
+                                {t('group')} {gIdx + 1}: <span className="text-primary-light font-mono">{group}</span>
                               </div>
                             ))}
                           </div>
@@ -250,14 +254,14 @@ export default function RegexTester() {
           <div className="space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                <h2 className="font-semibold text-text-primary text-lg">Pattern Library</h2>
+                <h2 className="font-semibold text-text-primary text-lg">{t('patternLibrary')}</h2>
               </div>
               <div className="p-4">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search patterns..."
+                  placeholder={t('searchPatterns')}
                   className="w-full px-4 py-2 bg-bg-elevated border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 mb-3"
                 />
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -269,7 +273,7 @@ export default function RegexTester() {
                         : 'bg-bg-elevated text-text-secondary hover:bg-bg-dark'
                     }`}
                   >
-                    All
+                    {t('all')}
                   </button>
                   {CATEGORIES.map(cat => (
                     <button

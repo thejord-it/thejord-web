@@ -1,5 +1,6 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ColorFormats {
   hex: string;
@@ -11,6 +12,7 @@ interface ColorFormats {
 }
 
 export default function ColorConverter() {
+  const t = useTranslations('toolPages.colorConverter');
   const [color, setColor] = useState('#3B82F6');
   const [formats, setFormats] = useState<ColorFormats>({
     hex: '#3B82F6',
@@ -134,7 +136,7 @@ export default function ColorConverter() {
             Color Picker & Converter
           </h1>
           <p className="text-gray-400 text-lg">
-            Pick colors and convert between HEX, RGB, HSL, and CMYK formats
+            {t('description')}
           </p>
         </div>
 
@@ -193,7 +195,7 @@ export default function ColorConverter() {
 
         {/* Preset Colors */}
         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
-          <h3 className="text-lg font-semibold text-white mb-4">Preset Colors</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">{t('presetColors')}</h3>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-3">
             {presetColors.map((presetColor) => (
               <button
@@ -209,27 +211,27 @@ export default function ColorConverter() {
 
         {/* Color Info */}
         <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
-          <h3 className="text-lg font-semibold text-white mb-3">Color Format Guide</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">{t('formatGuide')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
             <div>
-              <strong className="text-blue-400">HEX:</strong> Hexadecimal notation (#RRGGBB)
+              <strong className="text-blue-400">HEX:</strong> {t('hexDesc')}
               <br />
-              Used in: CSS, HTML, design tools
+              {t('hexUsed')}
             </div>
             <div>
-              <strong className="text-green-400">RGB:</strong> Red, Green, Blue (0-255)
+              <strong className="text-green-400">RGB:</strong> {t('rgbDesc')}
               <br />
-              Used in: Screen displays, web development
+              {t('rgbUsed')}
             </div>
             <div>
-              <strong className="text-purple-400">HSL:</strong> Hue, Saturation, Lightness
+              <strong className="text-purple-400">HSL:</strong> {t('hslDesc')}
               <br />
-              Used in: Color manipulation, CSS
+              {t('hslUsed')}
             </div>
             <div>
-              <strong className="text-pink-400">CMYK:</strong> Cyan, Magenta, Yellow, Black
+              <strong className="text-pink-400">CMYK:</strong> {t('cmykDesc')}
               <br />
-              Used in: Printing, graphic design
+              {t('cmykUsed')}
             </div>
           </div>
         </div>

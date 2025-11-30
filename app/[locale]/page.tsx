@@ -1,56 +1,70 @@
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
+
+type Props = {
+  params: Promise<{ locale: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'metadata' })
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
+}
 
 export default function HomePage() {
+  const t = useTranslations('home')
+  const tTools = useTranslations('tools.list')
+
   const featuredTools = [
     {
-      name: 'JSON Formatter',
-      description: 'Validate, format, and beautify JSON with syntax highlighting',
+      key: 'jsonFormatter',
       icon: '{ }',
-      href: '/tools/json-formatter',
+      href: 'tools/json-formatter',
       color: 'from-blue-500 to-cyan-500'
     },
     {
-      name: 'Base64 Encoder',
-      description: 'Encode and decode text and files to/from Base64',
+      key: 'base64',
       icon: '⚡',
-      href: '/tools/base64',
+      href: 'tools/base64',
       color: 'from-purple-500 to-pink-500'
     },
     {
-      name: 'RegEx Tester',
-      description: 'Test regular expressions with real-time highlighting',
+      key: 'regexTester',
       icon: '.*',
-      href: '/tools/regex-tester',
+      href: 'tools/regex-tester',
       color: 'from-green-500 to-emerald-500'
     },
     {
-      name: 'Hash Generator',
-      description: 'Generate MD5, SHA-1, SHA-256, and SHA-512 hashes',
+      key: 'hashGenerator',
       icon: '#',
-      href: '/tools/hash-generator',
+      href: 'tools/hash-generator',
       color: 'from-orange-500 to-red-500'
     },
     {
-      name: 'Cron Builder',
-      description: 'Build and validate cron expressions visually',
+      key: 'cronBuilder',
       icon: '⏰',
-      href: '/tools/cron-builder',
+      href: 'tools/cron-builder',
       color: 'from-indigo-500 to-purple-500'
     },
     {
-      name: 'Diff Checker',
-      description: 'Compare text differences with side-by-side view',
+      key: 'diffChecker',
       icon: '⚖️',
-      href: '/tools/diff-checker',
+      href: 'tools/diff-checker',
       color: 'from-teal-500 to-cyan-500'
     }
   ]
 
   const stats = [
-    { value: '11', label: 'Developer Tools', icon: '🛠️' },
-    { value: '100%', label: 'Privacy-First', icon: '🔒' },
-    { value: '0ms', label: 'Server Processing', icon: '⚡' },
-    { value: 'Free', label: 'Forever', icon: '💎' }
+    { value: '11', labelKey: 'tools', icon: '🛠️' },
+    { value: '100%', labelKey: 'privacyFirst', icon: '🔒' },
+    { value: '0ms', labelKey: 'serverProcessing', icon: '⚡' },
+    { value: t('stats.free'), labelKey: 'forever', icon: '💎' }
   ]
 
   return (
@@ -64,34 +78,33 @@ export default function HomePage() {
           <div className="text-center">
             <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6">
               <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-                Developer Tools
+                {t('hero.title1')}
               </span>
               <br />
-              <span className="text-text-primary">Built for Speed</span>
+              <span className="text-text-primary">{t('hero.title2')}</span>
             </h1>
 
             <p className="text-xl sm:text-2xl text-text-secondary max-w-3xl mx-auto mb-8">
-              Privacy-first developer utilities that process everything in your browser.
-              No servers, no tracking, no BS.
+              {t('hero.description')}
             </p>
 
             <p className="text-sm text-text-muted mb-12">
-              Made in Italy 🇮🇹 by The Jord
+              {t('hero.madeBy')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/tools"
+                href="tools"
                 className="group px-8 py-4 bg-gradient-to-r from-primary to-secondary hover:from-primary-light hover:to-secondary text-bg-darkest font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-primary/50"
               >
-                Explore Tools →
+                {t('hero.exploreTools')} →
               </Link>
 
               <Link
-                href="/blog"
+                href="blog"
                 className="px-8 py-4 border-2 border-border hover:border-primary text-text-primary font-semibold rounded-lg transition-all"
               >
-                Read the Blog
+                {t('hero.readBlog')}
               </Link>
             </div>
           </div>
@@ -108,7 +121,7 @@ export default function HomePage() {
                 <div className="text-3xl sm:text-2xl md:text-4xl font-bold text-primary mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm text-text-muted">{stat.label}</div>
+                <div className="text-sm text-text-muted">{t(`stats.${stat.labelKey}`)}</div>
               </div>
             ))}
           </div>
@@ -120,10 +133,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">
-              Popular Tools
+              {t('featuredTools.title')}
             </h2>
             <p className="text-xl text-text-secondary">
-              Everything runs locally in your browser for maximum privacy
+              {t('featuredTools.subtitle')}
             </p>
           </div>
 
@@ -143,16 +156,16 @@ export default function HomePage() {
 
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2">
-                      {tool.name}
+                      {tTools(`${tool.key}.name`)}
                     </h3>
                     <p className="text-text-secondary text-sm">
-                      {tool.description}
+                      {tTools(`${tool.key}.description`)}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-4 flex items-center text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  Try it now →
+                  {t('featuredTools.tryNow')} →
                 </div>
               </Link>
             ))}
@@ -160,10 +173,10 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link
-              href="/tools"
+              href="tools"
               className="inline-flex items-center text-primary hover:text-primary-light font-semibold transition-colors"
             >
-              View all 11 tools →
+              {t('featuredTools.viewAll')} →
             </Link>
           </div>
         </div>
@@ -176,30 +189,30 @@ export default function HomePage() {
             <div className="text-center p-6">
               <div className="text-3xl md:text-5xl mb-4">🔒</div>
               <h3 className="text-xl font-bold text-text-primary mb-3">
-                Privacy-First
+                {t('features.privacy.title')}
               </h3>
               <p className="text-text-secondary">
-                All tools process data 100% client-side. Your data never leaves your browser.
+                {t('features.privacy.description')}
               </p>
             </div>
 
             <div className="text-center p-6">
               <div className="text-3xl md:text-5xl mb-4">⚡</div>
               <h3 className="text-xl font-bold text-text-primary mb-3">
-                Lightning Fast
+                {t('features.fast.title')}
               </h3>
               <p className="text-text-secondary">
-                No server round-trips. Everything happens instantly in your browser.
+                {t('features.fast.description')}
               </p>
             </div>
 
             <div className="text-center p-6">
               <div className="text-3xl md:text-5xl mb-4">🎯</div>
               <h3 className="text-xl font-bold text-text-primary mb-3">
-                Developer-Focused
+                {t('features.focused.title')}
               </h3>
               <p className="text-text-secondary">
-                Built by developers, for developers. Clean UIs and powerful features.
+                {t('features.focused.description')}
               </p>
             </div>
           </div>
@@ -210,16 +223,16 @@ export default function HomePage() {
       <section className="py-12 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">
-            Technical Blog
+            {t('blog.title')}
           </h2>
           <p className="text-xl text-text-secondary mb-8">
-            Deep dives into web development, architecture, and engineering best practices
+            {t('blog.description')}
           </p>
           <Link
-            href="/blog"
+            href="blog"
             className="inline-flex px-8 py-4 bg-bg-dark border border-border hover:border-primary text-text-primary font-semibold rounded-lg transition-all"
           >
-            Read Latest Articles →
+            {t('blog.readLatest')} →
           </Link>
         </div>
       </section>
@@ -229,7 +242,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-3xl font-bold text-text-primary mb-4">
-              Built with Modern Tech
+              {t('techStack.title')}
             </h2>
           </div>
 

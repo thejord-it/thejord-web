@@ -1,16 +1,30 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getBlogPost, getAllBlogPostSlugs } from '@/lib/api'
+import { getBlogPost, getAllBlogPostSlugs, getPostTranslations } from '@/lib/api'
+import { locales, localeFlags, type Locale } from '@/i18n/config'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }
 
-// Generate static params for all blog posts (ISR)
+// Generate static params for all blog posts in all locales (ISR)
 export async function generateStaticParams() {
-  const slugs = await getAllBlogPostSlugs('it')
-  return slugs.map((slug) => ({ slug }))
+  const results: { locale: string; slug: string }[] = []
+
+  for (const locale of locales) {
+    try {
+      const slugs = await getAllBlogPostSlugs(locale)
+      slugs.forEach(slug => {
+        results.push({ locale, slug })
+      })
+    } catch (error) {
+      console.warn(`Failed to get slugs for locale ${locale}:`, error)
+    }
+  }
+
+  return results
 }
 
 // Allow dynamic generation of pages not in generateStaticParams
@@ -18,8 +32,9 @@ export const dynamicParams = true
 
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const post = await getBlogPost(slug, 'it')
+  const { slug, locale } = await params
+  const post = await getBlogPost(slug, locale)
+  const t = await getTranslations({ locale, namespace: 'blog' })
 
   if (!post) {
     return {
@@ -27,12 +42,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  // Get translations for correct hreflang links
+  const translations = await getPostTranslations(slug, locale)
+
   const title = post.metaTitle || post.title
   const description = post.metaDescription || post.excerpt
   const publishedTime = post.publishedAt || post.createdAt
   const modifiedTime = post.updatedAt
   const ogImage = post.ogImage || '/og-image.png'
-  const canonical = post.canonicalUrl || `https://thejord.it/blog/${post.slug}`
+  const canonical = post.canonicalUrl || `https://thejord.it/${locale}/blog/${post.slug}`
+
+  // Build alternate languages with correct slugs
+  const languages: Record<string, string> = {}
+  if (translations.it) {
+    languages['it'] = `https://thejord.it/it/blog/${translations.it}`
+  }
+  if (translations.en) {
+    languages['en'] = `https://thejord.it/en/blog/${translations.en}`
+  }
+  // Fallback: if no translations, use current slug
+  if (Object.keys(languages).length === 0) {
+    languages[locale] = `https://thejord.it/${locale}/blog/${slug}`
+  }
 
   return {
     title,
@@ -43,14 +74,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     publisher: 'THEJORD',
     alternates: {
       canonical,
+      languages,
     },
     openGraph: {
       type: 'article',
-      url: `https://thejord.it/blog/${post.slug}`,
+      url: `https://thejord.it/${locale}/blog/${post.slug}`,
       title,
       description,
       siteName: 'THEJORD',
-      locale: 'it_IT',
+      locale: locale === 'it' ? 'it_IT' : 'en_US',
       images: [
         {
           url: ogImage,
@@ -83,12 +115,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params
-  const post = await getBlogPost(slug, 'it')
+  const { slug, locale } = await params
+  const post = await getBlogPost(slug, locale)
+  const t = await getTranslations({ locale, namespace: 'blog' })
 
   if (!post || !post.published) {
     notFound()
   }
+
+  // Get translations for language switch
+  const translations = await getPostTranslations(slug, locale)
+  const otherLocale = locale === 'it' ? 'en' : 'it'
+  const hasTranslation = translations[otherLocale] !== undefined
+
+  const dateLocale = locale === 'it' ? 'it-IT' : 'en-US'
+  const langCode = locale === 'it' ? 'it-IT' : 'en-US'
 
   // Schema.org JSON-LD for rich snippets
   const jsonLd = {
@@ -113,13 +154,13 @@ export default async function BlogPostPage({ params }: Props) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://thejord.it/blog/${post.slug}`,
+      '@id': `https://thejord.it/${locale}/blog/${post.slug}`,
     },
     keywords: post.keywords.join(', '),
     articleSection: post.tags.join(', '),
     wordCount: post.content.split(/\s+/).length,
     timeRequired: post.readTime,
-    inLanguage: 'it-IT',
+    inLanguage: langCode,
   }
 
   return (
@@ -131,13 +172,26 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       <article className="max-w-4xl mx-auto px-4 py-16">
-        {/* Back link */}
-        <Link
-          href="/blog"
-          className="text-primary hover:text-primary-light transition-colors mb-8 inline-block"
-        >
-          ← Back to Blog
-        </Link>
+        {/* Navigation bar */}
+        <div className="flex items-center justify-between mb-8">
+          <Link
+            href={`/${locale}/blog`}
+            className="text-primary hover:text-primary-light transition-colors"
+          >
+            ← {t('backToBlog')}
+          </Link>
+
+          {/* Language switch for this post */}
+          {hasTranslation && (
+            <Link
+              href={`/${otherLocale}/blog/${translations[otherLocale]}`}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-text-secondary hover:text-primary border border-border hover:border-primary rounded-lg transition-colors"
+            >
+              <span>{localeFlags[otherLocale as Locale]}</span>
+              <span>{locale === 'it' ? 'Read in English' : 'Leggi in Italiano'}</span>
+            </Link>
+          )}
+        </div>
 
         {/* Article Header */}
         <header className="mb-12">
@@ -149,14 +203,14 @@ export default async function BlogPostPage({ params }: Props) {
             <span className="font-semibold text-text-secondary">{post.author}</span>
             <span>•</span>
             <time dateTime={post.publishedAt || post.createdAt}>
-              {new Date(post.publishedAt || post.createdAt).toLocaleDateString('it-IT', {
+              {new Date(post.publishedAt || post.createdAt).toLocaleDateString(dateLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}
             </time>
             <span>•</span>
-            <span>{post.readTime} di lettura</span>
+            <span>{post.readTime} {locale === 'it' ? 'di lettura' : 'read'}</span>
           </div>
 
           {post.tags.length > 0 && (
@@ -205,9 +259,9 @@ export default async function BlogPostPage({ params }: Props) {
         <footer className="mt-16 pt-8 border-t border-border">
           <div className="flex items-center justify-between">
             <div className="text-text-muted text-sm">
-              Ultimo aggiornamento:{' '}
+              {locale === 'it' ? 'Ultimo aggiornamento' : 'Last updated'}:{' '}
               <time dateTime={post.updatedAt}>
-                {new Date(post.updatedAt).toLocaleDateString('it-IT', {
+                {new Date(post.updatedAt).toLocaleDateString(dateLocale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -215,10 +269,10 @@ export default async function BlogPostPage({ params }: Props) {
               </time>
             </div>
             <Link
-              href="/blog"
+              href={`/${locale}/blog`}
               className="px-6 py-2 bg-primary hover:bg-primary-light text-bg-darkest font-semibold rounded-lg transition-colors"
             >
-              Leggi altri articoli →
+              {locale === 'it' ? 'Leggi altri articoli' : 'Read more articles'} →
             </Link>
           </div>
         </footer>
@@ -251,7 +305,7 @@ export default async function BlogPostPage({ params }: Props) {
               },
               mainEntityOfPage: {
                 '@type': 'WebPage',
-                '@id': `https://thejord.it/blog/${post.slug}`,
+                '@id': `https://thejord.it/${locale}/blog/${post.slug}`,
               },
               keywords: post.keywords.join(', '),
             }),
