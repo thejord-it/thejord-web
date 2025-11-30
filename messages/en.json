@@ -1,0 +1,732 @@
+{
+  "metadata": {
+    "title": "THEJORD - Developer Tools & Blog",
+    "titleTemplate": "%s | THEJORD",
+    "description": "Free developer tools and technical blog by The Jord. JSON formatter, Base64 encoder, Cron builder, and more. 100% privacy-first.",
+    "ogDescription": "Free developer tools and technical blog. 100% privacy-first. Made in Italy 🇮🇹"
+  },
+  "header": {
+    "tools": "Tools",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin"
+  },
+  "footer": {
+    "tagline": "Free, privacy-first developer tools.",
+    "madeWith": "Made with",
+    "inItaly": "in Italy",
+    "navigation": "Navigation",
+    "tools": "Tools",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "changelog": "Changelog",
+    "allRightsReserved": "All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "title1": "Developer Tools",
+      "title2": "Built for Speed",
+      "description": "Privacy-first developer utilities that process everything in your browser. No servers, no tracking, no BS.",
+      "madeBy": "Made in Italy 🇮🇹 by The Jord",
+      "exploreTools": "Explore Tools",
+      "readBlog": "Read the Blog"
+    },
+    "stats": {
+      "tools": "Developer Tools",
+      "privacyFirst": "Privacy-First",
+      "serverProcessing": "Server Processing",
+      "free": "Free",
+      "forever": "Forever"
+    },
+    "featuredTools": {
+      "title": "Popular Tools",
+      "subtitle": "Everything runs locally in your browser for maximum privacy",
+      "viewAll": "View all 11 tools",
+      "tryNow": "Try it now"
+    },
+    "features": {
+      "privacy": {
+        "title": "Privacy-First",
+        "description": "All tools process data 100% client-side. Your data never leaves your browser."
+      },
+      "fast": {
+        "title": "Lightning Fast",
+        "description": "No server round-trips. Everything happens instantly in your browser."
+      },
+      "focused": {
+        "title": "Developer-Focused",
+        "description": "Built by developers, for developers. Clean UIs and powerful features."
+      }
+    },
+    "blog": {
+      "title": "Technical Blog",
+      "description": "Deep dives into web development, architecture, and engineering best practices",
+      "readLatest": "Read Latest Articles"
+    },
+    "techStack": {
+      "title": "Built with Modern Tech"
+    }
+  },
+  "tools": {
+    "title": "Developer Tools",
+    "description": "Free, fast, and privacy-focused tools for developers. All processing happens in your browser.",
+    "searchPlaceholder": "Search tools...",
+    "allCategories": "All Categories",
+    "noResults": "No tools found",
+    "whyUse": {
+      "title": "Why Use Our Tools?",
+      "privacy": {
+        "title": "Privacy First",
+        "description": "All processing happens in your browser. Your data never touches our servers."
+      },
+      "fast": {
+        "title": "Lightning Fast",
+        "description": "No server round-trips means instant results, even with large files."
+      },
+      "free": {
+        "title": "100% Free",
+        "description": "No subscriptions, no limits, no ads. Free forever."
+      }
+    },
+    "list": {
+      "jsonFormatter": {
+        "name": "JSON Formatter",
+        "description": "Format, validate, and beautify JSON data"
+      },
+      "base64": {
+        "name": "Base64 Encoder/Decoder",
+        "description": "Encode and decode Base64 strings"
+      },
+      "regexTester": {
+        "name": "RegEx Tester",
+        "description": "Test and debug regular expressions"
+      },
+      "hashGenerator": {
+        "name": "Hash Generator",
+        "description": "Generate MD5, SHA-1, SHA-256, SHA-512 hashes"
+      },
+      "urlEncoder": {
+        "name": "URL Encoder/Decoder",
+        "description": "Encode and decode URLs"
+      },
+      "markdownConverter": {
+        "name": "Markdown Converter",
+        "description": "Convert Markdown to HTML and preview"
+      },
+      "colorConverter": {
+        "name": "Color Converter",
+        "description": "Convert between HEX, RGB, HSL color formats"
+      },
+      "loremIpsum": {
+        "name": "Lorem Ipsum Generator",
+        "description": "Generate placeholder text"
+      },
+      "diffChecker": {
+        "name": "Diff Checker",
+        "description": "Compare and find differences between texts"
+      },
+      "cronBuilder": {
+        "name": "Cron Expression Builder",
+        "description": "Build and validate cron expressions"
+      },
+      "jsonSchema": {
+        "name": "JSON Schema Converter",
+        "description": "Generate JSON Schema from JSON"
+      }
+    },
+    "categories": {
+      "textProcessing": "Text Processing",
+      "encoding": "Encoding",
+      "development": "Development",
+      "security": "Security",
+      "design": "Design"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Technical articles, tutorials, and insights about web development",
+    "searchPlaceholder": "Search articles...",
+    "noResults": "No articles found for the selected filters",
+    "resultsCount": "{count} article{count, plural, one {} other {s}} found",
+    "tryDifferentFilters": "Try different search filters",
+    "noPostsYet": "No blog posts yet. Check back soon!",
+    "readMore": "Read more",
+    "minRead": "{minutes} min read",
+    "by": "by",
+    "publishedOn": "Published on",
+    "tags": "Tags",
+    "relatedPosts": "Related Posts",
+    "backToBlog": "← Back to Blog"
+  },
+  "about": {
+    "title": "About THEJORD",
+    "subtitle": "The Italian alternative to IT-Tools. Free, fast, and privacy-focused developer tools.",
+    "mission": {
+      "title": "Our Mission",
+      "intro": "THEJORD.IT was born with the goal of offering an Italian platform for developer tools, completely free and privacy-respecting.",
+      "believe": "We believe that development tools should be:",
+      "privacy": {
+        "title": "Privacy-First",
+        "description": "All tools work 100% client-side. Your data never leaves your browser."
+      },
+      "fast": {
+        "title": "Lightning Fast",
+        "description": "No server round-trips means instant results, even with large files."
+      },
+      "intuitive": {
+        "title": "Intuitive",
+        "description": "Clean and modern interfaces for an optimal user experience."
+      },
+      "openSource": {
+        "title": "Open Source",
+        "description": "The source code is public and contributions are welcome!"
+      }
+    },
+    "techStack": {
+      "title": "Tech Stack",
+      "description": "THEJORD is built with modern technologies to ensure performance and reliability:",
+      "frontend": "Frontend",
+      "infrastructure": "Infrastructure"
+    },
+    "openSource": {
+      "title": "Open Source",
+      "description": "THEJORD is completely open source. You can contribute, report bugs, or use the code for your projects.",
+      "viewOnGithub": "View on GitHub",
+      "reportBug": "Report a Bug"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "description": "Your privacy is our priority. Here's how we protect your data:",
+      "clientSide": {
+        "title": "100% Client-Side Processing",
+        "description": "All tools process data directly in your browser. No data is ever sent to our servers."
+      },
+      "noAccount": {
+        "title": "No Account Required",
+        "description": "No registration, no tracking, no login required."
+      },
+      "securityHeaders": {
+        "title": "Security Headers",
+        "description": "HTTPS only, CSP, HSTS and other security best practices implemented."
+      },
+      "auditable": {
+        "title": "Auditable Code",
+        "description": "Open source code that can be verified by anyone."
+      }
+    },
+    "contact": {
+      "title": "Questions or Feedback?",
+      "description": "We'd love to hear from you! Get in touch or open an issue on GitHub.",
+      "contactUs": "Contact Us",
+      "openIssue": "Open an Issue"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have questions, feedback, or want to collaborate? We're here to help!",
+    "methods": {
+      "title": "Contact Methods",
+      "email": {
+        "title": "Email",
+        "description": "For general questions and support"
+      },
+      "github": {
+        "title": "GitHub Issues",
+        "description": "Report bugs or request new features"
+      },
+      "discussions": {
+        "title": "GitHub Discussions",
+        "description": "Join the community discussions",
+        "cta": "Join the conversation"
+      }
+    },
+    "security": {
+      "title": "Security Issues",
+      "warning": "If you've discovered a security vulnerability, DO NOT open a public issue.",
+      "instruction": "Send an email to ",
+      "instructionSuffix": " with the details."
+    },
+    "form": {
+      "title": "Send a Message",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "type": "Type",
+      "types": {
+        "question": "Question",
+        "bug": "Bug Report",
+        "feature": "Feature Request",
+        "feedback": "Feedback",
+        "other": "Other"
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "Brief description",
+      "message": "Message",
+      "messagePlaceholder": "Your message...",
+      "send": "Send Message",
+      "note": "Clicking \"Send Message\" will open your default email client"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "contribute": {
+        "question": "How can I contribute to the project?",
+        "answer": "Visit our GitHub repository, fork it, make your changes, and submit a pull request. We welcome all contributions!"
+      },
+      "security": {
+        "question": "How do I report a security vulnerability?",
+        "answer": "Please DO NOT open a public issue. Instead, email us at security@thejord.it with details about the vulnerability."
+      },
+      "selfhost": {
+        "question": "Can I self-host THEJORD?",
+        "answer": "Yes! The project is open source and can be self-hosted. Check our GitHub repository for deployment instructions."
+      },
+      "free": {
+        "question": "Is THEJORD really free?",
+        "answer": "Yes, 100% free forever. No subscriptions, no hidden costs, no limits."
+      },
+      "request": {
+        "question": "Can I request a new tool?",
+        "answer": "Absolutely! Open an issue on GitHub with the \"feature request\" label and describe the tool you'd like to see."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "backToHome": "← Back to Home",
+    "intro": {
+      "title": "Introduction",
+      "text": "At THEJORD, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website. We are committed to GDPR compliance and transparency in all our data practices."
+    },
+    "approach": {
+      "title": "Our Privacy-First Approach",
+      "text": "THEJORD is built with privacy as a core principle:",
+      "points": {
+        "clientSide": "All developer tools process data 100% client-side in your browser",
+        "noServer": "Tool data never leaves your device or reaches our servers",
+        "noAccount": "No user accounts or personal data storage required",
+        "minimalAnalytics": "Minimal analytics with IP anonymization enabled"
+      }
+    },
+    "collect": {
+      "title": "Information We Collect",
+      "analytics": {
+        "title": "Analytics Data (Google Analytics 4)",
+        "text": "We use Google Analytics 4 to understand how visitors use our site. The following information is collected with IP anonymization enabled:",
+        "points": {
+          "pages": "Pages you visit and time spent on each page",
+          "browser": "Browser type and version",
+          "device": "Device type and screen resolution",
+          "ip": "Anonymized IP address (last octet removed)",
+          "referrer": "Referrer URL (where you came from)",
+          "location": "General geographic location (country/region level only)"
+        }
+      },
+      "tools": {
+        "title": "Tool Usage Data",
+        "text": "Our developer tools (JSON formatter, Base64 encoder, regex tester, etc.) process all data entirely in your browser. We do not collect, store, or transmit any data you input into these tools."
+      }
+    },
+    "cookies": {
+      "title": "Cookies We Use",
+      "text": "We use minimal cookies for essential functionality:",
+      "analytics": {
+        "title": "Analytics Cookies (Google Analytics)",
+        "ga": "- Distinguishes users (expires: 2 years)",
+        "gaId": "- Maintains session state (expires: 2 years)"
+      },
+      "preferences": {
+        "title": "Preference Cookies",
+        "consent": "- Stores your cookie preferences (expires: 1 year)"
+      }
+    },
+    "usage": {
+      "title": "How We Use Your Information",
+      "text": "The limited data we collect is used exclusively for:",
+      "points": {
+        "popularity": "Understanding which pages and tools are most popular",
+        "ux": "Improving user experience based on usage patterns",
+        "issues": "Identifying and fixing technical issues",
+        "traffic": "Analyzing traffic sources to guide content creation"
+      },
+      "noSale": "We never sell, rent, or share your data with third parties for marketing purposes."
+    },
+    "gdpr": {
+      "title": "Your Rights Under GDPR",
+      "text": "If you are in the European Union, you have the following rights:",
+      "rights": {
+        "access": "Request a copy of data we hold about you",
+        "rectification": "Request correction of inaccurate data",
+        "erasure": "Request deletion of your data (right to be forgotten)",
+        "restrict": "Request limitation on how we use your data",
+        "portability": "Request data transfer in a machine-readable format",
+        "object": "Object to data processing for specific purposes",
+        "withdraw": "Withdraw consent for analytics at any time"
+      }
+    },
+    "optout": {
+      "title": "How to Opt Out of Analytics",
+      "text": "You can opt out of Google Analytics tracking in several ways:",
+      "points": {
+        "banner": "Use the cookie consent banner to disable analytics cookies",
+        "addon": "Install the Google Analytics Opt-out Browser Add-on",
+        "dnt": "Enable \"Do Not Track\" in your browser settings",
+        "extensions": "Use browser extensions that block analytics scripts",
+        "incognito": "Browse in private/incognito mode"
+      }
+    },
+    "security": {
+      "title": "Data Security",
+      "text": "We implement industry-standard security measures:",
+      "points": {
+        "https": "HTTPS encryption for all connections",
+        "hsts": "HTTP Strict Transport Security (HSTS) enabled",
+        "csp": "Content Security Policy (CSP) headers",
+        "audits": "Regular security audits and updates",
+        "anonymization": "IP anonymization in Google Analytics"
+      }
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "text": "We use the following third-party services:",
+      "ga": {
+        "title": "Google Analytics 4",
+        "text": "For website analytics with IP anonymization enabled. View Google's privacy policy at"
+      }
+    },
+    "children": {
+      "title": "Children's Privacy",
+      "text": "Our services are not directed at children under 16. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us to have it removed."
+    },
+    "international": {
+      "title": "International Data Transfers",
+      "text": "Analytics data may be processed by Google in countries outside the EU/EEA. Google is certified under the EU-US Data Privacy Framework and provides appropriate safeguards for data protection."
+    },
+    "changes": {
+      "title": "Changes to This Policy",
+      "text": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated \"Last updated\" date. Significant changes will be prominently announced on our website."
+    },
+    "contactSection": {
+      "title": "Contact Us",
+      "text": "If you have questions about this Privacy Policy or wish to exercise your rights:",
+      "visitContact": "Visit our Contact page",
+      "visitChangelog": "Refer to our Changelog for privacy-related updates"
+    },
+    "legal": {
+      "title": "Legal Basis for Processing",
+      "text": "Under GDPR, our legal basis for processing your data is:",
+      "legitimate": "For analytics to improve our service",
+      "consent": "For optional analytics cookies (via cookie consent banner)",
+      "withdraw": "You can withdraw consent at any time through the cookie consent banner or by contacting us."
+    }
+  },
+  "changelog": {
+    "title": "Changelog",
+    "description": "All changes and updates to THEJORD",
+    "majorUpdate": "Major Update",
+    "initialRelease": "Initial Release",
+    "newFeatures": "New Features",
+    "technicalImprovements": "Technical Improvements",
+    "techStack": "Tech Stack",
+    "versionSummary": "Version Summary",
+    "version": "Version",
+    "date": "Date",
+    "descriptionCol": "Description",
+    "usefulLinks": "Useful Links",
+    "repository": "Repository",
+    "issues": "Issues",
+    "discussions": "Discussions"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "clear": "Clear",
+    "download": "Download",
+    "upload": "Upload",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "preview": "Preview",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and"
+  },
+  "cookies": {
+    "title": "Cookies",
+    "message": "We use cookies to improve your experience. You can accept or reject them.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "settings": "Settings"
+  },
+  "toolPages": {
+    "common": {
+      "home": "Home",
+      "tools": "Tools",
+      "backToTools": "← Back to All Tools",
+      "loading": "Loading tool...",
+      "privacyFirst": "Privacy-First:",
+      "privacyNotice": "All processing happens in your browser. Your data never leaves your device.",
+      "toolNotFound": "Tool Not Found",
+      "componentNotAvailable": "Component not available."
+    },
+    "regexTester": {
+      "title": "RegExp Tester",
+      "description": "Test regular expressions with real-time matching and highlighting.",
+      "regularExpression": "Regular Expression",
+      "patternPlaceholder": "Enter your regex pattern...",
+      "flags": "Flags:",
+      "flagGlobal": "Global",
+      "flagCaseInsensitive": "Case insensitive",
+      "flagMultiline": "Multiline",
+      "flagDotall": "Dotall",
+      "flagUnicode": "Unicode",
+      "testString": "Test String",
+      "testStringPlaceholder": "Enter text to test against your regex...",
+      "highlightedMatches": "Highlighted Matches:",
+      "matchDetails": "Match Details",
+      "matchNumber": "Match #{number}",
+      "index": "Index",
+      "captureGroups": "Capture Groups:",
+      "group": "Group",
+      "matchesFound": "Matches found:",
+      "patternLibrary": "Pattern Library",
+      "searchPatterns": "Search patterns...",
+      "all": "All"
+    },
+    "jsonFormatter": {
+      "description": "Format, validate, and beautify JSON instantly. All processing happens in your browser.",
+      "jsonComparison": "JSON Comparison",
+      "jsonEditor": "JSON Editor",
+      "inputJson": "Input JSON",
+      "compareJson": "Compare JSON",
+      "formattedOutput": "Formatted Output",
+      "jsonTreeView": "JSON Tree View",
+      "validJson": "Valid JSON",
+      "enterValidJson": "Enter valid JSON to see tree view",
+      "outputPlaceholder": "// Output will appear here...",
+      "enterJsonToCompare": "Enter JSON to compare",
+      "formattingOptions": "Formatting Options",
+      "indentation": "Indentation",
+      "quoteStyle": "Quote Style",
+      "maxLineLength": "Max Line Length",
+      "sortKeysAlpha": "Sort keys alphabetically",
+      "allowTrailingCommas": "Allow trailing commas",
+      "spaces": "spaces",
+      "doubleQuotes": "Double quotes",
+      "singleQuotes": "Single quotes",
+      "sorted": "Sorted",
+      "originalOrder": "Original order",
+      "copiedToClipboard": "Copied to clipboard!",
+      "failedToCopy": "Failed to copy"
+    },
+    "base64Tool": {
+      "description": "Encode or decode Base64 strings. All processing happens in your browser.",
+      "textToBase64": "Text to Base64",
+      "base64ToText": "Base64 to Text",
+      "plainTextInput": "Plain Text Input",
+      "base64Input": "Base64 Input",
+      "base64Output": "Base64 Output",
+      "decodedTextOutput": "Decoded Text Output",
+      "enterTextToEncode": "Enter text to encode...",
+      "enterBase64ToDecode": "Enter Base64 string to decode...",
+      "outputPlaceholder": "Output will appear here...",
+      "uploadFile": "Upload File",
+      "maxSize": "Max",
+      "characters": "characters",
+      "bytes": "bytes",
+      "aboutBase64": "About Base64",
+      "aboutBase64Text": "Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used to encode data that needs to be stored or transferred over media designed to handle text.",
+      "commonUseCases": "Common Use Cases:",
+      "useCase1": "Encoding images for data URIs in HTML/CSS",
+      "useCase2": "Storing complex data in cookies or URLs",
+      "useCase3": "Email attachments (MIME)",
+      "useCase4": "API authentication tokens",
+      "useCase5": "Embedding binary data in JSON or XML",
+      "highConfidence": "High confidence",
+      "mediumConfidence": "Medium confidence",
+      "lowConfidence": "Low confidence",
+      "binaryFileDetected": "Binary {type} file detected - {size} bytes",
+      "clickDownloadToSave": "Click \"Download\" button to save the file."
+    },
+    "hashGenerator": {
+      "description": "Generate cryptographic hashes using various algorithms.",
+      "inputText": "Input Text",
+      "enterTextToHash": "Enter text to hash...",
+      "hmacSecretKey": "HMAC Secret Key",
+      "enterSecretKey": "Enter secret key for HMAC...",
+      "hmacDescription": "HMAC (Hash-based Message Authentication Code) uses a secret key to create a keyed hash.",
+      "hashResults": "Hash Results",
+      "algorithms": "Algorithms",
+      "useHmac": "Use HMAC",
+      "enterKeyAbove": "Please enter a secret key above",
+      "aboutHashing": "About Hashing",
+      "hashingDescription": "Cryptographic hash functions generate a fixed-size string from any input data. They are one-way functions (cannot be reversed).",
+      "commonUses": "Common Uses:",
+      "use1": "Password storage",
+      "use2": "Data integrity verification",
+      "use3": "Digital signatures",
+      "use4": "File checksums",
+      "use5": "Blockchain",
+      "securityNotes": "Security Notes:",
+      "secNote1": "MD5 is broken, avoid for security",
+      "secNote2": "SHA1 is deprecated for security",
+      "secNote3": "Use SHA256+ for new applications",
+      "secNote4": "HMAC adds authentication layer",
+      "chars": "chars",
+      "notSecure": "not cryptographically secure",
+      "deprecated": "deprecated for security",
+      "recommended": "recommended",
+      "verySecure": "very secure",
+      "latestStandard": "latest standard"
+    },
+    "urlTool": {
+      "description": "Encode or decode URLs and URI components.",
+      "textToUrl": "Text to URL",
+      "urlToText": "URL to Text",
+      "input": "Input",
+      "output": "Output",
+      "outputPlaceholder": "Output will appear here...",
+      "enterEncodedUrl": "Enter encoded URL or component to decode...",
+      "encodeVsComponent": "encodeURI() vs encodeURIComponent()",
+      "encodeUriDesc": "Encodes a complete URL. Preserves URL structure characters:",
+      "useForFullUrls": "Use for full URLs",
+      "encodeComponentDesc": "Encodes URI components. Encodes ALL special characters including:",
+      "useForParams": "Use for query parameters and path segments"
+    },
+    "markdownConverter": {
+      "description": "Convert Markdown syntax to clean HTML code",
+      "markdownLength": "Markdown Length",
+      "htmlLength": "HTML Length",
+      "lines": "Lines",
+      "markdownInput": "Markdown Input",
+      "htmlOutput": "HTML Output",
+      "livePreview": "Live Preview",
+      "enterMarkdownHere": "Enter your Markdown here...",
+      "htmlWillAppear": "HTML will appear here...",
+      "syntaxReference": "Markdown Syntax Quick Reference",
+      "headers": "Headers:",
+      "emphasis": "Emphasis:",
+      "lists": "Lists:",
+      "links": "Links:",
+      "code": "Code:",
+      "quote": "Quote:"
+    },
+    "colorConverter": {
+      "description": "Pick colors and convert between HEX, RGB, HSL, and CMYK formats",
+      "presetColors": "Preset Colors",
+      "colorFormatGuide": "Color Format Guide",
+      "hexDesc": "Hexadecimal notation (#RRGGBB)",
+      "hexUsed": "Used in: CSS, HTML, design tools",
+      "rgbDesc": "Red, Green, Blue (0-255)",
+      "rgbUsed": "Used in: Screen displays, web development",
+      "hslDesc": "Hue, Saturation, Lightness",
+      "hslUsed": "Used in: Color manipulation, CSS",
+      "cmykDesc": "Cyan, Magenta, Yellow, Black",
+      "cmykUsed": "Used in: Printing, graphic design"
+    },
+    "loremIpsum": {
+      "description": "Generate placeholder text for your designs and mockups",
+      "generate": "Generate",
+      "paragraphs": "Paragraphs",
+      "sentences": "Sentences",
+      "words": "Words",
+      "count": "Count",
+      "startWithLorem": "Start with \"Lorem ipsum dolor sit amet\"",
+      "generateLoremIpsum": "Generate Lorem Ipsum",
+      "characters": "Characters",
+      "generatedText": "Generated Text",
+      "clickToGenerate": "Click 'Generate Lorem Ipsum' to create placeholder text...",
+      "whatIsLorem": "What is Lorem Ipsum?",
+      "loremDescription": "Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. It helps designers and developers focus on design elements without being distracted by meaningful content. The text is derived from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" by Cicero, written in 45 BC."
+    },
+    "diffChecker": {
+      "description": "Compare two texts and highlight the differences line by line",
+      "lineNumbers": "Line Numbers",
+      "ignoreWhitespace": "Ignore Whitespace",
+      "ignoreCase": "Ignore Case",
+      "totalLines": "Total Lines",
+      "unchanged": "Unchanged",
+      "additions": "Additions",
+      "deletions": "Deletions",
+      "originalText": "Original Text",
+      "modifiedText": "Modified Text",
+      "differences": "Differences",
+      "legend": "Legend",
+      "addedLine": "+ Added line",
+      "removedLine": "- Removed line",
+      "unchangedLine": "Unchanged line",
+      "pasteOriginal": "Paste original text here...",
+      "pasteModified": "Paste modified text here..."
+    },
+    "cronBuilder": {
+      "description": "Build and validate cron schedules with a visual interface",
+      "visualBuilder": "Visual Builder",
+      "directInput": "Direct Input",
+      "patternLibrary": "Pattern Library",
+      "minute": "Minute",
+      "hour": "Hour",
+      "dayOfMonth": "Day of Month",
+      "month": "Month",
+      "dayOfWeek": "Day of Week",
+      "cronExpression": "Cron Expression",
+      "descriptionLabel": "Description:",
+      "validationErrors": "Validation Errors:",
+      "next5Executions": "Next 5 Executions:",
+      "specialCharsGuide": "Special Characters Guide",
+      "wildcard": "Wildcard",
+      "anyValue": "Any value",
+      "wildcardExample": "Example: * in minute = every minute",
+      "list": "List",
+      "multipleValues": "Multiple values",
+      "listExample": "Example: 0,15,30,45 = at 0, 15, 30, and 45",
+      "range": "Range",
+      "rangeOfValues": "Range of values",
+      "rangeExample": "Example: 1-5 = from 1 to 5",
+      "step": "Step",
+      "stepValues": "Step values",
+      "stepExample": "Example: */5 = every 5 units",
+      "cronFormatReference": "Cron Format Reference",
+      "position": "Position",
+      "field": "Field",
+      "allowedValues": "Allowed Values",
+      "specialChars": "Special Characters",
+      "enterCronExpression": "Enter a cron expression with 5 fields: minute hour day month weekday",
+      "clickPatternToApply": "Click on a pattern to apply it to the builder:",
+      "examples": "Examples"
+    },
+    "jsonSchema": {
+      "description": "Generate JSON Schema from your JSON data automatically",
+      "configuration": "Configuration",
+      "schemaTitle": "Schema Title (optional)",
+      "schemaVersion": "Schema Version",
+      "makeAllRequired": "Make all fields required",
+      "addFormatHints": "Add format hints (email, uri, date, etc.)",
+      "inputJson": "Input JSON",
+      "generatedSchema": "Generated Schema",
+      "generateSchema": "Generate Schema",
+      "pleaseEnterJson": "Please enter JSON data",
+      "invalidJson": "Invalid JSON",
+      "formatDetection": "Format Detection",
+      "formatDetectionDesc": "When \"Add format hints\" is enabled, the converter automatically detects and adds format specifications:",
+      "typeMappingTitle": "JSON to JSON Schema Type Mapping",
+      "jsonType": "JSON Type",
+      "schemaType": "Schema Type",
+      "example": "Example"
+    }
+  }
+}

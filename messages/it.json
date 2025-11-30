@@ -1,0 +1,732 @@
+{
+  "metadata": {
+    "title": "THEJORD - Strumenti per Sviluppatori & Blog",
+    "titleTemplate": "%s | THEJORD",
+    "description": "Strumenti gratuiti per sviluppatori e blog tecnico di The Jord. JSON formatter, Base64 encoder, Cron builder e molto altro. 100% privacy-first.",
+    "ogDescription": "Strumenti gratuiti per sviluppatori e blog tecnico. 100% privacy-first. Made in Italy 🇮🇹"
+  },
+  "header": {
+    "tools": "Strumenti",
+    "blog": "Blog",
+    "about": "Chi Siamo",
+    "contact": "Contatti",
+    "admin": "Admin"
+  },
+  "footer": {
+    "tagline": "Strumenti per sviluppatori gratuiti e privacy-first.",
+    "madeWith": "Fatto con",
+    "inItaly": "in Italia",
+    "navigation": "Navigazione",
+    "tools": "Strumenti",
+    "blog": "Blog",
+    "about": "Chi Siamo",
+    "contact": "Contatti",
+    "legal": "Legale",
+    "privacy": "Privacy Policy",
+    "changelog": "Changelog",
+    "allRightsReserved": "Tutti i diritti riservati."
+  },
+  "home": {
+    "hero": {
+      "title1": "Strumenti per Sviluppatori",
+      "title2": "Costruiti per la Velocità",
+      "description": "Utility privacy-first per sviluppatori che processano tutto nel tuo browser. Nessun server, nessun tracking, nessuna fregatura.",
+      "madeBy": "Made in Italy 🇮🇹 by The Jord",
+      "exploreTools": "Esplora Strumenti",
+      "readBlog": "Leggi il Blog"
+    },
+    "stats": {
+      "tools": "Strumenti",
+      "privacyFirst": "Privacy-First",
+      "serverProcessing": "Elaborazione Server",
+      "free": "Gratis",
+      "forever": "Per Sempre"
+    },
+    "featuredTools": {
+      "title": "Strumenti Popolari",
+      "subtitle": "Tutto viene eseguito localmente nel tuo browser per la massima privacy",
+      "viewAll": "Vedi tutti gli 11 strumenti",
+      "tryNow": "Provalo ora"
+    },
+    "features": {
+      "privacy": {
+        "title": "Privacy-First",
+        "description": "Tutti gli strumenti elaborano i dati 100% lato client. I tuoi dati non lasciano mai il browser."
+      },
+      "fast": {
+        "title": "Velocissimo",
+        "description": "Nessun round-trip al server. Tutto avviene istantaneamente nel tuo browser."
+      },
+      "focused": {
+        "title": "Per Sviluppatori",
+        "description": "Costruito da sviluppatori, per sviluppatori. Interfacce pulite e funzionalità potenti."
+      }
+    },
+    "blog": {
+      "title": "Blog Tecnico",
+      "description": "Approfondimenti su sviluppo web, architettura e best practices di engineering",
+      "readLatest": "Leggi gli Ultimi Articoli"
+    },
+    "techStack": {
+      "title": "Costruito con Tecnologie Moderne"
+    }
+  },
+  "tools": {
+    "title": "Strumenti per Sviluppatori",
+    "description": "Strumenti gratuiti, veloci e privacy-focused per sviluppatori. Tutta l'elaborazione avviene nel tuo browser.",
+    "searchPlaceholder": "Cerca strumenti...",
+    "allCategories": "Tutte le Categorie",
+    "noResults": "Nessuno strumento trovato",
+    "whyUse": {
+      "title": "Perché Usare i Nostri Strumenti?",
+      "privacy": {
+        "title": "Privacy First",
+        "description": "Tutta l'elaborazione avviene nel tuo browser. I tuoi dati non toccano mai i nostri server."
+      },
+      "fast": {
+        "title": "Velocissimi",
+        "description": "Nessun round-trip al server significa risultati istantanei, anche con file grandi."
+      },
+      "free": {
+        "title": "100% Gratis",
+        "description": "Nessun abbonamento, nessun limite, nessuna pubblicità. Gratis per sempre."
+      }
+    },
+    "list": {
+      "jsonFormatter": {
+        "name": "JSON Formatter",
+        "description": "Formatta, valida e abbellisci dati JSON"
+      },
+      "base64": {
+        "name": "Base64 Encoder/Decoder",
+        "description": "Codifica e decodifica stringhe Base64"
+      },
+      "regexTester": {
+        "name": "RegEx Tester",
+        "description": "Testa e debugga espressioni regolari"
+      },
+      "hashGenerator": {
+        "name": "Hash Generator",
+        "description": "Genera hash MD5, SHA-1, SHA-256, SHA-512"
+      },
+      "urlEncoder": {
+        "name": "URL Encoder/Decoder",
+        "description": "Codifica e decodifica URL"
+      },
+      "markdownConverter": {
+        "name": "Markdown Converter",
+        "description": "Converti Markdown in HTML con anteprima"
+      },
+      "colorConverter": {
+        "name": "Color Converter",
+        "description": "Converti tra formati colore HEX, RGB, HSL"
+      },
+      "loremIpsum": {
+        "name": "Lorem Ipsum Generator",
+        "description": "Genera testo placeholder"
+      },
+      "diffChecker": {
+        "name": "Diff Checker",
+        "description": "Confronta e trova differenze tra testi"
+      },
+      "cronBuilder": {
+        "name": "Cron Expression Builder",
+        "description": "Costruisci e valida espressioni cron"
+      },
+      "jsonSchema": {
+        "name": "JSON Schema Converter",
+        "description": "Genera JSON Schema da JSON"
+      }
+    },
+    "categories": {
+      "textProcessing": "Elaborazione Testo",
+      "encoding": "Codifica",
+      "development": "Sviluppo",
+      "security": "Sicurezza",
+      "design": "Design"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Articoli tecnici, tutorial e approfondimenti sullo sviluppo web",
+    "searchPlaceholder": "Cerca articoli...",
+    "noResults": "Nessun articolo trovato per i filtri selezionati",
+    "resultsCount": "{count} articol{count, plural, one {o} other {i}} trovat{count, plural, one {o} other {i}}",
+    "tryDifferentFilters": "Prova a modificare i filtri di ricerca",
+    "noPostsYet": "Nessun articolo ancora. Torna presto!",
+    "readMore": "Leggi di più",
+    "minRead": "{minutes} min di lettura",
+    "by": "di",
+    "publishedOn": "Pubblicato il",
+    "tags": "Tag",
+    "relatedPosts": "Articoli Correlati",
+    "backToBlog": "← Torna al Blog"
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "subtitle": "L'alternativa italiana a IT-Tools. Strumenti per sviluppatori gratuiti, veloci e privacy-focused.",
+    "mission": {
+      "title": "La Nostra Missione",
+      "intro": "THEJORD.IT è nato con l'obiettivo di offrire una piattaforma italiana di strumenti per sviluppatori, completamente gratuita e rispettosa della privacy.",
+      "believe": "Crediamo che gli strumenti di sviluppo debbano essere:",
+      "privacy": {
+        "title": "Privacy-First",
+        "description": "Tutti i tool funzionano 100% client-side. I tuoi dati non lasciano mai il tuo browser."
+      },
+      "fast": {
+        "title": "Velocissimi",
+        "description": "Nessun server round-trip significa risultati istantanei, anche con file di grandi dimensioni."
+      },
+      "intuitive": {
+        "title": "Intuitivi",
+        "description": "Interfacce pulite e moderne per una user experience ottimale."
+      },
+      "openSource": {
+        "title": "Open Source",
+        "description": "Il codice sorgente è pubblico e contribuzioni sono benvenute!"
+      }
+    },
+    "techStack": {
+      "title": "Tech Stack",
+      "description": "THEJORD è costruito con tecnologie moderne per garantire performance e affidabilità:",
+      "frontend": "Frontend",
+      "infrastructure": "Infrastruttura"
+    },
+    "openSource": {
+      "title": "Open Source",
+      "description": "THEJORD è completamente open source. Puoi contribuire, segnalare bug, o utilizzare il codice per i tuoi progetti.",
+      "viewOnGithub": "Vedi su GitHub",
+      "reportBug": "Segnala un Bug"
+    },
+    "privacy": {
+      "title": "Privacy & Sicurezza",
+      "description": "La tua privacy è la nostra priorità. Ecco come proteggiamo i tuoi dati:",
+      "clientSide": {
+        "title": "100% Elaborazione Client-Side",
+        "description": "Tutti i tool elaborano i dati direttamente nel tuo browser. Nessun dato viene mai inviato ai nostri server."
+      },
+      "noAccount": {
+        "title": "Nessun Account Richiesto",
+        "description": "Nessuna registrazione, nessun tracking, nessun login necessario."
+      },
+      "securityHeaders": {
+        "title": "Security Headers",
+        "description": "HTTPS only, CSP, HSTS e altre best practices di sicurezza implementate."
+      },
+      "auditable": {
+        "title": "Codice Verificabile",
+        "description": "Codice open source che può essere verificato da chiunque."
+      }
+    },
+    "contact": {
+      "title": "Domande o Feedback?",
+      "description": "Ci piacerebbe sentirti! Contattaci o apri una issue su GitHub.",
+      "contactUs": "Contattaci",
+      "openIssue": "Apri una Issue"
+    }
+  },
+  "contact": {
+    "title": "Contattaci",
+    "description": "Hai domande, feedback o vuoi collaborare? Siamo qui per aiutarti!",
+    "methods": {
+      "title": "Metodi di Contatto",
+      "email": {
+        "title": "Email",
+        "description": "Per domande generali e supporto"
+      },
+      "github": {
+        "title": "GitHub Issues",
+        "description": "Segnala bug o richiedi nuove funzionalità"
+      },
+      "discussions": {
+        "title": "GitHub Discussions",
+        "description": "Partecipa alle discussioni della community",
+        "cta": "Unisciti alla conversazione"
+      }
+    },
+    "security": {
+      "title": "Problemi di Sicurezza",
+      "warning": "Se hai scoperto una vulnerabilità di sicurezza, NON aprire una issue pubblica.",
+      "instruction": "Invia una email a ",
+      "instructionSuffix": " con i dettagli."
+    },
+    "form": {
+      "title": "Invia un Messaggio",
+      "name": "Nome",
+      "namePlaceholder": "Il tuo nome",
+      "email": "Email",
+      "emailPlaceholder": "la.tua@email.com",
+      "type": "Tipo",
+      "types": {
+        "question": "Domanda",
+        "bug": "Segnalazione Bug",
+        "feature": "Richiesta Funzionalità",
+        "feedback": "Feedback",
+        "other": "Altro"
+      },
+      "subject": "Oggetto",
+      "subjectPlaceholder": "Breve descrizione",
+      "message": "Messaggio",
+      "messagePlaceholder": "Il tuo messaggio...",
+      "send": "Invia Messaggio",
+      "note": "Cliccando \"Invia Messaggio\" si aprirà il tuo client email predefinito"
+    },
+    "faq": {
+      "title": "Domande Frequenti",
+      "contribute": {
+        "question": "Come posso contribuire al progetto?",
+        "answer": "Visita il nostro repository GitHub, fai un fork, apporta le tue modifiche e invia una pull request. Accogliamo tutti i contributi!"
+      },
+      "security": {
+        "question": "Come segnalo una vulnerabilità di sicurezza?",
+        "answer": "Per favore NON aprire una issue pubblica. Inviaci invece una email a security@thejord.it con i dettagli della vulnerabilità."
+      },
+      "selfhost": {
+        "question": "Posso fare self-hosting di THEJORD?",
+        "answer": "Sì! Il progetto è open source e può essere self-hosted. Controlla il nostro repository GitHub per le istruzioni di deployment."
+      },
+      "free": {
+        "question": "THEJORD è davvero gratuito?",
+        "answer": "Sì, 100% gratuito per sempre. Nessun abbonamento, nessun costo nascosto, nessun limite."
+      },
+      "request": {
+        "question": "Posso richiedere un nuovo strumento?",
+        "answer": "Assolutamente! Apri una issue su GitHub con l'etichetta \"feature request\" e descrivi lo strumento che vorresti vedere."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Ultimo aggiornamento",
+    "backToHome": "← Torna alla Home",
+    "intro": {
+      "title": "Introduzione",
+      "text": "In THEJORD, prendiamo sul serio la tua privacy. Questa Privacy Policy spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni personali quando visiti il nostro sito web. Ci impegniamo a rispettare il GDPR e a garantire trasparenza in tutte le nostre pratiche relative ai dati."
+    },
+    "approach": {
+      "title": "Il Nostro Approccio Privacy-First",
+      "text": "THEJORD è costruito con la privacy come principio fondamentale:",
+      "points": {
+        "clientSide": "Tutti gli strumenti per sviluppatori elaborano i dati 100% client-side nel tuo browser",
+        "noServer": "I dati degli strumenti non lasciano mai il tuo dispositivo né raggiungono i nostri server",
+        "noAccount": "Nessun account utente o memorizzazione di dati personali richiesta",
+        "minimalAnalytics": "Analytics minimali con anonimizzazione IP abilitata"
+      }
+    },
+    "collect": {
+      "title": "Informazioni che Raccogliamo",
+      "analytics": {
+        "title": "Dati Analytics (Google Analytics 4)",
+        "text": "Utilizziamo Google Analytics 4 per capire come i visitatori usano il nostro sito. Le seguenti informazioni vengono raccolte con anonimizzazione IP abilitata:",
+        "points": {
+          "pages": "Pagine che visiti e tempo trascorso su ciascuna",
+          "browser": "Tipo e versione del browser",
+          "device": "Tipo di dispositivo e risoluzione schermo",
+          "ip": "Indirizzo IP anonimizzato (ultimo ottetto rimosso)",
+          "referrer": "URL di provenienza (da dove sei arrivato)",
+          "location": "Posizione geografica generale (solo a livello paese/regione)"
+        }
+      },
+      "tools": {
+        "title": "Dati Utilizzo Strumenti",
+        "text": "I nostri strumenti per sviluppatori (JSON formatter, Base64 encoder, regex tester, ecc.) elaborano tutti i dati interamente nel tuo browser. Non raccogliamo, memorizziamo o trasmettiamo alcun dato che inserisci in questi strumenti."
+      }
+    },
+    "cookies": {
+      "title": "Cookie che Utilizziamo",
+      "text": "Utilizziamo cookie minimali per funzionalità essenziali:",
+      "analytics": {
+        "title": "Cookie Analytics (Google Analytics)",
+        "ga": "- Distingue gli utenti (scade: 2 anni)",
+        "gaId": "- Mantiene lo stato della sessione (scade: 2 anni)"
+      },
+      "preferences": {
+        "title": "Cookie Preferenze",
+        "consent": "- Memorizza le tue preferenze cookie (scade: 1 anno)"
+      }
+    },
+    "usage": {
+      "title": "Come Utilizziamo le Tue Informazioni",
+      "text": "I dati limitati che raccogliamo sono utilizzati esclusivamente per:",
+      "points": {
+        "popularity": "Capire quali pagine e strumenti sono più popolari",
+        "ux": "Migliorare l'esperienza utente basandoci sui pattern di utilizzo",
+        "issues": "Identificare e risolvere problemi tecnici",
+        "traffic": "Analizzare le fonti di traffico per guidare la creazione di contenuti"
+      },
+      "noSale": "Non vendiamo, affittiamo o condividiamo mai i tuoi dati con terze parti per scopi di marketing."
+    },
+    "gdpr": {
+      "title": "I Tuoi Diritti secondo il GDPR",
+      "text": "Se ti trovi nell'Unione Europea, hai i seguenti diritti:",
+      "rights": {
+        "access": "Richiedere una copia dei dati che conserviamo su di te",
+        "rectification": "Richiedere la correzione di dati inesatti",
+        "erasure": "Richiedere la cancellazione dei tuoi dati (diritto all'oblio)",
+        "restrict": "Richiedere limitazioni su come utilizziamo i tuoi dati",
+        "portability": "Richiedere il trasferimento dei dati in formato leggibile da macchina",
+        "object": "Opporti al trattamento dei dati per scopi specifici",
+        "withdraw": "Revocare il consenso per gli analytics in qualsiasi momento"
+      }
+    },
+    "optout": {
+      "title": "Come Disattivare gli Analytics",
+      "text": "Puoi disattivare il tracciamento di Google Analytics in diversi modi:",
+      "points": {
+        "banner": "Usa il banner di consenso cookie per disabilitare i cookie analytics",
+        "addon": "Installa il Google Analytics Opt-out Browser Add-on",
+        "dnt": "Abilita \"Do Not Track\" nelle impostazioni del browser",
+        "extensions": "Usa estensioni del browser che bloccano gli script analytics",
+        "incognito": "Naviga in modalità privata/incognito"
+      }
+    },
+    "security": {
+      "title": "Sicurezza dei Dati",
+      "text": "Implementiamo misure di sicurezza standard del settore:",
+      "points": {
+        "https": "Crittografia HTTPS per tutte le connessioni",
+        "hsts": "HTTP Strict Transport Security (HSTS) abilitato",
+        "csp": "Content Security Policy (CSP) headers",
+        "audits": "Audit di sicurezza e aggiornamenti regolari",
+        "anonymization": "Anonimizzazione IP in Google Analytics"
+      }
+    },
+    "thirdParty": {
+      "title": "Servizi di Terze Parti",
+      "text": "Utilizziamo i seguenti servizi di terze parti:",
+      "ga": {
+        "title": "Google Analytics 4",
+        "text": "Per analytics del sito web con anonimizzazione IP abilitata. Consulta la privacy policy di Google su"
+      }
+    },
+    "children": {
+      "title": "Privacy dei Minori",
+      "text": "I nostri servizi non sono destinati a minori di 16 anni. Non raccogliamo consapevolmente informazioni personali da bambini. Se ritieni che un minore ci abbia fornito informazioni personali, contattaci per farle rimuovere."
+    },
+    "international": {
+      "title": "Trasferimenti Internazionali di Dati",
+      "text": "I dati analytics possono essere elaborati da Google in paesi al di fuori dell'UE/SEE. Google è certificato secondo l'EU-US Data Privacy Framework e fornisce garanzie adeguate per la protezione dei dati."
+    },
+    "changes": {
+      "title": "Modifiche a Questa Policy",
+      "text": "Potremmo aggiornare questa Privacy Policy di tanto in tanto. Le modifiche saranno pubblicate su questa pagina con una data \"Ultimo aggiornamento\" aggiornata. Cambiamenti significativi saranno annunciati in modo prominente sul nostro sito web."
+    },
+    "contactSection": {
+      "title": "Contattaci",
+      "text": "Se hai domande su questa Privacy Policy o desideri esercitare i tuoi diritti:",
+      "visitContact": "Visita la nostra pagina Contatti",
+      "visitChangelog": "Consulta il nostro Changelog per aggiornamenti sulla privacy"
+    },
+    "legal": {
+      "title": "Base Giuridica del Trattamento",
+      "text": "Secondo il GDPR, la nostra base giuridica per il trattamento dei tuoi dati è:",
+      "legitimate": "Per analytics per migliorare il nostro servizio",
+      "consent": "Per cookie analytics opzionali (tramite banner di consenso cookie)",
+      "withdraw": "Puoi revocare il consenso in qualsiasi momento tramite il banner di consenso cookie o contattandoci."
+    }
+  },
+  "changelog": {
+    "title": "Changelog",
+    "description": "Tutte le modifiche e aggiornamenti di THEJORD",
+    "majorUpdate": "Aggiornamento Maggiore",
+    "initialRelease": "Release Iniziale",
+    "newFeatures": "Nuove Funzionalità",
+    "technicalImprovements": "Miglioramenti Tecnici",
+    "techStack": "Stack Tecnologico",
+    "versionSummary": "Riepilogo Versioni",
+    "version": "Versione",
+    "date": "Data",
+    "descriptionCol": "Descrizione",
+    "usefulLinks": "Collegamenti Utili",
+    "repository": "Repository",
+    "issues": "Issues",
+    "discussions": "Discussioni"
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "retry": "Riprova",
+    "close": "Chiudi",
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "clear": "Pulisci",
+    "download": "Scarica",
+    "upload": "Carica",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "preview": "Anteprima",
+    "search": "Cerca",
+    "filter": "Filtra",
+    "all": "Tutti",
+    "none": "Nessuno",
+    "yes": "Sì",
+    "no": "No",
+    "or": "o",
+    "and": "e"
+  },
+  "cookies": {
+    "title": "Cookie",
+    "message": "Utilizziamo cookie per migliorare la tua esperienza. Puoi accettarli o rifiutarli.",
+    "accept": "Accetta",
+    "reject": "Rifiuta",
+    "settings": "Impostazioni"
+  },
+  "toolPages": {
+    "common": {
+      "home": "Home",
+      "tools": "Strumenti",
+      "backToTools": "← Torna agli Strumenti",
+      "loading": "Caricamento strumento...",
+      "privacyFirst": "Privacy-First:",
+      "privacyNotice": "Tutta l'elaborazione avviene nel tuo browser. I tuoi dati non lasciano mai il tuo dispositivo.",
+      "toolNotFound": "Strumento Non Trovato",
+      "componentNotAvailable": "Componente non disponibile."
+    },
+    "regexTester": {
+      "title": "RegExp Tester",
+      "description": "Testa espressioni regolari con matching in tempo reale ed evidenziazione.",
+      "regularExpression": "Espressione Regolare",
+      "patternPlaceholder": "Inserisci il pattern regex...",
+      "flags": "Flag:",
+      "flagGlobal": "Globale",
+      "flagCaseInsensitive": "Case insensitive",
+      "flagMultiline": "Multilinea",
+      "flagDotall": "Dotall",
+      "flagUnicode": "Unicode",
+      "testString": "Stringa di Test",
+      "testStringPlaceholder": "Inserisci il testo da testare con la tua regex...",
+      "highlightedMatches": "Match Evidenziati:",
+      "matchDetails": "Dettagli Match",
+      "matchNumber": "Match #{number}",
+      "index": "Indice",
+      "captureGroups": "Gruppi di Cattura:",
+      "group": "Gruppo",
+      "matchesFound": "Match trovati:",
+      "patternLibrary": "Libreria Pattern",
+      "searchPatterns": "Cerca pattern...",
+      "all": "Tutti"
+    },
+    "jsonFormatter": {
+      "description": "Formatta, valida e abbellisci JSON istantaneamente. Tutta l'elaborazione avviene nel tuo browser.",
+      "jsonComparison": "Confronto JSON",
+      "jsonEditor": "Editor JSON",
+      "inputJson": "JSON di Input",
+      "compareJson": "JSON da Confrontare",
+      "formattedOutput": "Output Formattato",
+      "jsonTreeView": "Vista ad Albero JSON",
+      "validJson": "JSON Valido",
+      "enterValidJson": "Inserisci JSON valido per vedere la vista ad albero",
+      "outputPlaceholder": "// L'output apparirà qui...",
+      "enterJsonToCompare": "Inserisci JSON da confrontare",
+      "formattingOptions": "Opzioni di Formattazione",
+      "indentation": "Indentazione",
+      "quoteStyle": "Stile Virgolette",
+      "maxLineLength": "Lunghezza Massima Riga",
+      "sortKeysAlpha": "Ordina chiavi alfabeticamente",
+      "allowTrailingCommas": "Permetti virgole finali",
+      "spaces": "spazi",
+      "doubleQuotes": "Virgolette doppie",
+      "singleQuotes": "Virgolette singole",
+      "sorted": "Ordinato",
+      "originalOrder": "Ordine originale",
+      "copiedToClipboard": "Copiato negli appunti!",
+      "failedToCopy": "Copia fallita"
+    },
+    "base64Tool": {
+      "description": "Codifica o decodifica stringhe Base64. Tutta l'elaborazione avviene nel tuo browser.",
+      "textToBase64": "Testo a Base64",
+      "base64ToText": "Base64 a Testo",
+      "plainTextInput": "Input Testo",
+      "base64Input": "Input Base64",
+      "base64Output": "Output Base64",
+      "decodedTextOutput": "Output Testo Decodificato",
+      "enterTextToEncode": "Inserisci testo da codificare...",
+      "enterBase64ToDecode": "Inserisci stringa Base64 da decodificare...",
+      "outputPlaceholder": "L'output apparirà qui...",
+      "uploadFile": "Carica File",
+      "maxSize": "Max",
+      "characters": "caratteri",
+      "bytes": "byte",
+      "aboutBase64": "Informazioni su Base64",
+      "aboutBase64Text": "Base64 è uno schema di codifica binario-testuale che rappresenta dati binari in formato stringa ASCII. È comunemente usato per codificare dati che devono essere memorizzati o trasferiti su supporti progettati per gestire testo.",
+      "commonUseCases": "Casi d'Uso Comuni:",
+      "useCase1": "Codifica immagini per data URI in HTML/CSS",
+      "useCase2": "Memorizzazione dati complessi in cookie o URL",
+      "useCase3": "Allegati email (MIME)",
+      "useCase4": "Token di autenticazione API",
+      "useCase5": "Incorporamento dati binari in JSON o XML",
+      "highConfidence": "Alta confidenza",
+      "mediumConfidence": "Media confidenza",
+      "lowConfidence": "Bassa confidenza",
+      "binaryFileDetected": "File binario {type} rilevato - {size} byte",
+      "clickDownloadToSave": "Clicca \"Download\" per salvare il file."
+    },
+    "hashGenerator": {
+      "description": "Genera hash crittografici usando vari algoritmi.",
+      "inputText": "Testo di Input",
+      "enterTextToHash": "Inserisci testo da hashare...",
+      "hmacSecretKey": "Chiave Segreta HMAC",
+      "enterSecretKey": "Inserisci chiave segreta per HMAC...",
+      "hmacDescription": "HMAC (Hash-based Message Authentication Code) usa una chiave segreta per creare un hash con chiave.",
+      "hashResults": "Risultati Hash",
+      "algorithms": "Algoritmi",
+      "useHmac": "Usa HMAC",
+      "enterKeyAbove": "Inserisci una chiave segreta sopra",
+      "aboutHashing": "Informazioni sull'Hashing",
+      "hashingDescription": "Le funzioni hash crittografiche generano una stringa di dimensione fissa da qualsiasi dato di input. Sono funzioni unidirezionali (non possono essere invertite).",
+      "commonUses": "Usi Comuni:",
+      "use1": "Memorizzazione password",
+      "use2": "Verifica integrità dati",
+      "use3": "Firme digitali",
+      "use4": "Checksum file",
+      "use5": "Blockchain",
+      "securityNotes": "Note sulla Sicurezza:",
+      "secNote1": "MD5 è compromesso, evitare per sicurezza",
+      "secNote2": "SHA1 è deprecato per sicurezza",
+      "secNote3": "Usa SHA256+ per nuove applicazioni",
+      "secNote4": "HMAC aggiunge livello di autenticazione",
+      "chars": "caratteri",
+      "notSecure": "non crittograficamente sicuro",
+      "deprecated": "deprecato per sicurezza",
+      "recommended": "raccomandato",
+      "verySecure": "molto sicuro",
+      "latestStandard": "ultimo standard"
+    },
+    "urlTool": {
+      "description": "Codifica o decodifica URL e componenti URI.",
+      "textToUrl": "Testo a URL",
+      "urlToText": "URL a Testo",
+      "input": "Input",
+      "output": "Output",
+      "outputPlaceholder": "L'output apparirà qui...",
+      "enterEncodedUrl": "Inserisci URL o componente codificato da decodificare...",
+      "encodeVsComponent": "encodeURI() vs encodeURIComponent()",
+      "encodeUriDesc": "Codifica un URL completo. Preserva i caratteri strutturali dell'URL:",
+      "useForFullUrls": "Usa per URL completi",
+      "encodeComponentDesc": "Codifica componenti URI. Codifica TUTTI i caratteri speciali inclusi:",
+      "useForParams": "Usa per parametri query e segmenti di percorso"
+    },
+    "markdownConverter": {
+      "description": "Converti sintassi Markdown in codice HTML pulito",
+      "markdownLength": "Lunghezza Markdown",
+      "htmlLength": "Lunghezza HTML",
+      "lines": "Righe",
+      "markdownInput": "Input Markdown",
+      "htmlOutput": "Output HTML",
+      "livePreview": "Anteprima Live",
+      "enterMarkdownHere": "Inserisci il tuo Markdown qui...",
+      "htmlWillAppear": "L'HTML apparirà qui...",
+      "syntaxReference": "Riferimento Rapido Sintassi Markdown",
+      "headers": "Intestazioni:",
+      "emphasis": "Enfasi:",
+      "lists": "Liste:",
+      "links": "Link:",
+      "code": "Codice:",
+      "quote": "Citazione:"
+    },
+    "colorConverter": {
+      "description": "Scegli colori e converti tra formati HEX, RGB, HSL e CMYK",
+      "presetColors": "Colori Predefiniti",
+      "colorFormatGuide": "Guida ai Formati Colore",
+      "hexDesc": "Notazione esadecimale (#RRGGBB)",
+      "hexUsed": "Usato in: CSS, HTML, strumenti di design",
+      "rgbDesc": "Rosso, Verde, Blu (0-255)",
+      "rgbUsed": "Usato in: Display, sviluppo web",
+      "hslDesc": "Tonalità, Saturazione, Luminosità",
+      "hslUsed": "Usato in: Manipolazione colori, CSS",
+      "cmykDesc": "Ciano, Magenta, Giallo, Nero",
+      "cmykUsed": "Usato in: Stampa, graphic design"
+    },
+    "loremIpsum": {
+      "description": "Genera testo placeholder per i tuoi design e mockup",
+      "generate": "Genera",
+      "paragraphs": "Paragrafi",
+      "sentences": "Frasi",
+      "words": "Parole",
+      "count": "Quantità",
+      "startWithLorem": "Inizia con \"Lorem ipsum dolor sit amet\"",
+      "generateLoremIpsum": "Genera Lorem Ipsum",
+      "characters": "Caratteri",
+      "generatedText": "Testo Generato",
+      "clickToGenerate": "Clicca 'Genera Lorem Ipsum' per creare testo placeholder...",
+      "whatIsLorem": "Cos'è Lorem Ipsum?",
+      "loremDescription": "Lorem Ipsum è testo placeholder comunemente usato nelle industrie grafiche, di stampa e editoriali per visualizzare layout e mockup visivi. Aiuta designer e sviluppatori a concentrarsi sugli elementi di design senza essere distratti da contenuti significativi. Il testo deriva dalle sezioni 1.10.32 e 1.10.33 di \"de Finibus Bonorum et Malorum\" di Cicerone, scritto nel 45 a.C."
+    },
+    "diffChecker": {
+      "description": "Confronta due testi ed evidenzia le differenze riga per riga",
+      "lineNumbers": "Numeri di Riga",
+      "ignoreWhitespace": "Ignora Spazi",
+      "ignoreCase": "Ignora Maiuscole/Minuscole",
+      "totalLines": "Righe Totali",
+      "unchanged": "Invariate",
+      "additions": "Aggiunte",
+      "deletions": "Rimozioni",
+      "originalText": "Testo Originale",
+      "modifiedText": "Testo Modificato",
+      "differences": "Differenze",
+      "legend": "Legenda",
+      "addedLine": "+ Riga aggiunta",
+      "removedLine": "- Riga rimossa",
+      "unchangedLine": "Riga invariata",
+      "pasteOriginal": "Incolla il testo originale qui...",
+      "pasteModified": "Incolla il testo modificato qui..."
+    },
+    "cronBuilder": {
+      "description": "Costruisci e valida schedulazioni cron con interfaccia visuale",
+      "visualBuilder": "Builder Visuale",
+      "directInput": "Input Diretto",
+      "patternLibrary": "Libreria Pattern",
+      "minute": "Minuto",
+      "hour": "Ora",
+      "dayOfMonth": "Giorno del Mese",
+      "month": "Mese",
+      "dayOfWeek": "Giorno della Settimana",
+      "cronExpression": "Espressione Cron",
+      "descriptionLabel": "Descrizione:",
+      "validationErrors": "Errori di Validazione:",
+      "next5Executions": "Prossime 5 Esecuzioni:",
+      "specialCharsGuide": "Guida Caratteri Speciali",
+      "wildcard": "Wildcard",
+      "anyValue": "Qualsiasi valore",
+      "wildcardExample": "Esempio: * in minuto = ogni minuto",
+      "list": "Lista",
+      "multipleValues": "Valori multipli",
+      "listExample": "Esempio: 0,15,30,45 = a 0, 15, 30 e 45",
+      "range": "Intervallo",
+      "rangeOfValues": "Intervallo di valori",
+      "rangeExample": "Esempio: 1-5 = da 1 a 5",
+      "step": "Passo",
+      "stepValues": "Valori a passo",
+      "stepExample": "Esempio: */5 = ogni 5 unità",
+      "cronFormatReference": "Riferimento Formato Cron",
+      "position": "Posizione",
+      "field": "Campo",
+      "allowedValues": "Valori Permessi",
+      "specialChars": "Caratteri Speciali",
+      "enterCronExpression": "Inserisci espressione cron con 5 campi: minuto ora giorno mese giorno_settimana",
+      "clickPatternToApply": "Clicca su un pattern per applicarlo al builder:",
+      "examples": "Esempi"
+    },
+    "jsonSchema": {
+      "description": "Genera JSON Schema dai tuoi dati JSON automaticamente",
+      "configuration": "Configurazione",
+      "schemaTitle": "Titolo Schema (opzionale)",
+      "schemaVersion": "Versione Schema",
+      "makeAllRequired": "Rendi tutti i campi obbligatori",
+      "addFormatHints": "Aggiungi hint di formato (email, uri, date, ecc.)",
+      "inputJson": "JSON di Input",
+      "generatedSchema": "Schema Generato",
+      "generateSchema": "Genera Schema",
+      "pleaseEnterJson": "Inserisci dati JSON",
+      "invalidJson": "JSON non valido",
+      "formatDetection": "Rilevamento Formato",
+      "formatDetectionDesc": "Quando \"Aggiungi hint di formato\" è abilitato, il convertitore rileva automaticamente e aggiunge specifiche di formato:",
+      "typeMappingTitle": "Mappatura Tipi JSON a JSON Schema",
+      "jsonType": "Tipo JSON",
+      "schemaType": "Tipo Schema",
+      "example": "Esempio"
+    }
+  }
+}

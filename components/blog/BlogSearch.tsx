@@ -2,20 +2,23 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface BlogSearchProps {
   initialSearch?: string
+  locale: string
 }
 
-export default function BlogSearch({ initialSearch = '' }: BlogSearchProps) {
+export default function BlogSearch({ initialSearch = '', locale }: BlogSearchProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
   const [searchValue, setSearchValue] = useState(initialSearch)
+  const t = useTranslations('blog')
 
   const updateSearch = useCallback((value: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    
+
     if (value) {
       params.set('search', value)
     } else {
@@ -23,9 +26,9 @@ export default function BlogSearch({ initialSearch = '' }: BlogSearchProps) {
     }
 
     startTransition(() => {
-      router.push('/blog?' + params.toString())
+      router.push(`/${locale}/blog?` + params.toString())
     })
-  }, [router, searchParams])
+  }, [router, searchParams, locale])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,11 +47,11 @@ export default function BlogSearch({ initialSearch = '' }: BlogSearchProps) {
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          placeholder="Cerca articoli..."
-          className="w-full px-4 py-2 pl-10 pr-10 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder={t('searchPlaceholder')}
+          className="w-full px-4 py-2 pl-10 pr-10 bg-bg-dark border border-border rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         />
         <svg
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -64,7 +67,7 @@ export default function BlogSearch({ initialSearch = '' }: BlogSearchProps) {
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -74,7 +77,7 @@ export default function BlogSearch({ initialSearch = '' }: BlogSearchProps) {
       </div>
       {isPending && (
         <div className="absolute right-12 top-1/2 -translate-y-1/2">
-          <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
     </form>

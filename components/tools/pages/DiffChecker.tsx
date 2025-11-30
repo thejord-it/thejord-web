@@ -1,5 +1,6 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface DiffLine {
   type: 'equal' | 'added' | 'removed';
@@ -9,6 +10,7 @@ interface DiffLine {
 }
 
 export default function DiffChecker() {
+  const t = useTranslations('toolPages.diffChecker');
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const [diff, setDiff] = useState<DiffLine[]>([]);
@@ -118,7 +120,7 @@ export default function DiffChecker() {
             Text Diff Checker
           </h1>
           <p className="text-gray-400 text-lg">
-            Compare two texts and highlight the differences line by line
+            {t('description')}
           </p>
         </div>
 
@@ -155,7 +157,7 @@ export default function DiffChecker() {
               onChange={(e) => setShowLineNumbers(e.target.checked)}
               className="w-4 h-4"
             />
-            Line Numbers
+            {t('lineNumbers')}
           </label>
           <label className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors">
             <input
@@ -164,7 +166,7 @@ export default function DiffChecker() {
               onChange={(e) => setIgnoreWhitespace(e.target.checked)}
               className="w-4 h-4"
             />
-            Ignore Whitespace
+            {t('ignoreWhitespace')}
           </label>
           <label className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors">
             <input
@@ -173,7 +175,7 @@ export default function DiffChecker() {
               onChange={(e) => setIgnoreCase(e.target.checked)}
               className="w-4 h-4"
             />
-            Ignore Case
+            {t('ignoreCase')}
           </label>
         </div>
 
@@ -181,19 +183,19 @@ export default function DiffChecker() {
         {diff.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-              <div className="text-gray-400 text-sm mb-1">Total Lines</div>
+              <div className="text-gray-400 text-sm mb-1">{t('totalLines')}</div>
               <div className="text-2xl font-bold text-blue-400">{stats.total}</div>
             </div>
             <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-              <div className="text-gray-400 text-sm mb-1">Unchanged</div>
+              <div className="text-gray-400 text-sm mb-1">{t('unchanged')}</div>
               <div className="text-2xl font-bold text-gray-400">{stats.unchanged}</div>
             </div>
             <div className="bg-gray-800/50 backdrop-blur-sm border border-green-700/30 rounded-lg p-4">
-              <div className="text-gray-400 text-sm mb-1">Additions</div>
+              <div className="text-gray-400 text-sm mb-1">{t('additions')}</div>
               <div className="text-2xl font-bold text-green-400">{stats.additions}</div>
             </div>
             <div className="bg-gray-800/50 backdrop-blur-sm border border-red-700/30 rounded-lg p-4">
-              <div className="text-gray-400 text-sm mb-1">Deletions</div>
+              <div className="text-gray-400 text-sm mb-1">{t('deletions')}</div>
               <div className="text-2xl font-bold text-red-400">{stats.deletions}</div>
             </div>
           </div>
@@ -204,12 +206,12 @@ export default function DiffChecker() {
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-blue-400">📄</span>
-              Original Text
+              {t('originalText')}
             </h2>
             <textarea
               value={text1}
               onChange={(e) => setText1(e.target.value)}
-              placeholder="Paste original text here..."
+              placeholder={t('pasteOriginal')}
               className="w-full h-64 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               spellCheck={false}
             />
@@ -218,12 +220,12 @@ export default function DiffChecker() {
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-green-400">📄</span>
-              Modified Text
+              {t('modifiedText')}
             </h2>
             <textarea
               value={text2}
               onChange={(e) => setText2(e.target.value)}
-              placeholder="Paste modified text here..."
+              placeholder={t('pasteModified')}
               className="w-full h-64 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
               spellCheck={false}
             />
@@ -235,7 +237,7 @@ export default function DiffChecker() {
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-purple-400">🔍</span>
-              Differences
+              {t('differences')}
             </h2>
             <div className="bg-gray-900 rounded-lg overflow-hidden border border-gray-600">
               {diff.map((line, index) => (
@@ -281,19 +283,19 @@ export default function DiffChecker() {
 
         {/* Legend */}
         <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
-          <h3 className="text-lg font-semibold text-white mb-3">Legend</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">{t('legend')}</h3>
           <div className="flex flex-wrap gap-4 md:p-6 text-sm">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-green-500/20 border-l-2 border-green-500"></div>
-              <span className="text-green-400">+ Added line</span>
+              <span className="text-green-400">{t('addedLine')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-red-500/20 border-l-2 border-red-500"></div>
-              <span className="text-red-400">- Removed line</span>
+              <span className="text-red-400">{t('removedLine')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-gray-700"></div>
-              <span className="text-gray-400">Unchanged line</span>
+              <span className="text-gray-400">{t('unchangedLine')}</span>
             </div>
           </div>
         </div>

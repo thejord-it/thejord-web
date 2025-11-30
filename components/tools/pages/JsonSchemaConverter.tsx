@@ -1,9 +1,11 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
-import { useState } from 'react'
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor'
 import { jsonToJsonSchema, validateJSON, type JsonSchemaOptions } from '@/lib/tools/schema-generator'
 
 export default function JsonSchemaConverter() {
+  const t = useTranslations('toolPages.jsonSchema');
   const [inputJson, setInputJson] = useState('')
   const [outputSchema, setOutputSchema] = useState('')
   const [schemaTitle, setSchemaTitle] = useState('')
@@ -106,17 +108,17 @@ export default function JsonSchemaConverter() {
             </span>
           </h1>
           <p className="text-text-muted text-lg">
-            Generate JSON Schema from your JSON data automatically
+            {t('description')}
           </p>
         </div>
 
         {/* Configuration */}
         <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6 mb-6">
-          <h2 className="text-xl font-bold text-text-primary mb-4">Configuration</h2>
+          <h2 className="text-xl font-bold text-text-primary mb-4">{t('configuration')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-semibold text-text-secondary mb-2">
-                Schema Title (optional)
+                {t('schemaTitle')}
               </label>
               <input
                 type="text"
@@ -128,7 +130,7 @@ export default function JsonSchemaConverter() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-text-secondary mb-2">
-                Schema Version
+                {t('schemaVersion')}
               </label>
               <select
                 value={schemaVersion}
@@ -149,7 +151,7 @@ export default function JsonSchemaConverter() {
                 onChange={(e) => setMakeRequired(e.target.checked)}
                 className="w-4 h-4 accent-primary"
               />
-              <span className="text-text-secondary">Make all fields required</span>
+              <span className="text-text-secondary">{t('makeRequired')}</span>
             </label>
 
             <label className="flex items-center gap-2 cursor-pointer">
@@ -159,7 +161,7 @@ export default function JsonSchemaConverter() {
                 onChange={(e) => setAddFormatHints(e.target.checked)}
                 className="w-4 h-4 accent-primary"
               />
-              <span className="text-text-secondary">Add format hints (email, uri, date, etc.)</span>
+              <span className="text-text-secondary">{t('addFormatHints')}</span>
             </label>
           </div>
         </div>
@@ -169,7 +171,7 @@ export default function JsonSchemaConverter() {
           {/* Input JSON */}
           <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center mb-4">
-              <h2 className="text-xl font-bold text-text-primary">Input JSON</h2>
+              <h2 className="text-xl font-bold text-text-primary">{t('inputJson')}</h2>
               <button
                 onClick={handleLoadExample}
                 className="px-3 py-1 text-sm bg-bg-elevated border border-border hover:border-primary text-text-primary rounded-lg transition-colors"
@@ -188,7 +190,7 @@ export default function JsonSchemaConverter() {
 
           {/* Output Schema */}
           <div className="bg-bg-surface border border-border rounded-xl p-4 md:p-6">
-            <h2 className="text-xl font-bold text-text-primary mb-4">Generated Schema</h2>
+            <h2 className="text-xl font-bold text-text-primary mb-4">{t('generatedSchema')}</h2>
             <div className="h-64 md:h-96">
               <MonacoJsonEditor
                 value={outputSchema}
@@ -243,9 +245,9 @@ export default function JsonSchemaConverter() {
 
         {/* Format Detection Reference */}
         <div className="mt-8 bg-bg-surface border border-border rounded-xl p-4 md:p-6">
-          <h2 className="text-xl font-bold text-text-primary mb-4">Format Detection</h2>
+          <h2 className="text-xl font-bold text-text-primary mb-4">{t('formatDetection')}</h2>
           <p className="text-text-secondary mb-4">
-            When "Add format hints" is enabled, the converter automatically detects and adds format specifications:
+            {t('formatDetectionDesc')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="bg-bg-elevated border border-border rounded-lg p-3">
@@ -277,14 +279,14 @@ export default function JsonSchemaConverter() {
 
         {/* Type Mapping Reference */}
         <div className="mt-6 bg-bg-surface border border-border rounded-xl p-4 md:p-6">
-          <h2 className="text-xl font-bold text-text-primary mb-4">JSON to JSON Schema Type Mapping</h2>
+          <h2 className="text-xl font-bold text-text-primary mb-4">{t('typeMapping')}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="py-2 px-4 text-text-secondary font-semibold">JSON Type</th>
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Schema Type</th>
-                  <th className="py-2 px-4 text-text-secondary font-semibold">Example</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('jsonType')}</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('schemaType')}</th>
+                  <th className="py-2 px-4 text-text-secondary font-semibold">{t('example')}</th>
                 </tr>
               </thead>
               <tbody>

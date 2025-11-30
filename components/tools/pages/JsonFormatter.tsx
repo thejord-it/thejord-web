@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { validateJSON, formatJSON, minifyJSON, getJSONStats, FormatOptions } from '@/lib/tools/json-utils';
 import { jsonToCSV, jsonToXML, jsonToYAML, jsonToTypeScript } from '@/lib/tools/json-converters';
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor';
@@ -24,6 +25,7 @@ const SAMPLE_JSON = `{
 }`;
 
 export default function JsonFormatter() {
+  const t = useTranslations('toolPages.jsonFormatter');
   const [input, setInput] = useState(SAMPLE_JSON);
   const [output, setOutput] = useState('');
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
@@ -163,7 +165,7 @@ export default function JsonFormatter() {
             </span> & Validator
           </h1>
           <p className="text-text-muted text-lg">
-            Format, validate, and beautify JSON instantly. All processing happens in your browser.
+            {t('description')}
           </p>
         </div>
 
@@ -192,7 +194,7 @@ export default function JsonFormatter() {
         <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl mb-6">
           <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
             <h2 className="font-semibold text-text-primary text-lg">
-              {activeTab === 'compare' ? 'JSON Comparison' : 'JSON Editor'}
+              {activeTab === 'compare' ? t('jsonComparison') : t('jsonEditor')}
             </h2>
             <div className="flex flex-wrap gap-2">
               <button
@@ -254,7 +256,7 @@ export default function JsonFormatter() {
                 <div className="bg-bg-surface">
                   <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
-                    <span className="font-semibold text-text-secondary">Input JSON</span>
+                    <span className="font-semibold text-text-secondary">{t('inputJson')}</span>
                   </div>
                   <div className="p-4 md:p-6">
                     <div className="border border-border rounded-lg overflow-hidden">
@@ -272,7 +274,7 @@ export default function JsonFormatter() {
                           <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-xs font-bold shadow-md shadow-accent/40">
                             ✓
                           </div>
-                          <span className="text-accent-light font-semibold">Valid JSON</span>
+                          <span className="text-accent-light font-semibold">{t('validJson')}</span>
                         </>
                       ) : (
                         <>
@@ -295,7 +297,7 @@ export default function JsonFormatter() {
                 <div className="bg-bg-surface">
                   <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
-                    <span className="font-semibold text-text-secondary">Compare JSON</span>
+                    <span className="font-semibold text-text-secondary">{t('compareJson')}</span>
                   </div>
                   <div className="p-4 md:p-6">
                     <div className="border border-border rounded-lg overflow-hidden">
@@ -314,7 +316,7 @@ export default function JsonFormatter() {
                             <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-xs font-bold shadow-md shadow-accent/40">
                               ✓
                             </div>
-                            <span className="text-accent-light font-semibold">Valid JSON</span>
+                            <span className="text-accent-light font-semibold">{t('validJson')}</span>
                           </>
                         ) : (
                           <>
@@ -328,7 +330,7 @@ export default function JsonFormatter() {
                           </>
                         )
                       ) : (
-                        <span className="text-text-muted">Enter JSON to compare</span>
+                        <span className="text-text-muted">{t('enterJsonToCompare')}</span>
                       )}
                     </div>
                   </div>
@@ -344,7 +346,7 @@ export default function JsonFormatter() {
               <div className="bg-bg-surface">
                 <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary shadow-md shadow-primary/40"></div>
-                  <span className="font-semibold text-text-secondary">Input JSON</span>
+                  <span className="font-semibold text-text-secondary">{t('inputJson')}</span>
                 </div>
                 <div className="p-4 md:p-6">
                   <div className="border border-border rounded-lg overflow-hidden">
@@ -362,7 +364,7 @@ export default function JsonFormatter() {
                         <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-xs font-bold shadow-md shadow-accent/40">
                           ✓
                         </div>
-                        <span className="text-accent-light font-semibold">Valid JSON</span>
+                        <span className="text-accent-light font-semibold">{t('validJson')}</span>
                       </>
                     ) : (
                       <>
@@ -386,7 +388,7 @@ export default function JsonFormatter() {
                 <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-3 border-b border-border flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-secondary shadow-md shadow-secondary/40"></div>
                   <span className="font-semibold text-text-secondary">
-                    {activeTab === 'tree' ? 'JSON Tree View' : 'Formatted Output'}
+                    {activeTab === 'tree' ? t('jsonTreeView') : t('formattedOutput')}
                   </span>
                 </div>
                 <div className="p-4 md:p-6">
@@ -395,13 +397,13 @@ export default function JsonFormatter() {
                       <JsonTree data={parsedData} />
                     ) : (
                       <div className="h-64 md:h-96 flex items-center justify-center text-text-muted">
-                        Enter valid JSON to see tree view
+                        {t('enterValidJson')}
                       </div>
                     )
                   ) : (
                     <div className="border border-border rounded-lg overflow-hidden">
                       <MonacoJsonEditor
-                        value={output || '// Output will appear here...'}
+                        value={output || t('outputPlaceholder')}
                         onChange={() => {}}
                         height="400px"
                         readOnly={true}
@@ -427,7 +429,7 @@ export default function JsonFormatter() {
                     </button>
                   </div>
                   <div className="text-text-muted text-sm">
-                    {output && `${options.indent} spaces • ${options.sortKeys ? 'Sorted' : 'Original order'}`}
+                    {output && `${options.indent} ${t('spaces')} • ${options.sortKeys ? t('sorted') : t('originalOrder')}`}
                   </div>
                 </div>
               </div>
@@ -437,34 +439,34 @@ export default function JsonFormatter() {
 
         <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6 mb-6">
           <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
-            ⚙️ Formatting Options
+            ⚙️ {t('formattingOptions')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">Indentation</label>
+              <label className="block text-sm font-medium text-text-secondary mb-2">{t('indentation')}</label>
               <select
                 value={options.indent}
                 onChange={(e) => setOptions({ ...options, indent: Number(e.target.value) })}
                 className="w-full px-3 py-2 bg-bg-elevated border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               >
-                <option value="2">2 spaces</option>
-                <option value="4">4 spaces</option>
-                <option value="8">8 spaces</option>
+                <option value="2">2 {t('spaces')}</option>
+                <option value="4">4 {t('spaces')}</option>
+                <option value="8">8 {t('spaces')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">Quote Style</label>
+              <label className="block text-sm font-medium text-text-secondary mb-2">{t('quoteStyle')}</label>
               <select
                 value={options.quoteStyle}
                 onChange={(e) => setOptions({ ...options, quoteStyle: e.target.value as 'double' | 'single' })}
                 className="w-full px-3 py-2 bg-bg-elevated border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               >
-                <option value="double">Double quotes</option>
-                <option value="single">Single quotes</option>
+                <option value="double">{t('doubleQuotes')}</option>
+                <option value="single">{t('singleQuotes')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">Max Line Length</label>
+              <label className="block text-sm font-medium text-text-secondary mb-2">{t('maxLineLength')}</label>
               <input
                 type="number"
                 value={options.maxLineLength}
@@ -481,7 +483,7 @@ export default function JsonFormatter() {
                 onChange={(e) => setOptions({ ...options, sortKeys: e.target.checked })}
                 className="w-4 h-4 rounded border-border"
               />
-              <span>Sort keys alphabetically</span>
+              <span>{t('sortKeysAlpha')}</span>
             </label>
             <label className="flex items-center gap-2 text-text-secondary cursor-pointer">
               <input
@@ -490,7 +492,7 @@ export default function JsonFormatter() {
                 onChange={(e) => setOptions({ ...options, trailingComma: e.target.checked })}
                 className="w-4 h-4 rounded border-border"
               />
-              <span>Allow trailing commas</span>
+              <span>{t('allowTrailingCommas')}</span>
             </label>
           </div>
         </div>
