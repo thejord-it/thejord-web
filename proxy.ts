@@ -1,8 +1,16 @@
+import createMiddleware from 'next-intl/middleware'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { locales, defaultLocale } from './i18n/config'
 
-export function proxy(request: NextRequest) {
-  // Check if accessing admin routes
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: 'always'
+})
+
+export default function middleware(request: NextRequest) {
+  // Handle admin routes - check for auth token
   if (request.nextUrl.pathname.startsWith('/admin')) {
     // Allow login page without auth
     if (request.nextUrl.pathname === '/admin/login') {
@@ -16,11 +24,17 @@ export function proxy(request: NextRequest) {
       // Redirect to login if no token
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
+
+    return NextResponse.next()
   }
 
-  return NextResponse.next()
+  // For all other routes, use the i18n middleware
+  return intlMiddleware(request)
 }
 
 export const config = {
-  matcher: '/admin/:path*',
+  // Match all pathnames except for Next.js internals and static files
+  matcher: [
+    '/((?!api|_next|_vercel|static|uploads|favicon.ico|sitemap.xml|robots.txt|.*\\..*).*)'
+  ]
 }

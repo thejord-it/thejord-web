@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { useToast } from '@/components/ToastProvider';
 import CryptoJS from 'crypto-js';
 import { trackToolUsage, trackCopy, trackButtonClick } from '@/lib/tools/analytics';
@@ -12,6 +13,7 @@ interface HashResult {
 }
 
 export default function HashGenerator() {
+  const t = useTranslations('toolPages.hashGenerator');
   const [input, setInput] = useState('');
   const [selectedAlgorithms, setSelectedAlgorithms] = useState<HashAlgorithm[]>(['MD5', 'SHA1', 'SHA256']);
   const [results, setResults] = useState<HashResult[]>([]);
@@ -19,12 +21,12 @@ export default function HashGenerator() {
   const [useHMAC, setUseHMAC] = useState(false);
   const { showToast } = useToast();
 
-  const algorithms: { name: HashAlgorithm; description: string }[] = [
-    { name: 'MD5', description: '128-bit hash (not cryptographically secure)' },
-    { name: 'SHA1', description: '160-bit hash (deprecated for security)' },
-    { name: 'SHA256', description: '256-bit hash (recommended)' },
-    { name: 'SHA512', description: '512-bit hash (very secure)' },
-    { name: 'SHA3', description: '256-bit SHA-3 (latest standard)' },
+  const algorithms: { name: HashAlgorithm; descKey: string }[] = [
+    { name: 'MD5', descKey: 'notSecure' },
+    { name: 'SHA1', descKey: 'deprecated' },
+    { name: 'SHA256', descKey: 'recommended' },
+    { name: 'SHA512', descKey: 'verySecure' },
+    { name: 'SHA3', descKey: 'latestStandard' },
   ];
 
   useEffect(() => {
@@ -125,7 +127,7 @@ export default function HashGenerator() {
             </span> Generator
           </h1>
           <p className="text-text-muted text-lg">
-            Generate cryptographic hashes using various algorithms.
+            {t('description')}
           </p>
         </div>
 
@@ -133,7 +135,7 @@ export default function HashGenerator() {
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
-                <h2 className="font-semibold text-text-primary text-lg">Input Text</h2>
+                <h2 className="font-semibold text-text-primary text-lg">{t('inputText')}</h2>
                 <button
                   onClick={handleClear}
                   className="px-4 py-2 bg-bg-elevated border border-border rounded-lg text-text-secondary hover:bg-bg-dark hover:border-primary hover:text-primary-light transition-all"
@@ -145,11 +147,11 @@ export default function HashGenerator() {
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Enter text to hash..."
+                  placeholder={t('enterTextToHash')}
                   className="w-full h-48 px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                 />
                 <div className="mt-4 text-sm text-text-muted">
-                  {input.length} characters • {new Blob([input]).size} bytes
+                  {input.length} {t('chars')} • {new Blob([input]).size} bytes
                 </div>
               </div>
             </div>
@@ -157,18 +159,18 @@ export default function HashGenerator() {
             {useHMAC && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
                 <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                  <h2 className="font-semibold text-text-primary text-lg">HMAC Secret Key</h2>
+                  <h2 className="font-semibold text-text-primary text-lg">{t('hmacSecretKey')}</h2>
                 </div>
                 <div className="p-4 md:p-6">
                   <input
                     type="text"
                     value={hmacKey}
                     onChange={(e) => setHmacKey(e.target.value)}
-                    placeholder="Enter secret key for HMAC..."
+                    placeholder={t('enterSecretKey')}
                     className="w-full px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   />
                   <p className="mt-2 text-xs text-text-muted">
-                    HMAC (Hash-based Message Authentication Code) uses a secret key to create a keyed hash.
+                    {t('hmacDescription')}
                   </p>
                 </div>
               </div>
@@ -177,7 +179,7 @@ export default function HashGenerator() {
             {results.length > 0 && (
               <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
                 <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                  <h2 className="font-semibold text-text-primary text-lg">Hash Results</h2>
+                  <h2 className="font-semibold text-text-primary text-lg">{t('hashResults')}</h2>
                 </div>
                 <div className="p-4 md:p-6 space-y-4">
                   {results.map((result, idx) => (
@@ -185,7 +187,7 @@ export default function HashGenerator() {
                       <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center mb-2">
                         <div>
                           <span className="font-semibold text-primary-light">{result.algorithm}</span>
-                          <span className="text-text-muted text-sm ml-3">({result.length} chars)</span>
+                          <span className="text-text-muted text-sm ml-3">({result.length} {t('chars')})</span>
                         </div>
                         <button
                           onClick={() => handleCopy(result.hash, result.algorithm)}
@@ -207,7 +209,7 @@ export default function HashGenerator() {
           <div className="space-y-6">
             <div className="bg-bg-surface rounded-xl border border-border overflow-hidden shadow-xl">
               <div className="bg-bg-elevated px-4 md:px-6 py-2 md:py-4 border-b border-border">
-                <h2 className="font-semibold text-text-primary text-lg">Algorithms</h2>
+                <h2 className="font-semibold text-text-primary text-lg">{t('algorithms')}</h2>
               </div>
               <div className="p-4 md:p-6">
                 <div className="mb-4">
@@ -218,10 +220,10 @@ export default function HashGenerator() {
                       onChange={(e) => setUseHMAC(e.target.checked)}
                       className="w-4 h-4 rounded border-border"
                     />
-                    <span className="font-semibold">Use HMAC</span>
+                    <span className="font-semibold">{t('useHmac')}</span>
                   </label>
                   {useHMAC && !hmacKey && (
-                    <p className="mt-2 text-xs text-yellow-400">⚠️ Please enter a secret key above</p>
+                    <p className="mt-2 text-xs text-yellow-400">⚠️ {t('enterKeyAbove')}</p>
                   )}
                 </div>
 
@@ -242,7 +244,7 @@ export default function HashGenerator() {
                           <span className="text-accent text-xl">✓</span>
                         )}
                       </div>
-                      <div className="text-xs text-text-muted">{algo.description}</div>
+                      <div className="text-xs text-text-muted">{t(algo.descKey)}</div>
                     </button>
                   ))}
                 </div>
@@ -251,30 +253,29 @@ export default function HashGenerator() {
 
             <div className="bg-bg-surface rounded-xl border border-border p-4 md:p-6">
               <h3 className="font-semibold text-text-primary text-lg mb-4 flex items-center gap-2">
-                ℹ️ About Hashing
+                ℹ️ {t('aboutHashing')}
               </h3>
               <div className="text-text-secondary space-y-3 text-sm">
                 <p>
-                  Cryptographic hash functions generate a fixed-size string from any input data.
-                  They are one-way functions (cannot be reversed).
+                  {t('hashingDescription')}
                 </p>
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-2">Common Uses:</h4>
+                  <h4 className="font-semibold text-text-primary mb-2">{t('commonUses')}</h4>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Password storage</li>
-                    <li>Data integrity verification</li>
-                    <li>Digital signatures</li>
-                    <li>File checksums</li>
-                    <li>Blockchain</li>
+                    <li>{t('use1')}</li>
+                    <li>{t('use2')}</li>
+                    <li>{t('use3')}</li>
+                    <li>{t('use4')}</li>
+                    <li>{t('use5')}</li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-2">Security Notes:</h4>
+                  <h4 className="font-semibold text-text-primary mb-2">{t('securityNotes')}</h4>
                   <ul className="list-disc list-inside space-y-1 text-xs">
-                    <li>MD5 is broken, avoid for security</li>
-                    <li>SHA1 is deprecated for security</li>
-                    <li>Use SHA256+ for new applications</li>
-                    <li>HMAC adds authentication layer</li>
+                    <li>{t('secNote1')}</li>
+                    <li>{t('secNote2')}</li>
+                    <li>{t('secNote3')}</li>
+                    <li>{t('secNote4')}</li>
                   </ul>
                 </div>
               </div>

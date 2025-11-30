@@ -1,29 +1,38 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { getBlogPosts } from '@/lib/api'
 import BlogSearch from '@/components/blog/BlogSearch'
 import TagFilter from '@/components/blog/TagFilter'
 
-export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Technical articles about web development, tools, and programming by The Jord',
-}
-
-interface BlogPageProps {
+type Props = {
+  params: Promise<{ locale: string }>
   searchParams: Promise<{ search?: string; tags?: string }>
 }
 
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const params = await searchParams
-  const search = params.search || ''
-  const selectedTags = params.tags?.split(',').filter(Boolean) || []
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'blog' })
 
-  const posts = await getBlogPosts('it', {
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
+}
+
+export default async function BlogPage({ params, searchParams }: Props) {
+  const { locale } = await params
+  const resolvedSearchParams = await searchParams
+  const search = resolvedSearchParams.search || ''
+  const selectedTags = resolvedSearchParams.tags?.split(',').filter(Boolean) || []
+  const t = await getTranslations({ locale, namespace: 'blog' })
+
+  const posts = await getBlogPosts(locale, {
     search: search || undefined,
     tags: selectedTags.length > 0 ? selectedTags : undefined
   })
 
-  const allPosts = await getBlogPosts('it')
+  const allPosts = await getBlogPosts(locale)
   const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags))).sort()
 
   const hasFilters = search || selectedTags.length > 0
@@ -33,24 +42,24 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
         <div className="mb-6 md:mb-8">
           <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Blog
+            {t('title')}
           </h1>
           <p className="text-base md:text-xl text-text-secondary">
-            Technical articles, tutorials, and insights about web development
+            {t('description')}
           </p>
         </div>
 
         <div className="mb-6 md:mb-8 space-y-3 md:space-y-4">
-          <BlogSearch initialSearch={search} />
-          <TagFilter availableTags={allTags} selectedTags={selectedTags} />
+          <BlogSearch initialSearch={search} locale={locale} />
+          <TagFilter availableTags={allTags} selectedTags={selectedTags} locale={locale} />
         </div>
 
         {hasFilters && (
           <div className="mb-4 md:mb-6 text-text-muted text-sm">
             {posts.length === 0 ? (
-              <p>Nessun articolo trovato per i filtri selezionati</p>
+              <p>{t('noResults')}</p>
             ) : (
-              <p>{posts.length} articol{posts.length === 1 ? 'o' : 'i'} trovat{posts.length === 1 ? 'o' : 'i'}</p>
+              <p>{posts.length} {posts.length === 1 ? (locale === 'it' ? 'articolo trovato' : 'article found') : (locale === 'it' ? 'articoli trovati' : 'articles found')}</p>
             )}
           </div>
         )}
@@ -58,9 +67,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-text-muted text-lg">
-              {hasFilters
-                ? 'Prova a modificare i filtri di ricerca'
-                : 'No blog posts yet. Check back soon!'}
+              {hasFilters ? t('tryDifferentFilters') : t('noPostsYet')}
             </p>
           </div>
         ) : (
@@ -73,7 +80,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               return (
                 <Link
                   key={post.id}
-                  href={'/blog/' + post.slug}
+                  href={`/${locale}/blog/${post.slug}`}
                   className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <div className="flex gap-4 md:gap-6 p-4 md:p-6">
@@ -114,7 +121,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         <span>{post.author}</span>
                         <span>-</span>
                         <span>
-                          {new Date(post.publishedAt || post.createdAt).toLocaleDateString('it-IT', {
+                          {new Date(post.publishedAt || post.createdAt).toLocaleDateString(locale === 'it' ? 'it-IT' : 'en-US', {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric'

@@ -1,11 +1,13 @@
 import { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import { ToastProvider } from '@/components/ToastProvider'
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {}
 
-// Simple wrapper for tools - they don't need routing or other providers
+// Wrapper with ToastProvider for all tools
+// next-intl is mocked in jest.setup.js
 function TestWrapper({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return <ToastProvider>{children}</ToastProvider>
 }
 
 const customRender = (

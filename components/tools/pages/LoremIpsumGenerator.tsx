@@ -1,5 +1,6 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const LOREM_WORDS = [
   'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
@@ -24,6 +25,7 @@ const LOREM_SENTENCES = [
 ];
 
 export default function LoremIpsumGenerator() {
+  const t = useTranslations('toolPages.loremIpsum');
   const [count, setCount] = useState(3);
   const [type, setType] = useState<'paragraphs' | 'sentences' | 'words'>('paragraphs');
   const [startWithLorem, setStartWithLorem] = useState(true);
@@ -96,7 +98,7 @@ export default function LoremIpsumGenerator() {
             Lorem Ipsum Generator
           </h1>
           <p className="text-gray-400 text-lg">
-            Generate placeholder text for your designs and mockups
+            {t('description')}
           </p>
         </div>
 
@@ -106,20 +108,20 @@ export default function LoremIpsumGenerator() {
             {/* Type Selection */}
             <div>
               <label className="block text-gray-300 text-sm font-semibold mb-3">
-                Generate
+                {t('generate')}
               </label>
               <div className="flex flex-wrap gap-2">
-                {(['paragraphs', 'sentences', 'words'] as const).map((t) => (
+                {(['paragraphs', 'sentences', 'words'] as const).map((typeOption) => (
                   <button
-                    key={t}
-                    onClick={() => setType(t)}
+                    key={typeOption}
+                    onClick={() => setType(typeOption)}
                     className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                      type === t
+                      type === typeOption
                         ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
                         : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                     }`}
                   >
-                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                    {typeOption.charAt(0).toUpperCase() + typeOption.slice(1)}
                   </button>
                 ))}
               </div>
@@ -128,7 +130,7 @@ export default function LoremIpsumGenerator() {
             {/* Count Input */}
             <div>
               <label className="block text-gray-300 text-sm font-semibold mb-3">
-                Count: {count}
+                {t('count')}: {count}
               </label>
               <div className="flex gap-3 items-center">
                 <input
@@ -160,7 +162,7 @@ export default function LoremIpsumGenerator() {
                 onChange={(e) => setStartWithLorem(e.target.checked)}
                 className="w-4 h-4 text-purple-500 bg-gray-700 border-gray-600 rounded focus:ring-purple-500"
               />
-              <span>Start with "Lorem ipsum dolor sit amet"</span>
+              <span>{t('startWithLorem')}</span>
             </label>
           </div>
 
@@ -191,23 +193,23 @@ export default function LoremIpsumGenerator() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Characters</div>
+            <div className="text-gray-400 text-sm mb-1">{t('characters')}</div>
             <div className="text-2xl font-bold text-purple-400">{output.length}</div>
           </div>
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Words</div>
+            <div className="text-gray-400 text-sm mb-1">{t('words')}</div>
             <div className="text-2xl font-bold text-pink-400">
               {output.split(/\s+/).filter(Boolean).length}
             </div>
           </div>
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Sentences</div>
+            <div className="text-gray-400 text-sm mb-1">{t('sentences')}</div>
             <div className="text-2xl font-bold text-blue-400">
               {output.split(/[.!?]+/).filter(Boolean).length}
             </div>
           </div>
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Paragraphs</div>
+            <div className="text-gray-400 text-sm mb-1">{t('paragraphs')}</div>
             <div className="text-2xl font-bold text-green-400">
               {output.split(/\n\n+/).filter(Boolean).length}
             </div>
@@ -218,12 +220,12 @@ export default function LoremIpsumGenerator() {
         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <span className="text-purple-400">📄</span>
-            Generated Text
+            {t('generatedText')}
           </h2>
           <textarea
             value={output}
             readOnly
-            placeholder="Click 'Generate Lorem Ipsum' to create placeholder text..."
+            placeholder={t('placeholder')}
             className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 text-sm leading-relaxed focus:outline-none resize-none"
             spellCheck={false}
           />
@@ -231,13 +233,9 @@ export default function LoremIpsumGenerator() {
 
         {/* Info */}
         <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
-          <h3 className="text-lg font-semibold text-white mb-3">What is Lorem Ipsum?</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">{t('whatIsLorem')}</h3>
           <p className="text-gray-300 text-sm leading-relaxed">
-            Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing
-            industries for previewing layouts and visual mockups. It helps designers and
-            developers focus on design elements without being distracted by meaningful content.
-            The text is derived from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
-            Malorum" by Cicero, written in 45 BC.
+            {t('loremDescription')}
           </p>
         </div>
       </div>

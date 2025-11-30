@@ -26,7 +26,7 @@ const customJestConfig = {
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/', '/e2e/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(marked|crypto-js|dompurify)/)',
+    'node_modules/(?!(marked|crypto-js|dompurify|next-intl|use-intl)/)',
   ],
 }
 

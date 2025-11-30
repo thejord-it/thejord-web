@@ -1,5 +1,6 @@
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from "@/lib/tools/analytics";
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
@@ -61,6 +62,7 @@ function hello() {
 `;
 
 export default function MarkdownConverter() {
+  const t = useTranslations('toolPages.markdownConverter');
   const [markdown, setMarkdown] = useState('');
   const [html, setHtml] = useState('');
   const [preview, setPreview] = useState('');
@@ -101,7 +103,7 @@ export default function MarkdownConverter() {
             Markdown to HTML Converter
           </h1>
           <p className="text-gray-400 text-lg">
-            Convert Markdown syntax to clean HTML code
+            {t('description')}
           </p>
         </div>
 
@@ -131,15 +133,15 @@ export default function MarkdownConverter() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Markdown Length</div>
+            <div className="text-gray-400 text-sm mb-1">{t('markdownLength')}</div>
             <div className="text-2xl font-bold text-blue-400">{markdown.length}</div>
           </div>
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">HTML Length</div>
+            <div className="text-gray-400 text-sm mb-1">{t('htmlLength')}</div>
             <div className="text-2xl font-bold text-cyan-400">{html.length}</div>
           </div>
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Lines</div>
+            <div className="text-gray-400 text-sm mb-1">{t('lines')}</div>
             <div className="text-2xl font-bold text-green-400">
               {markdown.split('\n').length}
             </div>
@@ -152,12 +154,12 @@ export default function MarkdownConverter() {
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-blue-400">📝</span>
-              Markdown Input
+              {t('markdownInput')}
             </h2>
             <textarea
               value={markdown}
               onChange={(e) => convertMarkdown(e.target.value)}
-              placeholder="Enter your Markdown here..."
+              placeholder={t('enterMarkdownHere')}
               className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               spellCheck={false}
             />
@@ -167,12 +169,12 @@ export default function MarkdownConverter() {
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-green-400">💻</span>
-              HTML Output
+              {t('htmlOutput')}
             </h2>
             <textarea
               value={html}
               readOnly
-              placeholder="HTML will appear here..."
+              placeholder={t('htmlWillAppear')}
               className="w-full h-64 md:h-96 bg-gray-900 text-gray-100 border border-gray-600 rounded-lg p-4 font-mono text-sm focus:outline-none resize-none"
               spellCheck={false}
             />
@@ -184,7 +186,7 @@ export default function MarkdownConverter() {
           <div className="mt-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6 shadow-2xl">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="text-cyan-400">👁️</span>
-              Live Preview
+              {t('livePreview')}
             </h2>
             <div
               className="prose prose-invert max-w-none bg-white text-gray-900 rounded-lg p-4 md:p-6"
@@ -196,31 +198,31 @@ export default function MarkdownConverter() {
         {/* Help Section */}
         <div className="mt-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 md:p-6">
           <h3 className="text-lg font-semibold text-white mb-3">
-            Markdown Syntax Quick Reference
+            {t('syntaxReference')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <div className="text-gray-400 mb-2">Headers:</div>
+              <div className="text-gray-400 mb-2">{t('headers')}</div>
               <code className="text-blue-300"># H1, ## H2, ### H3</code>
             </div>
             <div>
-              <div className="text-gray-400 mb-2">Emphasis:</div>
+              <div className="text-gray-400 mb-2">{t('emphasis')}</div>
               <code className="text-blue-300">*italic* **bold** ***both***</code>
             </div>
             <div>
-              <div className="text-gray-400 mb-2">Lists:</div>
+              <div className="text-gray-400 mb-2">{t('lists')}</div>
               <code className="text-blue-300">- item or 1. item</code>
             </div>
             <div>
-              <div className="text-gray-400 mb-2">Links:</div>
+              <div className="text-gray-400 mb-2">{t('links')}</div>
               <code className="text-blue-300">[text](url)</code>
             </div>
             <div>
-              <div className="text-gray-400 mb-2">Code:</div>
+              <div className="text-gray-400 mb-2">{t('code')}</div>
               <code className="text-blue-300">`inline` or ```block```</code>
             </div>
             <div>
-              <div className="text-gray-400 mb-2">Quote:</div>
+              <div className="text-gray-400 mb-2">{t('quote')}</div>
               <code className="text-blue-300">&gt; quote text</code>
             </div>
           </div>

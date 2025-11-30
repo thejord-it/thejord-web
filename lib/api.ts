@@ -75,6 +75,9 @@ export interface BlogPost {
 
   // Editor type
   editorType?: 'markdown' | 'wysiwyg'
+
+  // Translation
+  translationGroup?: string
 }
 
 export interface BlogPostListItem extends Omit<BlogPost, 'content'> {}
@@ -148,6 +151,22 @@ export async function getBlogPost(slug: string, language: string = 'it'): Promis
 export async function getAllBlogPostSlugs(language: string = 'it'): Promise<string[]> {
   const posts = await getBlogPosts(language)
   return posts.map(post => post.slug)
+}
+
+/**
+ * Get translations for a blog post (returns { "it": "slug-it", "en": "slug-en" })
+ */
+export async function getPostTranslations(slug: string, language: string = 'it'): Promise<Record<string, string>> {
+  const res = await fetch(API_URL + '/api/posts/' + slug + '/translations?lang=' + language, {
+    next: { revalidate: 60 },
+  })
+
+  if (!res.ok) {
+    return {}
+  }
+
+  const data = await res.json()
+  return data.data || {}
 }
 
 // Admin API functions
