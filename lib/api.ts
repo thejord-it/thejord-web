@@ -59,6 +59,7 @@ export interface BlogPost {
   readTime: string
   tags: string[]
   image?: string
+  icon?: string  // Icon ID from IconPicker
 
   // SEO fields
   metaTitle?: string
@@ -181,7 +182,7 @@ const getAuthHeader = (): Record<string, string> => {
 }
 
 export async function getAllPosts(options?: BlogPostSearchOptions): Promise<BlogPost[]> {
-  const searchParams = new URLSearchParams({ published: 'all' })
+  const searchParams = new URLSearchParams({ published: 'all', lang: 'all' })
 
   if (options?.search) {
     searchParams.append('search', options.search)

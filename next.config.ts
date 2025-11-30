@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: http://localhost:4000 https: blob:",
               "font-src 'self' data: https://maxcdn.bootstrapcdn.com",
               "worker-src 'self' blob:",
-              "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com https://cdn.jsdelivr.net",
+              "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com https://cdn.jsdelivr.net https://api-free.deepl.com https://api.mymemory.translated.net",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'"
