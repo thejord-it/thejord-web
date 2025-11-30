@@ -2,7 +2,8 @@
 import Cookies from 'js-cookie'
 
 const TOKEN_KEY = 'thejord_admin_token'
-const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || 'http://localhost:4000'
+// Use proxy for client-side API calls (keeps backend internal)
+const API_URL = '/api/proxy'
 
 export interface User {
   id: string

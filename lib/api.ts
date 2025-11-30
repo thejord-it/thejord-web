@@ -1,6 +1,9 @@
 // API client for THEJORD API
 
-const API_URL = process.env.API_URL || 'http://localhost:4000'
+// Server-side uses internal API URL, client-side uses proxy
+const API_URL = typeof window === 'undefined'
+  ? (process.env.API_URL || 'http://localhost:4000')
+  : '/api/proxy'
 const REVALIDATE_TOKEN = process.env.REVALIDATE_TOKEN || 'dev-token-change-in-production'
 
 // Helper to sanitize HTML content and remove external CDN links
