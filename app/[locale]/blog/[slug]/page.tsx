@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { getBlogPost, getAllBlogPostSlugs, getPostTranslations } from '@/lib/api'
+import { getIconEmoji } from '@/lib/icons'
 import { locales, localeFlags, type Locale } from '@/i18n/config'
 import { getTranslations } from 'next-intl/server'
 
@@ -195,7 +196,10 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Article Header */}
         <header className="mb-12">
-          <h1 className="text-5xl font-bold mb-6 text-text-primary leading-tight">
+          <h1 className="text-5xl font-bold mb-6 text-text-primary leading-tight flex items-center gap-4">
+            {getIconEmoji(post.icon) && (
+              <span className="text-5xl">{getIconEmoji(post.icon)}</span>
+            )}
             {post.title}
           </h1>
 

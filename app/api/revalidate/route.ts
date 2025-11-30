@@ -23,19 +23,32 @@ export async function POST(request: NextRequest) {
       console.log(`Revalidated path: ${path}`)
     }
 
-    // If slug is provided, revalidate the specific blog post page
+    // Revalidate blog pages for all locales
+    const locales = ['it', 'en']
+
+    // If slug is provided, revalidate the specific blog post page for all locales
     if (slug) {
-      revalidatePath(`/blog/${slug}`)
-      console.log(`Revalidated blog post: /blog/${slug}`)
+      for (const locale of locales) {
+        revalidatePath(`/${locale}/blog/${slug}`)
+        console.log(`Revalidated blog post: /${locale}/blog/${slug}`)
+      }
     }
 
-    // Always revalidate blog list page when any post changes
-    revalidatePath('/blog')
-    console.log('Revalidated /blog list page')
+    // Always revalidate blog list page for all locales when any post changes
+    for (const locale of locales) {
+      revalidatePath(`/${locale}/blog`)
+      console.log(`Revalidated /${locale}/blog list page`)
+    }
+
+    const revalidatedPaths = [
+      path,
+      ...locales.map(l => `/${l}/blog`),
+      ...(slug ? locales.map(l => `/${l}/blog/${slug}`) : [])
+    ].filter(Boolean)
 
     return NextResponse.json({
       revalidated: true,
-      paths: [path, slug ? `/blog/${slug}` : null, '/blog'].filter(Boolean),
+      paths: revalidatedPaths,
       now: Date.now()
     })
   } catch (err) {
