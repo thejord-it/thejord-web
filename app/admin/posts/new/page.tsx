@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createPost, BlogPost } from '@/lib/api'
 import MarkdownEditor from '@/components/MarkdownEditor'
@@ -32,6 +32,14 @@ interface TranslatedPost {
 }
 
 export default function NewPostPage() {
+  return (
+    <Suspense fallback={<div className="text-text-muted">Loading...</div>}>
+      <NewPostContent />
+    </Suspense>
+  )
+}
+
+function NewPostContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
@@ -173,6 +181,7 @@ export default function NewPostPage() {
     try {
       const post: Partial<BlogPost> = {
         ...formData,
+        icon: formData.icon || undefined,
         editorType: editorType,
         published: publish,
         publishedAt: publish ? new Date().toISOString() : undefined,
