@@ -25,7 +25,7 @@ export default function TagInput({ value, onChange, label = 'Tags' }: TagInputPr
 
   const fetchAllTags = async () => {
     try {
-      const res = await fetch(`${API_URL}/posts`)
+      const res = await fetch(`${API_URL}/api/posts`)
       if (res.ok) {
         const data = await res.json()
         const posts = data.data || []
