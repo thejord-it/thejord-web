@@ -24,6 +24,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Set API URL for build time (internal K8s service)
 ENV API_URL=http://thejord-api:4000
 
+# Set Google Analytics ID for build time
+ENV NEXT_PUBLIC_GA_MEASUREMENT_ID=G-1LDVSZHTTB
+
 # Build Next.js app
 RUN npm run build
 
