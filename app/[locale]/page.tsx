@@ -71,8 +71,8 @@ export default function HomePage() {
     <div className="min-h-screen bg-bg-darkest">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-bg-darkest to-secondary/10 animate-gradient"></div>
+        {/* Static background gradient (removed animation for better LCP) */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-bg-darkest to-secondary/10"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-12 md:py-20 md:py-32">
           <div className="text-center">
@@ -183,7 +183,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 md:py-20 bg-bg-dark/30">
+      <section className="py-12 md:py-20 bg-bg-dark/30" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-6">
@@ -220,7 +220,7 @@ export default function HomePage() {
       </section>
 
       {/* Blog CTA Section */}
-      <section className="py-12 md:py-20">
+      <section className="py-12 md:py-20" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">
             {t('blog.title')}
@@ -238,7 +238,7 @@ export default function HomePage() {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="py-12 md:py-20 border-t border-border bg-bg-dark/50">
+      <section className="py-12 md:py-20 border-t border-border bg-bg-dark/50" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 200px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-3xl font-bold text-text-primary mb-4">
