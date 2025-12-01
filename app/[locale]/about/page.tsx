@@ -134,6 +134,98 @@ export default function About() {
           </div>
         </section>
 
+        {/* Roadmap Section */}
+        <section className="bg-bg-dark border border-border rounded-xl p-4 md:p-8 mb-4 md:mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-text-primary">
+            {locale === 'it' ? '🗺️ Roadmap' : '🗺️ Roadmap'}
+          </h2>
+          <p className="text-text-secondary mb-4 md:mb-6">
+            {locale === 'it'
+              ? 'Stiamo costantemente migliorando THEJORD.IT. Ecco il nostro percorso e cosa abbiamo in programma:'
+              : 'We are constantly improving THEJORD.IT. Here is our journey and what we have planned:'}
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <span className="text-green-500 text-xl">✅</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 1: Foundation (Completata)' : 'Phase 1: Foundation (Completed)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? '9 strumenti essenziali, deployment Docker/K3s, SEO e security headers'
+                    : '9 essential tools, Docker/K3s deployment, SEO and security headers'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-green-500 text-xl">✅</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 2: Testing & CI/CD (Completata)' : 'Phase 2: Testing & CI/CD (Completed)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? '118+ test (unit + E2E), GitHub Actions automatizzato, Playwright'
+                    : '118+ tests (unit + E2E), automated GitHub Actions, Playwright'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-green-500 text-xl">✅</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 3: Next.js Migration (Completata)' : 'Phase 3: Next.js Migration (Completed)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? 'SSR/SSG con Next.js 16, Turbopack, migliore indicizzazione SEO'
+                    : 'SSR/SSG with Next.js 16, Turbopack, improved SEO indexing'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-green-500 text-xl">✅</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 4: Blog & Backend (Completata)' : 'Phase 4: Blog & Backend (Completed)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? 'CMS blog multilingue, API REST, PostgreSQL, sistema di traduzione'
+                    : 'Multilingual blog CMS, REST API, PostgreSQL, translation system'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-blue-500 text-xl">🔄</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 5: Advanced Tools (In corso)' : 'Phase 5: Advanced Tools (In Progress)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? 'PDF tools, nuovi strumenti, miglioramenti UX, ambiente staging'
+                    : 'PDF tools, new utilities, UX improvements, staging environment'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-gray-500 text-xl">📋</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 6: Community & Scale (Pianificata)' : 'Phase 6: Community & Scale (Planned)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? '20+ tool totali, API pubblica, contributi community, documentazione estesa'
+                    : '20+ total tools, public API, community contributions, extended documentation'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Privacy & Security Section */}
         <section className="bg-bg-dark border border-border rounded-xl p-4 md:p-8 mb-4 md:mb-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-text-primary">{t('privacy.title')}</h2>

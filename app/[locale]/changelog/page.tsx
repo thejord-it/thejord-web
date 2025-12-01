@@ -44,13 +44,81 @@ export default function Changelog() {
           </p>
         </div>
 
-        {/* Version 2.0.0 - Next.js Migration */}
+        {/* Version 2.1.0 - Kubernetes Deployment */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="bg-primary px-4 py-2 rounded-lg">
+              <span className="text-white font-bold text-lg">v2.1.0</span>
+            </div>
+            <span className="text-text-muted">{formatDate('2025-12-01')}</span>
+            <span className="bg-blue-900/30 text-blue-400 px-3 py-1 rounded-full text-sm font-semibold">
+              {locale === 'it' ? 'Produzione' : 'Production'}
+            </span>
+          </div>
+
+          <div className="bg-bg-dark rounded-xl border border-border p-6 mb-6">
+            <h3 className="text-2xl font-bold mb-4 text-green-400 flex items-center gap-2">
+              ✨ {locale === 'it' ? 'Deploy Kubernetes e Miglioramenti' : 'Kubernetes Deploy & Improvements'}
+            </h3>
+            <ul className="space-y-3 text-text-secondary">
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Infrastruttura Kubernetes' : 'Kubernetes Infrastructure'}</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• {locale === 'it' ? 'Deploy su cluster K3s con 2 repliche' : 'Deploy on K3s cluster with 2 replicas'}</li>
+                    <li>• {locale === 'it' ? 'Cloudflare Tunnel per ingress sicuro' : 'Cloudflare Tunnel for secure ingress'}</li>
+                    <li>• {locale === 'it' ? 'PostgreSQL in container Docker dedicato' : 'PostgreSQL in dedicated Docker container'}</li>
+                    <li>• CI/CD {locale === 'it' ? 'con GitHub Actions e self-hosted runner' : 'with GitHub Actions and self-hosted runner'}</li>
+                  </ul>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'API Proxy Pattern' : 'API Proxy Pattern'}</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Backend API interno non esposto pubblicamente. Tutte le chiamate passano attraverso Next.js API routes per maggiore sicurezza.'
+                      : 'Internal backend API not publicly exposed. All calls go through Next.js API routes for enhanced security.'}
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Blog Multilingue Completo' : 'Complete Multilingual Blog'}</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• 6 {locale === 'it' ? 'articoli in italiano' : 'articles in Italian'}</li>
+                    <li>• 6 {locale === 'it' ? 'articoli in inglese' : 'articles in English'}</li>
+                    <li>• {locale === 'it' ? 'Sistema di traduzione collegato tra lingue' : 'Translation system linked between languages'}</li>
+                    <li>• {locale === 'it' ? 'Icone per ogni articolo' : 'Icons for each article'}</li>
+                  </ul>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">Google Analytics & SEO</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• Google Analytics 4 {locale === 'it' ? 'integrato' : 'integrated'}</li>
+                    <li>• Sitemap.xml {locale === 'it' ? 'dinamica con tutti i blog post' : 'dynamic with all blog posts'}</li>
+                    <li>• Robots.txt {locale === 'it' ? 'ottimizzato' : 'optimized'}</li>
+                    <li>• hreflang {locale === 'it' ? 'per SEO multilingue' : 'for multilingual SEO'}</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Version 2.0.0 - Next.js Migration */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v2.0.0</span>
             </div>
-            <span className="text-text-muted">{formatDate('2025-01-20')}</span>
+            <span className="text-text-muted">{formatDate('2025-11-18')}</span>
             <span className="bg-purple-900/30 text-purple-400 px-3 py-1 rounded-full text-sm font-semibold">
               {t('majorUpdate')}
             </span>
@@ -310,11 +378,22 @@ export default function Changelog() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="py-3 px-4">
-                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.0.0</span>
+                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.1.0</span>
                   </td>
-                  <td className="py-3 px-4">20 {locale === 'it' ? 'Gen' : 'Jan'} 2025</td>
+                  <td className="py-3 px-4">1 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
                   <td className="py-3 px-4">
                     🚀 {locale === 'it'
+                      ? 'Deploy Kubernetes, API Proxy, Blog multilingue, Google Analytics'
+                      : 'Kubernetes deploy, API Proxy, Multilingual blog, Google Analytics'}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">
+                    <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v2.0.0</span>
+                  </td>
+                  <td className="py-3 px-4">18 {locale === 'it' ? 'Nov' : 'Nov'} 2025</td>
+                  <td className="py-3 px-4">
+                    {locale === 'it'
                       ? 'Migrazione a Next.js 16, Blog + Tools integrati, 118 unit tests'
                       : 'Migration to Next.js 16, Blog + Tools integrated, 118 unit tests'}
                   </td>
