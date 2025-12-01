@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, Fragment } from 'react'
 import Link from 'next/link'
 import { getAllPosts, deletePost, bulkDeletePosts, bulkPublishPosts, bulkUnpublishPosts, BlogPost } from '@/lib/api'
 import { getIconEmoji } from '@/lib/icons'
@@ -363,10 +363,9 @@ export default function PostsListPage() {
             </thead>
             <tbody className="divide-y divide-border">
               {groupedPosts.map((group) => (
-                <>
+                <Fragment key={group.main.id}>
                   {/* Main post row */}
                   <tr
-                    key={group.main.id}
                     className={`hover:bg-bg-dark transition-colors ${group.translations.length > 0 ? 'border-l-4 border-l-primary/50' : ''}`}
                   >
                     <td className="px-6 py-4">
@@ -548,7 +547,7 @@ export default function PostsListPage() {
                       </tr>
                     ))
                   }
-                </>
+                </Fragment>
               ))}
             </tbody>
           </table>

@@ -48,9 +48,8 @@ async function proxyRequest(
   const path = params.path.join('/')
   const url = new URL(request.url)
 
-  // Don't add /api/ prefix for uploads (static files)
-  const apiPath = path.startsWith('uploads') ? `/${path}` : `/api/${path}`
-  const targetUrl = `${API_URL}${apiPath}${url.search}`
+  // Pass path as-is (caller includes /api/ when needed)
+  const targetUrl = `${API_URL}/${path}${url.search}`
 
   // Forward headers (except host)
   const headers = new Headers()
