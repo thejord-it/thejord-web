@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { locales, localeFlags, localeNames, type Locale } from '@/i18n/config'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+// Use proxy for client-side API calls (keeps backend internal)
+const API_URL = '/api/proxy'
 
 export default function Header() {
   const pathname = usePathname()
