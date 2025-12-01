@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import { getBlogPost, getAllBlogPostSlugs, getPostTranslations } from '@/lib/api'
 import { getIconEmoji } from '@/lib/icons'
 import { locales, localeFlags, type Locale } from '@/i18n/config'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -117,6 +117,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug, locale } = await params
+
+  // Enable static rendering for this locale
+  setRequestLocale(locale)
+
   const post = await getBlogPost(slug, locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
 
