@@ -56,7 +56,7 @@ export default function Header() {
     if (isBlogPost) {
       const slug = pathWithoutLocale.split('/')[2]
       if (slug) {
-        fetch(`${API_URL}/api/posts/${slug}/translations?lang=${locale}`)
+        fetch(`${API_URL}/posts/${slug}/translations?lang=${locale}`)
           .then(res => res.json())
           .then(data => {
             if (data.success && data.data) {
