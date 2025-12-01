@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+// Use proxy for client-side API calls (keeps backend internal)
+const API_URL = '/api/proxy'
 
 interface TagInputProps {
   value: string[]
