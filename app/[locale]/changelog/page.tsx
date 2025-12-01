@@ -272,7 +272,7 @@ export default function Changelog() {
             <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v1.1.0</span>
             </div>
-            <span className="text-text-muted">{formatDate('2025-01-12')}</span>
+            <span className="text-text-muted">{formatDate('2024-11-15')}</span>
           </div>
 
           <div className="bg-bg-dark rounded-xl border border-border p-6 mb-6">
@@ -320,7 +320,7 @@ export default function Changelog() {
             <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v1.0.0</span>
             </div>
-            <span className="text-text-muted">{formatDate('2025-01-12')}</span>
+            <span className="text-text-muted">{formatDate('2024-11-12')}</span>
             <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
               🚀 {t('initialRelease')}
             </span>
@@ -402,14 +402,14 @@ export default function Changelog() {
                   <td className="py-3 px-4">
                     <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v1.1.0</span>
                   </td>
-                  <td className="py-3 px-4">12 {locale === 'it' ? 'Gen' : 'Jan'} 2025</td>
+                  <td className="py-3 px-4">15 {locale === 'it' ? 'Nov' : 'Nov'} 2024</td>
                   <td className="py-3 px-4">UI enhancements, Base64 file ops, toast notifications</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4">
                     <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v1.0.0</span>
                   </td>
-                  <td className="py-3 px-4">12 {locale === 'it' ? 'Gen' : 'Jan'} 2025</td>
+                  <td className="py-3 px-4">12 {locale === 'it' ? 'Nov' : 'Nov'} 2024</td>
                   <td className="py-3 px-4">🚀 {locale === 'it' ? 'Release iniziale con 9 tool' : 'Initial release with 9 tools'}</td>
                 </tr>
               </tbody>
