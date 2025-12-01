@@ -82,6 +82,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
+      <head>
+        {/* DNS prefetch and preconnect for performance */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+      </head>
       <body className="antialiased flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
           {gaId && <GoogleAnalytics gaId={gaId} />}

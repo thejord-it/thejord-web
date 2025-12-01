@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
   // Enable standalone output for Docker
   output: 'standalone',
 
+  // Performance optimizations
+  experimental: {
+    // Optimize CSS loading
+    optimizeCss: true,
+  },
+
+  // Compiler optimizations
+  compiler: {
+    // Remove console.log in production
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
   // Security headers
   async headers() {
     return [
