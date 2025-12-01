@@ -21,6 +21,9 @@ COPY . .
 # Disable Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set API URL for build time (internal K8s service)
+ENV API_URL=http://thejord-api:4000
+
 # Build Next.js app
 RUN npm run build
 
