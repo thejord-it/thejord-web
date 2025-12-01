@@ -92,7 +92,7 @@ export default function ImageUpload({
       const formData = new FormData()
       formData.append('image', croppedBlob, 'cropped-image.jpg')
 
-      const res = await fetch(`${API_URL}/api/upload`, {
+      const res = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         headers: getAuthHeader(),
         body: formData,
