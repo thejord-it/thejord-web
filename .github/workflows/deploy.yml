@@ -83,10 +83,10 @@ jobs:
         run: |
           echo "Deploying to ${{ env.ENV_NAME }} environment..."
           echo "Namespace: ${{ env.NAMESPACE }}"
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${IMAGE_TAG}"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
 
           # Prepare deployment manifest
-          sed -e "s|IMAGE_PLACEHOLDER|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${IMAGE_TAG}|g" \
+          sed -e "s|IMAGE_PLACEHOLDER|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}|g" \
               -e "s|NAMESPACE_PLACEHOLDER|${{ env.NAMESPACE }}|g" \
               -e "s|API_URL_PLACEHOLDER|${{ env.API_URL }}|g" \
               -e "s|INGRESS_HOST_PLACEHOLDER|${{ env.INGRESS_HOST }}|g" \
