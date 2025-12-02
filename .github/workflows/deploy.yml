@@ -3,8 +3,8 @@ name: Build and Deploy thejord-web
 on:
   push:
     branches:
-      - main
       - master
+      - develop
   workflow_dispatch:
 
 env:
@@ -17,10 +17,16 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image_tag: ${{ steps.vars.outputs.sha_short }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set short SHA
+        id: vars
+        run: echo "sha_short=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
 
       - name: Log in to Container Registry
         uses: docker/login-action@v3
@@ -36,7 +42,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha,prefix=
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/develop' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -45,8 +52,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
 
   deploy:
     needs: build
@@ -55,20 +60,70 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to K3s
+      - name: Set environment variables
+        id: env
         run: |
-          # Update image tag to latest commit SHA
-          export IMAGE_TAG=${{ github.sha }}
+          if [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
+            echo "NAMESPACE=thejord" >> $GITHUB_ENV
+            echo "API_URL=http://thejord-api:4000" >> $GITHUB_ENV
+            echo "INGRESS_HOST=thejord.it" >> $GITHUB_ENV
+            echo "NODEPORT=30800" >> $GITHUB_ENV
+            echo "ENV_NAME=production" >> $GITHUB_ENV
+          else
+            echo "NAMESPACE=thejord-staging" >> $GITHUB_ENV
+            echo "API_URL=http://thejord-api.thejord:4000" >> $GITHUB_ENV
+            echo "INGRESS_HOST=staging.thejord.it" >> $GITHUB_ENV
+            echo "NODEPORT=30801" >> $GITHUB_ENV
+            echo "ENV_NAME=staging" >> $GITHUB_ENV
+          fi
 
-          # Apply deployment with new image
-          kubectl set image deployment/thejord-web \
-            thejord-web=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG:0:7} \
-            -n thejord
+      - name: Deploy to K3s
+        env:
+          IMAGE_TAG: ${{ needs.build.outputs.image_tag }}
+        run: |
+          echo "Deploying to ${{ env.ENV_NAME }} environment..."
+          echo "Namespace: ${{ env.NAMESPACE }}"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${IMAGE_TAG}"
 
-          # Wait for rollout
-          kubectl rollout status deployment/thejord-web -n thejord --timeout=300s
+          # Prepare deployment manifest
+          sed -e "s|IMAGE_PLACEHOLDER|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${IMAGE_TAG}|g" \
+              -e "s|NAMESPACE_PLACEHOLDER|${{ env.NAMESPACE }}|g" \
+              -e "s|API_URL_PLACEHOLDER|${{ env.API_URL }}|g" \
+              -e "s|INGRESS_HOST_PLACEHOLDER|${{ env.INGRESS_HOST }}|g" \
+              -e "s|NODEPORT_PLACEHOLDER|${{ env.NODEPORT }}|g" \
+              -e "s|DEPLOY_TIME|$(date +%s)|g" \
+              .github/k8s-deployment.yaml > /tmp/deployment-web.yaml
+
+          # Copy to K3s server
+          scp -o StrictHostKeyChecking=no /tmp/deployment-web.yaml root@192.168.1.212:/tmp/
+
+          # Deploy on K3s
+          ssh -o StrictHostKeyChecking=no root@192.168.1.212 "
+            # Create/update imagePullSecret
+            kubectl create secret docker-registry ghcr-secret \
+              --docker-server=${{ env.REGISTRY }} \
+              --docker-username=${{ github.actor }} \
+              --docker-password=${{ secrets.GITHUB_TOKEN }} \
+              --namespace=${{ env.NAMESPACE }} \
+              --dry-run=client -o yaml | kubectl apply -f -
+
+            # Apply deployment
+            kubectl apply -f /tmp/deployment-web.yaml
+
+            # Wait for rollout
+            kubectl rollout status deployment/thejord-web -n ${{ env.NAMESPACE }} --timeout=300s
+          "
 
       - name: Verify deployment
         run: |
-          kubectl get pods -n thejord -l app=thejord-web
-          echo "Deployment completed successfully!"
+          ssh -o StrictHostKeyChecking=no root@192.168.1.212 "
+            echo '=== Pods ==='
+            kubectl get pods -n ${{ env.NAMESPACE }} -l app=thejord-web
+            echo ''
+            echo '=== Service ==='
+            kubectl get svc -n ${{ env.NAMESPACE }} -l app=thejord-web
+            echo ''
+            echo '=== Ingress ==='
+            kubectl get ingress -n ${{ env.NAMESPACE }}
+          "
+          echo "Deployment to ${{ env.ENV_NAME }} completed successfully!"

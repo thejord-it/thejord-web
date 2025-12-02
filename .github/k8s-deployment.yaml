@@ -1,0 +1,98 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: NAMESPACE_PLACEHOLDER
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thejord-web
+  namespace: NAMESPACE_PLACEHOLDER
+  labels:
+    app: thejord-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thejord-web
+  template:
+    metadata:
+      labels:
+        app: thejord-web
+      annotations:
+        deploytime: "DEPLOY_TIME"
+    spec:
+      containers:
+      - name: thejord-web
+        image: IMAGE_PLACEHOLDER
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: API_URL
+          value: "API_URL_PLACEHOLDER"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+      imagePullSecrets:
+      - name: ghcr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thejord-web
+  namespace: NAMESPACE_PLACEHOLDER
+  labels:
+    app: thejord-web
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: NODEPORT_PLACEHOLDER
+    protocol: TCP
+    name: http
+  selector:
+    app: thejord-web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: thejord-web-ingress
+  namespace: NAMESPACE_PLACEHOLDER
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: INGRESS_HOST_PLACEHOLDER
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: thejord-web
+            port:
+              number: 3000
