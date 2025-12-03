@@ -44,10 +44,65 @@ export default function Changelog() {
           </p>
         </div>
 
-        {/* Version 2.1.0 - Kubernetes Deployment */}
+        {/* Version 2.2.0 - XML & WSDL Viewer */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="bg-primary px-4 py-2 rounded-lg">
+              <span className="text-white font-bold text-lg">v2.2.0</span>
+            </div>
+            <span className="text-text-muted">{formatDate('2025-12-03')}</span>
+            <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
+              {locale === 'it' ? 'Nuovo Tool' : 'New Tool'}
+            </span>
+          </div>
+
+          <div className="bg-bg-dark rounded-xl border border-border p-6 mb-6">
+            <h3 className="text-2xl font-bold mb-4 text-green-400 flex items-center gap-2">
+              ✨ XML & WSDL Viewer
+            </h3>
+            <ul className="space-y-3 text-text-secondary">
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Funzionalità Principali' : 'Main Features'}</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• XML Formatter & Prettifier</li>
+                    <li>• XML Validator {locale === 'it' ? 'in tempo reale' : 'in real-time'}</li>
+                    <li>• WSDL Parser & Viewer</li>
+                    <li>• XML ↔ JSON Converter</li>
+                    <li>• XML Minifier</li>
+                  </ul>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Statistiche XML' : 'XML Statistics'}</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Conteggio elementi, attributi, nodi testo, profondità e dimensione in bytes'
+                      : 'Element count, attributes, text nodes, depth and size in bytes'}
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Test Completi' : 'Complete Tests'}</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• 19 unit tests {locale === 'it' ? 'con' : 'with'} Jest</li>
+                    <li>• 17 E2E tests {locale === 'it' ? 'con' : 'with'} Playwright</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Version 2.1.0 - Kubernetes Deployment */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v2.1.0</span>
             </div>
             <span className="text-text-muted">{formatDate('2025-12-01')}</span>
@@ -154,7 +209,7 @@ export default function Changelog() {
               <li className="flex items-start gap-3">
                 <span className="text-green-400 mt-1">●</span>
                 <div>
-                  <strong className="text-text-primary">{locale === 'it' ? '11 Tools Migrati' : '11 Tools Migrated'}</strong>
+                  <strong className="text-text-primary">{locale === 'it' ? '12 Tools Migrati' : '12 Tools Migrated'}</strong>
                   <ul className="text-sm mt-1 space-y-1 ml-4">
                     <li>• JSON Formatter & Validator</li>
                     <li>• Base64 Encoder/Decoder</li>
@@ -167,6 +222,7 @@ export default function Changelog() {
                     <li>• Diff Checker</li>
                     <li>• Cron Expression Builder</li>
                     <li>• JSON Schema Converter</li>
+                    <li>• XML & WSDL Viewer</li>
                   </ul>
                 </div>
               </li>
@@ -175,8 +231,8 @@ export default function Changelog() {
                 <div>
                   <strong className="text-text-primary">{locale === 'it' ? 'Testing Completo' : 'Complete Testing'}</strong>
                   <ul className="text-sm mt-1 space-y-1 ml-4">
-                    <li>• 118 unit tests {locale === 'it' ? 'con' : 'with'} Jest</li>
-                    <li>• 14 E2E tests {locale === 'it' ? 'con' : 'with'} Playwright</li>
+                    <li>• 137 unit tests {locale === 'it' ? 'con' : 'with'} Jest</li>
+                    <li>• 31 E2E tests {locale === 'it' ? 'con' : 'with'} Playwright</li>
                     <li>• Test coverage {locale === 'it' ? 'per tutti i tool principali' : 'for all main tools'}</li>
                   </ul>
                 </div>
@@ -378,7 +434,18 @@ export default function Changelog() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="py-3 px-4">
-                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.1.0</span>
+                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.2.0</span>
+                  </td>
+                  <td className="py-3 px-4">3 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
+                  <td className="py-3 px-4">
+                    ✨ {locale === 'it'
+                      ? 'XML & WSDL Viewer: formatter, validator, WSDL parser, JSON converter'
+                      : 'XML & WSDL Viewer: formatter, validator, WSDL parser, JSON converter'}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">
+                    <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v2.1.0</span>
                   </td>
                   <td className="py-3 px-4">1 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
                   <td className="py-3 px-4">
@@ -394,8 +461,8 @@ export default function Changelog() {
                   <td className="py-3 px-4">18 {locale === 'it' ? 'Nov' : 'Nov'} 2025</td>
                   <td className="py-3 px-4">
                     {locale === 'it'
-                      ? 'Migrazione a Next.js 16, Blog + Tools integrati, 118 unit tests'
-                      : 'Migration to Next.js 16, Blog + Tools integrated, 118 unit tests'}
+                      ? 'Migrazione a Next.js 16, Blog + Tools integrati, 137 unit tests'
+                      : 'Migration to Next.js 16, Blog + Tools integrated, 137 unit tests'}
                   </td>
                 </tr>
                 <tr>
