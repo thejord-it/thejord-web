@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@/components/ToastProvider';
-import { validateXML, formatXML, minifyXML, xmlToJSON, jsonToXML, getXMLStats, parseWSDL, WSDLData } from '@/lib/xml-wsdl-utils';
+import { validateXML, formatXML, minifyXML, xmlToJSON, jsonToXML, getXMLStats, parseWSDL, WSDLData, XMLValidation, XMLStats } from '@/lib/xml-wsdl-utils';
 import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
 
 const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
@@ -67,8 +67,8 @@ export default function XmlWsdlViewer() {
   const [input, setInput] = useState(SAMPLE_XML);
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('format');
-  const [validation, setValidation] = useState({ valid: true, error: undefined, line: undefined, column: undefined });
-  const [stats, setStats] = useState({ elements: 0, attributes: 0, textNodes: 0, comments: 0, depth: 0, size: 0 });
+  const [validation, setValidation] = useState<XMLValidation>({ valid: true });
+  const [stats, setStats] = useState<XMLStats>({ elements: 0, attributes: 0, textNodes: 0, depth: 0, size: 0 });
   const [indent, setIndent] = useState(2);
   const [wsdlData, setWsdlData] = useState<WSDLData | null>(null);
   const [jsonInput, setJsonInput] = useState('');
