@@ -136,6 +136,10 @@
       "jsonSchema": {
         "name": "JSON Schema Converter",
         "description": "Generate JSON Schema from JSON"
+      },
+      "xmlWsdlViewer": {
+        "name": "XML & WSDL Viewer",
+        "description": "Format, validate, and parse XML and WSDL files"
       }
     },
     "categories": {
@@ -727,6 +731,62 @@
       "jsonType": "JSON Type",
       "schemaType": "Schema Type",
       "example": "Example"
+    },
+    "xmlWsdlViewer": {
+      "subtitle": "Format, validate, and parse XML and WSDL files",
+      "tabs": {
+        "format": "Format & Validate",
+        "wsdl": "WSDL Parser",
+        "convert": "XML ↔ JSON",
+        "minify": "Minify"
+      },
+      "editor": {
+        "title": "XML Editor",
+        "input": "XML Input",
+        "placeholder": "Paste your XML here..."
+      },
+      "output": {
+        "title": "Output",
+        "placeholder": "Output will appear here..."
+      },
+      "options": {
+        "title": "Options",
+        "indentation": "Indentation"
+      },
+      "buttons": {
+        "format": "Format XML",
+        "minify": "Minify XML",
+        "copy": "Copy",
+        "download": "Download",
+        "clear": "Clear"
+      },
+      "validation": {
+        "valid": "Valid XML",
+        "invalid": "Invalid XML"
+      },
+      "wsdl": {
+        "title": "WSDL Parser",
+        "placeholder": "Paste your WSDL here...",
+        "loadSample": "Load Sample WSDL",
+        "namespace": "Namespace",
+        "services": "Services",
+        "operations": "Operations",
+        "bindings": "Bindings",
+        "types": "Types",
+        "noServices": "No services found",
+        "noOperations": "No operations found",
+        "noBindings": "No bindings found",
+        "noTypes": "No types found"
+      },
+      "convert": {
+        "title": "Convert XML ↔ JSON",
+        "xmlInput": "XML Input",
+        "xmlPlaceholder": "Paste XML to convert to JSON...",
+        "jsonInput": "JSON Input",
+        "jsonPlaceholder": "Paste JSON to convert to XML..."
+      },
+      "copySuccess": "Copied to clipboard!",
+      "copyError": "Error copying"
     }
   }
 }
