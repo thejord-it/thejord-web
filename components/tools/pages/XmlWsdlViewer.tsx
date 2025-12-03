@@ -163,7 +163,7 @@ export default function XmlWsdlViewer() {
     try {
       await navigator.clipboard.writeText(output);
       showToast(t('copySuccess', { defaultValue: 'Copied to clipboard!' }), 'success');
-      trackCopy('XML & WSDL Viewer', output.length);
+      trackCopy('xml_output', 'XML & WSDL Viewer');
     } catch (error) {
       showToast(t('copyError', { defaultValue: 'Failed to copy' }), 'error');
       trackError('copy_error', 'Clipboard API failed', 'XML & WSDL Viewer');
