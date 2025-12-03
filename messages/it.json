@@ -136,6 +136,10 @@
       "jsonSchema": {
         "name": "JSON Schema Converter",
         "description": "Genera JSON Schema da JSON"
+      },
+      "xmlWsdlViewer": {
+        "name": "XML & WSDL Viewer",
+        "description": "Formatta, valida e analizza file XML e WSDL"
       }
     },
     "categories": {
@@ -727,6 +731,62 @@
       "jsonType": "Tipo JSON",
       "schemaType": "Tipo Schema",
       "example": "Esempio"
+    },
+    "xmlWsdlViewer": {
+      "subtitle": "Formatta, valida e analizza file XML e WSDL",
+      "tabs": {
+        "format": "Formatta & Valida",
+        "wsdl": "Parser WSDL",
+        "convert": "XML ↔ JSON",
+        "minify": "Minifica"
+      },
+      "editor": {
+        "title": "Editor XML",
+        "input": "Input XML",
+        "placeholder": "Incolla il tuo XML qui..."
+      },
+      "output": {
+        "title": "Output",
+        "placeholder": "L'output apparirà qui..."
+      },
+      "options": {
+        "title": "Opzioni",
+        "indentation": "Indentazione"
+      },
+      "buttons": {
+        "format": "Formatta XML",
+        "minify": "Minifica XML",
+        "copy": "Copia",
+        "download": "Scarica",
+        "clear": "Pulisci"
+      },
+      "validation": {
+        "valid": "XML Valido",
+        "invalid": "XML Non Valido"
+      },
+      "wsdl": {
+        "title": "Parser WSDL",
+        "placeholder": "Incolla il tuo WSDL qui...",
+        "loadSample": "Carica WSDL di Esempio",
+        "namespace": "Namespace",
+        "services": "Servizi",
+        "operations": "Operazioni",
+        "bindings": "Bindings",
+        "types": "Tipi",
+        "noServices": "Nessun servizio trovato",
+        "noOperations": "Nessuna operazione trovata",
+        "noBindings": "Nessun binding trovato",
+        "noTypes": "Nessun tipo trovato"
+      },
+      "convert": {
+        "title": "Converti XML ↔ JSON",
+        "xmlInput": "Input XML",
+        "xmlPlaceholder": "Incolla XML da convertire in JSON...",
+        "jsonInput": "Input JSON",
+        "jsonPlaceholder": "Incolla JSON da convertire in XML..."
+      },
+      "copySuccess": "Copiato negli appunti!",
+      "copyError": "Errore durante la copia"
     }
   }
 }

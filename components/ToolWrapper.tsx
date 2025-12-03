@@ -18,6 +18,7 @@ const LoremIpsumGenerator = lazy(() => import('./tools/pages/LoremIpsumGenerator
 const DiffChecker = lazy(() => import('./tools/pages/DiffChecker'))
 const CronBuilder = lazy(() => import('./tools/pages/CronBuilder'))
 const JsonSchemaConverter = lazy(() => import('./tools/pages/JsonSchemaConverter'))
+const XmlWsdlViewer = lazy(() => import('./tools/pages/XmlWsdlViewer'))
 
 const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   JsonFormatter,
@@ -31,6 +32,7 @@ const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   DiffChecker,
   CronBuilder,
   JsonSchemaConverter,
+  XmlWsdlViewer,
 }
 
 function ToolLoader({ loadingText }: { loadingText: string }) {
