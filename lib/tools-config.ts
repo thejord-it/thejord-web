@@ -122,6 +122,16 @@ export const TOOLS: ToolConfig[] = [
     metaDescription: 'Generate JSON Schema from JSON. Automatic schema generation for API validation and documentation.',
     component: 'JsonSchemaConverter'
   },
+  {
+    slug: 'xml-wsdl-viewer',
+    name: 'XML & WSDL Viewer',
+    description: 'Format, validate, and parse XML and WSDL files',
+    icon: '📄',
+    category: 'Development',
+    keywords: ['xml', 'wsdl', 'parser', 'validator', 'soap', 'web service', 'formatter'],
+    metaDescription: 'Format, validate, and view XML and WSDL files online. XML formatter with WSDL parser and XML to JSON converter. 100% privacy-first.',
+    component: 'XmlWsdlViewer'
+  },
 ]
 
 export function getToolBySlug(slug: string): ToolConfig | undefined {
