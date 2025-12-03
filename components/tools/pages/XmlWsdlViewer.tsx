@@ -67,7 +67,7 @@ export default function XmlWsdlViewer() {
   const [input, setInput] = useState(SAMPLE_XML);
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('format');
-  const [validation, setValidation] = useState({ valid: true, error: null as string | null, line: null as number | null, column: null as number | null });
+  const [validation, setValidation] = useState({ valid: true, error: undefined, line: undefined, column: undefined });
   const [stats, setStats] = useState({ elements: 0, attributes: 0, textNodes: 0, comments: 0, depth: 0, size: 0 });
   const [indent, setIndent] = useState(2);
   const [wsdlData, setWsdlData] = useState<WSDLData | null>(null);
