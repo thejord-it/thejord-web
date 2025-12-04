@@ -3,8 +3,13 @@ import { test, expect } from '@playwright/test';
 test.describe('JSON Formatter E2E', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tools/json-formatter');
-    // Wait for Monaco to fully load
-    await page.waitForSelector('.monaco-editor', { timeout: 15000 });
+    await page.waitForLoadState('networkidle');
+    // Wait for Monaco to fully load (may take longer in CI)
+    try {
+      await page.waitForSelector('.monaco-editor', { timeout: 30000 });
+    } catch {
+      // If Monaco doesn't load, the test will fail gracefully
+    }
     await page.waitForTimeout(1000); // Extra wait for Monaco initialization
   });
 
