@@ -101,6 +101,20 @@ const tools = [
     color: 'from-sky-500 to-blue-500',
     categoryKey: 'development'
   },
+  {
+    slug: 'xml-wsdl-viewer',
+    key: 'xmlWsdlViewer',
+    icon: '</>',
+    color: 'from-emerald-500 to-teal-500',
+    categoryKey: 'development'
+  },
+  {
+    slug: 'pdf-tools',
+    key: 'pdfTools',
+    icon: 'PDF',
+    color: 'from-red-500 to-orange-500',
+    categoryKey: 'documents'
+  },
 ]
 
 export default function ToolsPage() {
