@@ -838,7 +838,21 @@
         "deselectAll": "Deselect all",
         "saveChanges": "Save changes",
         "page": "Page",
-        "preview": "Preview"
+        "preview": "Preview",
+        "advancedEdit": "Advanced Edit"
+      },
+      "editor": {
+        "title": "PDF Editor",
+        "save": "Save PDF",
+        "clearPage": "Clear page",
+        "tools": {
+          "select": "Select",
+          "text": "Add Text",
+          "draw": "Draw / Sign",
+          "form": "Fill Form"
+        },
+        "textPlaceholder": "Type text here...",
+        "noFormFields": "No form fields detected in this PDF"
       },
       "convert": {
         "title": "Convert",
@@ -875,6 +889,7 @@
       "common": {
         "processing": "Processing...",
         "download": "Download",
+        "readyToDownload": "Ready to download",
         "remove": "Remove",
         "clear": "Clear all",
         "pages": "pages",
