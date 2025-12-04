@@ -114,7 +114,7 @@ test.describe('Hash Generator E2E', () => {
     await input.fill('Hello');
     await page.waitForTimeout(300);
 
-    // Check for character count
-    await expect(page.locator('text=/5.*characters/i')).toBeVisible();
+    // Check for character count - look for the count display with bytes
+    await expect(page.locator('text=/5.*bytes/i')).toBeVisible();
   });
 });
