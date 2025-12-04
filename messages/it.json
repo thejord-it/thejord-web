@@ -838,7 +838,21 @@
         "deselectAll": "Deseleziona tutto",
         "saveChanges": "Salva modifiche",
         "page": "Pagina",
-        "preview": "Anteprima"
+        "preview": "Anteprima",
+        "advancedEdit": "Modifica Avanzata"
+      },
+      "editor": {
+        "title": "Editor PDF",
+        "save": "Salva PDF",
+        "clearPage": "Pulisci pagina",
+        "tools": {
+          "select": "Seleziona",
+          "text": "Aggiungi Testo",
+          "draw": "Disegna / Firma",
+          "form": "Compila Form"
+        },
+        "textPlaceholder": "Scrivi il testo qui...",
+        "noFormFields": "Nessun campo form rilevato in questo PDF"
       },
       "convert": {
         "title": "Converti",
@@ -875,6 +889,7 @@
       "common": {
         "processing": "Elaborazione in corso...",
         "download": "Scarica",
+        "readyToDownload": "Pronto per il download",
         "remove": "Rimuovi",
         "clear": "Pulisci tutto",
         "pages": "pagine",
