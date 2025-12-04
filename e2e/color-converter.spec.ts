@@ -67,8 +67,10 @@ test.describe('Color Converter E2E', () => {
   });
 
   test('should display color format guide', async ({ page }) => {
-    await expect(page.locator('text=Color Format Guide')).toBeVisible();
-    await expect(page.locator('text=Hexadecimal notation')).toBeVisible();
+    // Check for format guide section (uses translations, so match by structure)
+    // The section contains HEX, RGB, HSL, CMYK descriptions
+    await expect(page.locator('strong.text-blue-400:has-text("HEX")')).toBeVisible();
+    await expect(page.locator('strong.text-green-400:has-text("RGB")')).toBeVisible();
   });
 
   test('should update all formats simultaneously', async ({ page }) => {
