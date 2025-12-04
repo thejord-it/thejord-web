@@ -132,6 +132,16 @@ export const TOOLS: ToolConfig[] = [
     metaDescription: 'Format, validate, and view XML and WSDL files online. XML formatter with WSDL parser and XML to JSON converter. 100% privacy-first.',
     component: 'XmlWsdlViewer'
   },
+  {
+    slug: 'pdf-tools',
+    name: 'PDF Tools',
+    description: 'Merge, split, edit, convert and compress PDF files',
+    icon: '📑',
+    category: 'Documents',
+    keywords: ['pdf', 'merge', 'split', 'compress', 'convert', 'rotate', 'edit', 'images'],
+    metaDescription: 'Free online PDF tools. Merge, split, compress, rotate and convert PDF files. Convert images to PDF and PDF to images. 100% privacy-first, works offline.',
+    component: 'PdfTools'
+  },
 ]
 
 export function getToolBySlug(slug: string): ToolConfig | undefined {
