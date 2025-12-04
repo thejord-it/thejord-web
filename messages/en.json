@@ -140,6 +140,10 @@
       "xmlWsdlViewer": {
         "name": "XML & WSDL Viewer",
         "description": "Format, validate, and parse XML and WSDL files"
+      },
+      "pdfTools": {
+        "name": "PDF Tools",
+        "description": "Merge, split, edit, convert and compress PDF files"
       }
     },
     "categories": {
@@ -147,7 +151,8 @@
       "encoding": "Encoding",
       "development": "Development",
       "security": "Security",
-      "design": "Design"
+      "design": "Design",
+      "documents": "Documents"
     }
   },
   "blog": {
@@ -787,6 +792,99 @@
       },
       "copySuccess": "Copied to clipboard!",
       "copyError": "Error copying"
+    },
+    "pdfTools": {
+      "subtitle": "Merge, split, edit, convert and compress PDF files",
+      "tabs": {
+        "merge": "Merge",
+        "split": "Split",
+        "edit": "Edit",
+        "convert": "Convert",
+        "compress": "Compress"
+      },
+      "dropzone": {
+        "title": "Drop files here",
+        "subtitle": "or click to select",
+        "acceptedFormats": "Accepted formats",
+        "maxSize": "Max size"
+      },
+      "merge": {
+        "title": "Merge PDFs",
+        "description": "Combine multiple PDF files into a single document",
+        "addFiles": "Add PDF files",
+        "dragToReorder": "Drag to reorder",
+        "mergeButton": "Merge PDFs",
+        "filesSelected": "{count} files selected"
+      },
+      "split": {
+        "title": "Split PDF",
+        "description": "Extract specific pages or split into separate files",
+        "selectPages": "Select pages",
+        "allPages": "All pages",
+        "customRange": "Custom range",
+        "rangePlaceholder": "e.g. 1-3, 5, 7-9",
+        "splitButton": "Split PDF",
+        "downloadAll": "Download all (ZIP)",
+        "downloadSingle": "Download single"
+      },
+      "edit": {
+        "title": "Edit Pages",
+        "description": "Rotate, reorder or delete pages from PDF",
+        "rotate": "Rotate",
+        "rotateLeft": "Rotate left",
+        "rotateRight": "Rotate right",
+        "delete": "Delete",
+        "selectAll": "Select all",
+        "deselectAll": "Deselect all",
+        "saveChanges": "Save changes",
+        "page": "Page",
+        "preview": "Preview"
+      },
+      "convert": {
+        "title": "Convert",
+        "imagesToPdf": "Images → PDF",
+        "pdfToImages": "PDF → Images",
+        "addImages": "Add images",
+        "pageSize": "Page size",
+        "a4": "A4",
+        "letter": "Letter",
+        "fitToImage": "Fit to image",
+        "outputFormat": "Output format",
+        "quality": "Quality",
+        "convertButton": "Convert",
+        "resultSize": "File size"
+      },
+      "compress": {
+        "title": "Compress PDF",
+        "description": "Reduce PDF file size",
+        "originalSize": "Original size",
+        "compressedSize": "Compressed size",
+        "savings": "Savings",
+        "level": "Compression level",
+        "light": "Light",
+        "lightDesc": "High quality, minimal reduction",
+        "medium": "Medium",
+        "mediumDesc": "Balanced quality and size",
+        "aggressive": "Aggressive",
+        "aggressiveDesc": "Maximum reduction, lower quality",
+        "compressButton": "Compress PDF",
+        "preserveText": "Preserve selectable text",
+        "preserveTextDesc": "Less compression but text remains copyable. Disable for maximum compression.",
+        "outputFilename": "Output filename"
+      },
+      "common": {
+        "processing": "Processing...",
+        "download": "Download",
+        "remove": "Remove",
+        "clear": "Clear all",
+        "pages": "pages",
+        "page": "page",
+        "size": "Size",
+        "noFile": "No file selected",
+        "uploadFirst": "Upload a PDF file to get started",
+        "error": "Error during processing",
+        "success": "Operation completed!"
+      }
     }
   }
 }

@@ -140,6 +140,10 @@
       "xmlWsdlViewer": {
         "name": "XML & WSDL Viewer",
         "description": "Formatta, valida e analizza file XML e WSDL"
+      },
+      "pdfTools": {
+        "name": "PDF Tools",
+        "description": "Unisci, dividi, modifica, converti e comprimi file PDF"
       }
     },
     "categories": {
@@ -147,7 +151,8 @@
       "encoding": "Codifica",
       "development": "Sviluppo",
       "security": "Sicurezza",
-      "design": "Design"
+      "design": "Design",
+      "documents": "Documenti"
     }
   },
   "blog": {
@@ -787,6 +792,99 @@
       },
       "copySuccess": "Copiato negli appunti!",
       "copyError": "Errore durante la copia"
+    },
+    "pdfTools": {
+      "subtitle": "Unisci, dividi, modifica, converti e comprimi file PDF",
+      "tabs": {
+        "merge": "Unisci",
+        "split": "Dividi",
+        "edit": "Modifica",
+        "convert": "Converti",
+        "compress": "Comprimi"
+      },
+      "dropzone": {
+        "title": "Trascina i file qui",
+        "subtitle": "oppure clicca per selezionare",
+        "acceptedFormats": "Formati accettati",
+        "maxSize": "Dimensione massima"
+      },
+      "merge": {
+        "title": "Unisci PDF",
+        "description": "Combina più file PDF in un unico documento",
+        "addFiles": "Aggiungi file PDF",
+        "dragToReorder": "Trascina per riordinare",
+        "mergeButton": "Unisci PDF",
+        "filesSelected": "{count} file selezionati"
+      },
+      "split": {
+        "title": "Dividi PDF",
+        "description": "Estrai pagine specifiche o dividi in file separati",
+        "selectPages": "Seleziona pagine",
+        "allPages": "Tutte le pagine",
+        "customRange": "Range personalizzato",
+        "rangePlaceholder": "es. 1-3, 5, 7-9",
+        "splitButton": "Dividi PDF",
+        "downloadAll": "Scarica tutto (ZIP)",
+        "downloadSingle": "Scarica singoli"
+      },
+      "edit": {
+        "title": "Modifica Pagine",
+        "description": "Ruota, riordina o elimina pagine dal PDF",
+        "rotate": "Ruota",
+        "rotateLeft": "Ruota a sinistra",
+        "rotateRight": "Ruota a destra",
+        "delete": "Elimina",
+        "selectAll": "Seleziona tutto",
+        "deselectAll": "Deseleziona tutto",
+        "saveChanges": "Salva modifiche",
+        "page": "Pagina",
+        "preview": "Anteprima"
+      },
+      "convert": {
+        "title": "Converti",
+        "imagesToPdf": "Immagini → PDF",
+        "pdfToImages": "PDF → Immagini",
+        "addImages": "Aggiungi immagini",
+        "pageSize": "Dimensione pagina",
+        "a4": "A4",
+        "letter": "Letter",
+        "fitToImage": "Adatta all'immagine",
+        "outputFormat": "Formato output",
+        "quality": "Qualità",
+        "convertButton": "Converti",
+        "resultSize": "Dimensione file"
+      },
+      "compress": {
+        "title": "Comprimi PDF",
+        "description": "Riduci la dimensione del file PDF",
+        "originalSize": "Dimensione originale",
+        "compressedSize": "Dimensione compressa",
+        "savings": "Risparmio",
+        "level": "Livello compressione",
+        "light": "Leggera",
+        "lightDesc": "Qualità alta, riduzione minima",
+        "medium": "Media",
+        "mediumDesc": "Bilanciato tra qualità e dimensione",
+        "aggressive": "Aggressiva",
+        "aggressiveDesc": "Massima riduzione, qualità ridotta",
+        "compressButton": "Comprimi PDF",
+        "preserveText": "Mantieni testo selezionabile",
+        "preserveTextDesc": "Compressione minore ma il testo rimane copiabile. Disattiva per massima compressione.",
+        "outputFilename": "Nome file di output"
+      },
+      "common": {
+        "processing": "Elaborazione in corso...",
+        "download": "Scarica",
+        "remove": "Rimuovi",
+        "clear": "Pulisci tutto",
+        "pages": "pagine",
+        "page": "pagina",
+        "size": "Dimensione",
+        "noFile": "Nessun file selezionato",
+        "uploadFirst": "Carica un file PDF per iniziare",
+        "error": "Errore durante l'elaborazione",
+        "success": "Operazione completata!"
+      }
     }
   }
 }
