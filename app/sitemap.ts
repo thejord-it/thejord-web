@@ -83,6 +83,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     })
 
+    // PDF Tools landing page
+    sitemap.push({
+      url: `${baseUrl}/${locale}/pdf-tools`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      alternates: {
+        languages: {
+          it: `${baseUrl}/it/pdf-tools`,
+          en: `${baseUrl}/en/pdf-tools`,
+        },
+      },
+    })
+
+    // Changelog page
+    sitemap.push({
+      url: `${baseUrl}/${locale}/changelog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+      alternates: {
+        languages: {
+          it: `${baseUrl}/it/changelog`,
+          en: `${baseUrl}/en/changelog`,
+        },
+      },
+    })
+
     // Dynamic blog post pages
     for (const post of posts) {
       sitemap.push({
