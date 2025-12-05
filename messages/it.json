@@ -7,6 +7,8 @@
   },
   "header": {
     "tools": "Strumenti",
+    "devTools": "Dev Tools",
+    "pdfTools": "PDF Tools",
     "blog": "Blog",
     "about": "Chi Siamo",
     "contact": "Contatti",
@@ -18,6 +20,8 @@
     "inItaly": "in Italia",
     "navigation": "Navigazione",
     "tools": "Strumenti",
+    "devTools": "Dev Tools",
+    "pdfTools": "PDF Tools",
     "blog": "Blog",
     "about": "Chi Siamo",
     "contact": "Contatti",
@@ -25,6 +29,53 @@
     "privacy": "Privacy Policy",
     "changelog": "Changelog",
     "allRightsReserved": "Tutti i diritti riservati."
+  },
+  "pdfTools": {
+    "title": "PDF Tools",
+    "description": "Strumenti PDF online gratuiti: unisci, dividi, modifica, converti e comprimi PDF. 100% privacy-first - tutta l'elaborazione avviene nel tuo browser.",
+    "openTool": "Apri PDF Tools",
+    "startNow": "Inizia Ora",
+    "features": {
+      "merge": {
+        "title": "Unisci PDF",
+        "description": "Combina più file PDF in un unico documento. Trascina e rilascia per riordinare le pagine."
+      },
+      "split": {
+        "title": "Dividi PDF",
+        "description": "Estrai pagine specifiche o dividi un PDF in file separati. Seleziona intervalli o singole pagine."
+      },
+      "edit": {
+        "title": "Modifica Pagine",
+        "description": "Ruota, riordina o elimina pagine. Aggiungi testo, firme e annotazioni."
+      },
+      "convert": {
+        "title": "Converti",
+        "description": "Converti immagini in PDF o estrai immagini da PDF. Supporto per JPG, PNG e altri formati."
+      },
+      "compress": {
+        "title": "Comprimi PDF",
+        "description": "Riduci la dimensione dei file PDF mantenendo la qualità. Scegli tra diversi livelli di compressione."
+      }
+    },
+    "privacy": {
+      "title": "100% Privacy-First",
+      "description": "I tuoi file non lasciano mai il tuo dispositivo. Tutta l'elaborazione avviene localmente nel browser - nessun upload su server."
+    },
+    "whyUse": {
+      "title": "Perché Scegliere i Nostri PDF Tools?",
+      "fast": {
+        "title": "Velocissimi",
+        "description": "Nessun tempo di attesa per upload/download. Elabora PDF istantaneamente nel browser."
+      },
+      "free": {
+        "title": "Completamente Gratis",
+        "description": "Nessun abbonamento, nessun limite, nessuna filigrana. Gratis per sempre."
+      },
+      "works": {
+        "title": "Funziona Offline",
+        "description": "Una volta caricato, funziona senza connessione internet. I tuoi dati restano sul tuo dispositivo."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -47,6 +98,18 @@
       "subtitle": "Tutto viene eseguito localmente nel tuo browser per la massima privacy",
       "viewAll": "Vedi tutti gli 12 strumenti",
       "tryNow": "Provalo ora"
+    },
+    "pdfTools": {
+      "title": "Suite PDF Tools",
+      "description": "Toolkit completo per la manipolazione di PDF. Unisci, dividi, modifica, converti e comprimi file PDF direttamente nel browser. Nessun upload, massima privacy.",
+      "features": {
+        "merge": "Unisci",
+        "split": "Dividi",
+        "edit": "Modifica",
+        "convert": "Converti",
+        "compress": "Comprimi"
+      },
+      "cta": "Apri PDF Tools"
     },
     "features": {
       "privacy": {
