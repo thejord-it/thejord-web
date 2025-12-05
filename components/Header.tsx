@@ -33,13 +33,21 @@ export default function Header() {
     if (path === '') {
       return pathWithoutLocale === '' || pathWithoutLocale === '/'
     }
+    // Special case: /tools/pdf-tools should highlight "PDF Tools", not "Dev Tools"
+    if (path === 'tools' && pathWithoutLocale.startsWith('/tools/pdf-tools')) {
+      return false
+    }
+    if (path === 'pdf-tools') {
+      return pathWithoutLocale.startsWith('/pdf-tools') || pathWithoutLocale.startsWith('/tools/pdf-tools')
+    }
     return pathWithoutLocale.startsWith('/' + path)
   }
 
   const navLinks = [
     { href: '', label: 'Home' },
     { href: 'blog', label: t('blog') },
-    { href: 'tools', label: t('tools') },
+    { href: 'tools', label: t('devTools') },
+    { href: 'pdf-tools', label: t('pdfTools') },
     { href: 'about', label: t('about') },
     { href: 'contact', label: t('contact') },
   ]
