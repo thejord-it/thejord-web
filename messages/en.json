@@ -7,6 +7,8 @@
   },
   "header": {
     "tools": "Tools",
+    "devTools": "Dev Tools",
+    "pdfTools": "PDF Tools",
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
@@ -18,6 +20,8 @@
     "inItaly": "in Italy",
     "navigation": "Navigation",
     "tools": "Tools",
+    "devTools": "Dev Tools",
+    "pdfTools": "PDF Tools",
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
@@ -25,6 +29,53 @@
     "privacy": "Privacy Policy",
     "changelog": "Changelog",
     "allRightsReserved": "All rights reserved."
+  },
+  "pdfTools": {
+    "title": "PDF Tools",
+    "description": "Free online PDF tools: merge, split, edit, convert and compress PDFs. 100% privacy-first - all processing happens in your browser.",
+    "openTool": "Open PDF Tools",
+    "startNow": "Start Now",
+    "features": {
+      "merge": {
+        "title": "Merge PDFs",
+        "description": "Combine multiple PDF files into a single document. Drag and drop to reorder pages."
+      },
+      "split": {
+        "title": "Split PDF",
+        "description": "Extract specific pages or split a PDF into separate files. Select ranges or individual pages."
+      },
+      "edit": {
+        "title": "Edit Pages",
+        "description": "Rotate, reorder, or delete pages. Add text, signatures, and annotations."
+      },
+      "convert": {
+        "title": "Convert",
+        "description": "Convert images to PDF or extract images from PDF. Support for JPG, PNG, and more."
+      },
+      "compress": {
+        "title": "Compress PDF",
+        "description": "Reduce PDF file size while maintaining quality. Choose from different compression levels."
+      }
+    },
+    "privacy": {
+      "title": "100% Privacy-First",
+      "description": "Your files never leave your device. All processing happens locally in your browser - no uploads to any server."
+    },
+    "whyUse": {
+      "title": "Why Choose Our PDF Tools?",
+      "fast": {
+        "title": "Lightning Fast",
+        "description": "No upload/download wait times. Process PDFs instantly in your browser."
+      },
+      "free": {
+        "title": "Completely Free",
+        "description": "No subscriptions, no limits, no watermarks. Free forever."
+      },
+      "works": {
+        "title": "Works Offline",
+        "description": "Once loaded, works without internet connection. Your data stays on your device."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -47,6 +98,18 @@
       "subtitle": "Everything runs locally in your browser for maximum privacy",
       "viewAll": "View all 12 tools",
       "tryNow": "Try it now"
+    },
+    "pdfTools": {
+      "title": "PDF Tools Suite",
+      "description": "Complete toolkit for PDF manipulation. Merge, split, edit, convert, and compress PDF files directly in your browser. No uploads, maximum privacy.",
+      "features": {
+        "merge": "Merge",
+        "split": "Split",
+        "edit": "Edit",
+        "convert": "Convert",
+        "compress": "Compress"
+      },
+      "cta": "Open PDF Tools"
     },
     "features": {
       "privacy": {

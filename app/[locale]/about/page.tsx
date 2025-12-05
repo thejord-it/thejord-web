@@ -198,15 +198,28 @@ export default function About() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-blue-500 text-xl">🔄</span>
+              <span className="text-green-500 text-xl">✅</span>
               <div>
                 <strong className="text-text-primary">
-                  {locale === 'it' ? 'Fase 5: Advanced Tools (In corso)' : 'Phase 5: Advanced Tools (In Progress)'}
+                  {locale === 'it' ? 'Fase 5: PDF Tools & Advanced (Completata)' : 'Phase 5: PDF Tools & Advanced (Completed)'}
                 </strong>
                 <p className="text-text-secondary">
                   {locale === 'it'
-                    ? 'PDF tools, nuovi strumenti, miglioramenti UX, ambiente staging'
-                    : 'PDF tools, new utilities, UX improvements, staging environment'}
+                    ? 'Suite PDF completa (merge, split, edit, convert, compress), XML/WSDL Viewer, ambiente staging'
+                    : 'Complete PDF suite (merge, split, edit, convert, compress), XML/WSDL Viewer, staging environment'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-blue-500 text-xl">🔄</span>
+              <div>
+                <strong className="text-text-primary">
+                  {locale === 'it' ? 'Fase 6: Marketing & Outreach (In corso)' : 'Phase 6: Marketing & Outreach (In Progress)'}
+                </strong>
+                <p className="text-text-secondary">
+                  {locale === 'it'
+                    ? 'Feed RSS, pubblicazione articoli, backlink building, presenza su directory'
+                    : 'RSS feeds, article publishing, backlink building, directory presence'}
                 </p>
               </div>
             </div>
@@ -214,7 +227,7 @@ export default function About() {
               <span className="text-gray-500 text-xl">📋</span>
               <div>
                 <strong className="text-text-primary">
-                  {locale === 'it' ? 'Fase 6: Community & Scale (Pianificata)' : 'Phase 6: Community & Scale (Planned)'}
+                  {locale === 'it' ? 'Fase 7: Community & Scale (Pianificata)' : 'Phase 7: Community & Scale (Planned)'}
                 </strong>
                 <p className="text-text-secondary">
                   {locale === 'it'

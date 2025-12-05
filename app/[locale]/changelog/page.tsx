@@ -44,10 +44,66 @@ export default function Changelog() {
           </p>
         </div>
 
-        {/* Version 2.2.0 - XML & WSDL Viewer */}
+        {/* Version 2.3.0 - PDF Tools */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="bg-primary px-4 py-2 rounded-lg">
+              <span className="text-white font-bold text-lg">v2.3.0</span>
+            </div>
+            <span className="text-text-muted">{formatDate('2025-12-05')}</span>
+            <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
+              {locale === 'it' ? 'Nuovo Tool' : 'New Tool'}
+            </span>
+          </div>
+
+          <div className="bg-bg-dark rounded-xl border border-border p-6 mb-6">
+            <h3 className="text-2xl font-bold mb-4 text-green-400 flex items-center gap-2">
+              ✨ PDF Tools Suite
+            </h3>
+            <ul className="space-y-3 text-text-secondary">
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Suite Completa PDF' : 'Complete PDF Suite'}</strong>
+                  <ul className="text-sm mt-1 space-y-1 ml-4">
+                    <li>• {locale === 'it' ? 'Unisci più PDF in un unico documento' : 'Merge multiple PDFs into one document'}</li>
+                    <li>• {locale === 'it' ? 'Dividi PDF per pagine o intervalli' : 'Split PDF by pages or ranges'}</li>
+                    <li>• {locale === 'it' ? 'Modifica: ruota, elimina, riordina pagine' : 'Edit: rotate, delete, reorder pages'}</li>
+                    <li>• {locale === 'it' ? 'Converti: Images ↔ PDF' : 'Convert: Images ↔ PDF'}</li>
+                    <li>• {locale === 'it' ? 'Comprimi PDF riducendo dimensioni' : 'Compress PDF reducing file size'}</li>
+                  </ul>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Privacy Totale' : 'Total Privacy'}</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Tutta l\'elaborazione avviene nel browser. I tuoi PDF non vengono mai caricati su server esterni.'
+                      : 'All processing happens in the browser. Your PDFs are never uploaded to external servers.'}
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Navigazione Dedicata' : 'Dedicated Navigation'}</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Separazione Dev Tools e PDF Tools nel menu per un\'esperienza utente migliorata'
+                      : 'Separation of Dev Tools and PDF Tools in menu for improved user experience'}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Version 2.2.0 - XML & WSDL Viewer */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v2.2.0</span>
             </div>
             <span className="text-text-muted">{formatDate('2025-12-03')}</span>
@@ -434,7 +490,18 @@ export default function Changelog() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="py-3 px-4">
-                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.2.0</span>
+                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.3.0</span>
+                  </td>
+                  <td className="py-3 px-4">5 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
+                  <td className="py-3 px-4">
+                    ✨ {locale === 'it'
+                      ? 'PDF Tools Suite: merge, split, edit, convert, compress'
+                      : 'PDF Tools Suite: merge, split, edit, convert, compress'}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">
+                    <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v2.2.0</span>
                   </td>
                   <td className="py-3 px-4">3 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
                   <td className="py-3 px-4">

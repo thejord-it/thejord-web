@@ -18,7 +18,8 @@ export default function Footer() {
     ],
     resources: [
       { href: 'blog', labelKey: 'blog' },
-      { href: 'tools', labelKey: 'tools' },
+      { href: 'tools', labelKey: 'devTools' },
+      { href: 'pdf-tools', labelKey: 'pdfTools' },
       { href: 'about', labelKey: 'about' },
       { href: 'contact', labelKey: 'contact' },
       { href: 'changelog', labelKey: 'changelog' },
