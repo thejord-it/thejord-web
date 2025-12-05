@@ -61,7 +61,7 @@ export default function HomePage() {
   ]
 
   const stats = [
-    { value: '11', labelKey: 'tools', icon: '🛠️' },
+    { value: '12', labelKey: 'tools', icon: '🛠️' },
     { value: '100%', labelKey: 'privacyFirst', icon: '🔒' },
     { value: '0ms', labelKey: 'serverProcessing', icon: '⚡' },
     { value: t('stats.free'), labelKey: 'forever', icon: '💎' }
@@ -178,6 +178,50 @@ export default function HomePage() {
             >
               {t('featuredTools.viewAll')} →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* PDF Tools Section */}
+      <section className="py-12 md:py-20 bg-gradient-to-r from-red-500/5 to-orange-500/5 border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            <div className="flex-shrink-0">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white text-3xl md:text-4xl font-bold shadow-lg">
+                PDF
+              </div>
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">
+                {t('pdfTools.title')}
+              </h2>
+              <p className="text-lg text-text-secondary mb-6">
+                {t('pdfTools.description')}
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-6">
+                <span className="px-3 py-1 bg-bg-dark border border-border rounded-full text-sm text-text-secondary">
+                  {t('pdfTools.features.merge')}
+                </span>
+                <span className="px-3 py-1 bg-bg-dark border border-border rounded-full text-sm text-text-secondary">
+                  {t('pdfTools.features.split')}
+                </span>
+                <span className="px-3 py-1 bg-bg-dark border border-border rounded-full text-sm text-text-secondary">
+                  {t('pdfTools.features.edit')}
+                </span>
+                <span className="px-3 py-1 bg-bg-dark border border-border rounded-full text-sm text-text-secondary">
+                  {t('pdfTools.features.convert')}
+                </span>
+                <span className="px-3 py-1 bg-bg-dark border border-border rounded-full text-sm text-text-secondary">
+                  {t('pdfTools.features.compress')}
+                </span>
+              </div>
+              <Link
+                href="pdf-tools"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                {t('pdfTools.cta')} →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
