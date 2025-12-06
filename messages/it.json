@@ -576,6 +576,7 @@
       "captureGroups": "Gruppi di Cattura:",
       "group": "Gruppo",
       "matchesFound": "Match trovati:",
+      "clickPattern": "Clicca un pattern per usarlo",
       "patternLibrary": "Libreria Pattern",
       "searchPatterns": "Cerca pattern...",
       "all": "Tutti"
@@ -701,6 +702,7 @@
     "colorConverter": {
       "description": "Scegli colori e converti tra formati HEX, RGB, HSL e CMYK",
       "presetColors": "Colori Predefiniti",
+      "formatGuide": "Guida ai Formati",
       "colorFormatGuide": "Guida ai Formati Colore",
       "hexDesc": "Notazione esadecimale (#RRGGBB)",
       "hexUsed": "Usato in: CSS, HTML, strumenti di design",
@@ -724,7 +726,8 @@
       "generatedText": "Testo Generato",
       "clickToGenerate": "Clicca 'Genera Lorem Ipsum' per creare testo placeholder...",
       "whatIsLorem": "Cos'è Lorem Ipsum?",
-      "loremDescription": "Lorem Ipsum è testo placeholder comunemente usato nelle industrie grafiche, di stampa e editoriali per visualizzare layout e mockup visivi. Aiuta designer e sviluppatori a concentrarsi sugli elementi di design senza essere distratti da contenuti significativi. Il testo deriva dalle sezioni 1.10.32 e 1.10.33 di \"de Finibus Bonorum et Malorum\" di Cicerone, scritto nel 45 a.C."
+      "loremDescription": "Lorem Ipsum è testo placeholder comunemente usato nelle industrie grafiche, di stampa e editoriali per visualizzare layout e mockup visivi. Aiuta designer e sviluppatori a concentrarsi sugli elementi di design senza essere distratti da contenuti significativi. Il testo deriva dalle sezioni 1.10.32 e 1.10.33 di \"de Finibus Bonorum et Malorum\" di Cicerone, scritto nel 45 a.C.",
+      "placeholder": "Clicca 'Genera Lorem Ipsum' per creare testo placeholder..."
     },
     "diffChecker": {
       "description": "Confronta due testi ed evidenzia le differenze riga per riga",
@@ -749,6 +752,7 @@
       "description": "Costruisci e valida schedulazioni cron con interfaccia visuale",
       "visualBuilder": "Builder Visuale",
       "directInput": "Input Diretto",
+      "clickPattern": "Clicca un pattern per usarlo",
       "patternLibrary": "Libreria Pattern",
       "minute": "Minuto",
       "hour": "Ora",
@@ -758,6 +762,7 @@
       "cronExpression": "Espressione Cron",
       "descriptionLabel": "Descrizione:",
       "validationErrors": "Errori di Validazione:",
+      "nextExecutions": "Prossime Esecuzioni",
       "next5Executions": "Prossime 5 Esecuzioni:",
       "specialCharsGuide": "Guida Caratteri Speciali",
       "wildcard": "Wildcard",
@@ -772,6 +777,7 @@
       "step": "Passo",
       "stepValues": "Valori a passo",
       "stepExample": "Esempio: */5 = ogni 5 unità",
+      "formatReference": "Riferimento Formato",
       "cronFormatReference": "Riferimento Formato Cron",
       "position": "Posizione",
       "field": "Campo",
@@ -787,6 +793,7 @@
       "schemaTitle": "Titolo Schema (opzionale)",
       "schemaVersion": "Versione Schema",
       "makeAllRequired": "Rendi tutti i campi obbligatori",
+      "makeRequired": "Rendi tutti i campi obbligatori",
       "addFormatHints": "Aggiungi hint di formato (email, uri, date, ecc.)",
       "inputJson": "JSON di Input",
       "generatedSchema": "Schema Generato",
@@ -796,6 +803,7 @@
       "formatDetection": "Rilevamento Formato",
       "formatDetectionDesc": "Quando \"Aggiungi hint di formato\" è abilitato, il convertitore rileva automaticamente e aggiunge specifiche di formato:",
       "typeMappingTitle": "Mappatura Tipi JSON a JSON Schema",
+      "typeMapping": "Mappatura Tipi JSON a JSON Schema",
       "jsonType": "Tipo JSON",
       "schemaType": "Tipo Schema",
       "example": "Esempio"
