@@ -88,6 +88,13 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        {/* RSS Feed autodiscovery */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={locale === 'it' ? 'THEJORD Blog - Feed RSS' : 'THEJORD Blog - RSS Feed'}
+          href={`/api/rss?lang=${locale}`}
+        />
       </head>
       <body className="antialiased flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
