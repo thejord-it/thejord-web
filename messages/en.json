@@ -576,6 +576,7 @@
       "captureGroups": "Capture Groups:",
       "group": "Group",
       "matchesFound": "Matches found:",
+      "clickPattern": "Click a pattern to use it",
       "patternLibrary": "Pattern Library",
       "searchPatterns": "Search patterns...",
       "all": "All"
@@ -701,6 +702,7 @@
     "colorConverter": {
       "description": "Pick colors and convert between HEX, RGB, HSL, and CMYK formats",
       "presetColors": "Preset Colors",
+      "formatGuide": "Format Guide",
       "colorFormatGuide": "Color Format Guide",
       "hexDesc": "Hexadecimal notation (#RRGGBB)",
       "hexUsed": "Used in: CSS, HTML, design tools",
@@ -724,7 +726,8 @@
       "generatedText": "Generated Text",
       "clickToGenerate": "Click 'Generate Lorem Ipsum' to create placeholder text...",
       "whatIsLorem": "What is Lorem Ipsum?",
-      "loremDescription": "Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. It helps designers and developers focus on design elements without being distracted by meaningful content. The text is derived from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" by Cicero, written in 45 BC."
+      "loremDescription": "Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. It helps designers and developers focus on design elements without being distracted by meaningful content. The text is derived from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" by Cicero, written in 45 BC.",
+      "placeholder": "Click 'Generate Lorem Ipsum' to create placeholder text..."
     },
     "diffChecker": {
       "description": "Compare two texts and highlight the differences line by line",
@@ -749,6 +752,7 @@
       "description": "Build and validate cron schedules with a visual interface",
       "visualBuilder": "Visual Builder",
       "directInput": "Direct Input",
+      "clickPattern": "Click a pattern to use it",
       "patternLibrary": "Pattern Library",
       "minute": "Minute",
       "hour": "Hour",
@@ -758,6 +762,7 @@
       "cronExpression": "Cron Expression",
       "descriptionLabel": "Description:",
       "validationErrors": "Validation Errors:",
+      "nextExecutions": "Next Executions",
       "next5Executions": "Next 5 Executions:",
       "specialCharsGuide": "Special Characters Guide",
       "wildcard": "Wildcard",
@@ -772,6 +777,7 @@
       "step": "Step",
       "stepValues": "Step values",
       "stepExample": "Example: */5 = every 5 units",
+      "formatReference": "Format Reference",
       "cronFormatReference": "Cron Format Reference",
       "position": "Position",
       "field": "Field",
@@ -787,6 +793,7 @@
       "schemaTitle": "Schema Title (optional)",
       "schemaVersion": "Schema Version",
       "makeAllRequired": "Make all fields required",
+      "makeRequired": "Make all fields required",
       "addFormatHints": "Add format hints (email, uri, date, etc.)",
       "inputJson": "Input JSON",
       "generatedSchema": "Generated Schema",
@@ -796,6 +803,7 @@
       "formatDetection": "Format Detection",
       "formatDetectionDesc": "When \"Add format hints\" is enabled, the converter automatically detects and adds format specifications:",
       "typeMappingTitle": "JSON to JSON Schema Type Mapping",
+      "typeMapping": "JSON to JSON Schema Type Mapping",
       "jsonType": "JSON Type",
       "schemaType": "Schema Type",
       "example": "Example"
