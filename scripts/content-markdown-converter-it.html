@@ -1,0 +1,502 @@
+<h2>Cos'è Markdown e Perché È Così Popolare</h2>
+
+<p><strong>Markdown</strong> è un linguaggio di markup leggero creato nel 2004 da John Gruber e Aaron Swartz con l'obiettivo di permettere la scrittura di testi formattati usando una sintassi semplice e leggibile. A differenza di HTML, Word o altri formati complessi, Markdown usa caratteri comuni come asterischi, trattini e parentesi quadre per definire la formattazione, rendendo i documenti leggibili anche senza rendering.</p>
+
+<p>Il nostro <strong>Markdown to HTML Converter</strong> è uno strumento gratuito che converte istantaneamente Markdown in HTML valido, con anteprima live e supporto per GitHub Flavored Markdown (GFM). Funziona al 100% nel browser senza inviare dati a server esterni, garantendo privacy completa.</p>
+
+<h2>Storia e Filosofia di Markdown</h2>
+
+<p>Markdown nasce dalla frustrazione di dover scrivere documenti web in HTML verboso. John Gruber lo descrisse così nel suo <a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">sito ufficiale</a>:</p>
+
+<blockquote>
+<p>"Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)."</p>
+</blockquote>
+
+<p>I principi fondamentali di Markdown sono:</p>
+
+<ul>
+  <li><strong>Leggibilità</strong>: Il testo sorgente deve essere leggibile senza rendering</li>
+  <li><strong>Semplicità</strong>: La sintassi deve essere intuitiva e minimale</li>
+  <li><strong>Portabilità</strong>: I file .md sono plain text, apribili ovunque</li>
+  <li><strong>Compatibilità</strong>: HTML inline è permesso quando serve</li>
+</ul>
+
+<h2>Sintassi Markdown Completa</h2>
+
+<h3>Intestazioni (Headings)</h3>
+
+<pre><code># Heading 1 (H1)
+## Heading 2 (H2)
+### Heading 3 (H3)
+#### Heading 4 (H4)
+##### Heading 5 (H5)
+###### Heading 6 (H6)
+
+<!-- Sintassi alternativa per H1 e H2 -->
+Heading 1
+=========
+
+Heading 2
+---------</code></pre>
+
+<h3>Formattazione Testo</h3>
+
+<pre><code>*corsivo* o _corsivo_
+**grassetto** o __grassetto__
+***grassetto corsivo*** o ___grassetto corsivo___
+~~barrato~~ (strikethrough - GFM)
+`codice inline`</code></pre>
+
+<h3>Liste</h3>
+
+<pre><code><!-- Lista non ordinata -->
+- Elemento 1
+- Elemento 2
+  - Sottoelemento 2.1
+  - Sottoelemento 2.2
+- Elemento 3
+
+<!-- Lista ordinata -->
+1. Primo
+2. Secondo
+3. Terzo
+
+<!-- Lista di task (GFM) -->
+- [x] Task completato
+- [ ] Task da fare
+- [ ] Altro task</code></pre>
+
+<h3>Link e Immagini</h3>
+
+<pre><code><!-- Link -->
+[Testo del link](https://esempio.com)
+[Link con titolo](https://esempio.com "Titolo tooltip")
+
+<!-- Link di riferimento -->
+[Google][1]
+[GitHub][gh]
+
+[1]: https://google.com
+[gh]: https://github.com "GitHub"
+
+<!-- Immagini -->
+![Alt text](https://esempio.com/immagine.jpg)
+![Alt text](immagine.jpg "Titolo opzionale")
+
+<!-- Immagine con link -->
+[![Alt](immagine.jpg)](https://esempio.com)</code></pre>
+
+<h3>Citazioni (Blockquotes)</h3>
+
+<pre><code>> Questa è una citazione.
+> Può essere su più righe.
+>
+> > Citazioni annidate
+> > sono supportate.</code></pre>
+
+<h3>Codice</h3>
+
+<pre><code><!-- Codice inline -->
+Usa la funzione `console.log()` per debug.
+
+<!-- Blocco di codice (indentato) -->
+    function hello() {
+        console.log("Hello!");
+    }
+
+<!-- Blocco di codice (fenced - GFM) -->
+```javascript
+function hello() {
+    console.log("Hello!");
+}
+```
+
+```python
+def hello():
+    print("Hello!")
+```</code></pre>
+
+<h3>Tabelle (GitHub Flavored Markdown)</h3>
+
+<pre><code>| Colonna 1 | Colonna 2 | Colonna 3 |
+|-----------|:---------:|----------:|
+| Sinistra  | Centro    | Destra    |
+| Testo     | Testo     | Testo     |
+
+<!-- Allineamento -->
+:--- sinistra
+:---: centro
+---: destra</code></pre>
+
+<h3>Linee Orizzontali</h3>
+
+<pre><code>---
+***
+___
+
+(almeno 3 caratteri)</code></pre>
+
+<h3>Escape Characters</h3>
+
+<pre><code>\*non corsivo\*
+\# non un heading
+\[non un link\]
+\`non codice\`</code></pre>
+
+<h2>7+ Casi d'Uso Reali</h2>
+
+<h3>1. Documentazione Software (README.md)</h3>
+
+<p>Ogni progetto open source su GitHub, GitLab o Bitbucket usa README.md:</p>
+
+<pre><code># Nome Progetto
+
+[![Build Status](https://ci.example.com/badge.svg)](https://ci.example.com)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+Breve descrizione del progetto.
+
+## Installazione
+
+```bash
+npm install mio-pacchetto
+```
+
+## Uso
+
+```javascript
+const pkg = require('mio-pacchetto');
+pkg.doSomething();
+```
+
+## Licenza
+
+MIT</code></pre>
+
+<h3>2. Blog Posts e CMS</h3>
+
+<p>Piattaforme come Ghost, Hugo, Jekyll, Gatsby usano Markdown per i contenuti:</p>
+
+<pre><code>---
+title: "Come Usare React Hooks"
+date: 2024-01-15
+author: "Mario Rossi"
+tags: ["react", "javascript", "tutorial"]
+---
+
+## Introduzione
+
+React Hooks hanno rivoluzionato il modo di scrivere componenti...
+
+## useState
+
+```jsx
+const [count, setCount] = useState(0);
+```</code></pre>
+
+<h3>3. Note e Knowledge Base</h3>
+
+<p>Applicazioni come Notion, Obsidian, Typora usano Markdown:</p>
+
+<pre><code># Meeting Notes - 2024-01-15
+
+## Partecipanti
+- Mario Rossi (PM)
+- Luigi Bianchi (Dev)
+
+## Decisioni
+- [x] Rilascio v2.0 entro marzo
+- [ ] Revisione architettura database
+
+## Action Items
+1. @mario: Creare roadmap
+2. @luigi: POC nuova feature</code></pre>
+
+<h3>4. Documentazione API</h3>
+
+<p>OpenAPI/Swagger, Postman e altri tool usano Markdown:</p>
+
+<pre><code>## GET /api/users
+
+Restituisce la lista degli utenti.
+
+### Parametri Query
+
+| Nome   | Tipo   | Richiesto | Descrizione          |
+|--------|--------|-----------|----------------------|
+| limit  | number | No        | Max risultati (default 10) |
+| offset | number | No        | Offset paginazione   |
+
+### Esempio Response
+
+```json
+{
+  "users": [
+    {"id": 1, "name": "Mario"}
+  ],
+  "total": 100
+}
+```</code></pre>
+
+<h3>5. Email Newsletter</h3>
+
+<p>Servizi come Mailchimp, ConvertKit supportano Markdown:</p>
+
+<pre><code># Newsletter Settimanale
+
+Ciao **{{name}}**!
+
+Questa settimana abbiamo pubblicato:
+
+1. [Guida a TypeScript 5.0](/blog/typescript-5)
+2. [10 VS Code Extensions](/blog/vscode-extensions)
+
+> "La semplicità è la sofisticazione suprema" - Leonardo
+
+---
+
+*Hai ricevuto questa email perché sei iscritto a...*</code></pre>
+
+<h3>6. Issue Tracking e PR</h3>
+
+<p>GitHub/GitLab Issues e Pull Requests usano Markdown:</p>
+
+<pre><code>## Bug: Login non funziona su Safari
+
+### Descrizione
+Il form di login non invia i dati su Safari 17.
+
+### Steps to Reproduce
+1. Apri Safari
+2. Vai a /login
+3. Inserisci credenziali
+4. Click "Login"
+
+### Expected vs Actual
+- **Expected**: Redirect a dashboard
+- **Actual**: Pagina ricarica senza azione
+
+### Environment
+- Browser: Safari 17.0
+- OS: macOS Sonoma
+
+### Screenshots
+![Bug screenshot](url-immagine)</code></pre>
+
+<h3>7. Chat e Messaggistica</h3>
+
+<p>Discord, Slack, Teams supportano subset di Markdown:</p>
+
+<pre><code>**Importante**: La riunione è stata spostata alle 15:00
+
+~~Vecchio orario: 14:00~~
+
+Agenda:
+- Review sprint
+- Planning Q2
+- `demo-feature-branch`</code></pre>
+
+<h2>Esempi di Conversione Markdown → HTML</h2>
+
+<h3>Input Markdown</h3>
+
+<pre><code># Guida Rapida
+
+Questo è un **esempio** di testo con *enfasi*.
+
+## Lista della Spesa
+
+- Pane
+- Latte
+- Caffè
+
+## Link Utili
+
+Visita [THEJORD](https://thejord.it) per altri tool.</code></pre>
+
+<h3>Output HTML</h3>
+
+<pre><code class="language-html">&lt;h1&gt;Guida Rapida&lt;/h1&gt;
+&lt;p&gt;Questo è un &lt;strong&gt;esempio&lt;/strong&gt; di testo con &lt;em&gt;enfasi&lt;/em&gt;.&lt;/p&gt;
+&lt;h2&gt;Lista della Spesa&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Pane&lt;/li&gt;
+  &lt;li&gt;Latte&lt;/li&gt;
+  &lt;li&gt;Caffè&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Link Utili&lt;/h2&gt;
+&lt;p&gt;Visita &lt;a href="https://thejord.it"&gt;THEJORD&lt;/a&gt; per altri tool.&lt;/p&gt;</code></pre>
+
+<h2>Librerie per Parsing Markdown</h2>
+
+<h3>JavaScript / Node.js</h3>
+
+<pre><code class="language-javascript">// marked - veloce e leggero
+import { marked } from 'marked';
+const html = marked.parse('# Hello\n\nWorld');
+
+// markdown-it - estensibile con plugin
+import MarkdownIt from 'markdown-it';
+const md = new MarkdownIt();
+const html = md.render('# Hello');
+
+// remark - AST-based, ecosystem MDX
+import { remark } from 'remark';
+import html from 'remark-html';
+const result = await remark().use(html).process('# Hello');
+
+// showdown - compatibile browser
+const converter = new showdown.Converter();
+const html = converter.makeHtml('# Hello');</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="language-python"># markdown - libreria standard
+import markdown
+html = markdown.markdown('# Hello\n\nWorld')
+
+# markdown2 - più feature
+import markdown2
+html = markdown2.markdown('# Hello', extras=['tables', 'fenced-code-blocks'])
+
+# mistune - veloce
+import mistune
+html = mistune.html('# Hello')
+
+# python-markdown con estensioni
+import markdown
+html = markdown.markdown(text, extensions=['tables', 'toc', 'codehilite'])</code></pre>
+
+<h3>PHP</h3>
+
+<pre><code class="language-php">&lt;?php
+// Parsedown - popolare e veloce
+$parsedown = new Parsedown();
+$html = $parsedown-&gt;text('# Hello');
+
+// league/commonmark - CommonMark compliant
+use League\CommonMark\CommonMarkConverter;
+$converter = new CommonMarkConverter();
+$html = $converter-&gt;convert('# Hello');
+
+// Michelf/php-markdown
+use Michelf\Markdown;
+$html = Markdown::defaultTransform('# Hello');
+?&gt;</code></pre>
+
+<h3>Go</h3>
+
+<pre><code class="language-go">// goldmark - CommonMark compliant
+import "github.com/yuin/goldmark"
+var buf bytes.Buffer
+goldmark.Convert([]byte("# Hello"), &amp;buf)
+
+// blackfriday - popolare
+import "github.com/russross/blackfriday/v2"
+html := blackfriday.Run([]byte("# Hello"))</code></pre>
+
+<h2>Confronto: Flavors di Markdown</h2>
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Standard</th>
+<th>CommonMark</th>
+<th>GFM</th>
+<th>MDX</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Tabelle</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>Task list</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>Strikethrough</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>Autolink</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>Fenced code</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Footnotes</td><td>❌</td><td>❌</td><td>❌</td><td>✅*</td></tr>
+<tr><td>JSX components</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>Specifica formale</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+</tbody>
+</table>
+
+<p>* Con plugin</p>
+
+<h2>FAQ - Domande Frequenti</h2>
+
+<h3>Qual è la differenza tra Markdown e HTML?</h3>
+
+<p>Markdown è un linguaggio di markup <strong>semplificato</strong> progettato per essere leggibile come testo semplice. HTML è il linguaggio di markup <strong>nativo del web</strong>, più verboso ma con controllo completo sulla struttura. Markdown viene convertito in HTML per la visualizzazione web. Puoi anche mescolare HTML dentro Markdown quando serve maggiore controllo.</p>
+
+<h3>Cosa significa GFM (GitHub Flavored Markdown)?</h3>
+
+<p>GFM è un'estensione di Markdown creata da GitHub che aggiunge feature utili per sviluppatori: tabelle, task list (checkbox), strikethrough, fenced code blocks con syntax highlighting, autolink per URL e menzioni @utente. È diventato lo standard de facto per documentazione tecnica.</p>
+
+<h3>Posso usare HTML dentro Markdown?</h3>
+
+<p>Sì, la maggior parte dei parser Markdown supporta HTML inline. Puoi inserire tag come <code>&lt;div&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;video&gt;</code> direttamente nel documento. Utile per feature non supportate da Markdown (es. collapsible sections, video embed).</p>
+
+<h3>Come aggiungo classi CSS o ID agli elementi?</h3>
+
+<p>Markdown standard non supporta attributi HTML. Alcune estensioni (es. markdown-it-attrs) permettono sintassi come <code>{.classe #id}</code>. In alternativa, usa HTML inline: <code>&lt;h2 class="special"&gt;Titolo&lt;/h2&gt;</code>.</p>
+
+<h3>Quale editor Markdown consigli?</h3>
+
+<p>Per desktop: <strong>VS Code</strong> (con estensioni), <strong>Typora</strong> (WYSIWYG), <strong>Obsidian</strong> (note-taking). Online: <strong>StackEdit</strong>, <strong>Dillinger</strong>, <strong>HackMD</strong>. Per documentazione: <strong>GitBook</strong>, <strong>Docusaurus</strong>, <strong>MkDocs</strong>.</p>
+
+<h3>Come gestisco le immagini in Markdown?</h3>
+
+<p>La sintassi è <code>![alt](url)</code>. Per immagini locali, assicurati che il path sia corretto rispetto al file .md. Per ridimensionare, usa HTML: <code>&lt;img src="img.jpg" width="300"&gt;</code>. Per immagini base64, usa: <code>![](data:image/png;base64,...)</code>.</p>
+
+<h3>Markdown supporta le formule matematiche?</h3>
+
+<p>Non nativamente, ma molti parser supportano LaTeX con estensioni. GitHub supporta formule con delimitatori <code>$inline$</code> e <code>$$block$$</code>. Librerie come KaTeX e MathJax renderizzano le formule nel browser.</p>
+
+<h3>Come creo un Table of Contents automatico?</h3>
+
+<p>Alcuni parser generano TOC automaticamente dai heading. In GFM, puoi usare <code>[TOC]</code> o link manuali: <code>[Sezione](#sezione)</code>. Tool come <strong>doctoc</strong> generano TOC automaticamente.</p>
+
+<h2>Best Practice per la Scrittura</h2>
+
+<h3>✅ Cosa Fare</h3>
+
+<ul>
+  <li><strong>Usa heading gerarchici</strong>: H1 per titolo, H2 per sezioni, H3 per sottosezioni</li>
+  <li><strong>Mantieni righe corte</strong>: ~80 caratteri per leggibilità nel codice sorgente</li>
+  <li><strong>Usa liste</strong> per elenchi invece di paragrafi lunghi</li>
+  <li><strong>Includi alt text</strong> per tutte le immagini (accessibilità + SEO)</li>
+  <li><strong>Specifica il linguaggio</strong> nei fenced code blocks per syntax highlighting</li>
+  <li><strong>Usa link descrittivi</strong>: "leggi la guida" invece di "clicca qui"</li>
+</ul>
+
+<h3>❌ Cosa NON Fare</h3>
+
+<ul>
+  <li><strong>Non saltare livelli di heading</strong>: H1 → H3 senza H2 è sbagliato</li>
+  <li><strong>Non usare HTML quando Markdown basta</strong>: mantieni il sorgente leggibile</li>
+  <li><strong>Non dimenticare le righe vuote</strong> prima/dopo blocchi (liste, codice, citazioni)</li>
+  <li><strong>Non usare spazi trailing</strong> (problemi con git e alcuni parser)</li>
+  <li><strong>Non mischiare stili</strong>: usa sempre * o sempre _ per enfasi</li>
+</ul>
+
+<h2>Tool Correlati su THEJORD</h2>
+
+<p>Scopri altri strumenti utili per sviluppatori e content creator:</p>
+
+<ul>
+  <li><a href="/tools/json-formatter">JSON Formatter</a> - Formatta e valida JSON (utile per code blocks)</li>
+  <li><a href="/tools/diff-checker">Diff Checker</a> - Confronta versioni di documenti Markdown</li>
+  <li><a href="/tools/base64">Base64 Encoder</a> - Codifica immagini per embed inline</li>
+  <li><a href="/tools/regex-tester">RegEx Tester</a> - Testa pattern per search/replace in documenti</li>
+  <li><a href="/tools/lorem-ipsum">Lorem Ipsum Generator</a> - Genera placeholder text</li>
+</ul>
+
+<h2>Risorse Esterne</h2>
+
+<ul>
+  <li><a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown ufficiale</a> - Sito originale di John Gruber</li>
+  <li><a href="https://commonmark.org/" target="_blank" rel="noopener">CommonMark</a> - Specifica standardizzata</li>
+  <li><a href="https://github.github.com/gfm/" target="_blank" rel="noopener">GitHub Flavored Markdown Spec</a> - Documentazione GFM</li>
+  <li><a href="https://www.markdownguide.org/" target="_blank" rel="noopener">Markdown Guide</a> - Tutorial completo</li>
+</ul>
+
+<p><strong><a href="/tools/markdown-converter">📝 Prova il nostro Markdown to HTML Converter →</a></strong></p>
