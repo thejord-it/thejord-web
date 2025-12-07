@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEJORD Submission Templates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e4e4e7;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #60a5fa;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .platform {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .platform-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .ph { background: linear-gradient(135deg, #da552f, #ff6b35); }
+        .hn { background: linear-gradient(135deg, #ff6600, #ff8c00); }
+        .alt { background: linear-gradient(135deg, #4a90d9, #67b8e3); }
+        .dev { background: linear-gradient(135deg, #0a0a0a, #333); }
+        .reddit { background: linear-gradient(135deg, #ff4500, #ff6b35); }
+        .github { background: linear-gradient(135deg, #333, #555); }
+
+        .platform-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .platform-priority {
+            margin-left: auto;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .priority-high { background: #dc2626; color: white; }
+        .priority-medium { background: #f59e0b; color: black; }
+
+        .field {
+            margin-bottom: 1rem;
+        }
+        .field-label {
+            font-size: 0.875rem;
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .field-content {
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+        .copy-btn.copied {
+            background: #22c55e;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s;
+        }
+        .link-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        .tips {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .tips-title {
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #94a3b8;
+        }
+        .tips li {
+            margin-bottom: 0.25rem;
+        }
+        .collapsible-content {
+            display: none;
+        }
+        .collapsible-content.active {
+            display: block;
+        }
+        .toggle-icon {
+            transition: transform 0.3s;
+            font-size: 1rem;
+        }
+        .platform-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .quick-link {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: #e4e4e7;
+            transition: all 0.2s;
+        }
+        .quick-link:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        .quick-link-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>THEJORD Submission Templates</h1>
+        <p class="subtitle">Copy-paste ready templates for platform submissions</p>
+
+        <div class="quick-links">
+            <a href="https://www.producthunt.com/posts/new" target="_blank" class="quick-link">
+                <div class="quick-link-icon">🚀</div>
+                <div>Product Hunt</div>
+            </a>
+            <a href="https://news.ycombinator.com/submit" target="_blank" class="quick-link">
+                <div class="quick-link-icon">📰</div>
+                <div>Hacker News</div>
+            </a>
+            <a href="https://alternativeto.net/software/new/" target="_blank" class="quick-link">
+                <div class="quick-link-icon">🔄</div>
+                <div>AlternativeTo</div>
+            </a>
+            <a href="https://dev.to/new" target="_blank" class="quick-link">
+                <div class="quick-link-icon">👩‍💻</div>
+                <div>Dev.to</div>
+            </a>
+            <a href="https://reddit.com/r/webdev/submit" target="_blank" class="quick-link">
+                <div class="quick-link-icon">🤖</div>
+                <div>Reddit</div>
+            </a>
+        </div>
+
+        <!-- Product Hunt -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo ph">🚀</div>
+                <span class="platform-title">Product Hunt</span>
+                <span class="platform-priority priority-high">High Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">Product Name</div>
+                    <div class="field-content">THEJORD - Free Privacy-First Developer Tools<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Tagline (60 chars max)</div>
+                    <div class="field-content">14 free dev tools: JSON, PDF, Hash, UUID, Diff - 100% offline<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Description</div>
+                    <div class="field-content">THEJORD is a suite of 14 free developer tools that work entirely in your browser. No server uploads, no sign-ups, no ads.
+
+**Dev Tools (9):**
+- JSON Formatter & Validator
+- Base64 Encoder/Decoder
+- Regex Tester with pattern library
+- Hash Generator (MD5, SHA-256, SHA-512)
+- Cron Expression Builder
+- UUID Generator (v4)
+- Diff Checker (side-by-side)
+- QR Code Generator
+- XML & WSDL Viewer
+
+**PDF Tools (5):**
+- Merge PDFs
+- Split PDF by pages
+- Edit PDF (text, images, drawings)
+- PDF to Image (PNG/JPG)
+- Compress PDF
+
+**Key Features:**
+- 100% client-side processing
+- No file uploads to servers
+- No registration required
+- Bilingual (English + Italian)
+- Mobile responsive
+
+**Tech Stack:** Next.js 16, TypeScript, Tailwind CSS<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Maker Comment</div>
+                    <div class="field-content">Hey Product Hunt! I built THEJORD because I was tired of online tools that:
+1. Upload my files to unknown servers
+2. Require sign-ups for basic features
+3. Show ads everywhere
+
+Every tool runs entirely in your browser. Your data never leaves your device. It's that simple.
+
+Would love your feedback!<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Topics/Tags</div>
+                    <div class="field-content">Developer Tools, Productivity, PDF, Privacy, Open Source<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://www.producthunt.com/posts/new" target="_blank" class="link-btn">
+                    🚀 Submit to Product Hunt
+                </a>
+                <div class="tips">
+                    <div class="tips-title">💡 Tips</div>
+                    <ul>
+                        <li>Launch on Tuesday-Thursday for best visibility</li>
+                        <li>Engage with comments throughout the day</li>
+                        <li>Prepare a demo GIF/video</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hacker News -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo hn">Y</div>
+                <span class="platform-title">Hacker News (Show HN)</span>
+                <span class="platform-priority priority-high">High Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">Title</div>
+                    <div class="field-content">Show HN: THEJORD - 14 Free Privacy-First Dev Tools (JSON, PDF, Hash, UUID)<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">URL</div>
+                    <div class="field-content">https://thejord.it/en/tools<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Text (optional self-post)</div>
+                    <div class="field-content">I built a suite of free developer tools that work 100% client-side.
+
+Why? I was frustrated with online tools that upload my files to servers or require registration for simple tasks like formatting JSON.
+
+**Tools included:**
+- JSON Formatter/Validator
+- Base64 Encoder/Decoder
+- Regex Tester
+- Hash Generator (MD5, SHA-256, SHA-512)
+- UUID Generator
+- Diff Checker
+- PDF Tools (merge, split, edit, compress, convert)
+- And more...
+
+**Key points:**
+- Everything runs in your browser (no server uploads)
+- No registration or sign-up required
+- Bilingual (EN/IT)
+
+Tech: Next.js 16, TypeScript, pdf-lib for PDF processing.
+
+Feedback welcome! Especially on which tools to add next.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://news.ycombinator.com/submit" target="_blank" class="link-btn">
+                    📰 Submit to Hacker News
+                </a>
+                <div class="tips">
+                    <div class="tips-title">💡 Tips</div>
+                    <ul>
+                        <li>Post between 6-10 AM EST (peak traffic)</li>
+                        <li>Keep title factual, avoid marketing speak</li>
+                        <li>Be ready to answer questions quickly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- AlternativeTo -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo alt">↔</div>
+                <span class="platform-title">AlternativeTo</span>
+                <span class="platform-priority priority-high">High Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">Software Name</div>
+                    <div class="field-content">THEJORD<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Website</div>
+                    <div class="field-content">https://thejord.it<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">One-line Description</div>
+                    <div class="field-content">Free privacy-first developer tools: JSON formatter, PDF tools, hash generator, and more<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Full Description</div>
+                    <div class="field-content">THEJORD is a collection of free online developer tools that prioritize privacy by processing everything client-side in your browser.
+
+Unlike many alternatives, THEJORD never uploads your files to external servers. All processing happens locally on your device.
+
+**Developer Tools:**
+- JSON Formatter & Validator
+- Base64 Encoder/Decoder
+- Regex Tester with syntax highlighting
+- Hash Generator (MD5, SHA-1, SHA-256, SHA-512)
+- Cron Expression Builder
+- UUID Generator (v4)
+- Diff Checker (side by side)
+- QR Code Generator
+- XML & WSDL Viewer
+
+**PDF Tools:**
+- Merge PDF
+- Split PDF
+- Edit PDF (text, images, drawings)
+- PDF to Image (PNG/JPG)
+- Compress PDF
+
+All tools are 100% free, no registration required, privacy-first, mobile responsive, and available in English and Italian.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Tags</div>
+                    <div class="field-content">Developer Tools, JSON, PDF, Privacy, Free, Open Source<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Alternatives To (suggest as alternative to)</div>
+                    <div class="field-content">JSON Formatter, Smallpdf, iLovePDF, JSONLint, CyberChef<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://alternativeto.net/software/new/" target="_blank" class="link-btn">
+                    🔄 Submit to AlternativeTo
+                </a>
+            </div>
+        </div>
+
+        <!-- Dev.to -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo dev">DEV</div>
+                <span class="platform-title">Dev.to Article</span>
+                <span class="platform-priority priority-high">High Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">Title</div>
+                    <div class="field-content">I Built 14 Free Privacy-First Dev Tools - Here's Why<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Tags</div>
+                    <div class="field-content">webdev, javascript, opensource, productivity<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Article Body (Markdown)</div>
+                    <div class="field-content">I got tired of online developer tools that:
+- Upload my sensitive data to unknown servers
+- Require sign-ups for basic features
+- Bombard me with ads
+- Limit free usage
+
+So I built **THEJORD** - a suite of 14 free tools that run entirely in your browser.
+
+## What's Included
+
+### Developer Tools (9)
+| Tool | What it does |
+|------|--------------|
+| JSON Formatter | Format, minify, validate JSON |
+| Base64 | Encode/decode text and files |
+| Regex Tester | Test regex with pattern library |
+| Hash Generator | MD5, SHA-256, SHA-512 |
+| Cron Builder | Visual cron expression builder |
+| UUID Generator | Generate v4 UUIDs |
+| Diff Checker | Side-by-side text comparison |
+| QR Code | Generate QR codes |
+| XML/WSDL Viewer | Parse and analyze XML |
+
+### PDF Tools (5)
+| Tool | What it does |
+|------|--------------|
+| Merge PDF | Combine multiple PDFs |
+| Split PDF | Extract specific pages |
+| Edit PDF | Add text, images, drawings |
+| PDF to Image | Convert to PNG/JPG |
+| Compress PDF | Reduce file size |
+
+## The Privacy-First Approach
+
+Every tool processes data **100% client-side**. Your files never leave your browser.
+
+This matters because:
+- Sensitive code stays private
+- No data retention concerns
+- Works offline once loaded
+- Faster (no upload/download wait)
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **PDF Processing**: pdf-lib
+
+## Try It Out
+
+Check it out at [thejord.it/tools](https://thejord.it/en/tools)
+
+No sign-up required. Just tools.
+
+---
+
+What other tools would you like to see? Drop a comment!<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://dev.to/new" target="_blank" class="link-btn">
+                    👩‍💻 Create Article on Dev.to
+                </a>
+                <div class="tips">
+                    <div class="tips-title">💡 Tips</div>
+                    <ul>
+                        <li>Add a good cover image (1000x420px suggested)</li>
+                        <li>Use relevant tags (max 4)</li>
+                        <li>Add canonical URL to your blog post</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reddit -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo reddit">🤖</div>
+                <span class="platform-title">Reddit</span>
+                <span class="platform-priority priority-medium">Medium Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">r/webdev - Title</div>
+                    <div class="field-content">I made a collection of 14 free privacy-first dev tools (JSON, PDF, Hash, etc.)<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">r/webdev - Body</div>
+                    <div class="field-content">Hey r/webdev!
+
+I built THEJORD - a suite of free developer tools that work entirely client-side. No server uploads, no registration.
+
+Tools include:
+- JSON Formatter/Validator
+- Base64 Encoder/Decoder
+- Regex Tester
+- Hash Generator (MD5, SHA-256, SHA-512)
+- UUID Generator
+- Diff Checker
+- PDF Tools (merge, split, edit, compress)
+
+Everything processes in your browser. Your data never hits a server.
+
+Link: https://thejord.it/en/tools
+
+Built with Next.js 16 and TypeScript. Would love feedback on what tools to add next!<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">r/selfhosted - Title</div>
+                    <div class="field-content">Self-hosted dev tools suite - JSON, PDF, Hash tools with 100% client-side processing<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">r/selfhosted - Body</div>
+                    <div class="field-content">Built a suite of privacy-first dev tools that can be self-hosted. All processing happens client-side in the browser.
+
+Currently running on my K3s cluster.
+
+Tools: JSON Formatter, Base64, Regex Tester, Hash Generator, UUID, Diff Checker, PDF tools (merge, split, edit, compress, convert).
+
+Demo: https://thejord.it/en/tools
+
+Anyone interested in the Docker images/K8s manifests for self-hosting?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://reddit.com/r/webdev/submit" target="_blank" class="link-btn">
+                    🤖 Post to r/webdev
+                </a>
+                <div class="tips">
+                    <div class="tips-title">💡 Tips</div>
+                    <ul>
+                        <li>Participate in communities first before posting</li>
+                        <li>Don't spam - genuine engagement matters</li>
+                        <li>Answer all comments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free-for.dev -->
+        <div class="platform">
+            <div class="platform-header" onclick="toggleContent(this)">
+                <div class="platform-logo github">GH</div>
+                <span class="platform-title">Free-for.dev (GitHub PR)</span>
+                <span class="platform-priority priority-medium">Medium Priority</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="field">
+                    <div class="field-label">PR Title</div>
+                    <div class="field-content">Add THEJORD - Free developer tools suite<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Content to Add (under "Developer Tools" section)</div>
+                    <div class="field-content">  * [THEJORD](https://thejord.it/en/tools) - Free privacy-first developer tools: JSON formatter, Base64, regex tester, hash generator, UUID, diff checker, PDF tools. 100% client-side processing.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+                </div>
+                <a href="https://github.com/ripienaar/free-for-dev" target="_blank" class="link-btn">
+                    🐙 Open Repository
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleContent(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+
+        function copyText(button) {
+            const content = button.parentElement;
+            const text = content.textContent.replace('Copy', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Open first platform by default
+        document.querySelector('.platform-header').click();
+    </script>
+</body>
+</html>
