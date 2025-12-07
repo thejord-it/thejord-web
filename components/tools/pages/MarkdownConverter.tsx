@@ -189,9 +189,33 @@ export default function MarkdownConverter() {
               {t('livePreview')}
             </h2>
             <div
-              className="prose prose-invert max-w-none bg-white text-gray-900 rounded-lg p-4 md:p-6"
-              dangerouslySetInnerHTML={{ __html: preview }}
-            />
+              className="prose prose-lg max-w-none bg-white rounded-lg p-4 md:p-6"
+              style={{ color: '#111827' }}
+            >
+              <style>{`
+                .preview-content * { color: #111827 !important; }
+                .preview-content h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; margin-top: 1.5rem; color: #111827 !important; }
+                .preview-content h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; margin-top: 1.25rem; color: #111827 !important; }
+                .preview-content h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 1rem; color: #111827 !important; }
+                .preview-content h4 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.75rem; color: #111827 !important; }
+                .preview-content h5 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; margin-top: 0.5rem; color: #111827 !important; }
+                .preview-content h6 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem; margin-top: 0.5rem; color: #6b7280 !important; }
+                .preview-content p { margin-bottom: 0.5rem; color: #111827 !important; }
+                .preview-content code { color: #db2777 !important; background: #f3f4f6; padding: 0.125rem 0.25rem; border-radius: 0.25rem; }
+                .preview-content pre { background: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; }
+                .preview-content pre code { background: transparent; padding: 0; }
+                .preview-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1rem; font-style: italic; margin: 1rem 0; color: #4b5563 !important; }
+                .preview-content ul, .preview-content ol { margin-left: 1.5rem; margin-bottom: 0.5rem; }
+                .preview-content li { color: #111827 !important; margin-bottom: 0.25rem; }
+                .preview-content hr { border: none; border-top: 1px solid #d1d5db; margin: 1.5rem 0; }
+                .preview-content table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+                .preview-content th, .preview-content td { border: 1px solid #d1d5db; padding: 0.5rem; text-align: left; }
+                .preview-content th { background: #f3f4f6; font-weight: 600; }
+                .preview-content a { color: #2563eb !important; text-decoration: underline; }
+                .preview-content img { max-width: 100%; height: auto; border-radius: 0.5rem; }
+              `}</style>
+              <div className="preview-content" dangerouslySetInnerHTML={{ __html: preview }} />
+            </div>
           </div>
         )}
 
