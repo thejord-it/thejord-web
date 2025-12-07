@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "title": "THEJORD - Developer Tools & Blog",
+    "title": "THEJORD - Free Privacy-First Developer Tools & Tech Blog",
     "titleTemplate": "%s | THEJORD",
     "description": "Free developer tools and technical blog by The Jord. JSON formatter, Base64 encoder, Cron builder, and more. 100% privacy-first.",
-    "ogDescription": "Free developer tools and technical blog. 100% privacy-first. Made in Italy 🇮🇹"
+    "ogDescription": "Free developer tools: JSON Formatter, Base64, Hash Generator. Technical blog with guides. 100% privacy-first, client-side only. Made in Italy 🇮🇹"
   },
   "header": {
     "tools": "Tools",
