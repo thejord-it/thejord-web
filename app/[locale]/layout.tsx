@@ -33,11 +33,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'THEJORD',
       title: t('title'),
       description: t('ogDescription'),
+      images: [
+        {
+          url: 'https://thejord.it/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'THEJORD - Developer Tools & Blog',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
       description: t('ogDescription'),
+      images: ['https://thejord.it/og-image.png'],
     },
     robots: {
       index: true,
