@@ -90,6 +90,25 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Make package public
+        if: ${{ secrets.GHCR_PAT != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GHCR_PAT }}
+        run: |
+          # Set package visibility to public using GitHub API
+          if [ -n "$GH_TOKEN" ]; then
+            echo "Setting package visibility to public..."
+            curl -s -X PATCH \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/orgs/thejord-it/packages/container/thejord-web/visibility \
+              -d '{"visibility":"public"}' && echo "Package visibility set to public"
+          else
+            echo "WARNING: GHCR_PAT secret not set. Package visibility not changed."
+            echo "Add GHCR_PAT secret with write:packages permission to enable auto-public."
+          fi
+
   deploy:
     needs: build
     runs-on: self-hosted
@@ -136,14 +155,6 @@ jobs:
 
           # Deploy on K3s
           ssh -o StrictHostKeyChecking=no root@192.168.1.212 "
-            # Create/update imagePullSecret
-            kubectl create secret docker-registry ghcr-secret \
-              --docker-server=${{ env.REGISTRY }} \
-              --docker-username=${{ github.actor }} \
-              --docker-password=${{ secrets.GITHUB_TOKEN }} \
-              --namespace=${{ env.NAMESPACE }} \
-              --dry-run=client -o yaml | kubectl apply -f -
-
             # Apply deployment
             kubectl apply -f /tmp/deployment-web.yaml
 
