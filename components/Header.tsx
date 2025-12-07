@@ -115,6 +115,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link href={`/${locale}`} className="flex items-center space-x-2 group">
+              <img src="/logo.svg" alt="THEJORD Logo" className="h-8 w-8" />
               <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
                 THEJORD
               </span>
