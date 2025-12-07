@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEJORD Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .tagline {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 800px;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #60a5fa;
+        }
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tool-name {
+            font-weight: 600;
+            color: #e4e4e7;
+        }
+
+        /* Feature slides */
+        .feature-slide {
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+        }
+        .feature-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .feature-desc {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            max-width: 600px;
+        }
+
+        /* Tool demo slides */
+        .demo-slide {
+            text-align: center;
+        }
+        .demo-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+        .demo-preview {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 700px;
+            text-align: left;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+        .json-key { color: #f472b6; }
+        .json-string { color: #4ade80; }
+        .json-number { color: #fbbf24; }
+        .json-bracket { color: #94a3b8; }
+
+        /* Progress bar */
+        .progress-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+        .progress-dot.active {
+            background: #60a5fa;
+            transform: scale(1.2);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .control-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .control-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .control-btn.recording {
+            background: #dc2626;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* CTA slide */
+        .cta-slide {
+            text-align: center;
+        }
+        .cta-url {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #60a5fa;
+            margin-top: 2rem;
+        }
+        .cta-features {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .cta-feature {
+            text-align: center;
+        }
+        .cta-feature-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .cta-feature-text {
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Intro -->
+    <div class="slide active" id="slide1">
+        <div class="logo">THEJORD</div>
+        <div class="tagline">14 Free Privacy-First Developer Tools</div>
+        <div class="tool-grid">
+            <div class="tool-card"><div class="tool-icon">{ }</div><div class="tool-name">JSON Formatter</div></div>
+            <div class="tool-card"><div class="tool-icon">🔐</div><div class="tool-name">Base64</div></div>
+            <div class="tool-card"><div class="tool-icon">.*</div><div class="tool-name">Regex Tester</div></div>
+            <div class="tool-card"><div class="tool-icon">#</div><div class="tool-name">Hash Generator</div></div>
+            <div class="tool-card"><div class="tool-icon">⏰</div><div class="tool-name">Cron Builder</div></div>
+            <div class="tool-card"><div class="tool-icon">🆔</div><div class="tool-name">UUID Generator</div></div>
+            <div class="tool-card"><div class="tool-icon">⟷</div><div class="tool-name">Diff Checker</div></div>
+            <div class="tool-card"><div class="tool-icon">📱</div><div class="tool-name">QR Code</div></div>
+            <div class="tool-card"><div class="tool-icon">📄</div><div class="tool-name">PDF Tools</div></div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Privacy Feature -->
+    <div class="slide feature-slide" id="slide2">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">100% Client-Side</div>
+        <div class="feature-desc">Your data never leaves your browser. No server uploads, ever.</div>
+    </div>
+
+    <!-- Slide 3: JSON Demo -->
+    <div class="slide demo-slide" id="slide3">
+        <div class="demo-title">JSON Formatter</div>
+        <div class="demo-preview">
+<span class="json-bracket">{</span>
+  <span class="json-key">"name"</span>: <span class="json-string">"THEJORD"</span>,
+  <span class="json-key">"tools"</span>: <span class="json-number">14</span>,
+  <span class="json-key">"privacy"</span>: <span class="json-string">"client-side"</span>,
+  <span class="json-key">"cost"</span>: <span class="json-string">"free"</span>,
+  <span class="json-key">"features"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"format"</span>,
+    <span class="json-string">"minify"</span>,
+    <span class="json-string">"validate"</span>,
+    <span class="json-string">"convert"</span>
+  <span class="json-bracket">]</span>
+<span class="json-bracket">}</span>
+        </div>
+    </div>
+
+    <!-- Slide 4: No Sign Up -->
+    <div class="slide feature-slide" id="slide4">
+        <div class="feature-icon">🚫</div>
+        <div class="feature-title">No Sign Up Required</div>
+        <div class="feature-desc">Just open and use. No accounts, no emails, no friction.</div>
+    </div>
+
+    <!-- Slide 5: PDF Tools -->
+    <div class="slide feature-slide" id="slide5">
+        <div class="feature-icon">📄</div>
+        <div class="feature-title">PDF Tools Suite</div>
+        <div class="feature-desc">Merge, Split, Edit, Compress, Convert - All offline!</div>
+    </div>
+
+    <!-- Slide 6: Free to Use -->
+    <div class="slide feature-slide" id="slide6">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Free to Use</div>
+        <div class="feature-desc">No sign-up required. No hidden costs. Start using instantly.</div>
+    </div>
+
+    <!-- Slide 7: CTA -->
+    <div class="slide cta-slide" id="slide7">
+        <div class="logo">THEJORD</div>
+        <div class="cta-url">thejord.it/en/tools</div>
+        <div class="cta-features">
+            <div class="cta-feature">
+                <div class="cta-feature-icon">🔒</div>
+                <div class="cta-feature-text">Privacy First</div>
+            </div>
+            <div class="cta-feature">
+                <div class="cta-feature-icon">💰</div>
+                <div class="cta-feature-text">Free to Use</div>
+            </div>
+            <div class="cta-feature">
+                <div class="cta-feature-icon">⚡</div>
+                <div class="cta-feature-text">No Sign Up</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress dots -->
+    <div class="progress-container">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" onclick="toggleAuto()">
+            <span id="autoText">▶ Auto (3s)</span>
+        </button>
+        <button class="control-btn" onclick="prevSlide()">← Prev</button>
+        <button class="control-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 7;
+        let autoPlay = false;
+        let autoInterval;
+
+        function showSlide(index) {
+            document.querySelectorAll('.slide').forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function toggleAuto() {
+            autoPlay = !autoPlay;
+            const btn = document.getElementById('autoText');
+            if (autoPlay) {
+                btn.textContent = '⏸ Stop';
+                btn.parentElement.classList.add('recording');
+                autoInterval = setInterval(nextSlide, 3000);
+            } else {
+                btn.textContent = '▶ Auto (3s)';
+                btn.parentElement.classList.remove('recording');
+                clearInterval(autoInterval);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'a') toggleAuto();
+        });
+    </script>
+</body>
+</html>
