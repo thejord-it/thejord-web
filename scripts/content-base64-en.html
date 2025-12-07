@@ -1,0 +1,434 @@
+<h1>Base64 Encoder/Decoder: Complete Guide and Free Tool</h1>
+
+<p>Base64 is an encoding scheme that converts binary data into safe ASCII format for transmission. Universally used in web development, email, APIs, and data URIs, Base64 is essential for transporting binary data through systems designed for text.</p>
+
+<p>Our online <strong>Base64 Encoder/Decoder</strong> is completely free, fast, and privacy-first: it processes everything in the browser without sending data to servers. Ideal for encoding/decoding text, files, images, and binary data.</p>
+
+<h2>What is Base64 and How Does it Work</h2>
+
+<p>Base64 is an encoding method that represents binary data using only 64 printable and safe ASCII characters:</p>
+
+<ul>
+<li><strong>A-Z</strong>: 26 uppercase letters</li>
+<li><strong>a-z</strong>: 26 lowercase letters</li>
+<li><strong>0-9</strong>: 10 numeric digits</li>
+<li><strong>+ and /</strong>: 2 special characters</li>
+<li><strong>=</strong>: Padding character (doesn't count in the 64)</li>
+</ul>
+
+<h3>How Encoding Works</h3>
+
+<p>The Base64 encoding process works like this:</p>
+
+<ol>
+<li><strong>Binary Conversion</strong>: Each input byte is converted to 8 binary bits</li>
+<li><strong>Grouping</strong>: Bits are grouped into 6-bit blocks (instead of 8)</li>
+<li><strong>Mapping</strong>: Each 6-bit group (value 0-63) is mapped to a character in the Base64 table</li>
+<li><strong>Padding</strong>: If needed, <code>=</code> characters are added to complete 4-character blocks</li>
+</ol>
+
+<p><strong>Practical Example:</strong></p>
+
+<pre><code>Input:  "Man" (3 bytes = 24 bits)
+Binary: 01001101 01100001 01101110
+Base64: 010011 010110 000101 101110
+        M      a      n      →  TWFu
+
+Input:  "Ma" (2 bytes = 16 bits)
+Binary: 01001101 01100001
+Base64: 010011 010110 0001(00) (padding needed)
+        T      W      F      =  TWE=</code></pre>
+
+<h3>Why Exactly 64 Characters?</h3>
+
+<p>64 is 2^6, so each Base64 character represents exactly 6 bits of information. This allows efficient conversion: 3 bytes (24 bits) become 4 Base64 characters (24 bits).</p>
+
+<p><strong>Efficiency:</strong> Base64 increases the size of original data by about 33% (4/3 ratio).</p>
+
+<h2>When to Use Base64</h2>
+
+<h3>1. Embedding Images in HTML/CSS (Data URI)</h3>
+
+<p>Include images directly in HTML code without external files:</p>
+
+<pre><code>&lt;!-- Instead of external link --&gt;
+&lt;img src="logo.png" /&gt;
+
+&lt;!-- Base64 Data URI --&gt;
+&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..." /&gt;</code></pre>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Reduces HTTP requests (1 instead of 2)</li>
+<li>Image embedded in CSS/HTML for portability</li>
+<li>Useful for small icons and logos</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Increases file size by 33%</li>
+<li>Not separately cacheable</li>
+<li>Discouraged for large images (&gt;10KB)</li>
+</ul>
+
+<h3>2. Transmitting Binary Data via JSON</h3>
+
+<p>JSON only supports text. To send binary files via JSON API:</p>
+
+<pre><code>{
+  "filename": "document.pdf",
+  "content": "JVBERi0xLjQKJeLjz9MKMy...",
+  "encoding": "base64"
+}</code></pre>
+
+<p><strong>Use case:</strong> File uploads via REST API, webhook attachments, user avatars.</p>
+
+<h3>3. HTTP Basic Authentication</h3>
+
+<p>HTTP Basic Auth standard uses Base64 for username:password:</p>
+
+<pre><code>// Credentials: user:password
+// Base64: dXNlcjpwYXNzd29yZA==
+
+Authorization: Basic dXNlcjpwYXNzd29yZA==</code></pre>
+
+<p><strong>⚠️ Important:</strong> Base64 is NOT secure! Always use HTTPS with Basic Auth, or preferably OAuth2/JWT.</p>
+
+<h3>4. Email Attachments (MIME)</h3>
+
+<p>Email attachments are encoded in Base64 for transmission via SMTP (text protocol):</p>
+
+<pre><code>Content-Type: image/jpeg; name="photo.jpg"
+Content-Transfer-Encoding: base64
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBD...</code></pre>
+
+<h3>5. JWT Tokens</h3>
+
+<p>JSON Web Tokens use Base64URL (URL-safe variant) for encoding:</p>
+
+<pre><code>// JWT Structure: header.payload.signature
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+
+<h3>6. CSS Sprites and Fonts</h3>
+
+<p>Embedding web fonts in CSS:</p>
+
+<pre><code>@font-face {
+  font-family: 'CustomFont';
+  src: url(data:font/woff2;base64,d09GMgABAAAAABE...) format('woff2');
+}</code></pre>
+
+<h3>7. Storing Files in Databases</h3>
+
+<p>Save binary files in TEXT/VARCHAR fields:</p>
+
+<pre><code>INSERT INTO documents (name, content_base64)
+VALUES ('report.pdf', 'JVBERi0xLjQKJe...');</code></pre>
+
+<p><strong>Note:</strong> Better to use BLOB/BYTEA fields when possible for efficiency.</p>
+
+<h2>How to Use Our Base64 Tool</h2>
+
+<h3>Encoding Text to Base64</h3>
+
+<ol>
+<li>Open the <a href="/tools/base64">Base64 Encoder</a></li>
+<li>Select "Text to Base64" tab</li>
+<li>Paste your text in the input area</li>
+<li>Base64 result appears instantly</li>
+<li>Click "Copy" to copy to clipboard</li>
+</ol>
+
+<p><strong>Example:</strong></p>
+<pre><code>Input:  Hello, World!
+Output: SGVsbG8sIFdvcmxkIQ==</code></pre>
+
+<h3>Decoding Base64 to Text</h3>
+
+<ol>
+<li>Select "Base64 to Text" tab</li>
+<li>Paste the Base64 string</li>
+<li>Decoded text appears automatically</li>
+</ol>
+
+<h3>Encoding Files (Images, PDF, etc)</h3>
+
+<ol>
+<li>Click "Upload File" or drag & drop</li>
+<li>Tool automatically generates:
+<ul>
+<li>Pure Base64 string</li>
+<li>Complete Data URI (with MIME type)</li>
+</ul>
+</li>
+<li>Use "Copy Data URI" for HTML/CSS</li>
+</ol>
+
+<p><strong>Example Output:</strong></p>
+<pre><code>// Pure Base64
+iVBORw0KGgoAAAANSUhEUgAAAAUA...
+
+// Data URI for HTML
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...</code></pre>
+
+<h3>Decoding File from Base64</h3>
+
+<ol>
+<li>Paste Base64 string in input</li>
+<li>Tool automatically detects file type</li>
+<li>Preview (if image)</li>
+<li>Click "Download" to save original file</li>
+</ol>
+
+<h2>Practical Code Examples</h2>
+
+<h3>JavaScript (Browser)</h3>
+
+<pre><code>// Encoding
+const text = "Hello World";
+const encoded = btoa(text); // SGVsbG8gV29ybGQ=
+
+// Decoding
+const decoded = atob(encoded); // Hello World
+
+// File to Base64
+function fileToBase64(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+// Usage
+const file = document.querySelector('input[type="file"]').files[0];
+const dataURL = await fileToBase64(file);
+console.log(dataURL); // data:image/png;base64,...</code></pre>
+
+<h3>Node.js</h3>
+
+<pre><code>// Encoding
+const text = "Hello World";
+const encoded = Buffer.from(text).toString('base64');
+console.log(encoded); // SGVsbG8gV29ybGQ=
+
+// Decoding
+const decoded = Buffer.from(encoded, 'base64').toString('utf8');
+console.log(decoded); // Hello World
+
+// File encoding
+const fs = require('fs');
+const fileBuffer = fs.readFileSync('image.png');
+const base64 = fileBuffer.toString('base64');
+
+// File decoding
+const fileData = Buffer.from(base64, 'base64');
+fs.writeFileSync('output.png', fileData);</code></pre>
+
+<h3>Python</h3>
+
+<pre><code>import base64
+
+# Encoding
+text = "Hello World"
+encoded = base64.b64encode(text.encode()).decode()
+print(encoded)  # SGVsbG8gV29ybGQ=
+
+# Decoding
+decoded = base64.b64decode(encoded).decode()
+print(decoded)  # Hello World
+
+# File encoding
+with open('image.png', 'rb') as f:
+    encoded = base64.b64encode(f.read()).decode()
+
+# File decoding
+with open('output.png', 'wb') as f:
+    f.write(base64.b64decode(encoded))</code></pre>
+
+<h3>PHP</h3>
+
+<pre><code>// Encoding
+$text = "Hello World";
+$encoded = base64_encode($text);
+echo $encoded; // SGVsbG8gV29ybGQ=
+
+// Decoding
+$decoded = base64_decode($encoded);
+echo $decoded; // Hello World
+
+// File
+$fileContent = file_get_contents('image.png');
+$encoded = base64_encode($fileContent);</code></pre>
+
+<h2>Base64 vs. Alternative Encoding</h2>
+
+<table>
+<thead>
+<tr>
+<th>Encoding</th>
+<th>Characters</th>
+<th>Overhead</th>
+<th>URL-Safe</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Base64</strong></td>
+<td>64</td>
+<td>+33%</td>
+<td>No (+ and /)</td>
+<td>Email, JSON, data URI</td>
+</tr>
+<tr>
+<td><strong>Base64URL</strong></td>
+<td>64</td>
+<td>+33%</td>
+<td>Yes (- and _)</td>
+<td>JWT, URL parameters</td>
+</tr>
+<tr>
+<td><strong>Hex</strong></td>
+<td>16</td>
+<td>+100%</td>
+<td>Yes</td>
+<td>Hash, colors, debug</td>
+</tr>
+<tr>
+<td><strong>Base32</strong></td>
+<td>32</td>
+<td>+60%</td>
+<td>Yes</td>
+<td>TOTP codes, DNS</td>
+</tr>
+<tr>
+<td><strong>ASCII85</strong></td>
+<td>85</td>
+<td>+25%</td>
+<td>No</td>
+<td>PDF, PostScript</td>
+</tr>
+</tbody>
+</table>
+
+<h3>When to Use What</h3>
+
+<ul>
+<li><strong>Base64</strong>: Default standard for most cases</li>
+<li><strong>Base64URL</strong>: When you need to include encoding in URLs (JWT, query params)</li>
+<li><strong>Hex</strong>: Debug, hash visualization, CSS colors (#RRGGBB)</li>
+<li><strong>Base32</strong>: QR codes, 2FA TOTP secrets (Google Authenticator)</li>
+</ul>
+
+<h2>Security and Best Practices</h2>
+
+<h3>⚠️ Base64 is NOT Encryption</h3>
+
+<p>This is the most common mistake. Base64 is <strong>encoding</strong>, NOT <strong>encryption</strong>:</p>
+
+<ul>
+<li><strong>Encoding</strong>: Reversible transformation without key (anyone can decode)</li>
+<li><strong>Encryption</strong>: Requires secret key to decrypt (secure against attackers)</li>
+</ul>
+
+<p><strong>DO NOT use Base64 for:</strong></p>
+
+<ul>
+<li>❌ Hiding passwords</li>
+<li>❌ Protecting API keys</li>
+<li>❌ "Encrypting" sensitive data</li>
+<li>❌ Authentication tokens without HTTPS</li>
+</ul>
+
+<p><strong>For real security, use:</strong></p>
+
+<ul>
+<li>✅ <strong>AES</strong> (symmetric encryption)</li>
+<li>✅ <strong>RSA</strong> (asymmetric encryption)</li>
+<li>✅ <strong>bcrypt/Argon2</strong> (password hashing)</li>
+<li>✅ <strong>HTTPS/TLS</strong> (secure transport)</li>
+</ul>
+
+<h3>✅ Best Practices</h3>
+
+<ul>
+<li><strong>Validate Input</strong>: Verify Base64 string is valid before decoding</li>
+<li><strong>Limit Size</strong>: Avoid Base64 for very large files (use binary upload instead)</li>
+<li><strong>MIME Type</strong>: Always specify MIME type in data URIs</li>
+<li><strong>URL-Safe</strong>: Use Base64URL for URL parameters and JWT</li>
+<li><strong>Compression First</strong>: Compress data before encoding for efficiency</li>
+</ul>
+
+<h2>Common Problems and Solutions</h2>
+
+<h3>Problem: "Invalid character in base64 string"</h3>
+
+<p><strong>Cause:</strong> String contains non-Base64 characters (spaces, newlines, special characters)</p>
+
+<p><strong>Solution:</strong></p>
+<pre><code>// JavaScript - Clean input
+const cleaned = base64String.replace(/[^A-Za-z0-9+/=]/g, '');
+const decoded = atob(cleaned);</code></pre>
+
+<h3>Problem: Incorrect Padding (missing =)</h3>
+
+<p><strong>Cause:</strong> Some systems omit padding for brevity</p>
+
+<p><strong>Solution:</strong></p>
+<pre><code>function fixPadding(base64) {
+  while (base64.length % 4 !== 0) {
+    base64 += '=';
+  }
+  return base64;
+}</code></pre>
+
+<h3>Problem: Decoded File is Corrupted</h3>
+
+<p><strong>Cause:</strong> Wrong encoding charset (UTF-16 instead of UTF-8)</p>
+
+<p><strong>Solution:</strong> Always use UTF-8 as default charset.</p>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h3>Is Base64 secure for passwords?</h3>
+
+<p>No, absolutely not. Base64 is easily reversible without a key. For passwords use bcrypt, Argon2, or PBKDF2 with salt.</p>
+
+<h3>How much does size increase with Base64?</h3>
+
+<p>About 33%. Every 3 bytes become 4 characters. 1MB binary → 1.33MB Base64.</p>
+
+<h3>Can I use Base64 in URLs?</h3>
+
+<p>Standard Base64 contains + and / which are problematic in URLs. Use <strong>Base64URL</strong> which replaces + with - and / with _.</p>
+
+<h3>Is Base64 slower than binary?</h3>
+
+<p>Yes, encoding/decoding has CPU overhead and increases size. For performance-critical applications, use direct binary transfer (multipart/form-data, binary protocols).</p>
+
+<h3>How do I remove padding from Base64?</h3>
+
+<p>Remove trailing <code>=</code> characters. Note: some decoders require padding, so save it if you need to restore it.</p>
+
+<h2>Related Resources</h2>
+
+<p>Explore other useful THEJORD tools:</p>
+
+<ul>
+<li><strong><a href="/tools/hash-generator">Hash Generator</a></strong>: Generate MD5/SHA hashes to verify Base64 file integrity</li>
+<li><strong><a href="/tools/url-encoder">URL Encoder</a></strong>: Encode Base64 for safe use in URLs</li>
+<li><strong><a href="/tools/json-formatter">JSON Formatter</a></strong>: Format JSON with embedded Base64 data</li>
+<li><strong><a href="/tools/diff-checker">Diff Checker</a></strong>: Compare Base64 strings to find differences</li>
+</ul>
+
+<h3>External Documentation</h3>
+
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc4648" target="_blank" rel="noopener">RFC 4648 - Base64 Specification</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/btoa" target="_blank" rel="noopener">MDN - btoa() and atob()</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Base64" target="_blank" rel="noopener">Base64 - Wikipedia</a></li>
+</ul>
+
+<p><a href="/tools/base64" class="cta-button">Try the Base64 Tool Now →</a></p>

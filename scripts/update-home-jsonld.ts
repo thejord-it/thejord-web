@@ -1,5 +1,12 @@
-import Link from 'next/link'
+#!/usr/bin/env tsx
+/**
+ * Update home page with JSON-LD schemas
+ */
 
+import * as fs from 'fs'
+import * as path from 'path'
+
+const homePageContent = `import Link from 'next/link'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Metadata } from 'next'
 
@@ -16,7 +23,7 @@ function getJsonLdSchemas(locale: string) {
     '@type': 'WebSite',
     name: 'THEJORD',
     alternateName: 'The Jord Developer Tools',
-    url: `${baseUrl}/${locale}`,
+    url: \`\${baseUrl}/\${locale}\`,
     description: locale === 'it'
       ? 'Strumenti gratuiti per sviluppatori: JSON formatter, Base64, Hash, Regex e altro.'
       : 'Free developer tools: JSON formatter, Base64, Hash, Regex and more.',
@@ -28,7 +35,7 @@ function getJsonLdSchemas(locale: string) {
     '@type': 'Organization',
     name: 'THEJORD',
     url: baseUrl,
-    logo: `${baseUrl}/logo.png`,
+    logo: \`\${baseUrl}/logo.png\`,
     sameAs: ['https://github.com/thejord-it'],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -54,8 +61,8 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const t = await getTranslations({ locale, namespace: 'home' })
-  const tTools = await getTranslations({ locale, namespace: 'tools.list' })
+  const t = useTranslations('home')
+  const tTools = useTranslations('tools.list')
   const { webSiteSchema, organizationSchema } = getJsonLdSchemas(locale)
 
   const featuredTools = [
@@ -110,7 +117,7 @@ export default async function HomePage({ params }: Props) {
                 <div key={index} className="text-center">
                   <div className="text-4xl mb-2">{stat.icon}</div>
                   <div className="text-3xl sm:text-2xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                  <div className="text-sm text-text-muted">{t(`stats.${stat.labelKey}`)}</div>
+                  <div className="text-sm text-text-muted">{t(\`stats.\${stat.labelKey}\`)}</div>
                 </div>
               ))}
             </div>
@@ -127,12 +134,12 @@ export default async function HomePage({ params }: Props) {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredTools.map((tool, index) => (
                 <Link key={index} href={tool.href} className="group relative bg-bg-dark border border-border hover:border-primary rounded-xl p-6 transition-all hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${tool.color} rounded-t-xl`}></div>
+                  <div className={\`absolute top-0 left-0 w-full h-1 bg-gradient-to-r \${tool.color} rounded-t-xl\`}></div>
                   <div className="flex items-start gap-4">
-                    <div className={`text-4xl flex-shrink-0 bg-gradient-to-br ${tool.color} bg-clip-text text-transparent font-bold`}>{tool.icon}</div>
+                    <div className={\`text-4xl flex-shrink-0 bg-gradient-to-br \${tool.color} bg-clip-text text-transparent font-bold\`}>{tool.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2">{tTools(`${tool.key}.name`)}</h3>
-                      <p className="text-text-secondary text-sm">{tTools(`${tool.key}.description`)}</p>
+                      <h3 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2">{tTools(\`\${tool.key}.name\`)}</h3>
+                      <p className="text-text-secondary text-sm">{tTools(\`\${tool.key}.description\`)}</p>
                     </div>
                   </div>
                   <div className="mt-4 flex items-center text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">{t('featuredTools.tryNow')} →</div>
@@ -219,3 +226,8 @@ export default async function HomePage({ params }: Props) {
     </>
   )
 }
+`
+
+const targetPath = path.resolve(process.cwd(), 'app/[locale]/page.tsx')
+fs.writeFileSync(targetPath, homePageContent)
+console.log('✅ Home page updated with JSON-LD schemas')

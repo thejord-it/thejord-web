@@ -117,6 +117,10 @@ All tools process data 100% client-side for maximum privacy:
 - ✅ Coverage for all major tools and utilities
 - ✅ Automated testing in CI/CD pipeline
 
+## Roadmap
+
+See [ROADMAP.md](./ROADMAP.md) for planned features and improvements.
+
 ## License
 
 MIT © The Jord

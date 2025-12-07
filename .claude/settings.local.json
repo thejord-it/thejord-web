@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill:*)",
+      "Bash(gh workflow:*)",
+      "Bash(npm test:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(npx tsx:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMTc0ZTgyMC01ZGRkLTQxNDMtOGFkOS05NmI4NzlhOGM5YTciLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ2OTk4ODQsImV4cCI6MTc2NTMwNDY4NH0.QzUV2G8YBwjztEYu8NBS1rXI0zTWNbheCh7cAXSvqxU npx tsx scripts/create-tool-posts.ts)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMTc0ZTgyMC01ZGRkLTQxNDMtOGFkOS05NmI4NzlhOGM5YTciLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ2OTk4ODQsImV4cCI6MTc2NTMwNDY4NH0.QzUV2G8YBwjztEYu8NBS1rXI0zTWNbheCh7cAXSvqxU API_URL=http://localhost:3001 npx tsx:*)",
+      "Bash(node -e:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRiYzllMS00ZDcxLTQ1NmItYjI4MS0xNjNlZmVhMzM2MDQiLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ3MDk2NjUsImV4cCI6MTc2NTMxNDQ2NX0.tNyrhgUQ8SKdDxKjjT7IaHDvAWOQZFngtVGpSnJ-GoA API_URL=http://localhost:3001 npx tsx:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRiYzllMS00ZDcxLTQ1NmItYjI4MS0xNjNlZmVhMzM2MDQiLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ3MDk2NjUsImV4cCI6MTc2NTMxNDQ2NX0.tNyrhgUQ8SKdDxKjjT7IaHDvAWOQZFngtVGpSnJ-GoA npx tsx:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMTc0ZTgyMC01ZGRkLTQxNDMtOGFkOS05NmI4NzlhOGM5YTciLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ2OTk4ODQsImV4cCI6MTc2NTMwNDY4NH0.QzUV2G8YBwjztEYu8NBS1rXI0zTWNbheCh7cAXSvqxU npx tsx scripts/create-tool-posts.ts --staging)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMTc0ZTgyMC01ZGRkLTQxNDMtOGFkOS05NmI4NzlhOGM5YTciLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ2OTk4ODQsImV4cCI6MTc2NTMwNDY4NH0.QzUV2G8YBwjztEYu8NBS1rXI0zTWNbheCh7cAXSvqxU API_URL=https://staging.thejord.it npx tsx scripts/create-xml-wsdl-posts.ts)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AdGhlam9yZC5pdCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NDk0MTcwNywiZXhwIjoxNzY1NTQ2NTA3fQ.l5v0JZbZ2h74y1MKtsj5c50-lDKkzTv6tQLloMyT4XA API_URL=https://thejord.it npx tsx:*)",
+      "Bash(netstat:*)",
+      "Bash(grep:*)",
+      "Bash(node scripts/check-translations.js:*)",
+      "Bash(node:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRiYzllMS00ZDcxLTQ1NmItYjI4MS0xNjNlZmVhMzM2MDQiLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjQ3MDk2NjUsImV4cCI6MTc2NTMxNDQ2NX0.tNyrhgUQ8SKdDxKjjT7IaHDvAWOQZFngtVGpSnJ-GoA API_URL=https://thejord.it npx tsx scripts/update-all-seo-meta.ts)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AdGhlam9yZC5pdCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NDk0MTcwNywiZXhwIjoxNzY1NTQ2NTA3fQ.l5v0JZbZ2h74y1MKtsj5c50-lDKkzTv6tQLloMyT4XA node:*)",
+      "Bash(ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRiYzllMS00ZDcxLTQ1NmItYjI4MS0xNjNlZmVhMzM2MDQiLCJlbWFpbCI6ImFkbWluQHRoZWpvcmQuaXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjUwNTA0NzUsImV4cCI6MTc2NTY1NTI3NX0.JuqNA9qNTRW5DdSztj7kW9XgeAm5uS84vUZt5IjsfnA node scripts/update-sprint2-seo.js)",
+      "Bash(DATABASE_URL=\"postgresql://thejord:TJ0rd%21Pr0d2025%23@192.168.1.212:5432/thejord_db?schema=public\" npx tsx:*)",
+      "Bash(start http://localhost:3001/demo-slideshow.html)",
+      "Bash(ls:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
