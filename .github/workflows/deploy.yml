@@ -91,7 +91,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Make package public
-        if: ${{ secrets.GHCR_PAT != '' }}
         env:
           GH_TOKEN: ${{ secrets.GHCR_PAT }}
         run: |
@@ -105,8 +104,7 @@ jobs:
               https://api.github.com/orgs/thejord-it/packages/container/thejord-web/visibility \
               -d '{"visibility":"public"}' && echo "Package visibility set to public"
           else
-            echo "WARNING: GHCR_PAT secret not set. Package visibility not changed."
-            echo "Add GHCR_PAT secret with write:packages permission to enable auto-public."
+            echo "INFO: GHCR_PAT secret not set. Skipping package visibility change."
           fi
 
   deploy:
