@@ -32,7 +32,7 @@ const config: Config = {
         text: {
           primary: '#F9FAFB',
           secondary: '#D1D5DB',
-          muted: '#9CA3AF',
+          muted: '#A8AEB8', // Improved contrast (was #9CA3AF)
         },
         border: {
           DEFAULT: '#374151',
