@@ -2,12 +2,13 @@
   "name": "thejord-web",
   "version": "1.0.0",
   "browserslist": [
-    "last 2 Chrome versions",
-    "last 2 Firefox versions",
-    "last 2 Safari versions",
-    "last 2 Edge versions",
+    "Chrome >= 90",
+    "Firefox >= 90",
+    "Safari >= 14",
+    "Edge >= 90",
     "not dead",
-    "not IE 11"
+    "not IE 11",
+    "not op_mini all"
   ],
   "description": "THEJORD Web - Blog and content platform with SSR",
   "scripts": {
