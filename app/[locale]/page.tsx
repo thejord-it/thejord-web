@@ -135,7 +135,7 @@ export default async function HomePage({ params }: Props) {
                       <p className="text-text-secondary text-sm">{tTools(`${tool.key}.description`)}</p>
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">{t('featuredTools.tryNow')} →</div>
+                  <div className="mt-4 flex items-center text-primary text-sm font-semibold invisible group-hover:visible">{t('featuredTools.tryNow')} →</div>
                 </Link>
               ))}
             </div>
