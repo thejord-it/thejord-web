@@ -32,7 +32,7 @@ const config: Config = {
         text: {
           primary: '#F9FAFB',
           secondary: '#D1D5DB',
-          muted: '#A8AEB8', // Improved contrast (was #9CA3AF)
+          muted: '#B8BEC8', // Better contrast for WAVE (was #A8AEB8)
         },
         border: {
           DEFAULT: '#374151',
