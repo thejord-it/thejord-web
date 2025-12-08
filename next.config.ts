@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Optimize CSS loading
     optimizeCss: true,
+    // Optimize package imports to reduce bundle size
+    optimizePackageImports: ['@dnd-kit/core', '@dnd-kit/sortable', 'crypto-js', 'jszip'],
   },
 
   // Compiler optimizations
