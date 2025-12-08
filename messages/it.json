@@ -3,7 +3,7 @@
     "title": "THEJORD - Strumenti Gratuiti per Sviluppatori & Blog Tecnico",
     "titleTemplate": "%s | THEJORD",
     "description": "Strumenti gratuiti per sviluppatori e blog tecnico di The Jord. JSON formatter, Base64 encoder, Cron builder e molto altro. 100% privacy-first.",
-    "ogDescription": "Strumenti gratuiti per sviluppatori: JSON Formatter, Base64, Hash Generator. Blog tecnico con guide. 100% privacy-first, elaborazione client-side. Made in Italy 🇮🇹"
+    "ogDescription": "Strumenti gratuiti per sviluppatori: JSON Formatter, Base64, Hash Generator. Blog tecnico con guide. Privacy-first, client-side. Made in Italy 🇮🇹"
   },
   "header": {
     "tools": "Strumenti",
