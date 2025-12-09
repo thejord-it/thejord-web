@@ -108,7 +108,7 @@
 
 ---
 
-## 🛠️ Available Tools (13 Tools)
+## 🛠️ Available Tools (14 Tools)
 
 | Tool | Description | Key Features |
 |------|-------------|--------------|
@@ -125,6 +125,7 @@
 | **🕐 Cron Expression Builder** | Create and validate cron schedules | Visual builder, patterns, next runs preview |
 | **📋 JSON Schema Converter** | Generate JSON Schema from JSON | Format detection, Draft 2020-12/07 support |
 | **📂 XML/WSDL Viewer** | Parse and navigate XML/WSDL files | Tree view, XPath search, schema validation |
+| **🔑 UUID Generator** | Generate and validate UUIDs | v1, v4, bulk generation, validation |
 
 ---
 
@@ -231,7 +232,7 @@ docker run -d -p 3000:3000 --name thejord-web thejord-web:latest
 | Feature | THEJORD.IT | IT-Tools | ToolAska | CodeUtil |
 |---------|------------|----------|----------|----------|
 | **Framework** | ⚛️ Next.js 16 | 🟢 Vue 3 | 🅰️ Angular | ⚛️ Next.js |
-| **Tool Count** | 13 tools | 80+ tools | 9 categories | 19 tools |
+| **Tool Count** | 14 tools | 80+ tools | 9 categories | 19 tools |
 | **PDF Tools** | ✅ Full suite | ❌ None | ⚠️ Limited | ❌ None |
 | **Real Compression** | ✅ Ghostscript | ❌ | ❌ | ❌ |
 | **SSR/SEO** | ✅ Full SSR | ❌ SPA | ❌ SPA | ✅ SSR |
@@ -308,7 +309,7 @@ Made with ❤️ in Italy 🇮🇹
 - 🌍 **Multilingua**: Supporto completo italiano e inglese
 - 🇮🇹 **Fatto in Italia**: Alternativa italiana a IT-Tools
 
-### Strumenti Disponibili (13 Tools)
+### Strumenti Disponibili (14 Tools)
 
 - **JSON Formatter**: Formatta, valida e converti JSON
 - **PDF Tools**: Unisci, dividi, comprimi, converti e modifica PDF
@@ -323,6 +324,7 @@ Made with ❤️ in Italy 🇮🇹
 - **Cron Builder**: Crea e valida espressioni cron
 - **JSON Schema Converter**: Genera JSON Schema da JSON
 - **XML/WSDL Viewer**: Visualizza e naviga file XML/WSDL
+- **UUID Generator**: Genera e valida UUID
 
 ### Installazione
 
