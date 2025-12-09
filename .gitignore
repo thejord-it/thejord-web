@@ -39,3 +39,13 @@ next-env.d.ts
 # windows artifacts
 nul
 scripts/
+
+# demo/video output
+demo-output/
+*.mp4
+*.mp3
+*.webm
+
+# sensitive admin pages (keep out of public repo)
+app/admin/strategy/
+app/api/analytics/
