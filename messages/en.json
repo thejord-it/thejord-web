@@ -207,6 +207,10 @@
       "pdfTools": {
         "name": "PDF Tools",
         "description": "Merge, split, edit, convert and compress PDF files"
+      },
+      "uuidGenerator": {
+        "name": "UUID Generator",
+        "description": "Generate and validate UUIDs (v1, v4)"
       }
     },
     "categories": {
@@ -971,6 +975,42 @@
         "success": "Operation completed!",
         "reset": "Reset"
       }
+    },
+    "uuidGenerator": {
+      "description": "Generate and validate universally unique identifiers (UUIDs).",
+      "generate": "Generate UUIDs",
+      "generateBtn": "Generate",
+      "clear": "Clear",
+      "version": "UUID Version",
+      "quantity": "Quantity",
+      "random": "Random",
+      "timestamp": "Timestamp",
+      "allZeros": "All zeros",
+      "uppercase": "Uppercase",
+      "noDashes": "No dashes",
+      "generated": "generated",
+      "copy": "Copy",
+      "copyAll": "Copy All",
+      "copied": "UUID copied to clipboard!",
+      "allCopied": "All UUIDs copied to clipboard!",
+      "copyFailed": "Failed to copy",
+      "validate": "Validate UUID",
+      "validateBtn": "Validate",
+      "enterUuidToValidate": "Enter UUID to validate...",
+      "validUuid": "Valid UUID",
+      "invalidUuid": "Invalid UUID format",
+      "detectedVersion": "Detected version",
+      "uuidVersions": "UUID Versions",
+      "v4Description": "Random UUID. Most commonly used. 122 bits of randomness.",
+      "v1Description": "Timestamp-based. Contains MAC address and time. Less private but sortable.",
+      "nilDescription": "Special UUID with all zeros. Used as placeholder or null value.",
+      "aboutUuid": "About UUIDs",
+      "aboutDescription": "UUID (Universally Unique Identifier) is a 128-bit identifier that is unique across space and time. Used for generating unique IDs without coordination.",
+      "commonUses": "Common Uses:",
+      "use1": "Database primary keys",
+      "use2": "Session identifiers",
+      "use3": "File naming",
+      "use4": "Distributed systems"
     }
   }
 }

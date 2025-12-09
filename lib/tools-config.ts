@@ -142,6 +142,16 @@ export const TOOLS: ToolConfig[] = [
     metaDescription: 'Free online PDF tools. Merge, split, compress, rotate and convert PDF files. Convert images to PDF and PDF to images. 100% privacy-first, works offline.',
     component: 'PdfTools'
   },
+  {
+    slug: 'uuid-generator',
+    name: 'UUID Generator',
+    description: 'Generate and validate UUIDs (v1, v4)',
+    icon: '🔑',
+    category: 'Development',
+    keywords: ['uuid', 'guid', 'unique id', 'generator', 'v4', 'v1', 'identifier'],
+    metaDescription: 'Generate UUIDs online. Create UUID v1 (timestamp) and v4 (random) identifiers. Validate and parse existing UUIDs. 100% privacy-first.',
+    component: 'UuidGenerator'
+  },
 ]
 
 export function getToolBySlug(slug: string): ToolConfig | undefined {

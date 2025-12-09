@@ -108,6 +108,13 @@ const tools = [
     color: 'from-emerald-500 to-teal-500',
     categoryKey: 'development'
   },
+  {
+    slug: 'uuid-generator',
+    key: 'uuidGenerator',
+    icon: '#',
+    color: 'from-rose-500 to-pink-500',
+    categoryKey: 'development'
+  },
 ]
 
 export default function ToolsPage() {

@@ -207,6 +207,10 @@
       "pdfTools": {
         "name": "PDF Tools",
         "description": "Unisci, dividi, modifica, converti e comprimi file PDF"
+      },
+      "uuidGenerator": {
+        "name": "UUID Generator",
+        "description": "Genera e valida UUID (v1, v4)"
       }
     },
     "categories": {
@@ -971,6 +975,42 @@
         "success": "Operazione completata!",
         "reset": "Resetta"
       }
+    },
+    "uuidGenerator": {
+      "description": "Genera e valida identificatori univoci universali (UUID).",
+      "generate": "Genera UUID",
+      "generateBtn": "Genera",
+      "clear": "Pulisci",
+      "version": "Versione UUID",
+      "quantity": "Quantità",
+      "random": "Casuale",
+      "timestamp": "Timestamp",
+      "allZeros": "Tutti zeri",
+      "uppercase": "Maiuscolo",
+      "noDashes": "Senza trattini",
+      "generated": "generati",
+      "copy": "Copia",
+      "copyAll": "Copia tutti",
+      "copied": "UUID copiato negli appunti!",
+      "allCopied": "Tutti gli UUID copiati negli appunti!",
+      "copyFailed": "Copia fallita",
+      "validate": "Valida UUID",
+      "validateBtn": "Valida",
+      "enterUuidToValidate": "Inserisci UUID da validare...",
+      "validUuid": "UUID valido",
+      "invalidUuid": "Formato UUID non valido",
+      "detectedVersion": "Versione rilevata",
+      "uuidVersions": "Versioni UUID",
+      "v4Description": "UUID casuale. Il più usato. 122 bit di casualità.",
+      "v1Description": "Basato su timestamp. Contiene indirizzo MAC e ora. Meno privato ma ordinabile.",
+      "nilDescription": "UUID speciale con tutti zeri. Usato come placeholder o valore nullo.",
+      "aboutUuid": "Informazioni sugli UUID",
+      "aboutDescription": "UUID (Universally Unique Identifier) è un identificatore a 128 bit unico nello spazio e nel tempo. Usato per generare ID unici senza coordinamento.",
+      "commonUses": "Usi comuni:",
+      "use1": "Chiavi primarie database",
+      "use2": "Identificatori di sessione",
+      "use3": "Nomi file",
+      "use4": "Sistemi distribuiti"
     }
   }
 }
