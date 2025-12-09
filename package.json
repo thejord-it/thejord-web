@@ -34,6 +34,8 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@google-analytics/data": "^5.2.1",
+    "@jspawn/ghostscript-wasm": "^0.0.2",
     "@monaco-editor/react": "^4.7.0",
     "@swc/helpers": "^0.5.17",
     "@tiptap/extension-image": "^3.10.8",
