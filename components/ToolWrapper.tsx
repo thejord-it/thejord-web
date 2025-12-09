@@ -20,6 +20,7 @@ const CronBuilder = lazy(() => import('./tools/pages/CronBuilder'))
 const JsonSchemaConverter = lazy(() => import('./tools/pages/JsonSchemaConverter'))
 const XmlWsdlViewer = lazy(() => import('./tools/pages/XmlWsdlViewer'))
 const PdfTools = lazy(() => import('./tools/pages/PdfTools'))
+const UuidGenerator = lazy(() => import('./tools/pages/UuidGenerator'))
 
 const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   JsonFormatter,
@@ -35,6 +36,7 @@ const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   JsonSchemaConverter,
   XmlWsdlViewer,
   PdfTools,
+  UuidGenerator,
 }
 
 function ToolLoader({ loadingText }: { loadingText: string }) {
