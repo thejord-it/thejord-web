@@ -44,7 +44,7 @@ type PDFDocumentProxy = {
 const getPdfRenderer = () => import('@/lib/tools/pdf-renderer')
 
 type TabType = 'merge' | 'split' | 'edit' | 'convert' | 'compress'
-type CompressionLevel = 'light' | 'medium' | 'aggressive'
+type CompressionQuality = 'screen' | 'ebook' | 'printer' | 'prepress'
 type ConvertMode = 'imagesToPdf' | 'pdfToImages'
 type PageSize = 'a4' | 'letter' | 'fit'
 
@@ -345,8 +345,8 @@ export default function PdfTools() {
 
   // Compress state
   const [compressFile, setCompressFile] = useState<PdfFile | null>(null)
-  const [compressionLevel, setCompressionLevel] = useState<CompressionLevel>('medium')
-  const [preserveText, setPreserveText] = useState(true)
+  const [compressionQuality, setCompressionQuality] = useState<CompressionQuality>('ebook')
+  const [isLoadingGhostscript, setIsLoadingGhostscript] = useState(false)
   const [compressedSize, setCompressedSize] = useState<number | null>(null)
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null)
   const [compressOutputName, setCompressOutputName] = useState('')
@@ -772,123 +772,30 @@ export default function PdfTools() {
     }
   }
 
-  // Compress PDF
+  // Compress PDF using Ghostscript WASM
   const handleCompress = async () => {
     if (!compressFile) return
     setIsProcessing(true)
+    setIsLoadingGhostscript(true)
     setProgress(0)
 
     try {
       const arrayBuffer = await compressFile.file.arrayBuffer()
-      const settings = {
-        light: { scale: 1.5, quality: 0.85 },
-        medium: { scale: 1.2, quality: 0.7 },
-        aggressive: { scale: 1.0, quality: 0.5 },
-      }
-      const { scale, quality } = settings[compressionLevel]
 
-      if (preserveText) {
-        // Hybrid mode: analyze each page and only convert image-only pages
-        // This preserves text on text pages while compressing scanned/image pages
-        const { loadPdfDocument } = await getPdfRenderer()
-        // Create copies of ArrayBuffer since pdfjs detaches the original
-        const arrayBufferForPdfJs = arrayBuffer.slice(0)
-        const arrayBufferForPdfLib = arrayBuffer.slice(0)
-        const pdfJsDoc = await loadPdfDocument(arrayBufferForPdfJs)
-        const pdfLibDoc = await PDFDocument.load(arrayBufferForPdfLib, { ignoreEncryption: true })
-        const totalPages = pdfJsDoc.numPages
+      // Dynamic import of Ghostscript compressor
+      const { compressPdfWithGhostscript } = await import('@/lib/tools/ghostscript-compress')
+      setIsLoadingGhostscript(false)
 
-        // Create new PDF document
-        const newPdfDoc = await PDFDocument.create()
+      const compressedData = await compressPdfWithGhostscript(arrayBuffer, {
+        quality: compressionQuality,
+        onProgress: (p) => setProgress(p),
+      })
 
-        for (let i = 1; i <= totalPages; i++) {
-          setProgress(Math.round((i / totalPages) * 100))
+      const blob = new Blob([compressedData as BlobPart], { type: 'application/pdf' })
+      setCompressedSize(blob.size)
+      setCompressedBlob(blob)
 
-          const page = await pdfJsDoc.getPage(i)
-
-          // Try to extract text content to determine if page has real text
-          let hasSignificantText = false
-          try {
-            const textContent = await page.getTextContent()
-            hasSignificantText = textContent.items && textContent.items.length > 10
-          } catch {
-            // If text extraction fails, assume it's an image page
-            hasSignificantText = false
-          }
-
-          if (hasSignificantText) {
-            // Copy original page to preserve text
-            const [copiedPage] = await newPdfDoc.copyPages(pdfLibDoc, [i - 1])
-            newPdfDoc.addPage(copiedPage)
-          } else {
-            // Image-only page: render and compress as JPEG
-            const viewport = page.getViewport({ scale })
-            const canvas = document.createElement('canvas')
-            const context = canvas.getContext('2d')
-            if (!context) throw new Error('Could not get canvas context')
-
-            canvas.width = viewport.width
-            canvas.height = viewport.height
-            context.fillStyle = 'white'
-            context.fillRect(0, 0, canvas.width, canvas.height)
-
-            await page.render({ canvasContext: context, viewport }).promise
-
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', quality)
-            const jpegBase64 = jpegDataUrl.split(',')[1]
-            const jpegBytes = Uint8Array.from(atob(jpegBase64), (c) => c.charCodeAt(0))
-
-            const jpegImage = await newPdfDoc.embedJpg(jpegBytes)
-            const newPage = newPdfDoc.addPage([jpegImage.width, jpegImage.height])
-            newPage.drawImage(jpegImage, { x: 0, y: 0, width: jpegImage.width, height: jpegImage.height })
-          }
-        }
-
-        const pdfBytes = await newPdfDoc.save({ useObjectStreams: true })
-        const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' })
-        setCompressedSize(blob.size)
-        setCompressedBlob(blob)
-      } else {
-        // Maximum compression mode: convert ALL pages to compressed JPEG images
-        const { loadPdfDocument } = await getPdfRenderer()
-        const pdfDoc = await loadPdfDocument(arrayBuffer)
-        const totalPages = pdfDoc.numPages
-
-        const newPdfDoc = await PDFDocument.create()
-
-        for (let i = 1; i <= totalPages; i++) {
-          setProgress(Math.round((i / totalPages) * 100))
-
-          const page = await pdfDoc.getPage(i)
-          const viewport = page.getViewport({ scale })
-
-          const canvas = document.createElement('canvas')
-          const context = canvas.getContext('2d')
-          if (!context) throw new Error('Could not get canvas context')
-
-          canvas.width = viewport.width
-          canvas.height = viewport.height
-          context.fillStyle = 'white'
-          context.fillRect(0, 0, canvas.width, canvas.height)
-
-          await page.render({ canvasContext: context, viewport }).promise
-
-          const jpegDataUrl = canvas.toDataURL('image/jpeg', quality)
-          const jpegBase64 = jpegDataUrl.split(',')[1]
-          const jpegBytes = Uint8Array.from(atob(jpegBase64), (c) => c.charCodeAt(0))
-
-          const jpegImage = await newPdfDoc.embedJpg(jpegBytes)
-          const newPage = newPdfDoc.addPage([jpegImage.width, jpegImage.height])
-          newPage.drawImage(jpegImage, { x: 0, y: 0, width: jpegImage.width, height: jpegImage.height })
-        }
-
-        const pdfBytes = await newPdfDoc.save()
-        const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' })
-        setCompressedSize(blob.size)
-        setCompressedBlob(blob)
-      }
-
-      trackToolUsage('PDF Tools', 'compress_complete', `${compressionLevel}_${preserveText ? 'hybrid' : 'image'}`)
+      trackToolUsage('PDF Tools', 'compress_complete', `ghostscript_${compressionQuality}`)
       showToast(t('common.success'), 'success')
     } catch (error) {
       console.error('PDF Compress Error:', error)
@@ -1701,38 +1608,40 @@ export default function PdfTools() {
                   </div>
 
                   <div className="space-y-3">
-                    <p className="text-text-primary font-medium">{t('compress.level')}</p>
-                    <div className="grid grid-cols-3 gap-3">
-                      {(['light', 'medium', 'aggressive'] as CompressionLevel[]).map((level) => (
+                    <p className="text-text-primary font-medium">{t('compress.quality')}</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      {([
+                        { id: 'screen', dpi: '72 dpi' },
+                        { id: 'ebook', dpi: '150 dpi' },
+                        { id: 'printer', dpi: '300 dpi' },
+                        { id: 'prepress', dpi: '300+ dpi' },
+                      ] as const).map((q) => (
                         <button
-                          key={level}
-                          onClick={() => setCompressionLevel(level)}
+                          key={q.id}
+                          onClick={() => {
+                            setCompressionQuality(q.id)
+                            // Reset result when changing quality
+                            setCompressedBlob(null)
+                            setCompressedSize(null)
+                          }}
                           className={`p-3 rounded-lg border-2 transition-colors text-left ${
-                            compressionLevel === level
+                            compressionQuality === q.id
                               ? 'border-primary bg-primary/10'
                               : 'border-border hover:border-border-light'
                           }`}
                         >
-                          <p className="text-text-primary font-medium">{t(`compress.${level}`)}</p>
-                          <p className="text-text-muted text-xs">{t(`compress.${level}Desc`)}</p>
+                          <p className="text-text-primary font-medium">{t(`compress.${q.id}`)}</p>
+                          <p className="text-text-muted text-xs">{q.dpi}</p>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <label className="flex items-center gap-3 p-3 bg-bg-darkest rounded-lg cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={preserveText}
-                        onChange={(e) => setPreserveText(e.target.checked)}
-                        className="w-5 h-5 accent-primary"
-                      />
-                      <div>
-                        <p className="text-text-primary font-medium">{t('compress.preserveText')}</p>
-                        <p className="text-text-muted text-xs">{t('compress.preserveTextDesc')}</p>
-                      </div>
-                    </label>
+                  {/* Info about Ghostscript */}
+                  <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                    <p className="text-blue-400 text-sm">
+                      {t('compress.ghostscriptInfo')}
+                    </p>
                   </div>
 
                   <div className="space-y-2">
@@ -1785,7 +1694,7 @@ export default function PdfTools() {
                       disabled={isProcessing || !compressOutputName.trim()}
                       className="w-full py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
                     >
-                      {t('compress.compressButton')}
+                      {isLoadingGhostscript ? t('compress.loadingEngine') : isProcessing ? t('compress.compressing') : t('compress.compressButton')}
                     </button>
                   )}
                 </>
