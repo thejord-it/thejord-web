@@ -81,7 +81,7 @@
     "hero": {
       "title1": "Strumenti per Sviluppatori",
       "title2": "Costruiti per la Velocità",
-      "description": "Utility privacy-first per sviluppatori che processano tutto nel tuo browser. Nessun server, nessun tracking, nessuna fregatura.",
+      "description": "Utility privacy-first per sviluppatori che processano tutto nel tuo browser. Nessun server, nessun tracking, nessun compromesso.",
       "madeBy": "Made in Italy 🇮🇹 by The Jord",
       "exploreTools": "Esplora Strumenti",
       "readBlog": "Leggi il Blog"
@@ -968,7 +968,8 @@
         "noFile": "Nessun file selezionato",
         "uploadFirst": "Carica un file PDF per iniziare",
         "error": "Errore durante l'elaborazione",
-        "success": "Operazione completata!"
+        "success": "Operazione completata!",
+        "reset": "Resetta"
       }
     }
   }

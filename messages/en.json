@@ -81,7 +81,7 @@
     "hero": {
       "title1": "Developer Tools",
       "title2": "Built for Speed",
-      "description": "Privacy-first developer utilities that process everything in your browser. No servers, no tracking, no BS.",
+      "description": "Privacy-first developer utilities that process everything in your browser. No servers, no tracking, no compromises.",
       "madeBy": "Made in Italy 🇮🇹 by The Jord",
       "exploreTools": "Explore Tools",
       "readBlog": "Read the Blog"
@@ -968,7 +968,8 @@
         "noFile": "No file selected",
         "uploadFirst": "Upload a PDF file to get started",
         "error": "Error during processing",
-        "success": "Operation completed!"
+        "success": "Operation completed!",
+        "reset": "Reset"
       }
     }
   }
