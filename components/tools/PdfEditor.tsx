@@ -381,6 +381,9 @@ export default function PdfEditor({ file, onSave, onClose }: PdfEditorProps) {
 
     setTextAnnotations((prev) => [...prev, newAnnotation])
     setEditingTextId(newAnnotation.id)
+    setSelectedTextId(newAnnotation.id)
+    // Switch to select tool after adding text so user can interact with it
+    setActiveTool('select')
   }
 
   // Handle drawing
@@ -423,6 +426,8 @@ export default function PdfEditor({ file, onSave, onClose }: PdfEditorProps) {
     setDrawPaths((prev) => [...prev, newPath])
     setIsDrawing(false)
     setCurrentPath([])
+    // Switch to select tool after drawing
+    setActiveTool('select')
   }
 
   // Update form field value

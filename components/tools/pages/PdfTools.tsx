@@ -319,16 +319,25 @@ export default function PdfTools() {
 
   // Merge state
   const [mergeFiles, setMergeFiles] = useState<PdfFile[]>([])
+  const [mergedBlob, setMergedBlob] = useState<Blob | null>(null)
+  const [mergedSize, setMergedSize] = useState<number | null>(null)
+  const [mergeOutputName, setMergeOutputName] = useState('merged.pdf')
 
   // Split state
   const [splitFile, setSplitFile] = useState<PdfFile | null>(null)
   const [splitPages, setSplitPages] = useState<PageInfo[]>([])
   const [splitRange, setSplitRange] = useState('')
   const [splitMode, setSplitMode] = useState<'all' | 'custom'>('all')
+  const [splitResultBlob, setSplitResultBlob] = useState<Blob | null>(null)
+  const [splitResultSize, setSplitResultSize] = useState<number | null>(null)
+  const [splitOutputName, setSplitOutputName] = useState('')
 
   // Edit state
   const [editFile, setEditFile] = useState<PdfFile | null>(null)
   const [editPages, setEditPages] = useState<PageInfo[]>([])
+  const [editResultBlob, setEditResultBlob] = useState<Blob | null>(null)
+  const [editResultSize, setEditResultSize] = useState<number | null>(null)
+  const [editOutputName, setEditOutputName] = useState('')
 
   // Convert state
   const [convertMode, setConvertMode] = useState<ConvertMode>('imagesToPdf')
@@ -522,7 +531,11 @@ export default function PdfTools() {
 
       const mergedBytes = await mergedPdf.save()
       const blob = new Blob([mergedBytes as BlobPart], { type: 'application/pdf' })
-      downloadBlob(blob, 'merged.pdf')
+
+      // Store result for manual download
+      setMergedBlob(blob)
+      setMergedSize(blob.size)
+      setMergeOutputName('merged.pdf')
 
       trackToolUsage('PDF Tools', 'merge_complete', `${mergeFiles.length} files`)
       showToast(t('common.success'), 'success')
@@ -532,6 +545,13 @@ export default function PdfTools() {
     } finally {
       setIsProcessing(false)
       setProgress(0)
+    }
+  }
+
+  // Download merged PDF
+  const handleMergeDownload = () => {
+    if (mergedBlob) {
+      downloadBlob(mergedBlob, mergeOutputName)
     }
   }
 
@@ -590,18 +610,24 @@ export default function PdfTools() {
         }
 
         const zipBlob = await zip.generateAsync({ type: 'blob' })
-        downloadBlob(zipBlob, 'split_pages.zip')
+        // Store result for manual download
+        setSplitResultBlob(zipBlob)
+        setSplitResultSize(zipBlob.size)
+        setSplitOutputName('split_pages.zip')
       } else {
-        // Download each page separately
+        // Create single merged PDF with selected pages
+        const newPdf = await PDFDocument.create()
         for (let i = 0; i < selectedPages.length; i++) {
-          const newPdf = await PDFDocument.create()
           const [copiedPage] = await newPdf.copyPages(pdfDoc, [selectedPages[i]])
           newPdf.addPage(copiedPage)
-          const pdfBytes = await newPdf.save()
-          const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' })
-          downloadBlob(blob, `page_${selectedPages[i] + 1}.pdf`)
           setProgress(((i + 1) / selectedPages.length) * 100)
         }
+        const pdfBytes = await newPdf.save()
+        const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' })
+        // Store result for manual download
+        setSplitResultBlob(blob)
+        setSplitResultSize(blob.size)
+        setSplitOutputName(`extracted_${selectedPages.length}_pages.pdf`)
       }
 
       trackToolUsage('PDF Tools', 'split_complete', `${selectedPages.length} pages`)
@@ -626,8 +652,12 @@ export default function PdfTools() {
       const pdfDoc = await PDFDocument.load(arrayBuffer)
       const newPdf = await PDFDocument.create()
 
-      for (let i = 0; i < editPages.length; i++) {
-        const pageInfo = editPages[i]
+      // If some pages are selected, export only those; otherwise export all
+      const selectedPages = editPages.filter(p => p.selected)
+      const pagesToExport = selectedPages.length > 0 ? selectedPages : editPages
+
+      for (let i = 0; i < pagesToExport.length; i++) {
+        const pageInfo = pagesToExport[i]
         const [copiedPage] = await newPdf.copyPages(pdfDoc, [pageInfo.pageNumber - 1])
 
         // Apply rotation
@@ -636,14 +666,19 @@ export default function PdfTools() {
         }
 
         newPdf.addPage(copiedPage)
-        setProgress(((i + 1) / editPages.length) * 100)
+        setProgress(((i + 1) / pagesToExport.length) * 100)
       }
 
       const pdfBytes = await newPdf.save()
       const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' })
-      downloadBlob(blob, `edited_${editFile.name}`)
 
-      trackToolUsage('PDF Tools', 'edit_complete', `${editPages.length} pages`)
+      // Store result for manual download
+      setEditResultBlob(blob)
+      setEditResultSize(blob.size)
+      const suffix = selectedPages.length > 0 ? `_${selectedPages.length}pages` : ''
+      setEditOutputName(`edited${suffix}_${editFile.name}`)
+
+      trackToolUsage('PDF Tools', 'edit_complete', `${pagesToExport.length} pages`)
       showToast(t('common.success'), 'success')
     } catch (error) {
       trackError('PDF_EDIT_ERROR', String(error), 'PDF Tools')
@@ -651,6 +686,19 @@ export default function PdfTools() {
     } finally {
       setIsProcessing(false)
       setProgress(0)
+    }
+  }
+
+  // Download handlers
+  const handleSplitDownload = () => {
+    if (splitResultBlob) {
+      downloadBlob(splitResultBlob, splitOutputName)
+    }
+  }
+
+  const handleEditDownload = () => {
+    if (editResultBlob) {
+      downloadBlob(editResultBlob, editOutputName)
     }
   }
 
@@ -1098,13 +1146,53 @@ export default function PdfTools() {
                     </DndContext>
                   </div>
 
-                  <button
-                    onClick={handleMerge}
-                    disabled={mergeFiles.length < 2 || isProcessing}
-                    className="w-full py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
-                  >
-                    {t('merge.mergeButton')}
-                  </button>
+                  {!mergedBlob ? (
+                    <button
+                      onClick={handleMerge}
+                      disabled={mergeFiles.length < 2 || isProcessing}
+                      className="w-full py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                    >
+                      {t('merge.mergeButton')}
+                    </button>
+                  ) : (
+                    <div className="space-y-4 p-4 bg-bg-elevated rounded-lg border border-border">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={mergeOutputName}
+                            onChange={(e) => setMergeOutputName(e.target.value)}
+                            className="w-full bg-bg-dark border border-border rounded px-3 py-1.5 text-text-primary text-sm"
+                          />
+                          <p className="text-text-muted text-xs mt-1">
+                            {mergedSize ? `${(mergedSize / 1024 / 1024).toFixed(2)} MB` : ''}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleMergeDownload}
+                          className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          {t('common.download')}
+                        </button>
+                        <button
+                          onClick={() => { setMergedBlob(null); setMergedSize(null) }}
+                          className="px-4 py-2.5 bg-bg-dark hover:bg-bg-elevated border border-border text-text-primary font-medium rounded-lg transition-colors"
+                        >
+                          {t('common.reset')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </div>
@@ -1216,22 +1304,62 @@ export default function PdfTools() {
                     )}
                   </div>
 
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => handleSplit(true)}
-                      disabled={isProcessing || splitPages.length === 0}
-                      className="flex-1 py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
-                    >
-                      {t('split.downloadAll')}
-                    </button>
-                    <button
-                      onClick={() => handleSplit(false)}
-                      disabled={isProcessing || splitPages.length === 0}
-                      className="flex-1 py-3 bg-bg-elevated hover:bg-bg-surface text-text-primary font-medium rounded-lg transition-colors"
-                    >
-                      {t('split.downloadSingle')}
-                    </button>
-                  </div>
+                  {!splitResultBlob ? (
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleSplit(true)}
+                        disabled={isProcessing || splitPages.length === 0}
+                        className="flex-1 py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
+                      >
+                        {t('split.downloadAll')}
+                      </button>
+                      <button
+                        onClick={() => handleSplit(false)}
+                        disabled={isProcessing || splitPages.length === 0}
+                        className="flex-1 py-3 bg-bg-elevated hover:bg-bg-surface text-text-primary font-medium rounded-lg transition-colors"
+                      >
+                        {t('split.downloadSingle')}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 p-4 bg-bg-elevated rounded-lg border border-border">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={splitOutputName}
+                            onChange={(e) => setSplitOutputName(e.target.value)}
+                            className="w-full bg-bg-dark border border-border rounded px-3 py-1.5 text-text-primary text-sm"
+                          />
+                          <p className="text-text-muted text-xs mt-1">
+                            {splitResultSize ? `${(splitResultSize / 1024 / 1024).toFixed(2)} MB` : ''}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleSplitDownload}
+                          className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          {t('common.download')}
+                        </button>
+                        <button
+                          onClick={() => { setSplitResultBlob(null); setSplitResultSize(null) }}
+                          className="px-4 py-2.5 bg-bg-dark hover:bg-bg-elevated border border-border text-text-primary font-medium rounded-lg transition-colors"
+                        >
+                          {t('common.reset')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </div>
@@ -1314,25 +1442,67 @@ export default function PdfTools() {
                     </SortableContext>
                   </DndContext>
 
-                  <div className="flex gap-3">
-                    <button
-                      onClick={handleSaveEdit}
-                      disabled={editPages.length === 0 || isProcessing}
-                      className="flex-1 py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
-                    >
-                      {t('edit.saveChanges')}
-                    </button>
-                    <button
-                      onClick={() => handleOpenEditor(editFile.file)}
-                      disabled={isProcessing}
-                      className="flex-1 py-3 bg-bg-elevated hover:bg-bg-surface text-text-primary font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                      </svg>
-                      {t('edit.advancedEdit')}
-                    </button>
-                  </div>
+                  {!editResultBlob ? (
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleSaveEdit}
+                        disabled={editPages.length === 0 || isProcessing}
+                        className="flex-1 py-3 bg-primary hover:bg-primary-dark disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
+                      >
+                        {editPages.some(p => p.selected)
+                          ? `${t('edit.saveChanges')} (${editPages.filter(p => p.selected).length})`
+                          : t('edit.saveChanges')}
+                      </button>
+                      <button
+                        onClick={() => handleOpenEditor(editFile.file)}
+                        disabled={isProcessing}
+                        className="flex-1 py-3 bg-bg-elevated hover:bg-bg-surface text-text-primary font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                        {t('edit.advancedEdit')}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 p-4 bg-bg-elevated rounded-lg border border-border">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={editOutputName}
+                            onChange={(e) => setEditOutputName(e.target.value)}
+                            className="w-full bg-bg-dark border border-border rounded px-3 py-1.5 text-text-primary text-sm"
+                          />
+                          <p className="text-text-muted text-xs mt-1">
+                            {editResultSize ? `${(editResultSize / 1024 / 1024).toFixed(2)} MB` : ''}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleEditDownload}
+                          className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          {t('common.download')}
+                        </button>
+                        <button
+                          onClick={() => { setEditResultBlob(null); setEditResultSize(null) }}
+                          className="px-4 py-2.5 bg-bg-dark hover:bg-bg-elevated border border-border text-text-primary font-medium rounded-lg transition-colors"
+                        >
+                          {t('common.reset')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </div>
@@ -1762,22 +1932,28 @@ export default function PdfTools() {
 
           {/* Image container */}
           <div
-            className="flex-1 overflow-auto flex items-center justify-center p-4"
+            className="flex-1 overflow-auto p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            {previewPage.loading ? (
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
-                <p className="text-white">{t('common.processing')}</p>
-              </div>
-            ) : (
-              <img
-                src={previewPage.image}
-                alt={`${t('edit.page')} ${previewPage.pageNum}`}
-                className="max-w-none transition-transform duration-200"
-                style={{ transform: `scale(${previewZoom})` }}
-              />
-            )}
+            <div className="min-h-full flex items-center justify-center">
+              {previewPage.loading ? (
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
+                  <p className="text-white">{t('common.processing')}</p>
+                </div>
+              ) : (
+                <img
+                  src={previewPage.image}
+                  alt={`${t('edit.page')} ${previewPage.pageNum}`}
+                  className="max-w-none"
+                  style={{
+                    width: `${previewZoom * 100}%`,
+                    height: 'auto',
+                    maxWidth: 'none'
+                  }}
+                />
+              )}
+            </div>
           </div>
 
           {/* Navigation buttons */}

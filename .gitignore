@@ -49,3 +49,9 @@ demo-output/
 # sensitive admin pages (keep out of public repo)
 app/admin/strategy/
 app/api/analytics/
+
+# claude code settings
+.claude/settings.local.json
+
+# test files
+__tests__/*.pdf
