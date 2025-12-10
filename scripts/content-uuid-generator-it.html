@@ -1,0 +1,147 @@
+<article>
+  <p>Gli UUID (Universally Unique Identifiers) sono numeri a 128 bit utilizzati per identificare univocamente informazioni nei sistemi informatici. Questa guida completa copre tutto sugli UUID, dalla generazione alle best practices, con il nostro UUID Generator online gratuito.</p>
+
+  <h2>Cos'e un UUID?</h2>
+  <p>Un UUID (Universally Unique Identifier) e un identificatore a 128 bit che e garantito essere unico nello spazio e nel tempo. Conosciuto anche come GUID (Globally Unique Identifier) nei sistemi Microsoft, gli UUID sono standardizzati dalla RFC 4122.</p>
+
+  <p>Un tipico UUID appare cosi:</p>
+  <pre><code>550e8400-e29b-41d4-a716-446655440000</code></pre>
+
+  <p>Il formato consiste in 32 cifre esadecimali visualizzate in cinque gruppi separati da trattini: 8-4-4-4-12.</p>
+
+  <h2>Versioni UUID</h2>
+  <p>Esistono diverse versioni di UUID, ognuna con metodi di generazione differenti:</p>
+
+  <h3>Versione 1 (Time-based)</h3>
+  <p>Generato usando il timestamp corrente e l'indirizzo MAC. Sebbene garantisca unicita, puo esporre l'indirizzo MAC e l'orario di creazione.</p>
+
+  <h3>Versione 4 (Random)</h3>
+  <p>Generato usando numeri casuali o pseudo-casuali. E la versione piu comunemente usata per la sua semplicita e privacy. Il nostro tool genera UUID Versione 4.</p>
+
+  <h3>Versione 5 (Name-based SHA-1)</h3>
+  <p>Generato tramite hashing di un identificatore namespace e un nome usando SHA-1. Utile per creare UUID deterministici da nomi.</p>
+
+  <h2>Come Usare il Nostro UUID Generator</h2>
+  <p>Il nostro UUID Generator online gratuito rende semplice creare identificatori unici:</p>
+
+  <ol>
+    <li><strong>Genera</strong>: Clicca il pulsante "Genera" per creare un nuovo UUID v4</li>
+    <li><strong>Generazione Multipla</strong>: Specifica una quantita per generare piu UUID contemporaneamente</li>
+    <li><strong>Copia</strong>: Copia negli appunti con un click per un uso immediato</li>
+    <li><strong>Opzioni Formato</strong>: Scegli maiuscolo/minuscolo, con/senza trattini</li>
+  </ol>
+
+  <h2>Casi d'Uso degli UUID</h2>
+  <p>Gli UUID sono essenziali in molti scenari:</p>
+
+  <h3>Chiavi Primarie Database</h3>
+  <p>Gli UUID sono eccellenti per database distribuiti dove gli ID auto-increment causerebbero conflitti. Permettono di creare record offline e unirli successivamente senza conflitti.</p>
+
+  <h3>Identificatori di Sessione</h3>
+  <p>Le applicazioni web usano UUID per token di sessione sicuri. La loro casualita li rende imprevedibili e sicuri.</p>
+
+  <h3>Nomi File</h3>
+  <p>Durante l'upload di file, gli UUID prevengono collisioni di nomi e nascondono i nomi originali per privacy.</p>
+
+  <h3>Tracciamento Richieste API</h3>
+  <p>Gli UUID abilitano il tracciamento end-to-end delle richieste in architetture microservizi.</p>
+
+  <h2>UUID vs Altri Identificatori</h2>
+
+  <h3>UUID vs Auto-increment ID</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Caratteristica</th>
+        <th>UUID</th>
+        <th>Auto-increment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Unicita</td>
+        <td>Globalmente unico</td>
+        <td>Unico per tabella</td>
+      </tr>
+      <tr>
+        <td>Dimensione</td>
+        <td>16 bytes</td>
+        <td>4-8 bytes</td>
+      </tr>
+      <tr>
+        <td>Prevedibilita</td>
+        <td>Casuale</td>
+        <td>Sequenziale</td>
+      </tr>
+      <tr>
+        <td>Distribuito</td>
+        <td>Si</td>
+        <td>No</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>UUID vs ULID</h3>
+  <p>Gli ULID (Universally Unique Lexicographically Sortable Identifiers) sono ordinati temporalmente, rendendoli migliori per l'indicizzazione database. Tuttavia, gli UUID rimangono piu ampiamente supportati.</p>
+
+  <h2>Esempi di Programmazione</h2>
+
+  <h3>JavaScript</h3>
+  <pre><code>// Usando crypto API (browser moderni)
+const uuid = crypto.randomUUID();
+console.log(uuid); // es., "550e8400-e29b-41d4-a716-446655440000"
+
+// Usando il package uuid (Node.js)
+import { v4 as uuidv4 } from 'uuid';
+const id = uuidv4();</code></pre>
+
+  <h3>Python</h3>
+  <pre><code>import uuid
+
+# Genera UUID v4
+new_uuid = uuid.uuid4()
+print(new_uuid)  # es., 550e8400-e29b-41d4-a716-446655440000
+
+# UUID senza trattini
+print(new_uuid.hex)  # es., 550e8400e29b41d4a716446655440000</code></pre>
+
+  <h3>Java</h3>
+  <pre><code>import java.util.UUID;
+
+// Genera UUID v4
+UUID uuid = UUID.randomUUID();
+System.out.println(uuid.toString());
+
+// Parse UUID da stringa
+UUID parsed = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");</code></pre>
+
+  <h2>Validazione UUID</h2>
+  <p>Un UUID valido deve corrispondere a questo pattern regex:</p>
+  <pre><code>^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$</code></pre>
+
+  <p>Il nostro tool valida gli UUID per assicurarsi che siano conformi al formato standard.</p>
+
+  <h2>Best Practices</h2>
+
+  <ul>
+    <li><strong>Usa v4 nella maggior parte dei casi</strong>: Gli UUID random sono sicuri e semplici</li>
+    <li><strong>Archivia efficientemente</strong>: Usa BINARY(16) nei database invece di VARCHAR(36)</li>
+    <li><strong>Considera l'indicizzazione</strong>: Gli UUID possono impattare le performance del database; usa ULID se l'ordinamento e importante</li>
+    <li><strong>Non esporre la sequenza</strong>: Mai usare UUID che rivelano l'ordine di creazione in contesti di sicurezza</li>
+    <li><strong>Valida l'input</strong>: Valida sempre gli UUID ricevuti da fonti esterne</li>
+  </ul>
+
+  <h2>Privacy e Sicurezza</h2>
+  <p>Il nostro UUID Generator e 100% privacy-first:</p>
+  <ul>
+    <li><strong>Generazione client-side</strong>: Tutti gli UUID sono generati nel tuo browser</li>
+    <li><strong>Nessun upload server</strong>: I tuoi dati non lasciano mai il tuo dispositivo</li>
+    <li><strong>Crittograficamente sicuro</strong>: Usa la Web Crypto API per la casualita</li>
+    <li><strong>Nessun tracking</strong>: Non logghiamo gli UUID generati</li>
+  </ul>
+
+  <h2>Conclusione</h2>
+  <p>Gli UUID sono strumenti essenziali per lo sviluppo software moderno. Che tu abbia bisogno di chiavi database uniche, token di sessione o identificatori file, il nostro UUID Generator gratuito fornisce creazione UUID istantanea, sicura e rispettosa della privacy.</p>
+
+  <p><a href="/tools/uuid-generator">Prova il nostro UUID Generator ora</a> - e gratuito, veloce e funziona interamente nel tuo browser!</p>
+</article>

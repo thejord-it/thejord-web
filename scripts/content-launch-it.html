@@ -1,0 +1,301 @@
+<h1>Benvenuto su THEJORD.IT: La Piattaforma di Developer Tools Italiani</h1>
+
+<p>Siamo entusiasti di annunciare il lancio ufficiale di <strong>THEJORD.IT</strong>, una piattaforma completamente gratuita dedicata a sviluppatori, DevOps, data analyst e chiunque lavori quotidianamente con codice, dati e testo. Una suite completa di strumenti professionali, 100% privacy-first e progettati per la comunità italiana.</p>
+
+<h2>Perché Abbiamo Creato THEJORD</h2>
+
+<p>Lavorando nel mondo dello sviluppo software, ci siamo trovati ripetutamente a cercare tool online per task comuni: confrontare file di configurazione, generare hash per verificare download, convertire JSON, testare espressioni regolari. Esistono centinaia di siti che offrono questi servizi, ma molti presentano problemi critici:</p>
+
+<ul>
+<li><strong>Privacy dubbia</strong>: Dati sensibili inviati a server sconosciuti senza garanzie</li>
+<li><strong>Advertising invasivo</strong>: Pop-up, banner, trackers che rallentano e distraggono</li>
+<li><strong>Limiti artificiali</strong>: Paywall per funzionalità basic, dimensioni file ridotte</li>
+<li><strong>Performance scadente</strong>: Caricamento lento, interfacce obsolete</li>
+<li><strong>Localizzazione assente</strong>: Solo inglese, nessuna attenzione a formati italiani (codice fiscale, P.IVA, CAP)</li>
+</ul>
+
+<p>THEJORD nasce per risolvere questi problemi, offrendo un'alternativa professionale, veloce e rispettosa della privacy dell'utente.</p>
+
+<h2>I Nostri Principi Fondamentali</h2>
+
+<h3>1. Privacy Assoluta</h3>
+
+<p>Tutti i tool di THEJORD elaborano i dati <strong>esclusivamente nel browser</strong>. Zero upload a server esterni. Zero salvataggio di dati personali. Zero tracking invasivo.</p>
+
+<pre><code>// Esempio: Diff Checker
+function compareDiff(text1, text2) {
+  // Elaborazione 100% client-side con Web Workers
+  const worker = new Worker('/workers/diff.js')
+  worker.postMessage({ text1, text2 })
+  // Nessun dato lascia il tuo computer
+}</code></pre>
+
+<p><strong>Cosa significa in pratica:</strong></p>
+<ul>
+<li>Puoi confrontare file confidenziali (contratti, codice proprietario) in sicurezza</li>
+<li>Puoi generare hash di password senza timore che vengano intercettate</li>
+<li>Puoi validare JSON con dati sensibili (API keys, tokens) senza esporli</li>
+</ul>
+
+<h3>2. Completamente Gratuito</h3>
+
+<p>Nessun paywall, nessuna registrazione obbligatoria, nessun "premium plan". Tutti gli strumenti sono e rimarranno 100% gratuiti.</p>
+
+<p><strong>Non troverai mai:</strong></p>
+<ul>
+<li>❌ "Upgrade to Pro per sbloccare questa feature"</li>
+<li>❌ Limiti artificiali su dimensioni file o numero di utilizzi</li>
+<li>❌ Richieste di carta di credito o abbonamenti</li>
+</ul>
+
+<h3>3. Performance e Velocità</h3>
+
+<p>Costruito con tecnologie moderne (Next.js 16, Turbopack, React 19) per garantire caricamento istantaneo ed elaborazione real-time anche su file grandi.</p>
+
+<p><strong>Benchmark interni:</strong></p>
+<ul>
+<li>First Contentful Paint: &lt;0.8s</li>
+<li>Time to Interactive: &lt;1.2s</li>
+<li>Diff su file 10.000 righe: &lt;2s</li>
+<li>JSON validation 5MB: &lt;1s</li>
+</ul>
+
+<h3>4. Open Source e Trasparente</h3>
+
+<p>Il codice sorgente di THEJORD è pubblico su <a href="https://github.com/thejord-it" target="_blank" rel="noopener">GitHub</a>. Puoi verificare esattamente cosa fa ogni tool, proporre miglioramenti, segnalare bug.</p>
+
+<p><strong>Stack tecnologico:</strong></p>
+<ul>
+<li>Frontend: Next.js 16, React 19, TypeScript, TailwindCSS</li>
+<li>Backend: Node.js, Express, PostgreSQL</li>
+<li>Infra: Kubernetes (K3s), Docker, Cloudflare CDN</li>
+</ul>
+
+<h2>Gli Strumenti Disponibili al Lancio</h2>
+
+<h3>1. Diff Checker - Confronto Testi e Codice</h3>
+
+<p>Confronta file, codice, JSON, XML con evidenziazione riga per riga delle differenze. Supporta side-by-side view, inline view, e export in vari formati.</p>
+
+<p><strong>Casi d'uso:</strong> Code review, confronto configurazioni, verifica modifiche database, merge conflicts Git.</p>
+
+<p><a href="/tools/diff-checker">Vai al Diff Checker →</a></p>
+
+<h3>2. Hash Generator - MD5, SHA-1, SHA-256, SHA-512</h3>
+
+<p>Genera hash crittografici per file, password, testi. Supporta MD5, SHA-1, SHA-256, SHA-512, HMAC. Include verificatore di integrità file e password strength checker.</p>
+
+<p><strong>Casi d'uso:</strong> Verifica download, password hashing, firma digitale, blockchain development.</p>
+
+<p><a href="/tools/hash-generator">Vai al Hash Generator →</a></p>
+
+<h3>3. Base64 Encoder/Decoder</h3>
+
+<p>Codifica e decodifica Base64 per testi, file, immagini. Genera Data URI per embedding in HTML/CSS. Supporta file fino a 50MB.</p>
+
+<p><strong>Casi d'uso:</strong> Data URI per immagini, JSON API con file embedded, JWT tokens, email attachments MIME.</p>
+
+<p><a href="/tools/base64">Vai al Base64 Tool →</a></p>
+
+<h3>4. JSON Formatter & Validator</h3>
+
+<p>Valida, formatta (prettify), minifica JSON. Visualizzazione ad albero, supporto JSON5, conversione YAML. Error highlighting preciso.</p>
+
+<p><strong>Casi d'uso:</strong> Debug API responses, validazione config files, MongoDB queries, Elasticsearch mappings.</p>
+
+<p><a href="/tools/json-formatter">Vai al JSON Formatter →</a></p>
+
+<h3>5. RegEx Tester</h3>
+
+<p>Testa espressioni regolari in tempo reale con highlighting. Library di pattern italiani (codice fiscale, P.IVA, CAP, IBAN). Supporto JavaScript, Python, PHP syntax.</p>
+
+<p><strong>Casi d'uso:</strong> Validazione form, parsing log, data extraction, sanitizzazione input.</p>
+
+<p><a href="/tools/regex-tester">Vai al RegEx Tester →</a></p>
+
+<h3>6. Cron Expression Builder</h3>
+
+<p>Genera espressioni cron con interfaccia visuale. Spiegazione in italiano, preview prossime esecuzioni, supporto sintassi 5 e 6 campi (Quartz).</p>
+
+<p><strong>Casi d'uso:</strong> Schedulazione backup, task automation, CI/CD pipelines, Kubernetes CronJobs.</p>
+
+<p><a href="/tools/cron-builder">Vai al Cron Builder →</a></p>
+
+<h3>7. URL Encoder/Decoder</h3>
+
+<p>Codifica e decodifica URL, query string parameters, path segments. Supporto UTF-8, preview encoding real-time.</p>
+
+<p><strong>Casi d'uso:</strong> API testing, URL construction, query parameter encoding, debugging HTTP requests.</p>
+
+<p><a href="/tools/url-encoder">Vai al URL Encoder →</a></p>
+
+<h3>8. Color Converter</h3>
+
+<p>Converti colori tra formati: HEX, RGB, HSL, HSV, CMYK. Color picker visuale, palette generator, contrast checker WCAG.</p>
+
+<p><strong>Casi d'uso:</strong> Web design, CSS development, accessibility testing, brand color management.</p>
+
+<p><a href="/tools/color-converter">Vai al Color Converter →</a></p>
+
+<h3>9. Lorem Ipsum Generator</h3>
+
+<p>Genera testo placeholder in italiano e altre lingue. Paragrafi, parole, caratteri personalizzabili. Supporto HTML markup.</p>
+
+<p><strong>Casi d'uso:</strong> Web design mockups, template development, content placeholder, UI testing.</p>
+
+<p><a href="/tools/lorem-ipsum">Vai al Lorem Ipsum Generator →</a></p>
+
+<h3>10. JSON Schema Converter</h3>
+
+<p>Genera JSON Schema da JSON esistente, valida JSON contro schema, TypeScript interface generation. Supporto Draft 7 e 2020-12.</p>
+
+<p><strong>Casi d'uso:</strong> API documentation, data validation, TypeScript development, OpenAPI schemas.</p>
+
+<p><a href="/tools/json-schema">Vai al JSON Schema Converter →</a></p>
+
+<h3>11. Markdown Converter</h3>
+
+<p>Converti Markdown in HTML, preview real-time, supporto GitHub Flavored Markdown, syntax highlighting per code blocks.</p>
+
+<p><strong>Casi d'uso:</strong> Documentazione tecnica, README files, blog posts, note-taking.</p>
+
+<p><a href="/tools/markdown-converter">Vai al Markdown Converter →</a></p>
+
+<h2>Funzionalità Avanzate</h2>
+
+<h3>Internazionalizzazione (i18n)</h3>
+
+<p>THEJORD è disponibile in <strong>italiano</strong> e <strong>inglese</strong> con traduzione completa di interfaccia, documentazione e blog posts. Switch lingua istantaneo senza ricaricare la pagina.</p>
+
+<h3>Dark Mode Nativo</h3>
+
+<p>Interfaccia ottimizzata per lavoro notturno con dark mode che rispetta le preferenze del sistema operativo. Toggle manuale disponibile.</p>
+
+<h3>Responsive Design</h3>
+
+<p>Tutti i tool funzionano perfettamente su desktop, tablet e smartphone. Layout adattivo che mantiene funzionalità complete su ogni dispositivo.</p>
+
+<h3>Keyboard Shortcuts</h3>
+
+<p>Power user? Ogni tool supporta scorciatoie da tastiera per operazioni comuni:</p>
+
+<ul>
+<li><code>Ctrl/Cmd + S</code>: Salva/Download</li>
+<li><code>Ctrl/Cmd + K</code>: Clear/Reset</li>
+<li><code>Ctrl/Cmd + D</code>: Toggle Dark Mode</li>
+<li><code>Ctrl/Cmd + /</code>: Mostra shortcuts</li>
+</ul>
+
+<h2>Roadmap Futura</h2>
+
+<p>THEJORD è un progetto in continua evoluzione. Ecco cosa abbiamo in programma:</p>
+
+<h3>Q1 2025</h3>
+
+<ul>
+<li>✅ Lancio piattaforma con 11 tool</li>
+<li>🔄 SEO optimization per ranking Google</li>
+<li>📱 Progressive Web App (PWA) installabile</li>
+<li>🔐 Account utente opzionale per salvare preferenze</li>
+</ul>
+
+<h3>Q2 2025</h3>
+
+<ul>
+<li>🚀 Altri 5 tool: SQL Formatter, CSV to JSON, Image Optimizer, QR Code Generator, Password Generator</li>
+<li>🔌 API pubblica per integrazione in altri tool</li>
+<li>📊 Dashboard analytics per monitorare utilizzo personale</li>
+<li>🌍 Supporto per altre lingue (francese, spagnolo, tedesco)</li>
+</ul>
+
+<h3>Q3 2025</h3>
+
+<ul>
+<li>🤝 Integrazione con editor (VS Code extension)</li>
+<li>📦 CLI tool per uso da terminale</li>
+<li>🔗 Shareable links per configurazioni tool</li>
+<li>📚 Tutorial video e documentazione estesa</li>
+</ul>
+
+<h2>Il Team dietro THEJORD</h2>
+
+<p>THEJORD è sviluppato e mantenuto da un team di appassionati sviluppatori italiani con esperienza in:</p>
+
+<ul>
+<li>Full-stack web development</li>
+<li>DevOps e Cloud Infrastructure</li>
+<li>Security e Privacy Engineering</li>
+<li>UI/UX Design</li>
+</ul>
+
+<p>Crediamo fortemente nell'open source, nella privacy come diritto fondamentale, e nell'importanza di strumenti di qualità accessibili a tutti senza barriere economiche.</p>
+
+<h2>Come Puoi Contribuire</h2>
+
+<h3>1. Usa e Condividi</h3>
+
+<p>Il miglior supporto è usare THEJORD e condividerlo con colleghi, community, social media. Ogni utente ci aiuta a crescere e migliorare.</p>
+
+<h3>2. Feedback e Suggerimenti</h3>
+
+<p>Hai trovato un bug? Hai un'idea per migliorare uno strumento? Segnalaci su <a href="https://github.com/thejord-it/issues" target="_blank" rel="noopener">GitHub Issues</a> o via email a <a href="mailto:feedback@thejord.it">feedback@thejord.it</a>.</p>
+
+<h3>3. Contribuisci al Codice</h3>
+
+<p>Sviluppatore? Il progetto è open source e accettiamo pull request. Check la <a href="https://github.com/thejord-it/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guide</a>.</p>
+
+<h3>4. Supporto Economico (Opzionale)</h3>
+
+<p>THEJORD è e rimarrà gratuito. Se vuoi supportare i costi di hosting e sviluppo, puoi fare una donazione volontaria. Ma non è assolutamente necessario!</p>
+
+<h2>Domande Frequenti (FAQ)</h2>
+
+<h3>THEJORD è davvero gratis?</h3>
+
+<p>Sì, 100% gratuito senza limiti, paywall o registrazioni obbligatorie. Nessun costo nascosto.</p>
+
+<h3>I miei dati sono al sicuro?</h3>
+
+<p>Assolutamente. Tutti i tool elaborano dati esclusivamente nel tuo browser. Zero upload a server. Zero salvataggio. Zero tracking di dati sensibili.</p>
+
+<h3>Devo registrarmi per usare i tool?</h3>
+
+<p>No. Puoi usare tutti i tool senza creare account. L'account sarà opzionale in futuro solo per salvare preferenze personali.</p>
+
+<h3>Funziona offline?</h3>
+
+<p>Attualmente no, ma stiamo lavorando alla versione PWA (Progressive Web App) che permetterà uso offline completo. Previsto per Q1 2025.</p>
+
+<h3>Posso usare THEJORD in progetti commerciali?</h3>
+
+<p>Sì, puoi usare liberamente i tool per qualsiasi scopo (personale, aziendale, educativo) senza restrizioni.</p>
+
+<h3>Come monetizzate se è tutto gratis?</h3>
+
+<p>Attualmente THEJORD è finanziato dal team stesso. In futuro potremmo aggiungere advertising non invasivo (no pop-up, no tracking) e donazioni volontarie.</p>
+
+<h2>Ringraziamenti</h2>
+
+<p>Un grande ringraziamento a:</p>
+
+<ul>
+<li>La community open source per le librerie incredibili che usiamo</li>
+<li>I beta tester che ci hanno aiutato a perfezionare i tool prima del lancio</li>
+<li>Tutti coloro che condivideranno e sosterranno THEJORD</li>
+</ul>
+
+<h2>Inizia Subito</h2>
+
+<p>Esplora tutti gli strumenti disponibili e scopri come THEJORD può velocizzare il tuo lavoro quotidiano:</p>
+
+<p><a href="/tools" class="cta-button">Esplora Tutti i Tool →</a></p>
+
+<p>Seguici per aggiornamenti:</p>
+
+<ul>
+<li>📧 Newsletter: <a href="/newsletter">Iscriviti</a></li>
+<li>🐙 GitHub: <a href="https://github.com/thejord-it" target="_blank" rel="noopener">@thejord-it</a></li>
+<li>📝 Blog: <a href="/blog">Articoli e tutorial</a></li>
+</ul>
+
+<p><strong>Benvenuto su THEJORD.IT</strong> - Developer tools professionali, gratuiti, privacy-first. Costruiti da sviluppatori, per sviluppatori.</p>
