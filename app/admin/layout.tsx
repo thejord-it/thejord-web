@@ -28,7 +28,6 @@ export default function AdminLayout({
     { href: '/admin/posts/new', label: 'New Post', icon: '➕' },
     { href: '/admin/tags', label: 'Tags', icon: '🏷️' },
     { href: '/admin/seo', label: 'SEO & Health', icon: '🔍' },
-    { href: '/admin/strategy', label: 'Strategy', icon: '📈' },
   ]
 
   return (
