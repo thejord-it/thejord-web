@@ -49,6 +49,9 @@ demo-output/
 app/admin/strategy/
 app/api/analytics/
 
+# scripts with tokens/credentials (keep local only)
+/scripts/
+
 # claude code settings
 .claude/settings.local.json
 
