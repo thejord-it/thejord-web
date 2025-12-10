@@ -1,0 +1,413 @@
+<h2>What is URL Encoding and Why Is It Necessary</h2>
+
+<p><strong>URL encoding</strong> (also known as percent-encoding) is a fundamental web mechanism that allows special characters to be transmitted within web addresses. When you enter a search query on Google, submit data through forms, or build REST API calls, special characters are automatically converted into safe sequences that can travel across the internet without causing parsing issues or misinterpretation.</p>
+
+<p>Our <strong>URL Encoder/Decoder</strong> is a completely free tool that works 100% in your browser, without sending any data to external servers. It's perfect for developers, SEO specialists, system administrators, and anyone who works daily with URLs, web parameters, and RESTful APIs.</p>
+
+<h2>How Percent-Encoding Works (RFC 3986)</h2>
+
+<p>URLs (<strong>Uniform Resource Locators</strong>) can only contain a limited set of ASCII characters. According to the <a href="https://datatracker.ietf.org/doc/html/rfc3986" target="_blank" rel="noopener">RFC 3986</a> specification, characters allowed in URLs are divided into:</p>
+
+<ul>
+  <li><strong>Unreserved characters</strong>: A-Z, a-z, 0-9, - _ . ~ (always safe)</li>
+  <li><strong>Reserved characters</strong>: : / ? # [ ] @ ! $ &amp; ' ( ) * + , ; = (have special meaning)</li>
+</ul>
+
+<p>All other characters (spaces, accented letters, emoji, symbols) must be <strong>encoded</strong> to be transmitted correctly through the HTTP protocol.</p>
+
+<h3>The Conversion Process</h3>
+
+<p>Percent-encoding converts each unsafe character into its hexadecimal UTF-8 value, preceded by the <code>%</code> symbol:</p>
+
+<pre><code>Character → UTF-8 Bytes → Percent-Encoded
+
+Space     → 0x20      → %20
+é         → 0xC3 0xA9 → %C3%A9
+ñ         → 0xC3 0xB1 → %C3%B1
+€         → 0xE2 0x82 0xAC → %E2%82%AC
+😀        → 0xF0 0x9F 0x98 0x80 → %F0%9F%98%80</code></pre>
+
+<h2>Common Characters Reference Table</h2>
+
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>URL Encoding</th>
+<th>Description</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Space</td><td><code>%20</code> or <code>+</code></td><td>Whitespace</td><td>Query strings</td></tr>
+<tr><td>!</td><td><code>%21</code></td><td>Exclamation mark</td><td>Text, messages</td></tr>
+<tr><td>#</td><td><code>%23</code></td><td>Hash/Pound</td><td>Fragment identifier</td></tr>
+<tr><td>$</td><td><code>%24</code></td><td>Dollar sign</td><td>Prices, currencies</td></tr>
+<tr><td>%</td><td><code>%25</code></td><td>Percent</td><td>Percentages, escape</td></tr>
+<tr><td>&amp;</td><td><code>%26</code></td><td>Ampersand</td><td>Parameter separator</td></tr>
+<tr><td>'</td><td><code>%27</code></td><td>Apostrophe</td><td>Text content</td></tr>
+<tr><td>+</td><td><code>%2B</code></td><td>Plus sign</td><td>Math operations</td></tr>
+<tr><td>,</td><td><code>%2C</code></td><td>Comma</td><td>Lists, separators</td></tr>
+<tr><td>/</td><td><code>%2F</code></td><td>Slash</td><td>URL path</td></tr>
+<tr><td>:</td><td><code>%3A</code></td><td>Colon</td><td>Ports, protocols</td></tr>
+<tr><td>=</td><td><code>%3D</code></td><td>Equals</td><td>Parameter assignment</td></tr>
+<tr><td>?</td><td><code>%3F</code></td><td>Question mark</td><td>Query string start</td></tr>
+<tr><td>@</td><td><code>%40</code></td><td>At sign</td><td>Email, credentials</td></tr>
+<tr><td>中</td><td><code>%E4%B8%AD</code></td><td>Chinese character</td><td>Internationalization</td></tr>
+</tbody>
+</table>
+
+<h2>7+ Real-World Use Cases with Examples</h2>
+
+<h3>1. Search Engine Query Strings</h3>
+
+<p>When you search for "best coffee shop" on Google, the URL becomes:</p>
+
+<pre><code>https://www.google.com/search?q=best%20coffee%20shop</code></pre>
+
+<p>Without encoding, spaces would break the URL structure and cause parsing errors.</p>
+
+<h3>2. REST API Parameters</h3>
+
+<p>Modern APIs often require encoded parameters for complex filters:</p>
+
+<pre><code>GET /api/users?filter=name%3DJohn%26city%3DNew%20York%26age%3E30
+
+// Decoded: filter=name=John&amp;city=New York&amp;age>30</code></pre>
+
+<h3>3. Social Media Share Links</h3>
+
+<p>Share links include encoded URLs and text:</p>
+
+<pre><code>https://twitter.com/intent/tweet?url=https%3A%2F%2Fthejord.it%2Ftools&amp;text=Great%20developer%20tools%21
+
+// Decoded: url=https://thejord.it/tools&amp;text=Great developer tools!</code></pre>
+
+<h3>4. OAuth Redirect URIs</h3>
+
+<p>OAuth 2.0 authentication systems use encoded redirect_uri:</p>
+
+<pre><code>https://accounts.google.com/oauth2/auth
+  ?client_id=xyz
+  &amp;redirect_uri=https%3A%2F%2Fmyapp.com%2Fauth%2Fcallback
+  &amp;scope=email%20profile
+  &amp;response_type=code</code></pre>
+
+<h3>5. Form Data (application/x-www-form-urlencoded)</h3>
+
+<p>HTML forms submit data with URL encoding by default:</p>
+
+<pre><code>POST /contact HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+name=John+Doe&amp;email=john%40example.com&amp;message=Hello%2C+I%27d+like+more+info%21</code></pre>
+
+<h3>6. Cookie Values</h3>
+
+<p>Cookie values containing JSON must be encoded:</p>
+
+<pre><code>Set-Cookie: user_prefs=%7B%22theme%22%3A%22dark%22%2C%22lang%22%3A%22en%22%7D
+
+// Decoded: {"theme":"dark","lang":"en"}</code></pre>
+
+<h3>7. Mobile App Deep Links</h3>
+
+<p>Deep links for iOS/Android use URL encoding for parameters:</p>
+
+<pre><code>myapp://product/view?name=Espresso%20Coffee&amp;price=2.50&amp;category=hot%20drinks</code></pre>
+
+<h3>8. Webhook Payload URLs</h3>
+
+<p>Webhooks (Slack, Discord, etc.) require encoded URLs in payloads:</p>
+
+<pre><code>https://hooks.slack.com/services/xxx/yyy?text=Deploy%20completed%20%E2%9C%85%20to%20production</code></pre>
+
+<h2>Code Examples in 5+ Languages</h2>
+
+<h3>JavaScript (Browser and Node.js)</h3>
+
+<pre><code class="language-javascript">// encodeURIComponent - for parameter values (RECOMMENDED)
+const encoded = encodeURIComponent('café italiano €5');
+console.log(encoded); // caf%C3%A9%20italiano%20%E2%82%AC5
+
+// decodeURIComponent - to decode
+const decoded = decodeURIComponent(encoded);
+console.log(decoded); // café italiano €5
+
+// encodeURI - for complete URLs (does NOT encode : / ? # etc)
+const url = encodeURI('https://example.com/path?q=café espresso');
+console.log(url); // https://example.com/path?q=caf%C3%A9%20espresso
+
+// URLSearchParams - for building query strings (MODERN)
+const params = new URLSearchParams({
+  name: 'John Doe',
+  city: 'New York',
+  email: 'john@example.com'
+});
+console.log(params.toString());
+// name=John+Doe&amp;city=New+York&amp;email=john%40example.com
+
+// URL API - for manipulating complete URLs
+const myUrl = new URL('https://api.example.com/search');
+myUrl.searchParams.set('query', 'café italiano');
+myUrl.searchParams.set('limit', '10');
+console.log(myUrl.href);
+// https://api.example.com/search?query=caf%C3%A9+italiano&amp;limit=10</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="language-python">from urllib.parse import quote, unquote, urlencode, parse_qs
+
+# quote - encode single string
+encoded = quote('café italiano €5')
+print(encoded)  # caf%C3%A9%20italiano%20%E2%82%AC5
+
+# quote with custom safe chars
+encoded_safe = quote('path/to/file', safe='/')
+print(encoded_safe)  # path/to/file (slash not encoded)
+
+# unquote - decode
+decoded = unquote(encoded)
+print(decoded)  # café italiano €5
+
+# urlencode - for dictionaries (query strings)
+params = urlencode({
+    'name': 'John Doe',
+    'city': 'New York',
+    'price': '€5.00'
+})
+print(params)  # name=John+Doe&amp;city=New+York&amp;price=%E2%82%AC5.00
+
+# parse_qs - parse query string
+parsed = parse_qs('name=John&amp;city=New+York')
+print(parsed)  # {'name': ['John'], 'city': ['New York']}</code></pre>
+
+<h3>PHP</h3>
+
+<pre><code class="language-php">&lt;?php
+// urlencode - encode (spaces as +)
+$encoded = urlencode('café italiano €5');
+echo $encoded; // caf%C3%A9+italiano+%E2%82%AC5
+
+// rawurlencode - RFC 3986 encoding (spaces as %20)
+$encoded_raw = rawurlencode('café italiano');
+echo $encoded_raw; // caf%C3%A9%20italiano
+
+// urldecode / rawurldecode - decode
+$decoded = urldecode($encoded);
+echo $decoded; // café italiano €5
+
+// http_build_query - for associative arrays
+$params = http_build_query([
+    'name' =&gt; 'John Doe',
+    'city' =&gt; 'New York',
+    'tags' =&gt; ['php', 'web', 'api']
+]);
+echo $params;
+// name=John+Doe&amp;city=New+York&amp;tags%5B0%5D=php&amp;tags%5B1%5D=web&amp;tags%5B2%5D=api
+
+// parse_str - parse query string
+parse_str('name=John&amp;city=New+York', $result);
+print_r($result); // Array ( [name] =&gt; John [city] =&gt; New York )
+?&gt;</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="language-java">import java.net.URLEncoder;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
+// Encode
+String encoded = URLEncoder.encode("café italiano €5", StandardCharsets.UTF_8);
+System.out.println(encoded); // caf%C3%A9+italiano+%E2%82%AC5
+
+// Decode
+String decoded = URLDecoder.decode(encoded, StandardCharsets.UTF_8);
+System.out.println(decoded); // café italiano €5
+
+// With Java 11+ HttpClient
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+
+String query = URLEncoder.encode("café", StandardCharsets.UTF_8);
+URI uri = URI.create("https://api.example.com/search?q=" + query);
+HttpRequest request = HttpRequest.newBuilder(uri).GET().build();</code></pre>
+
+<h3>C# / .NET</h3>
+
+<pre><code class="language-csharp">using System;
+using System.Web;
+using System.Net;
+
+// HttpUtility.UrlEncode (System.Web)
+string encoded = HttpUtility.UrlEncode("café italiano €5");
+Console.WriteLine(encoded); // caf%c3%a9+italiano+%e2%82%ac5
+
+// Uri.EscapeDataString (RFC 3986 compliant)
+string encoded2 = Uri.EscapeDataString("café italiano");
+Console.WriteLine(encoded2); // caf%C3%A9%20italiano
+
+// WebUtility.UrlEncode (.NET Core)
+string encoded3 = WebUtility.UrlEncode("café italiano");
+Console.WriteLine(encoded3); // caf%C3%A9+italiano
+
+// Decode
+string decoded = HttpUtility.UrlDecode(encoded);
+Console.WriteLine(decoded); // café italiano €5
+
+// QueryString builder
+var query = HttpUtility.ParseQueryString(string.Empty);
+query["name"] = "John Doe";
+query["city"] = "New York";
+Console.WriteLine(query.ToString()); // name=John+Doe&amp;city=New+York</code></pre>
+
+<h3>Go</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "net/url"
+)
+
+func main() {
+    // QueryEscape - encode
+    encoded := url.QueryEscape("café italiano €5")
+    fmt.Println(encoded) // caf%C3%A9+italiano+%E2%82%AC5
+
+    // QueryUnescape - decode
+    decoded, _ := url.QueryUnescape(encoded)
+    fmt.Println(decoded) // café italiano €5
+
+    // url.Values - build query string
+    params := url.Values{}
+    params.Add("name", "John Doe")
+    params.Add("city", "New York")
+    fmt.Println(params.Encode()) // city=New+York&amp;name=John+Doe
+}</code></pre>
+
+<h2>Comparison: URL Encoding vs Other Encodings</h2>
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>URL Encoding</th>
+<th>Base64</th>
+<th>HTML Entities</th>
+<th>JSON Escape</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Primary purpose</strong></td><td>Safe URLs</td><td>Binary → text</td><td>HTML characters</td><td>JSON strings</td></tr>
+<tr><td><strong>Output format</strong></td><td>%XX</td><td>A-Za-z0-9+/=</td><td>&amp;name; or &amp;#123;</td><td>\uXXXX</td></tr>
+<tr><td><strong>Average overhead</strong></td><td>~3x for special</td><td>~1.33x always</td><td>~6x for special</td><td>~6x for special</td></tr>
+<tr><td><strong>Preserves readability</strong></td><td>Partial</td><td>No</td><td>Yes</td><td>Partial</td></tr>
+<tr><td><strong>Standard</strong></td><td>RFC 3986</td><td>RFC 4648</td><td>HTML5</td><td>RFC 8259</td></tr>
+<tr><td><strong>Binary support</strong></td><td>No</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td><strong>Typical use case</strong></td><td>Query strings</td><td>Inline images</td><td>Web pages</td><td>API responses</td></tr>
+</tbody>
+</table>
+
+<h2>FAQ - Frequently Asked Questions</h2>
+
+<h3>What's the difference between encodeURI and encodeURIComponent in JavaScript?</h3>
+
+<p><code>encodeURI()</code> encodes a complete URL, leaving structural characters like <code>:</code>, <code>/</code>, <code>?</code>, <code>#</code>, <code>&amp;</code> intact. It's useful when you have a complete URL with special characters only in the path or query. <code>encodeURIComponent()</code> encodes <strong>everything</strong> except letters, numbers, and <code>- _ . ~</code>. Use <code>encodeURIComponent()</code> for parameter <strong>values</strong>, <code>encodeURI()</code> for pre-formed complete URLs.</p>
+
+<h3>Why does space become %20 or + ?</h3>
+
+<p>According to RFC 3986 (URI Generic Syntax), space should become <code>%20</code>. However, in the <code>application/x-www-form-urlencoded</code> format (used by HTML forms as defined in HTML5), space becomes <code>+</code> for historical compatibility. Both are valid but in different contexts. For safety, always use <code>%20</code> in URLs and accept both when decoding.</p>
+
+<h3>How do I handle Unicode characters (emoji, Chinese, Arabic)?</h3>
+
+<p>Unicode characters are first converted to their UTF-8 representation (1-4 bytes), then each byte is percent-encoded. An emoji like 😀 (U+1F600) becomes <code>%F0%9F%98%80</code> because it takes 4 bytes in UTF-8. A Chinese character like 中 (U+4E2D) becomes <code>%E4%B8%AD</code> (3 UTF-8 bytes).</p>
+
+<h3>Does URL encoding provide security?</h3>
+
+<p><strong>Absolutely not</strong>. URL encoding is completely reversible and serves only to transmit special characters without corrupting URL structure. It provides no data protection whatsoever. To protect sensitive information, always use HTTPS, end-to-end encryption, and never include passwords or sensitive tokens in URLs.</p>
+
+<h3>Should I encode the entire URL or just the parameters?</h3>
+
+<p>Encode only the parameter <strong>values</strong>, never the entire URL structure. The structure (<code>https://</code>, <code>/path/</code>, <code>?</code>, <code>&amp;</code>, <code>=</code>) must remain intact to function. Correct example: <code>?name=</code> + <code>encodeURIComponent(value)</code>.</p>
+
+<h3>How do I avoid double encoding?</h3>
+
+<p>Double encoding happens when you encode already-encoded text: <code>%20</code> becomes <code>%2520</code>. To avoid it: 1) Always decode before re-encoding, 2) Check if text contains <code>%XX</code> patterns before encoding, 3) Use functions that handle this case automatically. Double encoding can also indicate an attack attempt.</p>
+
+<h3>What's the maximum URL length?</h3>
+
+<p>There's no official limit in the specifications, but in practice: Internet Explorer supports up to 2083 characters, Chrome/Firefox/Safari about 65,000 characters, but many servers have lower limits (8KB typical for Apache/Nginx). For large data, use POST instead of GET.</p>
+
+<h3>How do I test if my URL is correctly encoded?</h3>
+
+<p>Use our <a href="/tools/url-encoder">URL Encoder/Decoder</a> to verify. Paste the URL, decode it, and check if the result is the original text. A well-formed URL should: 1) Not contain spaces (only %20 or +), 2) Not contain visible non-ASCII characters, 3) Decode without errors.</p>
+
+<h2>Security Best Practices</h2>
+
+<h3>✅ Do</h3>
+
+<ul>
+  <li><strong>Always encode user input</strong> before inserting it into URLs to prevent injection</li>
+  <li><strong>Use standard libraries</strong> from your language - avoid custom implementations</li>
+  <li><strong>Validate URLs after decoding</strong> to prevent path traversal attacks</li>
+  <li><strong>Use HTTPS</strong> to protect data in transit (URLs are visible in logs)</li>
+  <li><strong>Limit URL length</strong> accepted to prevent DoS attacks</li>
+  <li><strong>Sanitize decoded paths</strong> before accessing the filesystem</li>
+</ul>
+
+<h3>❌ Don't</h3>
+
+<ul>
+  <li><strong>Never trust decoded URLs</strong> without validation - they can contain malicious payloads</li>
+  <li><strong>Don't build URLs by concatenating strings</strong> without encoding values</li>
+  <li><strong>Don't assume encoding prevents XSS or SQL injection</strong> - it's only for transport</li>
+  <li><strong>Never put passwords, tokens, or sensitive data in URLs</strong> - they're logged everywhere</li>
+  <li><strong>Don't ignore double encoding</strong> - it may indicate a bypass attempt</li>
+</ul>
+
+<h3>Secure Code Example</h3>
+
+<pre><code class="language-javascript">// ❌ DANGEROUS - URL injection possible
+const url = `https://api.com/user?id=${userId}&amp;name=${userName}`;
+
+// ✅ SAFE - always encode user values
+const url = `https://api.com/user?id=${encodeURIComponent(userId)}&amp;name=${encodeURIComponent(userName)}`;
+
+// ✅ EVEN BETTER - validate first, then encode
+function buildUserUrl(userId, userName) {
+  // Validation
+  if (!/^[a-zA-Z0-9_-]+$/.test(userId)) {
+    throw new Error('Invalid userId');
+  }
+  if (userName.length > 100) {
+    throw new Error('userName too long');
+  }
+
+  // Safe construction
+  const params = new URLSearchParams({ id: userId, name: userName });
+  return `https://api.com/user?${params}`;
+}</code></pre>
+
+<h2>Related Tools on THEJORD</h2>
+
+<p>Discover other useful tools for developers and web professionals:</p>
+
+<ul>
+  <li><a href="/tools/base64">Base64 Encoder/Decoder</a> - Encode and decode binary data to safe ASCII format</li>
+  <li><a href="/tools/json-formatter">JSON Formatter</a> - Format, validate, and minify JSON data with syntax highlighting</li>
+  <li><a href="/tools/hash-generator">Hash Generator</a> - Generate MD5, SHA-1, SHA-256, SHA-512 hashes for integrity verification</li>
+  <li><a href="/tools/regex-tester">RegEx Tester</a> - Test and debug regular expressions in real-time</li>
+  <li><a href="/tools/diff-checker">Diff Checker</a> - Compare two texts and find the differences</li>
+</ul>
+
+<h2>Authoritative External Resources</h2>
+
+<ul>
+  <li><a href="https://datatracker.ietf.org/doc/html/rfc3986" target="_blank" rel="noopener">RFC 3986 - URI Generic Syntax</a> - Official IETF specification</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener">MDN - encodeURIComponent()</a> - JavaScript documentation</li>
+  <li><a href="https://en.wikipedia.org/wiki/Percent-encoding" target="_blank" rel="noopener">Wikipedia - Percent-encoding</a> - General overview</li>
+</ul>
+
+<p><strong><a href="/tools/url-encoder">🔗 Try our free URL Encoder/Decoder →</a></strong></p>
