@@ -1,0 +1,313 @@
+<h1>JSON Schema Converter: Generate Validation Schemas Automatically</h1><p>API documentation and validation are essential, but creating JSON Schema manually is tedious and error-prone. Today we introduce our <strong>JSON Schema Converter</strong> - a tool that automatically generates JSON Schema from your JSON data.</p><h2>What is JSON Schema?</h2><p>JSON Schema is the de facto standard for describing and validating JSON structures. It's used in:</p><ul><li><strong>OpenAPI/Swagger</strong> - REST API documentation</li>
+<li><strong>API Gateway</strong> - Request/response validation</li>
+<li><strong>Form Generation</strong> - Automatic UI generation</li>
+<li><strong>Data Validation</strong> - Libraries like Ajv, JSON Schema Validator</li>
+<li><strong>IDE Autocomplete</strong> - IntelliSense and code completion</li></ul><h3>Practical Example</h3><p><strong>Input JSON</strong>:</p>
+<pre><code class="language-json">{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "age": 30,
+  "active": true
+}
+</code></pre><p><strong>Generated JSON Schema</strong>:</p>
+<pre><code class="language-json">{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "age": { "type": "integer" },
+    "active": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}
+</code></pre><p>Note how the converter:</p>
+<ul><li>Detected all types correctly</li>
+<li>Identified the email and added <code>"format": "email"</code></li>
+<li>Distinguished <code>integer</code> from <code>number</code></li>
+<li>Set <code>additionalProperties: false</code> for better security</li></ul><h2>Key Features</h2><h3>Smart Auto-Detection</h3><p>The converter analyzes your data and automatically detects:</p><h4>Primitive Types</h4>
+<ul><li><strong>string</strong> - Text</li>
+<li><strong>number</strong> - Decimal numbers (3.14, 2.5)</li>
+<li><strong>integer</strong> - Whole numbers (42, 100)</li>
+<li><strong>boolean</strong> - true/false</li>
+<li><strong>null</strong> - Null values</li></ul><h4>Complex Types</h4>
+<ul><li><strong>object</strong> - Nested objects with properties</li>
+<li><strong>array</strong> - Arrays with element type inference</li></ul><h3>Format Detection</h3><p>When enabled, the converter automatically detects common formats:</p><p>| Format | Example | Use |
+|---------|---------|-----|
+| <code>email</code> | user@example.com | Email validation |
+| <code>uri</code> | https://example.com | URL/URI |
+| <code>uuid</code> | 550e8400-e29b-41d4-a716-446655440000 | Unique identifiers |
+| <code>date-time</code> | 2025-11-17T15:30:00Z | ISO 8601 timestamp |
+| <code>date</code> | 2025-11-17 | Date only |
+| <code>time</code> | 15:30:00 | Time only |
+| <code>ipv4</code> | 192.168.1.1 | IPv4 address |
+| <code>ipv6</code> | 2001:0db8::1 | IPv6 address |</p><p><strong>Example with format detection</strong>:</p>
+<pre><code class="language-json">{
+  "user": {
+    "email": "admin@example.com",
+    "website": "https://example.com",
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "created": "2025-11-17T15:30:00Z",
+    "ip": "192.168.1.1"
+  }
+}
+</code></pre><p><strong>Generated Schema</strong>:</p>
+<pre><code class="language-json">{
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "website": { "type": "string", "format": "uri" },
+        "id": { "type": "string", "format": "uuid" },
+        "created": { "type": "string", "format": "date-time" },
+        "ip": { "type": "string", "format": "ipv4" }
+      }
+    }
+  }
+}
+</code></pre><h3>Configurable Options</h3><h4>Schema Title</h4>
+<p>Name your schema for better documentation:</p>
+<pre><code class="language-json">{
+  "$schema": "...",
+  "title": "User Profile Schema",
+  "type": "object",
+  ...
+}
+</code></pre><h4>Make All Fields Required</h4>
+<p>Automatically make all fields required:</p>
+<pre><code class="language-json">{
+  "type": "object",
+  "properties": { ... },
+  "required": ["name", "email", "age"]
+}
+</code></pre><p><code>null</code> fields are excluded from the <code>required</code> list.</p><h4>Schema Version</h4>
+<p>Choose between:</p>
+<ul><li><strong>Draft 2020-12</strong> (Latest) - Full support for the latest features</li>
+<li><strong>Draft 07</strong> - Compatibility with older tools</li></ul><h3>Nested Objects Support</h3><p>Complete handling of complex structures:</p><pre><code class="language-json">{
+  "user": {
+    "profile": {
+      "name": "John",
+      "contacts": {
+        "email": "john@example.com",
+        "phone": "+1234567890"
+      }
+    },
+    "permissions": ["read", "write"],
+    "metadata": {
+      "created": "2025-11-17T10:00:00Z",
+      "updated": "2025-11-17T15:30:00Z"
+    }
+  }
+}
+</code></pre><p>The converter correctly generates all nesting levels with their respective schemas.</p><h3>Array Support</h3><p>Automatic element type inference:</p><pre><code class="language-json">{
+  "tags": ["typescript", "react", "vite"],
+  "scores": [95, 87, 92],
+  "users": [
+    { "name": "Alice", "age": 30 },
+    { "name": "Bob", "age": 25 }
+  ]
+}
+</code></pre><p><strong>Generated Schema</strong>:</p>
+<pre><code class="language-json">{
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "scores": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "age": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
+</code></pre><h2>Real-World Use Cases</h2><h3>1. API Documentation with OpenAPI</h3><p>Quickly generate schemas for your OpenAPI specifications:</p><pre><code class="language-yaml">openapi: 3.0.0
+paths:
+  /users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              # Paste the generated schema here
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+</code></pre><h3>2. Validation with Ajv</h3><p>Use the schema for runtime data validation:</p><pre><code class="language-typescript">import Ajv from 'ajv'
+import addFormats from 'ajv-formats'
+
+const ajv = new Ajv()
+addFormats(ajv)
+
+const schema = {
+  // Generated schema from the converter
+}
+
+const validate = ajv.compile(schema)
+
+const data = { name: "John", email: "john@example.com" }
+
+if (validate(data)) {
+  console.log('Valid data')
+} else {
+  console.log('Errors:', validate.errors)
+}
+</code></pre><h3>3. Form Generation</h3><p>Libraries like <code>react-jsonschema-form</code> can automatically generate forms:</p><pre><code class="language-tsx">import Form from '@rjsf/core'
+
+const schema = {
+  // Generated schema
+}
+
+function MyForm() {
+  return (
+    &lt;Form
+      schema={schema}
+      onSubmit={({ formData }) => console.log(formData)}
+    /&gt;
+  )
+}
+</code></pre><h3>4. TypeScript Interface Generation</h3><p>Use tools like <code>json-schema-to-typescript</code> to generate types:</p><pre><code class="language-bash">npm install -g json-schema-to-typescript
+
+# Generate TypeScript types from schema
+json-schema-to-typescript schema.json > types.ts
+</code></pre><p><strong>Output</strong>:</p>
+<pre><code class="language-typescript">export interface UserProfile {
+  name: string
+  email: string
+  age: number
+  active: boolean
+}
+</code></pre><h3>5. Database Schema Design</h3><p>Use JSON Schema as a base for defining database structures (MongoDB, PostgreSQL JSONB, etc.):</p><pre><code class="language-javascript">// MongoDB Schema Validation
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      // Schema generated by the converter
+    }
+  }
+})
+</code></pre><h2>Recommended Workflow</h2><h3>1. Rapid Prototyping</h3><pre><code class="language-">Sample data → JSON Schema Converter → Base schema → Manual refinement
+</code></pre><p>1. Create a representative example of your data
+2. Generate the schema with the converter
+3. Add additional constraints (min/max, pattern, enum, etc.)</p><h3>2. API-First Development</h3><pre><code class="language-">Request/Response examples → Schema → OpenAPI Spec → Code Generation
+</code></pre><p>1. Define request/response examples
+2. Generate schemas for each
+3. Integrate into OpenAPI specification
+4. Generate client/server code</p><h3>3. Documentation-Driven</h3><pre><code class="language-">JSON data → Schema → Auto-generated docs → Published API docs
+</code></pre><p>Use tools like Redoc or Swagger UI to publish documentation generated from schemas.</p><h2>Best Practices</h2><h3>1. Use Representative Data</h3><p>Provide a complete example with all possible fields:</p><pre><code class="language-json">// Incomplete
+{
+  "name": "John"
+}
+
+// Complete
+{
+  "name": "John",
+  "email": "john@example.com",
+  "age": 30,
+  "active": true,
+  "roles": ["user", "admin"],
+  "metadata": {
+    "created": "2025-11-17T10:00:00Z"
+  }
+}
+</code></pre><h3>2. Check Detected Formats</h3><p>Always verify that detected formats are correct:</p>
+<ul><li>A code might look like a UUID but not be one</li>
+<li>A string might accidentally match the email pattern</li></ul><h3>3. Add Constraints Manually</h3><p>The generated schema is a starting point. Add:</p>
+<ul><li><code>minLength</code> / <code>maxLength</code> for strings</li>
+<li><code>minimum</code> / <code>maximum</code> for numbers</li>
+<li><code>pattern</code> for regex validation</li>
+<li><code>enum</code> for predefined values</li></ul><pre><code class="language-json">{
+  "type": "string",
+  "format": "email",
+  "minLength": 5,
+  "maxLength": 100,
+  "pattern": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
+}
+</code></pre><h3>4. Version Your Schemas</h3><p>Add versioning when you change schemas:</p><pre><code class="language-json">{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/user-profile/v2.json",
+  "title": "User Profile Schema",
+  "version": "2.0.0",
+  ...
+}
+</code></pre><h3>5. Use <code>additionalProperties</code></h3><p>The converter sets <code>additionalProperties: false</code> for security. Consider whether to:</p>
+<ul><li>Keep it <code>false</code> for strict validation</li>
+<li>Set it to <code>true</code> for flexibility</li>
+<li>Define a specific schema for additional properties</li></ul><h2>Integration with Popular Tools</h2><h3>VS Code JSON Schema Validation</h3><p>Configure VS Code to validate JSON with your schema:</p><pre><code class="language-json">// settings.json
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["user-profile.json"],
+      "url": "./schemas/user-profile.schema.json"
+    }
+  ]
+}
+</code></pre><h3>Postman Schema Validation</h3><p>Use the schema to validate API responses in Postman:</p><pre><code class="language-javascript">// Test script
+pm.test("Response matches schema", function() {
+  const schema = {
+    // Generated schema
+  }
+  pm.response.to.have.jsonSchema(schema)
+})
+</code></pre><h3>Jest Testing</h3><p>Validate data in tests:</p><pre><code class="language-typescript">import Ajv from 'ajv'
+
+const ajv = new Ajv()
+const schema = { /* schema */ }
+const validate = ajv.compile(schema)
+
+test('API response is valid', async () => {
+  const response = await fetch('/api/users/1')
+  const data = await response.json()
+
+  expect(validate(data)).toBe(true)
+})
+</code></pre><h2>Limitations and Considerations</h2><h3>1. Example-Based Inference</h3><p>The generated schema is based on the example provided. If your JSON has:</p>
+<pre><code class="language-json">{ "age": 30 }
+</code></pre><p>The schema will be <code>"type": "integer"</code>, but if <code>age</code> could be <code>null</code> in the future, you'll need to add manually:</p>
+<pre><code class="language-json">{ "type": ["integer", "null"] }
+</code></pre><h3>2. Heterogeneous Arrays</h3><p>If the array contains mixed types, the converter uses the first element:</p>
+<pre><code class="language-json">{
+  "items": [1, "two", true]  // Difficult to handle
+}
+</code></pre><p>Better to use homogeneous arrays:</p>
+<pre><code class="language-json">{
+  "numbers": [1, 2, 3],
+  "strings": ["one", "two"]
+}
+</code></pre><h3>3. Circular References</h3><p>Structures with circular references are detected and marked:</p>
+<pre><code class="language-json">{
+  "description": "Circular reference detected"
+}
+</code></pre><p>You'll need to handle them manually with <code>$ref</code>.</p><h2>Upcoming Features</h2><p>We're working on:</p>
+<ul><li><strong>AVRO Schema Support</strong> - JSON → AVRO conversion for Kafka/Confluent</li>
+<li><strong>Schema Refinement UI</strong> - Visual editor to add constraints</li>
+<li><strong>Batch Conversion</strong> - Convert multiple JSONs at once</li>
+<li><strong>Schema Merging</strong> - Combine schemas from multiple examples</li>
+<li><strong>TypeScript Generation</strong> - Generate types directly from schema</li>
+<li><strong>Schema Library</strong> - Save and reuse common schemas</li></ul><h2>Privacy and Open Source</h2><p>Like all our tools:</p>
+<ul><li><strong>100% client-side</strong> - Your JSON data never leaves your browser</li>
+<li><strong>Zero tracking</strong> - No analytics on processed data</li>
+<li><strong>Open source</strong> - Public code on GitHub</li>
+<li><strong>Offline-ready</strong> - Works without an internet connection</li></ul><h2>Try It Now</h2><p>The <strong>JSON Schema Converter</strong> is available for free:</p><p><strong><a href="https://thejord.it/json-schema" target="_blank" rel="noopener noreferrer">thejord.it/json-schema</a></strong></p><h2>Useful Resources</h2>
+<ul><li><a href="https://json-schema.org/" target="_blank" rel="noopener noreferrer">JSON Schema Specification</a></li>
+<li><a href="https://ajv.js.org/" target="_blank" rel="noopener noreferrer">Ajv JSON Schema Validator</a></li>
+<li><a href="https://json-schema.org/understanding-json-schema/" target="_blank" rel="noopener noreferrer">Understanding JSON Schema</a></li>
+<li><a href="https://github.com/bcherny/json-schema-to-typescript" target="_blank" rel="noopener noreferrer">json-schema-to-typescript</a></li></ul><h2>Feedback</h2><p>Have suggestions? Found a bug? Want a feature?</p>
+<ul><li><a href="mailto:admin@thejord.it" target="_blank" rel="noopener noreferrer">admin@thejord.it</a></li>
+<li><a href="https://github.com/thejord-it/thejord-web/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a></li>
+<li>Contribute to the open source project!</li></ul><p>---</p><p><strong>Conclusion</strong>: Documenting and validating your APIs has never been easier. The JSON Schema Converter saves you hours of manual work by generating accurate, ready-to-use schemas. Try it today!</p><p><strong><a href="https://thejord.it/json-schema" target="_blank" rel="noopener noreferrer">Generate your first schema →</a></strong></p>

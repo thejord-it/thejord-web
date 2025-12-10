@@ -1,0 +1,408 @@
+<h1>Hash Generator: Guida Completa a MD5, SHA-1, SHA-256 e SHA-512</h1>
+
+<p>Gli algoritmi di hashing crittografico sono fondamentali nella sicurezza informatica moderna. Un <strong>hash generator</strong> trasforma qualsiasi dato di input (testo, file, password) in una stringa di lunghezza fissa chiamata hash o digest. Questa funzione è unidirezionale: impossibile risalire all'input originale dall'hash.</p>
+
+<p>Il nostro Hash Generator online supporta i principali algoritmi: <strong>MD5</strong>, <strong>SHA-1</strong>, <strong>SHA-256</strong>, <strong>SHA-512</strong>, e <strong>HMAC</strong> (Hash-based Message Authentication Code). Completamente gratuito, elabora tutto nel browser per garantire la massima privacy.</p>
+
+<h2>Come Funziona l'Hashing Crittografico</h2>
+
+<p>Un algoritmo di hash crittografico prende un input di lunghezza variabile e produce un output di lunghezza fissa. Le proprietà essenziali sono:</p>
+
+<h3>Proprietà Fondamentali</h3>
+
+<ul>
+<li><strong>Determinismo</strong>: Lo stesso input produce sempre lo stesso hash</li>
+<li><strong>Unidirezionalità</strong>: Impossibile calcolare l'input dall'hash (funzione one-way)</li>
+<li><strong>Effetto Valanga</strong>: Cambiare un solo bit dell'input modifica drasticamente l'hash</li>
+<li><strong>Resistenza alle Collisioni</strong>: Estremamente improbabile che due input diversi producano lo stesso hash</li>
+<li><strong>Velocità</strong>: Calcolo rapido dell'hash, lento da invertire (se possibile)</li>
+</ul>
+
+<h3>Processo di Hashing</h3>
+
+<p>Il processo funziona così:</p>
+
+<ol>
+<li><strong>Input</strong>: Testo o file binario di qualsiasi dimensione</li>
+<li><strong>Padding</strong>: L'input viene diviso in blocchi di dimensione fissa, aggiungendo padding se necessario</li>
+<li><strong>Compressione</strong>: Ogni blocco passa attraverso la funzione di compressione dell'algoritmo</li>
+<li><strong>Output</strong>: Hash finale di lunghezza fissa (128 bit per MD5, 256 bit per SHA-256, etc)</li>
+</ol>
+
+<h2>Algoritmi di Hash: Confronto Dettagliato</h2>
+
+<h3>MD5 (Message Digest 5)</h3>
+
+<ul>
+<li><strong>Lunghezza Hash</strong>: 128 bit (32 caratteri esadecimali)</li>
+<li><strong>Anno</strong>: 1991 (Ronald Rivest)</li>
+<li><strong>Velocità</strong>: Molto veloce</li>
+<li><strong>Sicurezza</strong>: ❌ COMPROMESSO - Non sicuro per applicazioni crittografiche</li>
+<li><strong>Uso Moderno</strong>: Solo checksum non-crittografici, legacy systems</li>
+</ul>
+
+<p><strong>Esempio MD5:</strong></p>
+<pre><code>Input: "password"
+MD5:   5f4dcc3b5aa765d61d8327deb882cf99</code></pre>
+
+<p><strong>Perché MD5 è Compromesso:</strong> Nel 2004 sono state trovate collisioni pratiche. Attaccanti possono creare due file con lo stesso hash MD5, rendendolo inadatto per firma digitale o password hashing.</p>
+
+<h3>SHA-1 (Secure Hash Algorithm 1)</h3>
+
+<ul>
+<li><strong>Lunghezza Hash</strong>: 160 bit (40 caratteri esadecimali)</li>
+<li><strong>Anno</strong>: 1995 (NSA)</li>
+<li><strong>Velocità</strong>: Veloce</li>
+<li><strong>Sicurezza</strong>: ⚠️ DEPRECATO - Non raccomandato per nuove applicazioni</li>
+<li><strong>Uso Moderno</strong>: Git (per commit ID), legacy TLS</li>
+</ul>
+
+<p><strong>Esempio SHA-1:</strong></p>
+<pre><code>Input: "password"
+SHA-1: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8</code></pre>
+
+<p><strong>Stato di SHA-1:</strong> Google e CWI Amsterdam hanno dimostrato collisioni pratiche nel 2017 (SHAttered attack). Ancora usato in Git ma sconsigliato per sicurezza.</p>
+
+<h3>SHA-256 (SHA-2 Family)</h3>
+
+<ul>
+<li><strong>Lunghezza Hash</strong>: 256 bit (64 caratteri esadecimali)</li>
+<li><strong>Anno</strong>: 2001 (NSA)</li>
+<li><strong>Velocità</strong>: Media</li>
+<li><strong>Sicurezza</strong>: ✅ SICURO - Standard attuale per applicazioni crittografiche</li>
+<li><strong>Uso Moderno</strong>: Bitcoin, TLS, firma digitale, password hashing</li>
+</ul>
+
+<p><strong>Esempio SHA-256:</strong></p>
+<pre><code>Input: "password"
+SHA-256: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</code></pre>
+
+<p><strong>Perché SHA-256 è Raccomandato:</strong> Nessuna collisione nota, resistente ad attacchi moderni, supportato da hardware (AES-NI), usato in blockchain e PKI.</p>
+
+<h3>SHA-512 (SHA-2 Family)</h3>
+
+<ul>
+<li><strong>Lunghezza Hash</strong>: 512 bit (128 caratteri esadecimali)</li>
+<li><strong>Anno</strong>: 2001 (NSA)</li>
+<li><strong>Velocità</strong>: Media (più veloce di SHA-256 su architetture 64-bit)</li>
+<li><strong>Sicurezza</strong>: ✅ MOLTO SICURO - Massima sicurezza disponibile</li>
+<li><strong>Uso Moderno</strong>: Applicazioni high-security, firma documenti governativi</li>
+</ul>
+
+<p><strong>Esempio SHA-512:</strong></p>
+<pre><code>Input: "password"
+SHA-512: b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86</code></pre>
+
+<h3>HMAC (Hash-based Message Authentication Code)</h3>
+
+<p>HMAC combina un hash con una chiave segreta per autenticazione:</p>
+
+<ul>
+<li><strong>Funzione</strong>: HMAC(key, message) = hash(key + hash(key + message))</li>
+<li><strong>Scopo</strong>: Verifica integrità E autenticità dei dati</li>
+<li><strong>Algoritmi</strong>: HMAC-MD5, HMAC-SHA256, HMAC-SHA512</li>
+<li><strong>Uso</strong>: JWT tokens, API signatures, webhook verification</li>
+</ul>
+
+<p><strong>Esempio HMAC-SHA256:</strong></p>
+<pre><code>Input: "message"
+Key:   "secret_key"
+HMAC:  97d2a569059bbcd8ead4444ff99071f4c01d005bcefe0d3567e1be628e5fdcd9</code></pre>
+
+<h2>Casi d'Uso Pratici</h2>
+
+<h3>1. Password Storage (Archiviazione Password)</h3>
+
+<p><strong>Problema:</strong> Non memorizzare mai password in chiaro nel database.</p>
+
+<p><strong>Soluzione:</strong> Hashare la password prima di salvarla. Al login, hasha l'input e confronta con l'hash memorizzato.</p>
+
+<pre><code>// ❌ SBAGLIATO - Password in chiaro
+INSERT INTO users (email, password) VALUES ('user@example.com', 'MyPass123');
+
+// ✅ GIUSTO - Password hashata con salt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hash = await bcrypt.hash('MyPass123', saltRounds);
+INSERT INTO users (email, password) VALUES ('user@example.com', '$2b$10$...');</code></pre>
+
+<p><strong>Nota Importante:</strong> Per password, usa algoritmi specifici come <strong>bcrypt</strong>, <strong>Argon2</strong> o <strong>PBKDF2</strong>, NON solo SHA-256. Questi sono "slow hash" progettati per resistere a brute-force.</p>
+
+<h3>2. File Integrity Verification (Verifica Integrità File)</h3>
+
+<p>Verifica che un file non sia stato modificato o corrotto:</p>
+
+<pre><code># Linux/Mac - Calcola SHA-256 di un file
+sha256sum myfile.zip
+a3c4f5b2...  myfile.zip
+
+# Confronta con hash pubblicato dall'autore
+# Se diverso → file corrotto o manomesso</code></pre>
+
+<p><strong>Caso reale:</strong> Download di ISO Linux. Il sito fornisce SHA-256. Dopo il download, verifichi l'hash per assicurarti che il file non sia stato alterato durante il trasferimento.</p>
+
+<h3>3. Digital Signatures (Firma Digitale)</h3>
+
+<p>Hashing è usato nelle firme digitali (RSA, ECDSA):</p>
+
+<ol>
+<li>Calcola SHA-256 del documento</li>
+<li>Cifra l'hash con la chiave privata</li>
+<li>Allega la firma cifrata al documento</li>
+<li>Il destinatario decifra con chiave pubblica e verifica l'hash</li>
+</ol>
+
+<p><strong>Vantaggi:</strong> Firma solo l'hash (piccolo) invece dell'intero documento (grande), più efficiente.</p>
+
+<h3>4. Blockchain e Criptovalute</h3>
+
+<p>Bitcoin usa SHA-256 in modo estensivo:</p>
+
+<ul>
+<li><strong>Block Hash</strong>: Ogni blocco è identificato dal suo SHA-256 hash</li>
+<li><strong>Proof of Work</strong>: Miners cercano un nonce che produce un hash con N zeri iniziali</li>
+<li><strong>Merkle Trees</strong>: Struttura dati basata su hash per verifiche efficienti</li>
+</ul>
+
+<pre><code>// Semplificato - Mining Bitcoin
+function mineBlock(transactions, difficulty) {
+  let nonce = 0;
+  while (true) {
+    const data = transactions + nonce;
+    const hash = sha256(sha256(data)); // Double SHA-256
+    if (hash.startsWith('0'.repeat(difficulty))) {
+      return { nonce, hash };
+    }
+    nonce++;
+  }
+}</code></pre>
+
+<h3>5. Content Addressing (Indirizzamento per Contenuto)</h3>
+
+<p>Sistemi come IPFS, Git usano hash per identificare contenuti:</p>
+
+<pre><code># Git - Commit ID è SHA-1 dell'oggetto commit
+git log
+commit a7f3c21b8e9d4f2a1c5e6b8d9f0a1b2c3d4e5f67
+
+# IPFS - File identificato da hash del suo contenuto
+ipfs add myfile.txt
+QmXg9Pp2ytZ...</code></pre>
+
+<p><strong>Vantaggio:</strong> Deduplicazione automatica - stesso contenuto = stesso hash.</p>
+
+<h3>6. API Authentication (Autenticazione API)</h3>
+
+<p>HMAC per firmare richieste API:</p>
+
+<pre><code>// Client - Firma la richiesta
+const timestamp = Date.now();
+const message = `POST\n/api/resource\n${timestamp}\n${JSON.stringify(body)}`;
+const signature = hmacSHA256(message, API_SECRET);
+
+// Server - Verifica la firma
+const expectedSignature = hmacSHA256(receivedMessage, API_SECRET);
+if (signature === expectedSignature) {
+  // ✅ Richiesta autentica
+}</code></pre>
+
+<p>Usato da AWS Signature v4, Stripe webhooks, Shopify API.</p>
+
+<h3>7. Data Deduplication</h3>
+
+<p>Storage systems usano hash per deduplicate:</p>
+
+<pre><code># File A e File B hanno lo stesso contenuto
+sha256(FileA) = 5e884898da28...
+sha256(FileB) = 5e884898da28...
+
+# Sistema salva solo una copia fisica
+# Entrambi i file puntano allo stesso blocco</code></pre>
+
+<p>Usato in Dropbox, backup systems, ZFS filesystem.</p>
+
+<h2>Guida Pratica: Come Usare l'Hash Generator</h2>
+
+<h3>Passo 1: Scegli l'Algoritmo</h3>
+
+<p>Apri l'<a href="/tools/hash-generator">Hash Generator</a> e seleziona:</p>
+
+<ul>
+<li><strong>MD5</strong>: Solo per checksum legacy, NON per sicurezza</li>
+<li><strong>SHA-1</strong>: Git commit IDs, compatibilità legacy</li>
+<li><strong>SHA-256</strong>: Standard moderno per la maggior parte degli usi</li>
+<li><strong>SHA-512</strong>: Massima sicurezza per applicazioni critiche</li>
+</ul>
+
+<h3>Passo 2: Inserisci i Dati</h3>
+
+<p>Puoi hashare:</p>
+
+<ul>
+<li><strong>Testo</strong>: Incolla direttamente nell'input area</li>
+<li><strong>File</strong>: Usa il pulsante "Carica File" (elaborazione locale, nessun upload)</li>
+<li><strong>Password</strong>: Per testing, NON per produzione (usa bcrypt per password reali)</li>
+</ul>
+
+<h3>Passo 3: HMAC (Opzionale)</h3>
+
+<p>Se vuoi creare un HMAC:</p>
+
+<ol>
+<li>Attiva l'opzione "Usa HMAC"</li>
+<li>Inserisci la chiave segreta</li>
+<li>L'hash risultante sarà autenticato con la chiave</li>
+</ol>
+
+<h3>Passo 4: Copia il Risultato</h3>
+
+<p>L'hash viene generato istantaneamente. Puoi:</p>
+
+<ul>
+<li><strong>Copiare</strong>: Un click per copiare negli appunti</li>
+<li><strong>Confrontare</strong>: Incolla hash atteso per verificare uguaglianza</li>
+<li><strong>Scaricare</strong>: Salva hash in file TXT</li>
+</ul>
+
+<h2>Sicurezza e Best Practices</h2>
+
+<h3>✅ Cosa Fare</h3>
+
+<ul>
+<li><strong>Usa SHA-256+</strong> per nuove applicazioni crittografiche</li>
+<li><strong>Aggiungi Salt</strong> quando hashi password (previene rainbow table attacks)</li>
+<li><strong>Usa algoritmi lenti</strong> (bcrypt, Argon2) per password, non SHA-256</li>
+<li><strong>Verifica hash</strong> quando scarichi file da internet</li>
+<li><strong>Usa HMAC</strong> per autenticare messaggi con chiave condivisa</li>
+</ul>
+
+<h3>❌ Cosa NON Fare</h3>
+
+<ul>
+<li><strong>NON usare MD5 o SHA-1</strong> per sicurezza (solo legacy)</li>
+<li><strong>NON hashare password senza salt</strong> (vulnerabile a rainbow tables)</li>
+<li><strong>NON usare solo SHA-256 per password</strong> (troppo veloce, usa bcrypt)</li>
+<li><strong>NON presumere che hash = cifratura</strong> (hash è unidirezionale, cifratura è bidirezionale)</li>
+<li><strong>NON condividere chiavi HMAC</strong> pubblicamente</li>
+</ul>
+
+<h3>Salt e Pepper Strategies</h3>
+
+<p><strong>Salt</strong>: Valore random aggiunto alla password prima dell'hashing.</p>
+
+<pre><code>// Senza salt (VULNERABILE)
+hash('password123') → sempre lo stesso hash
+Attaccante usa rainbow table per craccare
+
+// Con salt (SICURO)
+hash('password123' + 'random_salt_xyz') → hash unico per ogni utente
+Rainbow table inutile</code></pre>
+
+<p><strong>Pepper</strong>: Secret key aggiunta a tutte le password (stored separatamente dal DB).</p>
+
+<pre><code>hash = bcrypt(password + salt + PEPPER_FROM_ENV)</code></pre>
+
+<p><strong>Best practice moderna:</strong> bcrypt già include salt automaticamente. Argon2 è lo stato dell'arte (2023).</p>
+
+<h2>Performance e Hardware Acceleration</h2>
+
+<p>Gli algoritmi hanno performance diverse:</p>
+
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Velocità (MB/s)</th>
+<th>CPU 32-bit</th>
+<th>CPU 64-bit</th>
+<th>Hardware Acceleration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5</td>
+<td>~600</td>
+<td>✅</td>
+<td>✅</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>~550</td>
+<td>✅</td>
+<td>✅</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>~150</td>
+<td>✅</td>
+<td>✅</td>
+<td>SHA-NI (Intel/AMD)</td>
+</tr>
+<tr>
+<td>SHA-512</td>
+<td>~200</td>
+<td>Slow</td>
+<td>✅ Fast</td>
+<td>SHA-NI (Intel/AMD)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Nota:</strong> SHA-512 è più veloce di SHA-256 su CPU 64-bit grazie a operazioni native a 64 bit.</p>
+
+<h2>Domande Frequenti (FAQ)</h2>
+
+<h3>Qual è la differenza tra hash e cifratura?</h3>
+
+<p><strong>Hash</strong> è una funzione unidirezionale: non puoi recuperare l'input dall'output. Usato per integrità e verifica. <strong>Cifratura</strong> è bidirezionale: puoi decifrare con la chiave corretta. Usato per confidenzialità. Esempi: SHA-256 (hash), AES (cifratura).</p>
+
+<h3>Posso "decriptare" un hash?</h3>
+
+<p>No. L'hashing non è reversibile per design. Tuttavia, hash deboli (MD5) possono essere "crackati" usando rainbow tables (database precomputati) o brute-force. Per questo usiamo salt e algoritmi lenti per password.</p>
+
+<h3>Perché MD5 è ancora usato se è insicuro?</h3>
+
+<p>MD5 è veloce e sufficiente per <strong>checksum non-crittografici</strong>: verificare integrità file in ambienti fidati, cache keys, identificatori univoci. NON va usato per password, firma digitale o qualsiasi applicazione di sicurezza.</p>
+
+<h3>SHA-256 è sufficiente per hashare password?</h3>
+
+<p>No. SHA-256 è troppo veloce (~150 MB/s), permettendo miliardi di tentativi al secondo con GPU. Per password usa <strong>bcrypt</strong> (10-100 ms per hash), <strong>Argon2</strong> (winner Password Hashing Competition 2015), o <strong>scrypt</strong>.</p>
+
+<h3>Cos'è una rainbow table e come funziona?</h3>
+
+<p>Una rainbow table è un database precomputato di hash comuni. Esempio: contiene hash di tutte le password da 1-8 caratteri. Attaccante confronta l'hash rubato con la tabella per trovare la password originale. <strong>Difesa:</strong> salt unico per ogni password rende rainbow table inutili.</p>
+
+<h3>Quando usare HMAC invece di semplice hash?</h3>
+
+<p>Usa <strong>HMAC</strong> quando devi verificare sia <strong>integrità</strong> che <strong>autenticità</strong>. Hash normale verifica solo integrità. HMAC con chiave segreta prova che solo chi possiede la chiave ha generato quel valore. Esempi: JWT, API signatures, webhook verification.</p>
+
+<h3>SHA-3 è migliore di SHA-2?</h3>
+
+<p>SHA-3 (2015) usa algoritmo Keccak, diverso da SHA-2. È più sicuro teoricamente ma non perché SHA-2 sia compromesso. SHA-256/SHA-512 sono ancora standard. SHA-3 è alternativa per diversificazione crittografica e alcuni casi d'uso specifici (sponge construction).</p>
+
+<h3>Gli hash sono quantum-safe?</h3>
+
+<p>Hash crittografici sono <strong>relativamente resistenti</strong> ai computer quantistici. Grover's algorithm dimezza la sicurezza: SHA-256 passa da 256-bit a 128-bit di sicurezza quantistica (ancora sicuro). SHA-512 resta a 256-bit. Più preoccupante è la cifratura asimmetrica (RSA, ECDSA).</p>
+
+<h2>Risorse Correlate</h2>
+
+<p>Esplora altri strumenti THEJORD utili:</p>
+
+<ul>
+<li><strong><a href="/tools/base64">Base64 Encoder/Decoder</a></strong>: Codifica dati per trasporto sicuro, complementare all'hashing</li>
+<li><strong><a href="/tools/json-formatter">JSON Formatter</a></strong>: Formatta JSON prima di calcolare hash per consistency</li>
+<li><strong><a href="/tools/diff-checker">Diff Checker</a></strong>: Confronta hash output per verificare modifiche</li>
+<li><strong><a href="/tools/url-encoder">URL Encoder</a></strong>: Codifica hash per uso in URL query parameters</li>
+</ul>
+
+<h3>Documentazione Esterna</h3>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function" target="_blank" rel="noopener">Cryptographic Hash Function - Wikipedia</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6234" target="_blank" rel="noopener">RFC 6234 - US Secure Hash Algorithms</a></li>
+<li><a href="https://www.password-hashing.net/" target="_blank" rel="noopener">Password Hashing Competition</a></li>
+</ul>
+
+<p><a href="/tools/hash-generator" class="cta-button">Prova l'Hash Generator Ora →</a></p>
