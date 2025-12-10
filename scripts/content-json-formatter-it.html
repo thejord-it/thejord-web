@@ -1,0 +1,544 @@
+<h1>Come Validare JSON Online: Guida Completa al JSON Formatter</h1>
+
+<p>JSON (JavaScript Object Notation) è il formato di scambio dati più utilizzato nel web moderno. Un <strong>JSON formatter</strong> è uno strumento essenziale per sviluppatori che permette di validare, formattare, minificare e manipolare dati JSON in modo efficiente.</p>
+
+<p>Il nostro JSON Formatter online è gratuito, veloce e 100% privacy-first: elabora tutto nel browser senza inviare dati ai server. Ideale per API development, debugging, file di configurazione e data transformation.</p>
+
+<h2>Cos'è JSON e Perché è Importante</h2>
+
+<p>JSON (pronunciato "Jason") è un formato di dati leggero, human-readable e machine-parseable. Originato da JavaScript ma indipendente dal linguaggio, è diventato lo standard de facto per API REST e configurazioni moderne.</p>
+
+<h3>Caratteristiche Fondamentali</h3>
+
+<ul>
+<li><strong>Sintassi Semplice</strong>: Basata su due strutture: oggetti (key-value pairs) e array</li>
+<li><strong>Text-Based</strong>: Formato testo puro, facilmente leggibile</li>
+<li><strong>Language-Independent</strong>: Supportato da tutti i linguaggi di programmazione</li>
+<li><strong>Lightweight</strong>: Più compatto di XML, meno overhead</li>
+<li><strong>Strutturato</strong>: Schema gerarchico chiaro</li>
+</ul>
+
+<h3>Tipi di Dati JSON</h3>
+
+<p>JSON supporta sei tipi di dati:</p>
+
+<ul>
+<li><strong>String</strong>: <code>"testo tra virgolette doppie"</code></li>
+<li><strong>Number</strong>: <code>42</code>, <code>3.14</code>, <code>-10</code>, <code>1.5e10</code></li>
+<li><strong>Boolean</strong>: <code>true</code> o <code>false</code></li>
+<li><strong>Null</strong>: <code>null</code> (valore nullo)</li>
+<li><strong>Object</strong>: <code>{ "key": "value" }</code></li>
+<li><strong>Array</strong>: <code>[1, 2, 3]</code></li>
+</ul>
+
+<p><strong>Esempio JSON Completo:</strong></p>
+
+<pre><code>{
+  "user": {
+    "id": 12345,
+    "name": "Mario Rossi",
+    "email": "mario@example.com",
+    "active": true,
+    "roles": ["admin", "editor"],
+    "metadata": null
+  }
+}</code></pre>
+
+<h2>Funzionalità del Nostro JSON Formatter</h2>
+
+<h3>1. Validazione JSON</h3>
+
+<p>Verifica che il JSON sia sintatticamente corretto:</p>
+
+<ul>
+<li>✅ Parentesi bilanciate <code>{}</code> e <code>[]</code></li>
+<li>✅ Virgolette doppie per stringhe e chiavi</li>
+<li>✅ Virgole corrette tra elementi</li>
+<li>✅ Nessuna virgola finale (trailing comma)</li>
+<li>✅ Valori di tipo corretto</li>
+</ul>
+
+<p><strong>Errori Comuni Rilevati:</strong></p>
+
+<pre><code>// ❌ ERRATO - Single quotes
+{ 'name': 'Mario' }
+
+// ✅ CORRETTO - Double quotes
+{ "name": "Mario" }
+
+// ❌ ERRATO - Trailing comma
+{ "name": "Mario", }
+
+// ✅ CORRETTO - No trailing comma
+{ "name": "Mario" }</code></pre>
+
+<h3>2. Prettify / Beautify (Formattazione)</h3>
+
+<p>Trasforma JSON minificato in formato leggibile con indentazione:</p>
+
+<pre><code>// Prima (minified)
+{"user":{"name":"Mario","age":30,"tags":["dev","admin"]}}
+
+// Dopo (prettified)
+{
+  "user": {
+    "name": "Mario",
+    "age": 30,
+    "tags": [
+      "dev",
+      "admin"
+    ]
+  }
+}</code></pre>
+
+<p><strong>Opzioni di formattazione:</strong></p>
+<ul>
+<li>Indentazione: 2 o 4 spazi, oppure tab</li>
+<li>Ordine chiavi: alfabetico o originale</li>
+<li>Lunghezza massima riga</li>
+</ul>
+
+<h3>3. Minify / Compress</h3>
+
+<p>Rimuove spazi, newline e indentazione per ridurre dimensioni:</p>
+
+<pre><code>// Prima (formatted - 80 bytes)
+{
+  "name": "Mario",
+  "age": 30
+}
+
+// Dopo (minified - 28 bytes)
+{"name":"Mario","age":30}</code></pre>
+
+<p><strong>Riduzione tipica:</strong> 40-60% per JSON formattati</p>
+
+<h3>4. Tree View (Vista Albero)</h3>
+
+<p>Visualizzazione gerarchica espandibile/collassabile:</p>
+
+<ul>
+<li>Navigazione facilitata per JSON complessi</li>
+<li>Espandi/collassa nodi</li>
+<li>Conta elementi in array e oggetti</li>
+<li>Syntax highlighting per tipi di dati</li>
+</ul>
+
+<h3>5. JSON Comparison (Confronto)</h3>
+
+<p>Confronta due JSON per trovare differenze:</p>
+
+<ul>
+<li>Evidenzia chiavi aggiunte (verde)</li>
+<li>Evidenzia chiavi rimosse (rosso)</li>
+<li>Evidenzia valori modificati (giallo)</li>
+<li>Side-by-side o unified diff</li>
+</ul>
+
+<h3>6. Conversione YAML ↔ JSON</h3>
+
+<p>Converti bidirezionalmente tra JSON e YAML:</p>
+
+<pre><code># YAML
+user:
+  name: Mario
+  age: 30
+  tags:
+    - dev
+    - admin
+
+# JSON equivalente
+{
+  "user": {
+    "name": "Mario",
+    "age": 30,
+    "tags": ["dev", "admin"]
+  }
+}</code></pre>
+
+<h2>Casi d'Uso Pratici</h2>
+
+<h3>1. API Development e Testing</h3>
+
+<p>Valida e formatta response/request JSON durante sviluppo API:</p>
+
+<pre><code>// API Response da validare
+POST /api/users
+{
+  "name": "Mario Rossi",
+  "email": "mario@example.com",
+  "preferences": {
+    "theme": "dark",
+    "notifications": true
+  }
+}</code></pre>
+
+<p><strong>Workflow tipico:</strong></p>
+<ol>
+<li>Copia response da Postman/Insomnia/curl</li>
+<li>Incolla nel formatter per validare</li>
+<li>Prettify per leggibilità</li>
+<li>Identifica errori di struttura</li>
+</ol>
+
+<h3>2. Configuration Files</h3>
+
+<p>Gestisci file di configurazione JSON (package.json, tsconfig.json, etc):</p>
+
+<pre><code>// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}</code></pre>
+
+<h3>3. Database Export/Import</h3>
+
+<p>Valida JSON prima di import in database NoSQL (MongoDB, CouchDB):</p>
+
+<pre><code>// MongoDB document
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "user_id": 12345,
+  "created_at": { "$date": "2025-01-01T00:00:00Z" },
+  "items": [
+    { "product_id": 1, "quantity": 2 },
+    { "product_id": 5, "quantity": 1 }
+  ]
+}</code></pre>
+
+<h3>4. Logging e Debugging</h3>
+
+<p>Formatta log JSON per troubleshooting:</p>
+
+<pre><code>// Application log (minified)
+{"level":"error","timestamp":"2025-01-01T10:30:00Z","message":"DB connection failed","error":{"code":"ECONNREFUSED","host":"localhost","port":5432}}
+
+// Formatted per analisi
+{
+  "level": "error",
+  "timestamp": "2025-01-01T10:30:00Z",
+  "message": "DB connection failed",
+  "error": {
+    "code": "ECONNREFUSED",
+    "host": "localhost",
+    "port": 5432
+  }
+}</code></pre>
+
+<h3>5. Data Transformation</h3>
+
+<p>Manipola strutture JSON per ETL e data pipeline:</p>
+
+<ul>
+<li>Estrai subset di dati</li>
+<li>Ristruttura gerarchie</li>
+<li>Converti formati (JSON → CSV, JSON → XML)</li>
+<li>Merge di multiple sorgenti JSON</li>
+</ul>
+
+<h3>6. Webhook Payloads</h3>
+
+<p>Valida payload ricevuti da webhook (GitHub, Stripe, Shopify):</p>
+
+<pre><code>// GitHub webhook payload
+{
+  "action": "opened",
+  "number": 42,
+  "pull_request": {
+    "id": 1234567,
+    "title": "Fix: bug in authentication",
+    "user": {
+      "login": "developer",
+      "id": 123
+    },
+    "head": {
+      "ref": "fix-auth-bug",
+      "sha": "a7f3c21b8e9d4f2a"
+    }
+  }
+}</code></pre>
+
+<h2>JSON vs. Altri Formati</h2>
+
+<table>
+<thead>
+<tr>
+<th>Caratteristica</th>
+<th>JSON</th>
+<th>XML</th>
+<th>YAML</th>
+<th>CSV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Leggibilità</strong></td>
+<td>Alta ✅</td>
+<td>Media</td>
+<td>Molto Alta ✅✅</td>
+<td>Bassa</td>
+</tr>
+<tr>
+<td><strong>Dimensione</strong></td>
+<td>Compatto ✅</td>
+<td>Verbose ❌</td>
+<td>Compatto ✅</td>
+<td>Molto Compatto ✅✅</td>
+</tr>
+<tr>
+<td><strong>Parsing Speed</strong></td>
+<td>Veloce ✅</td>
+<td>Lento</td>
+<td>Medio</td>
+<td>Velocissimo ✅✅</td>
+</tr>
+<tr>
+<td><strong>Gerarchia</strong></td>
+<td>Sì ✅</td>
+<td>Sì ✅</td>
+<td>Sì ✅</td>
+<td>No ❌</td>
+</tr>
+<tr>
+<td><strong>Attributi</strong></td>
+<td>No</td>
+<td>Sì ✅</td>
+<td>Anchor/Alias</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Commenti</strong></td>
+<td>No ❌</td>
+<td>Sì ✅</td>
+<td>Sì ✅</td>
+<td>No ❌</td>
+</tr>
+<tr>
+<td><strong>Uso Principale</strong></td>
+<td>API, web</td>
+<td>SOAP, legacy</td>
+<td>Config, K8s</td>
+<td>Dati tabulari</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Quando Usare Cosa</h3>
+
+<ul>
+<li><strong>JSON</strong>: API REST, web services, data exchange standard</li>
+<li><strong>XML</strong>: SOAP APIs, documenti complessi con schema, enterprise systems</li>
+<li><strong>YAML</strong>: Configuration files (Docker, K8s, CI/CD), human-readable configs</li>
+<li><strong>CSV</strong>: Data export, spreadsheets, dataset semplici</li>
+</ul>
+
+<h2>Errori JSON Comuni e Come Risolverli</h2>
+
+<h3>1. Unexpected token</h3>
+
+<p><strong>Errore:</strong> <code>SyntaxError: Unexpected token } in JSON at position 45</code></p>
+
+<p><strong>Causa:</strong> Virgola finale (trailing comma)</p>
+
+<pre><code>// ❌ ERRATO
+{
+  "name": "Mario",
+  "age": 30,  ← Trailing comma
+}
+
+// ✅ CORRETTO
+{
+  "name": "Mario",
+  "age": 30
+}</code></pre>
+
+<h3>2. Unexpected end of JSON input</h3>
+
+<p><strong>Causa:</strong> JSON incompleto o parentesi non chiuse</p>
+
+<pre><code>// ❌ ERRATO - Manca }
+{
+  "name": "Mario",
+  "address": {
+    "city": "Roma"
+
+// ✅ CORRETTO
+{
+  "name": "Mario",
+  "address": {
+    "city": "Roma"
+  }
+}</code></pre>
+
+<h3>3. Invalid character</h3>
+
+<p><strong>Causa:</strong> Single quotes invece di double quotes</p>
+
+<pre><code>// ❌ ERRATO
+{ 'name': 'Mario' }
+
+// ✅ CORRETTO
+{ "name": "Mario" }</code></pre>
+
+<h3>4. Duplicate keys</h3>
+
+<p><strong>Causa:</strong> Stessa chiave ripetuta nell'oggetto</p>
+
+<pre><code>// ❌ ERRATO - "name" duplicato
+{
+  "name": "Mario",
+  "age": 30,
+  "name": "Luigi"  ← Sovrascrive il primo
+}
+
+// ✅ CORRETTO
+{
+  "firstName": "Mario",
+  "lastName": "Luigi",
+  "age": 30
+}</code></pre>
+
+<h2>Best Practices JSON</h2>
+
+<h3>✅ Do's</h3>
+
+<ul>
+<li><strong>Usa nomi descrittivi</strong>: <code>"user_id"</code> invece di <code>"uid"</code></li>
+<li><strong>Convenzione naming</strong>: snake_case o camelCase, ma consistente</li>
+<li><strong>Valida sempre</strong>: Prima di salvare o inviare</li>
+<li><strong>Versiona API</strong>: Include version field per backward compatibility</li>
+<li><strong>Usa null</strong>: Per valori assenti, non stringhe vuote</li>
+</ul>
+
+<h3>❌ Don'ts</h3>
+
+<ul>
+<li><strong>NON includere funzioni</strong>: JSON non supporta codice eseguibile</li>
+<li><strong>NON usare commenti</strong>: JSON non li supporta (usa JSONC o JSON5 se necessario)</li>
+<li><strong>NON esporre dati sensibili</strong>: Password, tokens, secrets</li>
+<li><strong>NON duplicare chiavi</strong>: Comportamento non definito</li>
+<li><strong>NON usare valori undefined</strong>: Usa <code>null</code> invece</li>
+</ul>
+
+<h2>Esempi di Codice</h2>
+
+<h3>JavaScript/Node.js</h3>
+
+<pre><code>// Parse JSON string
+const jsonString = '{"name":"Mario","age":30}';
+const obj = JSON.parse(jsonString);
+console.log(obj.name); // Mario
+
+// Stringify object
+const user = { name: "Mario", age: 30 };
+const json = JSON.stringify(user);
+console.log(json); // {"name":"Mario","age":30}
+
+// Prettify
+const pretty = JSON.stringify(user, null, 2);
+
+// Validazione con try-catch
+try {
+  JSON.parse(jsonString);
+  console.log("✅ JSON valido");
+} catch (error) {
+  console.error("❌ JSON non valido:", error.message);
+}</code></pre>
+
+<h3>Python</h3>
+
+<pre><code>import json
+
+# Parse JSON
+json_string = '{"name":"Mario","age":30}'
+data = json.loads(json_string)
+print(data['name'])  # Mario
+
+# Generate JSON
+user = {"name": "Mario", "age": 30}
+json_str = json.dumps(user)
+
+# Prettify
+pretty = json.dumps(user, indent=2, ensure_ascii=False)
+
+# Validate
+try:
+    json.loads(json_string)
+    print("✅ JSON valido")
+except json.JSONDecodeError as e:
+    print(f"❌ Errore: {e}")</code></pre>
+
+<h3>PHP</h3>
+
+<pre><code>// Parse JSON
+$jsonString = '{"name":"Mario","age":30}';
+$data = json_decode($jsonString);
+echo $data->name; // Mario
+
+// Generate JSON
+$user = ["name" => "Mario", "age" => 30];
+$json = json_encode($user);
+
+// Prettify
+$pretty = json_encode($user, JSON_PRETTY_PRINT);
+
+// Validate
+json_decode($jsonString);
+if (json_last_error() === JSON_ERROR_NONE) {
+    echo "✅ JSON valido";
+} else {
+    echo "❌ Errore: " . json_last_error_msg();
+}</code></pre>
+
+<h2>Domande Frequenti (FAQ)</h2>
+
+<h3>Posso aggiungere commenti in JSON?</h3>
+
+<p>No, JSON standard non supporta commenti. Però esistono estensioni come <strong>JSONC</strong> (JSON with Comments, usato da VS Code) e <strong>JSON5</strong> che permettono commenti. Per configurazioni, considera YAML.</p>
+
+<h3>Qual è la dimensione massima di un file JSON?</h3>
+
+<p>Non c'è limite tecnico, ma performance dipendono dal parser e memoria. Per JSON &gt;10MB considera streaming parser o formati alternativi (Protobuf, Avro). Il nostro tool gestisce bene file fino a 5MB.</p>
+
+<h3>JSON è case-sensitive?</h3>
+
+<p>Sì, le chiavi sono case-sensitive. <code>"Name"</code> e <code>"name"</code> sono chiavi diverse.</p>
+
+<h3>Come gestisco date in JSON?</h3>
+
+<p>JSON non ha tipo Date nativo. Usa string in formato ISO 8601: <code>"2025-01-01T10:30:00Z"</code>. Oppure timestamp Unix: <code>1704106200</code> (number).</p>
+
+<h3>JSON supporta riferimenti circolari?</h3>
+
+<p>No, JSON non può rappresentare strutture circolari. Se provi a serializzare un oggetto con riferimenti circolari otterrai errore "Converting circular structure to JSON".</p>
+
+<h3>Posso usare undefined in JSON?</h3>
+
+<p>No, JSON supporta solo <code>null</code>. <code>undefined</code> viene ignorato durante serializzazione: <code>JSON.stringify({a: undefined})</code> → <code>{}</code>.</p>
+
+<h2>Risorse Correlate</h2>
+
+<p>Esplora altri strumenti THEJORD per lavorare con JSON:</p>
+
+<ul>
+<li><strong><a href="/tools/json-schema">JSON Schema Converter</a></strong>: Genera schema di validazione da JSON automaticamente</li>
+<li><strong><a href="/tools/diff-checker">Diff Checker</a></strong>: Confronta due JSON per trovare differenze</li>
+<li><strong><a href="/tools/base64">Base64 Encoder</a></strong>: Codifica JSON in Base64 per trasporto</li>
+<li><strong><a href="/tools/regex-tester">RegEx Tester</a></strong>: Estrai dati da JSON con regex</li>
+</ul>
+
+<h3>Documentazione Esterna</h3>
+
+<ul>
+<li><a href="https://www.json.org" target="_blank" rel="noopener">JSON.org - Official Specification</a></li>
+<li><a href="https://jsonlint.com" target="_blank" rel="noopener">JSONLint - Online Validator</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener">MDN - JSON Object</a></li>
+</ul>
+
+<p><a href="/tools/json-formatter" class="cta-button">Prova il JSON Formatter Ora →</a></p>

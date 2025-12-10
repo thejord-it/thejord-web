@@ -1,0 +1,534 @@
+<h1>RegEx Tester: Strumento Online per Testare Espressioni Regolari</h1>
+
+<p>Le <strong>espressioni regolari (regex)</strong> sono sequenze di caratteri che definiscono pattern di ricerca nel testo. Fondamentali per sviluppatori, data analyst e chiunque lavori con elaborazione di testo, le regex permettono di validare input, estrarre dati, fare ricerca e sostituzione avanzata.</p>
+
+<p>Il nostro <strong>RegEx Tester online</strong> è completamente gratuito, veloce e privacy-first: processa tutto nel browser senza inviare dati a server esterni. Ideale per testare, debuggare e perfezionare le tue espressioni regolari in tempo reale.</p>
+
+<h2>Cos'è un'Espressione Regolare</h2>
+
+<p>Un'espressione regolare (regex o regexp) è un pattern che descrive un insieme di stringhe di testo. Invece di cercare una stringa esatta, una regex definisce <strong>regole generali</strong> che il testo deve rispettare.</p>
+
+<h3>Esempio Base</h3>
+
+<pre><code>// Cercare stringa esatta
+"hello" → trova solo "hello"
+
+// Regex con pattern
+/hel+o/ → trova "helo", "hello", "helllo", "hellllo"...
+/h[ae]llo/ → trova "hallo" e "hello"
+/\d{3}-\d{4}/ → trova "123-4567" (formato telefono)</code></pre>
+
+<h3>Componenti Fondamentali</h3>
+
+<ul>
+<li><strong>Caratteri letterali</strong>: `abc` cerca esattamente "abc"</li>
+<li><strong>Metacaratteri</strong>: `.` (qualsiasi), `*` (zero o più), `+` (uno o più), `?` (opzionale)</li>
+<li><strong>Classi di caratteri</strong>: `[abc]` (a o b o c), `[0-9]` (cifra), `[a-z]` (lettera minuscola)</li>
+<li><strong>Ancore</strong>: `^` (inizio), `$` (fine), `\b` (word boundary)</li>
+<li><strong>Gruppi</strong>: `(abc)` (gruppo di cattura), `(?:abc)` (gruppo non-cattura)</li>
+<li><strong>Quantificatori</strong>: `{3}` (esattamente 3), `{2,5}` (da 2 a 5), `{3,}` (3 o più)</li>
+</ul>
+
+<h2>Casi d'Uso delle Espressioni Regolari</h2>
+
+<h3>1. Validazione Input Utente</h3>
+
+<p>Verificare che i dati inseriti rispettino un formato specifico:</p>
+
+<pre><code>// Email
+/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+// Telefono italiano (+39 o 0039)
+/^(\+39|0039)?\s?3\d{2}\s?\d{6,7}$/
+
+// Codice Fiscale italiano
+/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/
+
+// Partita IVA italiana
+/^IT\d{11}$/
+
+// CAP italiano (5 cifre)
+/^\d{5}$/
+
+// IBAN italiano
+/^IT\d{2}[A-Z]\d{10}[A-Z0-9]{12}$/</code></pre>
+
+<p><strong>Caso pratico:</strong> Form di registrazione che valida email, telefono e codice fiscale prima dell'invio al server.</p>
+
+<h3>2. Estrazione Dati da Testo</h3>
+
+<p>Estrarre informazioni strutturate da testo non strutturato:</p>
+
+<pre><code>// Estrarre tutti gli indirizzi email da un documento
+const text = "Contattaci: info@example.com oppure support@test.it"
+const emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g)
+// → ["info@example.com", "support@test.it"]
+
+// Estrarre prezzi in Euro
+const prices = text.match(/€\s?\d+[.,]?\d*/g)
+
+// Estrarre date formato DD/MM/YYYY
+const dates = text.match(/\d{2}\/\d{2}\/\d{4}/g)</code></pre>
+
+<p><strong>Caso pratico:</strong> Parsing di log file per estrarre timestamp, IP address, codici di errore.</p>
+
+<h3>3. Ricerca e Sostituzione Avanzata</h3>
+
+<p>Modificare testo in modo intelligente usando gruppi di cattura:</p>
+
+<pre><code>// Convertire date da DD/MM/YYYY a YYYY-MM-DD
+const text = "Scadenza: 25/12/2024"
+text.replace(/(\d{2})\/(\d{2})\/(\d{4})/g, '$3-$2-$1')
+// → "Scadenza: 2024-12-25"
+
+// Anonimizzare numeri di telefono
+text.replace(/3\d{2}\s?\d{6,7}/g, '3XX XXXXXXX')
+
+// Formattare codici fiscali (aggiungere spazi)
+"RSSMRA85M01H501Z".replace(/([A-Z]{6})(\d{2})([A-Z])(\d{2})([A-Z]\d{3}[A-Z])/, '$1 $2$3$4 $5')
+// → "RSSMRA 85M01 H501Z"</code></pre>
+
+<p><strong>Caso pratico:</strong> Editor di testo che converte automaticamente formati di data, normalizza numeri di telefono, censura dati sensibili.</p>
+
+<h3>4. Parsing e Validazione File di Configurazione</h3>
+
+<p>Leggere e validare formati strutturati (CSV, INI, env):</p>
+
+<pre><code>// Parsing file .env
+KEY=value → /^([A-Z_]+)=(.*)$/
+
+// Validare riga CSV
+"nome,cognome,email" → /^[^,]+,[^,]+,[^,]+$/
+
+// Estrarre variabili da template
+"Hello {{name}}, welcome!" → /\{\{(\w+)\}\}/g</code></pre>
+
+<h3>5. Web Scraping e Data Mining</h3>
+
+<p>Estrarre dati strutturati da HTML, XML, JSON embedded:</p>
+
+<pre><code>// Estrarre URL da tag <a>
+/<a\s+href=["']([^"']+)["']/g
+
+// Estrarre ID YouTube da URL
+/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+
+// Estrarre hashtag da social media
+/#[a-zA-Z0-9_]+/g</code></pre>
+
+<h3>6. Sicurezza e Sanitizzazione Input</h3>
+
+<p>Rilevare e bloccare pattern pericolosi:</p>
+
+<pre><code>// Rilevare SQL injection
+/(\bOR\b|\bAND\b|--|;|\/\*|\*\/|xp_|sp_)/i
+
+// Rilevare XSS
+/<script|javascript:|onerror=|onclick=/i
+
+// Validare password sicura (min 8 char, maiuscola, numero, speciale)
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/</code></pre>
+
+<h3>7. Analisi Log e Monitoring</h3>
+
+<p>Filtrare e analizzare log di sistema, web server, applicazioni:</p>
+
+<pre><code>// Apache/Nginx access log
+/^(\S+) \S+ \S+ \[([\w:\/]+\s[+\-]\d{4})\] "(\S+)\s?(\S+)?\s?(\S+)?" (\d{3})/
+
+// Estrarre errori da log applicativo
+/ERROR.*Exception: (.+)/
+
+// Monitoring performance (tempi di risposta > 1000ms)
+/response_time: (\d{4,})/</code></pre>
+
+<h2>Come Usare il RegEx Tester di THEJORD</h2>
+
+<h3>Interfaccia Principale</h3>
+
+<ol>
+<li>Apri il <a href="/tools/regex-tester">RegEx Tester</a></li>
+<li><strong>Pattern RegEx</strong>: Inserisci la tua espressione regolare (es. `/\d{3}-\d{4}/`)</li>
+<li><strong>Flags</strong>: Seleziona opzioni:
+<ul>
+<li><code>g</code> (global): Trova tutte le occorrenze</li>
+<li><code>i</code> (case-insensitive): Ignora maiuscole/minuscole</li>
+<li><code>m</code> (multiline): `^` e `$` matchano inizio/fine riga</li>
+<li><code>s</code> (dotAll): `.` matcha anche newline</li>
+<li><code>u</code> (unicode): Supporto pieno Unicode</li>
+</ul>
+</li>
+<li><strong>Test String</strong>: Inserisci il testo da testare</li>
+<li>Vedi risultati in tempo reale con evidenziazione match</li>
+</ol>
+
+<h3>Funzionalità Avanzate</h3>
+
+<ul>
+<li><strong>Match Groups</strong>: Visualizza gruppi di cattura `(...)` estratti</li>
+<li><strong>Replace Mode</strong>: Testa sostituzioni con `$1`, `$2` per gruppi</li>
+<li><strong>Pattern Library</strong>: Template predefiniti per casi comuni (email, URL, telefono, codice fiscale)</li>
+<li><strong>Debug Mode</strong>: Visualizza step-by-step come la regex matcha il testo</li>
+<li><strong>Performance</strong>: Warning se regex è inefficiente (ReDoS risk)</li>
+</ul>
+
+<h3>Esempio Pratico: Validare Email</h3>
+
+<pre><code>// 1. Inserisci pattern
+/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+// 2. Flags: nessuno (match case-sensitive)
+
+// 3. Test string
+mario.rossi@example.com
+MARIO@EXAMPLE.IT
+invalid-email
+test@subdomain.example.co.uk
+
+// 4. Risultati
+✅ mario.rossi@example.com (match completo)
+✅ MARIO@EXAMPLE.IT (match completo)
+❌ invalid-email (no match)
+✅ test@subdomain.example.co.uk (match completo)</code></pre>
+
+<h2>Esempi di Codice</h2>
+
+<h3>JavaScript</h3>
+
+<pre><code>// Test regex
+const regex = /^3\d{2}\s?\d{6,7}$/
+regex.test('333 1234567') // true
+regex.test('02 12345') // false
+
+// Estrazione con match()
+const text = "Email: test@example.com, info@test.it"
+const emails = text.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi)
+console.log(emails) // ["test@example.com", "info@test.it"]
+
+// Replace con gruppi di cattura
+const data = "25/12/2024"
+const formatted = data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')
+console.log(formatted) // "2024-12-25"
+
+// Validazione form in React
+function validateEmail(email) {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return regex.test(email)
+}
+
+// Estrazione gruppi con exec()
+const regex = /(\d{2})\/(\d{2})\/(\d{4})/
+const match = regex.exec("Data: 25/12/2024")
+if (match) {
+  console.log(`Giorno: ${match[1]}, Mese: ${match[2]}, Anno: ${match[3]}`)
+}</code></pre>
+
+<h3>Python</h3>
+
+<pre><code>import re
+
+# Test regex
+pattern = r'^3\d{2}\s?\d{6,7}$'
+re.match(pattern, '333 1234567')  # Match object
+re.match(pattern, '02 12345')     # None
+
+# Estrazione
+text = "Email: test@example.com, info@test.it"
+emails = re.findall(r'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}', text, re.IGNORECASE)
+print(emails)  # ['test@example.com', 'info@test.it']
+
+# Replace con gruppi
+data = "25/12/2024"
+formatted = re.sub(r'(\d{2})/(\d{2})/(\d{4})', r'\3-\2-\1', data)
+print(formatted)  # "2024-12-25"
+
+# Validazione codice fiscale
+def validate_cf(cf):
+    pattern = r'^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$'
+    return bool(re.match(pattern, cf.upper()))
+
+# Parsing log con gruppi nominati
+log = '192.168.1.1 - - [10/Dec/2024:13:55:36] "GET /api/users HTTP/1.1" 200'
+pattern = r'(?P<ip>\S+).*\[(?P<date>[\w:/]+).*\] "(?P<method>\w+) (?P<path>\S+).*" (?P<status>\d{3})'
+match = re.search(pattern, log)
+print(match.groupdict())
+# {'ip': '192.168.1.1', 'date': '10/Dec/2024:13:55:36', 'method': 'GET', 'path': '/api/users', 'status': '200'}</code></pre>
+
+<h3>PHP</h3>
+
+<pre><code>&lt;?php
+// Test regex
+$pattern = '/^3\d{2}\s?\d{6,7}$/';
+preg_match($pattern, '333 1234567');  // 1 (true)
+preg_match($pattern, '02 12345');     // 0 (false)
+
+// Estrazione
+$text = "Email: test@example.com, info@test.it";
+preg_match_all('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i', $text, $matches);
+print_r($matches[0]);  // Array(['test@example.com', 'info@test.it'])
+
+// Replace
+$data = "25/12/2024";
+$formatted = preg_replace('/(\d{2})\/(\d{2})\/(\d{4})/', '$3-$2-$1', $data);
+echo $formatted;  // "2024-12-25"
+
+// Validazione Partita IVA
+function validatePIVA($piva) {
+    return preg_match('/^IT\d{11}$/', $piva);
+}
+
+// Sanitizzazione input (rimuovere caratteri non alfanumerici)
+$input = "Hello, World! 123";
+$clean = preg_replace('/[^a-zA-Z0-9\s]/', '', $input);
+echo $clean;  // "Hello World 123"
+?&gt;</code></pre>
+
+<h2>Pattern RegEx Comuni per l'Italia</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Pattern</th>
+<th>Esempio Match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Email</strong></td>
+<td><code>/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/</code></td>
+<td>mario@example.it</td>
+</tr>
+<tr>
+<td><strong>Telefono Mobile</strong></td>
+<td><code>/^(\+39|0039)?3\d{2}\s?\d{6,7}$/</code></td>
+<td>+39 333 1234567</td>
+</tr>
+<tr>
+<td><strong>Telefono Fisso</strong></td>
+<td><code>/^(\+39|0039)?0\d{1,3}\s?\d{6,8}$/</code></td>
+<td>02 12345678</td>
+</tr>
+<tr>
+<td><strong>Codice Fiscale</strong></td>
+<td><code>/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/</code></td>
+<td>RSSMRA85M01H501Z</td>
+</tr>
+<tr>
+<td><strong>Partita IVA</strong></td>
+<td><code>/^IT\d{11}$/</code></td>
+<td>IT12345678901</td>
+</tr>
+<tr>
+<td><strong>CAP</strong></td>
+<td><code>/^\d{5}$/</code></td>
+<td>00100</td>
+</tr>
+<tr>
+<td><strong>IBAN Italiano</strong></td>
+<td><code>/^IT\d{2}[A-Z]\d{10}[A-Z0-9]{12}$/</code></td>
+<td>IT60X0542811101000000123456</td>
+</tr>
+<tr>
+<td><strong>Targa Auto</strong></td>
+<td><code>/^[A-Z]{2}\d{3}[A-Z]{2}$/</code></td>
+<td>AB123CD</td>
+</tr>
+<tr>
+<td><strong>URL</strong></td>
+<td><code>/^https?:\/\/[a-z0-9.-]+\.[a-z]{2,}/i</code></td>
+<td>https://thejord.it</td>
+</tr>
+<tr>
+<td><strong>Data DD/MM/YYYY</strong></td>
+<td><code>/^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[012])\/\d{4}$/</code></td>
+<td>25/12/2024</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Confronto RegEx Tester</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Highlights</th>
+<th>Replace</th>
+<th>Groups</th>
+<th>Performance Warning</th>
+<th>Library</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>THEJORD</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ IT patterns</td>
+</tr>
+<tr>
+<td>Regex101</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ Multi-lang</td>
+</tr>
+<tr>
+<td>RegExr</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>RegexPal</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Quando Usare THEJORD RegEx Tester</h3>
+
+<ul>
+<li>✅ <strong>Privacy-first</strong>: Nessun dato inviato a server esterni (tutto in locale)</li>
+<li>✅ <strong>Pattern italiani</strong>: Library con regex per codice fiscale, P.IVA, CAP, IBAN</li>
+<li>✅ <strong>Fast</strong>: Nessun loading, elaborazione istantanea</li>
+<li>✅ <strong>Gratuito</strong>: Nessun limite di utilizzo o registrazione</li>
+<li>✅ <strong>Multi-language</strong>: Supporto JavaScript, Python, PHP, Java syntax</li>
+</ul>
+
+<h2>Best Practices e Performance</h2>
+
+<h3>⚠️ Evitare Catastrophic Backtracking (ReDoS)</h3>
+
+<p>Alcune regex possono causare esecuzione esponenziale su input specifici:</p>
+
+<pre><code>// ❌ PERICOLOSO - ReDoS vulnerability
+/(a+)+b/
+/(\w+\s?)*$/
+
+// ✅ SICURO - Quantificatori non annidati
+/a+b/
+/[\w\s]+$/</code></pre>
+
+<p><strong>Regola:</strong> Evita quantificatori annidati `(a+)+`, `(a*)*`, `(a+)*`.</p>
+
+<h3>✅ Ottimizzare le Regex</h3>
+
+<ul>
+<li><strong>Usa ancore</strong>: `^` e `$` limitano il matching</li>
+<li><strong>Classi specifiche</strong>: `\d` invece di `[0-9]`, `\w` invece di `[a-zA-Z0-9_]`</li>
+<li><strong>Gruppi non-cattura</strong>: `(?:...)` invece di `(...)` se non serve estrarre</li>
+<li><strong>Alternanza efficiente</strong>: `(jpg|png|gif)` invece di `(jpg)|(png)|(gif)`</li>
+</ul>
+
+<h3>🧪 Testare Edge Cases</h3>
+
+<p>Verifica sempre con input limite:</p>
+
+<ul>
+<li>Stringa vuota: `""`</li>
+<li>Un solo carattere: `"a"`</li>
+<li>Caratteri speciali: `"!@#$%"`</li>
+<li>Unicode/emoji: `"hello 👋"`</li>
+<li>Molto lungo: 10.000+ caratteri</li>
+<li>Newline e tab: `"hello\nworld\t"`</li>
+</ul>
+
+<h2>Domande Frequenti (FAQ)</h2>
+
+<h3>Qual è la differenza tra /g e senza flag g?</h3>
+
+<p>Senza `g`, la regex si ferma al primo match. Con `g` (global), trova tutte le occorrenze nel testo.</p>
+
+<pre><code>const text = "cat bat rat"
+text.match(/at/)   // ["at"] (solo primo match)
+text.match(/at/g)  // ["at", "at", "at"] (tutti i match)</code></pre>
+
+<h3>Come faccio a matchare un carattere speciale come . o *?</h3>
+
+<p>Usa il backslash `\` per fare escape dei metacaratteri:</p>
+
+<pre><code>/\./ → matcha il punto letterale "."
+/\*/ → matcha asterisco "*"
+/\+/ → matcha più "+"
+/\(/ → matcha parentesi tonda "("</code></pre>
+
+<h3>Regex per validare password sicura?</h3>
+
+<pre><code>// Min 8 caratteri, almeno: 1 maiuscola, 1 minuscola, 1 numero, 1 speciale
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/</code></pre>
+
+<p>Spiegazione: Usa <strong>lookahead positivo</strong> `(?=...)` per verificare ogni condizione senza consumare caratteri.</p>
+
+<h3>Come estrarre contenuto tra tag HTML?</h3>
+
+<p><strong>⚠️ Attenzione:</strong> Le regex NON sono adatte per parsing HTML complesso. Per HTML usa un parser (DOMParser, Cheerio, BeautifulSoup).</p>
+
+<p>Per casi semplici:</p>
+
+<pre><code>// Estrarre testo in <p>
+/<p>(.*?)<\/p>/gs
+
+// Estrarre href da <a>
+/<a\s+href=["']([^"']+)["']/g</code></pre>
+
+<h3>Differenza tra .* e .*? (greedy vs lazy)?</h3>
+
+<ul>
+<li><code>.*</code> (greedy): Matcha il massimo possibile</li>
+<li><code>.*?</code> (lazy): Matcha il minimo possibile</li>
+</ul>
+
+<pre><code>Input: "<p>hello</p><p>world</p>"
+
+/<p>.*<\/p>/  → match: "<p>hello</p><p>world</p>" (tutto)
+/<p>.*?<\/p>/ → match: "<p>hello</p>" (solo primo tag)</code></pre>
+
+<h3>Posso usare regex per validare email al 100%?</h3>
+
+<p>No. L'RFC 5322 (standard email) permette casi molto complessi. La regex completa è lunga 6000+ caratteri. Per produzione:</p>
+
+<ul>
+<li>✅ Usa regex semplice per validazione basic: <code>/^[^\s@]+@[^\s@]+\.[^\s@]+$/</code></li>
+<li>✅ Invia email di verifica per conferma reale</li>
+<li>❌ Non cercare la "regex perfetta" per email</li>
+</ul>
+
+<h3>Le regex sono case-sensitive?</h3>
+
+<p>Di default sì. Usa il flag `i` per ignorare maiuscole/minuscole:</p>
+
+<pre><code>/hello/.test("HELLO")   // false
+/hello/i.test("HELLO")  // true</code></pre>
+
+<h2>Risorse Correlate</h2>
+
+<p>Esplora altri strumenti utili di THEJORD:</p>
+
+<ul>
+<li><strong><a href="/tools/diff-checker">Diff Checker</a></strong>: Confronta testi e verifica differenze tra pattern regex</li>
+<li><strong><a href="/tools/json-formatter">JSON Formatter</a></strong>: Valida JSON con regex per chiavi/valori</li>
+<li><strong><a href="/tools/hash-generator">Hash Generator</a></strong>: Genera hash per verificare integrità di pattern estratti</li>
+<li><strong><a href="/tools/url-encoder">URL Encoder</a></strong>: Codifica URL estratti con regex</li>
+</ul>
+
+<h3>Documentazione Esterna</h3>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener">MDN - JavaScript Regular Expressions</a></li>
+<li><a href="https://docs.python.org/3/library/re.html" target="_blank" rel="noopener">Python re module</a></li>
+<li><a href="https://www.regular-expressions.info/" target="_blank" rel="noopener">Regular-Expressions.info - Tutorial Completo</a></li>
+<li><a href="https://regexcrossword.com/" target="_blank" rel="noopener">Regex Crossword - Impara giocando</a></li>
+</ul>
+
+<p><a href="/tools/regex-tester" class="cta-button">Prova il RegEx Tester Ora →</a></p>

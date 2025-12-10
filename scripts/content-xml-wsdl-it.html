@@ -1,0 +1,492 @@
+<h2>Cos'è XML e Perché è Importante</h2>
+
+<p>XML (eXtensible Markup Language) è un formato di markup standardizzato per strutturare dati in modo leggibile sia dagli esseri umani che dalle macchine. Creato dal W3C nel 1998, XML è diventato lo standard de facto per lo scambio di dati tra sistemi eterogenei, configurazioni applicative, documenti strutturati e servizi web.</p>
+
+<p>A differenza di HTML, che è progettato per visualizzare dati, XML è progettato per <strong>trasportare e memorizzare dati</strong>. È auto-descrittivo, estensibile e indipendente dalla piattaforma, rendendolo ideale per:</p>
+
+<ul>
+  <li><strong>Configurazioni applicative</strong>: Maven POM, Spring beans, Log4j config</li>
+  <li><strong>Servizi web SOAP</strong>: WSDL, messaggi request/response</li>
+  <li><strong>Documenti strutturati</strong>: RSS feed, sitemaps, SVG, DocBook</li>
+  <li><strong>Scambio dati B2B</strong>: EDI, fatturazione elettronica, HL7 healthcare</li>
+  <li><strong>Formati Office</strong>: .docx, .xlsx, .pptx (basati su XML)</li>
+</ul>
+
+<h2>XML Formatter & Validator: Funzionalità Principali</h2>
+
+<p>Il nostro <strong>XML & WSDL Viewer</strong> offre un set completo di strumenti per lavorare con XML in modo efficiente:</p>
+
+<h3>1. XML Validation (Validazione Sintattica)</h3>
+
+<p>La validazione XML verifica che il documento rispetti le regole di sintassi XML well-formed:</p>
+
+<ul>
+  <li>Ogni tag di apertura deve avere un tag di chiusura corrispondente</li>
+  <li>I tag devono essere correttamente annidati (no sovrapposizioni)</li>
+  <li>Un solo elemento radice (root element)</li>
+  <li>Gli attributi devono essere racchiusi tra virgolette</li>
+  <li>Caratteri speciali (&lt; &gt; &amp;) devono essere escaped</li>
+</ul>
+
+<p><strong>Esempio di XML valido:</strong></p>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;libreria&gt;
+  &lt;libro isbn="978-88-1234-567-8"&gt;
+    &lt;titolo&gt;Guida Completa a XML&lt;/titolo&gt;
+    &lt;autore&gt;Mario Rossi&lt;/autore&gt;
+    &lt;prezzo valuta="EUR"&gt;29.99&lt;/prezzo&gt;
+    &lt;anno&gt;2024&lt;/anno&gt;
+  &lt;/libro&gt;
+&lt;/libreria&gt;</code></pre>
+
+<p><strong>Esempio di XML non valido (errore rilevato):</strong></p>
+
+<pre><code>&lt;libro&gt;
+  &lt;titolo&gt;Titolo errato&lt;/autor&gt;  &lt;!-- Tag chiusura errato --&gt;
+  &lt;prezzo&gt;19.99&lt;/titolo&gt;          &lt;!-- Tag annidamento sbagliato --&gt;
+&lt;/libro&gt;</code></pre>
+
+<p>Il validatore mostrerà esattamente la linea e colonna dell'errore, facilitando il debug.</p>
+
+<h3>2. XML Formatting (Prettify & Minify)</h3>
+
+<p><strong>Prettify</strong> formatta XML con indentazione per renderlo leggibile:</p>
+
+<pre><code>&lt;!-- Prima (minificato) --&gt;
+&lt;root&gt;&lt;user&gt;&lt;name&gt;John&lt;/name&gt;&lt;age&gt;30&lt;/age&gt;&lt;/user&gt;&lt;/root&gt;
+
+&lt;!-- Dopo (prettified con indent 2) --&gt;
+&lt;root&gt;
+  &lt;user&gt;
+    &lt;name&gt;John&lt;/name&gt;
+    &lt;age&gt;30&lt;/age&gt;
+  &lt;/user&gt;
+&lt;/root&gt;</code></pre>
+
+<p><strong>Minify</strong> rimuove whitespace inutili per ridurre dimensione file:</p>
+
+<ul>
+  <li>Rimuove spazi e tab tra tag</li>
+  <li>Elimina newline non necessarie</li>
+  <li>Mantiene solo gli spazi significativi (dentro contenuto testuale)</li>
+  <li>Riduzione dimensione file: tipicamente 20-40%</li>
+</ul>
+
+<h3>3. XML to JSON Conversion (Bidirezionale)</h3>
+
+<p>Converti XML in JSON per usarlo in applicazioni JavaScript/REST API moderne:</p>
+
+<pre><code>&lt;!-- XML Input --&gt;
+&lt;person&gt;
+  &lt;name&gt;Mario Rossi&lt;/name&gt;
+  &lt;age&gt;35&lt;/age&gt;
+  &lt;skills&gt;
+    &lt;item&gt;JavaScript&lt;/item&gt;
+    &lt;item&gt;Python&lt;/item&gt;
+    &lt;item&gt;Java&lt;/item&gt;
+  &lt;/skills&gt;
+&lt;/person&gt;
+
+// JSON Output
+{
+  "person": {
+    "name": "Mario Rossi",
+    "age": "35",
+    "skills": {
+      "item": [
+        "JavaScript",
+        "Python",
+        "Java"
+      ]
+    }
+  }
+}</code></pre>
+
+<p><strong>Conversione inversa JSON → XML:</strong></p>
+
+<pre><code>// JSON Input
+{
+  "utente": {
+    "id": 12345,
+    "attivo": true,
+    "ruoli": ["admin", "editor"]
+  }
+}
+
+&lt;!-- XML Output --&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;root&gt;
+  &lt;utente&gt;
+    &lt;id&gt;12345&lt;/id&gt;
+    &lt;attivo&gt;true&lt;/attivo&gt;
+    &lt;ruoli&gt;
+      &lt;item&gt;admin&lt;/item&gt;
+      &lt;item&gt;editor&lt;/item&gt;
+    &lt;/ruoli&gt;
+  &lt;/utente&gt;
+&lt;/root&gt;</code></pre>
+
+<h3>4. WSDL Parser & Viewer</h3>
+
+<p><strong>WSDL (Web Services Description Language)</strong> descrive servizi web SOAP. Il parser estrae automaticamente:</p>
+
+<ul>
+  <li><strong>Services & Endpoints</strong>: URL dei servizi SOAP esposti</li>
+  <li><strong>Operations</strong>: Metodi disponibili con input/output message types</li>
+  <li><strong>Types</strong>: Tipi di dati complessi definiti (ComplexType, SimpleType)</li>
+  <li><strong>Bindings</strong>: Protocollo di comunicazione (SOAP 1.1/1.2, HTTP)</li>
+  <li><strong>Target Namespace</strong>: Namespace del servizio</li>
+</ul>
+
+<p><strong>Esempio WSDL parsing output:</strong></p>
+
+<pre><code>📋 Service: CalcolatriceService
+   Port: CalcolatoreSoapPort
+   Endpoint: http://example.com/calculator
+
+⚙️ Operations:
+   - addizione(int a, int b) → int result
+   - sottrazione(int a, int b) → int result
+   - moltiplicazione(int a, int b) → int result
+   - divisione(int a, int b) → float result
+
+📦 Types: AddRequest, AddResponse, DivideRequest, DivideResponse</code></pre>
+
+<h2>Casi d'Uso Reali</h2>
+
+<h3>1. Debug Configurazioni Spring/Maven</h3>
+
+<p>Developer backend che lavorano con Spring Boot o Maven spesso hanno configurazioni XML complesse. Il formatter aiuta a:</p>
+
+<ul>
+  <li>Validare sintassi di <code>pom.xml</code> prima del build</li>
+  <li>Formattare <code>applicationContext.xml</code> per leggibilità</li>
+  <li>Confrontare versioni di configurazioni (con Diff Checker)</li>
+</ul>
+
+<pre><code>&lt;!-- Spring beans configuration --&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"&gt;
+  &lt;bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"&gt;
+    &lt;property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/&gt;
+    &lt;property name="url" value="jdbc:mysql://localhost:3306/mydb"/&gt;
+    &lt;property name="username" value="root"/&gt;
+    &lt;property name="password" value="password"/&gt;
+  &lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+
+<h3>2. Integrazione SOAP Web Services</h3>
+
+<p>Quando si integra con servizi SOAP legacy (banking, ERP, public services), il WSDL parser permette di:</p>
+
+<ul>
+  <li>Visualizzare tutte le operations disponibili</li>
+  <li>Capire struttura dei messaggi request/response</li>
+  <li>Identificare endpoint e binding da configurare</li>
+  <li>Generare client code basandosi su types estratti</li>
+</ul>
+
+<h3>3. Analisi RSS Feed e Sitemap</h3>
+
+<p>RSS feed e sitemap XML possono essere validati e formattati:</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://thejord.it/&lt;/loc&gt;
+    &lt;lastmod&gt;2024-12-01&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+    &lt;priority&gt;1.0&lt;/priority&gt;
+  &lt;/url&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://thejord.it/xml-wsdl-viewer&lt;/loc&gt;
+    &lt;lastmod&gt;2024-12-03&lt;/lastmod&gt;
+    &lt;changefreq&gt;monthly&lt;/changefreq&gt;
+    &lt;priority&gt;0.8&lt;/priority&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+
+<h3>4. Fatturazione Elettronica XML (FatturaPA)</h3>
+
+<p>In Italia, le fatture elettroniche seguono il formato XML FatturaPA. Il validatore aiuta a:</p>
+
+<ul>
+  <li>Verificare sintassi XML prima dell'invio al Sistema di Interscambio (SDI)</li>
+  <li>Formattare per leggibilità durante controlli manuali</li>
+  <li>Convertire in JSON per processamento automatizzato</li>
+</ul>
+
+<h3>5. Migrazione da SOAP a REST</h3>
+
+<p>Team che stanno migrando da architetture SOAP a REST API possono:</p>
+
+<ul>
+  <li>Parsare WSDL per estrarre tutte le operations</li>
+  <li>Mappare operations SOAP a endpoint REST equivalenti</li>
+  <li>Convertire message types XML in JSON schemas</li>
+  <li>Documentare API REST basandosi su documentazione WSDL</li>
+</ul>
+
+<h2>Esempi di Codice</h2>
+
+<h3>JavaScript: Parse XML con DOMParser</h3>
+
+<pre><code>// Browser-based XML parsing
+const xmlString = '&lt;books&gt;&lt;book id="1"&gt;&lt;title&gt;XML Guide&lt;/title&gt;&lt;/book&gt;&lt;/books&gt;';
+
+const parser = new DOMParser();
+const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+// Check for parsing errors
+const parserError = xmlDoc.querySelector('parsererror');
+if (parserError) {
+  console.error('XML Parsing Error:', parserError.textContent);
+} else {
+  const books = xmlDoc.getElementsByTagName('book');
+  console.log(`Found ${books.length} books`);
+
+  const title = xmlDoc.querySelector('title').textContent;
+  console.log(`First book title: ${title}`);
+}</code></pre>
+
+<h3>Python: XML Processing con lxml</h3>
+
+<pre><code>from lxml import etree
+
+# Parse XML
+xml_string = '''&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+  &lt;product id="101"&gt;
+    &lt;name&gt;Laptop&lt;/name&gt;
+    &lt;price currency="EUR"&gt;899.99&lt;/price&gt;
+  &lt;/product&gt;
+&lt;/catalog&gt;'''
+
+root = etree.fromstring(xml_string.encode('utf-8'))
+
+# Extract data
+product = root.find('.//product')
+name = product.find('name').text
+price = product.find('price').text
+currency = product.find('price').get('currency')
+
+print(f"Product: {name} - {price} {currency}")
+
+# Validate with XSD schema
+schema = etree.XMLSchema(etree.parse('schema.xsd'))
+is_valid = schema.validate(root)
+print(f"Valid XML: {is_valid}")</code></pre>
+
+<h3>Java: JAXB per XML Binding</h3>
+
+<pre><code>import javax.xml.bind.*;
+import java.io.StringReader;
+
+@XmlRootElement
+class Person {
+    @XmlElement
+    private String name;
+
+    @XmlElement
+    private int age;
+
+    // Getters/Setters omessi
+}
+
+public class XmlExample {
+    public static void main(String[] args) throws JAXBException {
+        String xml = "&lt;person&gt;&lt;name&gt;Mario&lt;/name&gt;&lt;age&gt;35&lt;/age&gt;&lt;/person&gt;";
+
+        JAXBContext context = JAXBContext.newInstance(Person.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        Person person = (Person) unmarshaller.unmarshal(
+            new StringReader(xml)
+        );
+
+        System.out.println("Name: " + person.getName());
+        System.out.println("Age: " + person.getAge());
+    }
+}</code></pre>
+
+<h3>Node.js: XML to JSON con xml2js</h3>
+
+<pre><code>const xml2js = require('xml2js');
+
+const xmlString = `
+  &lt;config&gt;
+    &lt;database&gt;
+      &lt;host&gt;localhost&lt;/host&gt;
+      &lt;port&gt;5432&lt;/port&gt;
+      &lt;name&gt;mydb&lt;/name&gt;
+    &lt;/database&gt;
+  &lt;/config&gt;
+`;
+
+xml2js.parseString(xmlString, (err, result) => {
+  if (err) {
+    console.error('Parse error:', err);
+    return;
+  }
+
+  const dbConfig = result.config.database[0];
+  console.log(`DB: ${dbConfig.host}:${dbConfig.port}/${dbConfig.name}`);
+
+  // Convert back to XML
+  const builder = new xml2js.Builder();
+  const xml = builder.buildObject(result);
+  console.log(xml);
+});</code></pre>
+
+<h2>XML vs JSON: Quando Usare XML</h2>
+
+<table>
+  <tr>
+    <th>Caratteristica</th>
+    <th>XML</th>
+    <th>JSON</th>
+  </tr>
+  <tr>
+    <td><strong>Leggibilità</strong></td>
+    <td>Verboso, più pesante</td>
+    <td>Conciso, più leggero</td>
+  </tr>
+  <tr>
+    <td><strong>Parsing</strong></td>
+    <td>Più lento (DOM/SAX)</td>
+    <td>Più veloce (nativo JS)</td>
+  </tr>
+  <tr>
+    <td><strong>Validazione</strong></td>
+    <td>XSD Schema, DTD</td>
+    <td>JSON Schema</td>
+  </tr>
+  <tr>
+    <td><strong>Supporto Attributi</strong></td>
+    <td>✅ Sì</td>
+    <td>❌ No (solo key-value)</td>
+  </tr>
+  <tr>
+    <td><strong>Namespaces</strong></td>
+    <td>✅ Sì</td>
+    <td>❌ No</td>
+  </tr>
+  <tr>
+    <td><strong>Commenti</strong></td>
+    <td>✅ Sì (&lt;!-- --&gt;)</td>
+    <td>❌ No (standard)</td>
+  </tr>
+  <tr>
+    <td><strong>Uso Tipico</strong></td>
+    <td>Config, SOAP, Documenti</td>
+    <td>REST API, NoSQL, Web</td>
+  </tr>
+</table>
+
+<p><strong>Usa XML quando:</strong></p>
+
+<ul>
+  <li>Necessiti di validazione rigorosa con XML Schema</li>
+  <li>Lavori con servizi SOAP o legacy systems</li>
+  <li>Hai bisogno di metadati (attributi, namespaces)</li>
+  <li>Documenti complessi con struttura mista (testo + markup)</li>
+  <li>Standard di settore richiedono XML (healthcare HL7, finance FpML)</li>
+</ul>
+
+<p><strong>Usa JSON quando:</strong></p>
+
+<ul>
+  <li>Sviluppi REST API moderne</li>
+  <li>Prioritizzi performance e dimensione payload</li>
+  <li>Integri con JavaScript/frontend</li>
+  <li>Lavori con database NoSQL (MongoDB, Couchbase)</li>
+</ul>
+
+<h2>FAQ</h2>
+
+<h3>Come posso validare XML contro un XML Schema (XSD)?</h3>
+
+<p>Il nostro tool valida la sintassi XML (well-formedness). Per validare contro un XSD, usa librerie specializzate:</p>
+
+<ul>
+  <li><strong>Online</strong>: XMLValidation.com, FreeFormatter.com</li>
+  <li><strong>JavaScript</strong>: libxmljs, xsd-schema-validator</li>
+  <li><strong>Python</strong>: lxml con XMLSchema</li>
+  <li><strong>Java</strong>: javax.xml.validation.SchemaFactory</li>
+</ul>
+
+<h3>Il tool supporta XML namespaces?</h3>
+
+<p>Sì, il validatore e formatter gestiscono correttamente namespaces XML, inclusi prefissi (xmlns:ns) e default namespaces. Il WSDL parser riconosce automaticamente namespaces SOAP, WSDL e XSD.</p>
+
+<h3>Posso convertire XML in CSV o Excel?</h3>
+
+<p>Direttamente no, ma puoi seguire questo workflow:</p>
+
+<ol>
+  <li>XML → JSON (con il nostro tool)</li>
+  <li>JSON → CSV (con il nostro <a href="/json-formatter">JSON Formatter</a>)</li>
+  <li>Importa CSV in Excel</li>
+</ol>
+
+<h3>Come gestisco file XML molto grandi (>10MB)?</h3>
+
+<p>Il tool browser-based ha limiti di memoria. Per file grandi usa:</p>
+
+<ul>
+  <li><strong>Command line</strong>: <code>xmllint --format large.xml</code> (Linux/Mac)</li>
+  <li><strong>Python SAX parser</strong>: Parsing incrementale senza caricare tutto in memoria</li>
+  <li><strong>Java StAX</strong>: Streaming API for XML</li>
+</ul>
+
+<h3>Il WSDL parser supporta WSDL 2.0?</h3>
+
+<p>Attualmente supportiamo WSDL 1.1 (più diffuso). WSDL 2.0 ha adozione limitata. Se hai necessità specifiche, contattaci.</p>
+
+<h3>Come minify XML preservando formattazione interna a CDATA?</h3>
+
+<p>Le sezioni <code>&lt;![CDATA[...]]&gt;</code> vengono preservate esattamente come sono, includendo whitespace interno. Il minify rimuove solo spazi tra tag XML.</p>
+
+<h3>Qual è la differenza tra well-formed e valid XML?</h3>
+
+<p><strong>Well-formed</strong> XML rispetta le regole sintattiche di base (tag chiusi, annidamento corretto). <strong>Valid</strong> XML rispetta anche uno schema specifico (DTD o XSD) che definisce struttura e tipi consentiti.</p>
+
+<h3>Posso usare il tool offline?</h3>
+
+<p>Sì! Tutto il processing avviene nel browser (client-side). Puoi salvare la pagina HTML e usarla offline. Nessun dato viene inviato a server esterni.</p>
+
+<h2>Risorse e Tool Correlati</h2>
+
+<h3>Altri Tool THEJORD Utili</h3>
+
+<ul>
+  <li><a href="/json-formatter"><strong>JSON Formatter</strong></a> - Valida e formatta JSON, converti JSON → XML/CSV/YAML</li>
+  <li><a href="/diff-checker"><strong>Diff Checker</strong></a> - Confronta due versioni di XML per trovare differenze</li>
+  <li><a href="/base64"><strong>Base64 Encoder</strong></a> - Codifica XML in Base64 per trasmissione sicura</li>
+  <li><a href="/regex-tester"><strong>RegEx Tester</strong></a> - Testa pattern per estrarre dati da XML</li>
+</ul>
+
+<h3>Documentazione Esterna</h3>
+
+<ul>
+  <li><a href="https://www.w3.org/TR/xml/" target="_blank" rel="noopener">W3C XML Specification</a> - Standard ufficiale XML</li>
+  <li><a href="https://www.w3.org/TR/wsdl20/" target="_blank" rel="noopener">W3C WSDL Specification</a> - WSDL 2.0 spec</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser" target="_blank" rel="noopener">MDN DOMParser API</a> - JavaScript XML parsing</li>
+  <li><a href="https://www.hl7.org/" target="_blank" rel="noopener">HL7 Healthcare Standards</a> - XML in ambito medicale</li>
+</ul>
+
+<h2>Conclusione</h2>
+
+<p>Il <strong>XML & WSDL Viewer</strong> di THEJORD è uno strumento completo per sviluppatori che lavorano con XML: validazione real-time, formatting professionale, parsing WSDL avanzato e conversione bidirezionale XML ↔ JSON.</p>
+
+<p><strong>Vantaggi chiave:</strong></p>
+
+<ul>
+  <li>✅ 100% gratuito e privacy-first (nessun caricamento server)</li>
+  <li>⚡ Veloce: processing client-side istantaneo</li>
+  <li>🛡️ Sicuro: nessun dato lascia il tuo browser</li>
+  <li>🔧 Completo: validator, formatter, parser WSDL, converter</li>
+  <li>💻 Sempre disponibile: funziona anche offline</li>
+</ul>
+
+<p>Prova subito il tool e semplifica il tuo workflow XML!</p>
