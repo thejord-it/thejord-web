@@ -339,7 +339,7 @@ export default function SEOPage() {
                 </div>
 
                 {/* Expanded Results */}
-                {activeJob === job.id && job.result && (
+                {activeJob === job.id && job.result !== undefined && (
                   <div className="mt-4 pt-4 border-t border-border">
                     <JobResultDisplay type={job.type} result={job.result} />
                   </div>
