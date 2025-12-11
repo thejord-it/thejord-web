@@ -26,6 +26,20 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
+  // SEO FIX: Permanent redirect from root to default locale
+  // This ensures Google treats /it as the canonical URL, not /
+  // next-intl uses 307 (temporary) by default, but we need 301 (permanent) for SEO
+  // See: https://github.com/amannn/next-intl/discussions/544
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/it',
+        permanent: true, // Returns 308 Permanent Redirect
+      },
+    ]
+  },
+
   // Security headers
   async headers() {
     return [
