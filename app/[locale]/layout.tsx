@@ -59,8 +59,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'max-snippet': -1,
       },
     },
+    // NOTE: canonical is NOT set here because generateMetadata in layout
+    // doesn't have access to the current pathname. Each page must define
+    // its own canonical URL in its generateMetadata function.
+    // See: blog/[slug]/page.tsx for example
     alternates: {
-      canonical: `https://thejord.it/${locale}`,
       languages: {
         'it': 'https://thejord.it/it',
         'en': 'https://thejord.it/en',
