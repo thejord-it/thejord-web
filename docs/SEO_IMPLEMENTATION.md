@@ -356,6 +356,13 @@ Dopo deploy production:
 - [x] OG Image (1200x630)
 - [x] Social share preview
 
+### i18n SEO ✅
+
+- [x] Canonical URL per ogni pagina (con locale)
+- [x] Hreflang tags per alternates linguistici
+- [x] Redirect 308 (permanent) invece di 307 (temporary)
+- [x] Sitemap multilingue
+
 ### Content SEO ✅
 
 - [x] Keywords in meta
@@ -364,6 +371,89 @@ Dopo deploy production:
 - [x] Published/modified dates
 - [x] Tags/categories
 - [x] Excerpt/description
+
+---
+
+## 🌐 Implementazione i18n SEO
+
+### Struttura URL Multilingue
+
+Il sito supporta italiano (`/it/`) e inglese (`/en/`) con prefisso locale obbligatorio:
+
+```
+https://thejord.it/it/blog/articolo-slug   (italiano)
+https://thejord.it/en/blog/article-slug    (inglese)
+```
+
+### Canonical URL
+
+**IMPORTANTE**: Ogni pagina DEVE definire il proprio canonical in `generateMetadata()`.
+
+**NON** impostare canonical nel layout.tsx - non ha accesso al pathname corrente.
+
+**Esempio corretto** (`app/[locale]/blog/page.tsx`):
+```typescript
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  return {
+    title: t('title'),
+    alternates: {
+      canonical: `https://thejord.it/${locale}/blog`,
+      languages: {
+        'it': 'https://thejord.it/it/blog',
+        'en': 'https://thejord.it/en/blog',
+      },
+    },
+  }
+}
+```
+
+**Pagine con canonical implementato**:
+- `app/[locale]/page.tsx` - Homepage
+- `app/[locale]/blog/page.tsx` - Lista blog
+- `app/[locale]/blog/[slug]/page.tsx` - Post blog
+- `app/[locale]/tools/page.tsx` - Lista tools
+- `app/[locale]/tools/[slug]/page.tsx` - Tool singolo
+- `app/[locale]/about/page.tsx` - Chi siamo
+- `app/[locale]/contact/page.tsx` - Contatti
+
+### Hreflang Tags
+
+Generati automaticamente da `alternates.languages` in metadata:
+
+```html
+<link rel="alternate" hreflang="it" href="https://thejord.it/it/blog" />
+<link rel="alternate" hreflang="en" href="https://thejord.it/en/blog" />
+```
+
+### Redirect 308 (Permanent)
+
+Il middleware (`middleware.ts`) converte i redirect 307 di next-intl in 308:
+
+```typescript
+// middleware.ts
+if (response.status === 307) {
+  const location = response.headers.get('location')
+  if (location) {
+    return NextResponse.redirect(new URL(location, request.url), {
+      status: 308,  // Permanent redirect per SEO
+      headers: response.headers
+    })
+  }
+}
+```
+
+**Perché 308 invece di 307**:
+- 307 = Temporary Redirect - Google non trasferisce PageRank
+- 308 = Permanent Redirect - Google trasferisce PageRank e indicizza l'URL finale
+
+### Client Components e Metadata
+
+Per pagine con `'use client'` (es. form), separare in:
+1. `components/[name]/[Component].tsx` - Client component con UI
+2. `app/[locale]/[path]/page.tsx` - Server component con `generateMetadata()`
+
+**Esempio**: La pagina contact usa `ContactForm` client component importato in un server page.
 
 ---
 
@@ -463,6 +553,6 @@ image: `https://thejord.it${post.image}`
 
 ---
 
-**Ultimo aggiornamento**: 19 Novembre 2025
-**Versione**: 1.0
+**Ultimo aggiornamento**: 15 Dicembre 2025
+**Versione**: 1.1 (aggiunta sezione i18n SEO)
 **Autore**: Claude Code + The Jord

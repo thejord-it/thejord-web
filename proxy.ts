@@ -6,7 +6,9 @@ import { locales, defaultLocale } from './i18n/config'
 const intlMiddleware = createMiddleware({
   locales,
   defaultLocale,
-  localePrefix: 'always'
+  localePrefix: 'always',
+  localeDetection: true,
+  alternateLinks: true
 })
 
 export default function middleware(request: NextRequest) {
@@ -29,7 +31,23 @@ export default function middleware(request: NextRequest) {
   }
 
   // For all other routes, use the i18n middleware
-  return intlMiddleware(request)
+  const response = intlMiddleware(request)
+
+  // SEO FIX: Convert 307 (Temporary) redirects to 308 (Permanent)
+  // next-intl uses 307 by default, but 308 is better for SEO
+  // as Google will transfer page ranking to the new URL
+  // See: https://github.com/amannn/next-intl/discussions/544
+  if (response.status === 307) {
+    const location = response.headers.get('location')
+    if (location) {
+      return NextResponse.redirect(new URL(location, request.url), {
+        status: 308,
+        headers: response.headers
+      })
+    }
+  }
+
+  return response
 }
 
 export const config = {

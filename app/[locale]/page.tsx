@@ -47,6 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('title'),
     description: t('description'),
+    alternates: {
+      canonical: `https://thejord.it/${locale}`,
+      languages: {
+        'it': 'https://thejord.it/it',
+        'en': 'https://thejord.it/en',
+      },
+    },
   }
 }
 
