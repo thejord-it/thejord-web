@@ -20,6 +20,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t('description'),
       type: 'website',
     },
+    alternates: {
+      canonical: `https://thejord.it/${locale}/tools`,
+      languages: {
+        'it': 'https://thejord.it/it/tools',
+        'en': 'https://thejord.it/en/tools',
+      },
+    },
   }
 }
 
