@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const locale of locales) {
     const posts = postsByLocale[locale]
 
-    // Static pages with alternates for hreflang
+    // Static pages with alternates for hreflang (x-default points to English)
     sitemap.push({
       url: `${baseUrl}/${locale}`,
       lastModified: new Date(),
@@ -48,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it`,
           en: `${baseUrl}/en`,
+          'x-default': `${baseUrl}/en`,
         },
       },
     })
@@ -61,6 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/blog`,
           en: `${baseUrl}/en/blog`,
+          'x-default': `${baseUrl}/en/blog`,
         },
       },
     })
@@ -74,6 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/tools`,
           en: `${baseUrl}/en/tools`,
+          'x-default': `${baseUrl}/en/tools`,
         },
       },
     })
@@ -87,6 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/about`,
           en: `${baseUrl}/en/about`,
+          'x-default': `${baseUrl}/en/about`,
         },
       },
     })
@@ -100,6 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/contact`,
           en: `${baseUrl}/en/contact`,
+          'x-default': `${baseUrl}/en/contact`,
         },
       },
     })
@@ -114,6 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/pdf-tools`,
           en: `${baseUrl}/en/pdf-tools`,
+          'x-default': `${baseUrl}/en/pdf-tools`,
         },
       },
     })
@@ -128,6 +134,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           it: `${baseUrl}/it/changelog`,
           en: `${baseUrl}/en/changelog`,
+          'x-default': `${baseUrl}/en/changelog`,
         },
       },
     })
@@ -146,9 +153,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         for (const [lang, slug] of Object.entries(translations)) {
           languages[lang] = `${baseUrl}/${lang}/blog/${slug}`
         }
+        // x-default points to EN if available, otherwise current locale
+        languages['x-default'] = translations.en
+          ? `${baseUrl}/en/blog/${translations.en}`
+          : `${baseUrl}/${locale}/blog/${post.slug}`
       } else {
         // No translation group - only include current language
         languages[locale] = `${baseUrl}/${locale}/blog/${post.slug}`
+        languages['x-default'] = `${baseUrl}/${locale}/blog/${post.slug}`
       }
 
       sitemap.push({
@@ -173,6 +185,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             it: `${baseUrl}/it/tools/${tool.slug}`,
             en: `${baseUrl}/en/tools/${tool.slug}`,
+            'x-default': `${baseUrl}/en/tools/${tool.slug}`,
           },
         },
       })
