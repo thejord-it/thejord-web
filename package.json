@@ -59,7 +59,8 @@
     "react-easy-crop": "^5.5.3",
     "react-markdown": "^10.1.0",
     "react-simplemde-editor": "^5.2.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "resend": "^6.6.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
