@@ -1012,5 +1012,49 @@
       "use3": "Nomi file",
       "use4": "Sistemi distribuiti"
     }
+  },
+  "toolsMeta": {
+    "jsonFormatter": {
+      "description": "Formattatore e validatore JSON online gratuito. Formatta, valida, minifica JSON con evidenziazione sintassi. Vista ad albero, diff checker, converti in CSV/XML/YAML."
+    },
+    "base64": {
+      "description": "Encoder e decoder Base64 gratuito. Codifica testo in Base64 o decodifica Base64 in testo istantaneamente nel browser."
+    },
+    "regexTester": {
+      "description": "Testa espressioni regolari online. Test regex in tempo reale con evidenziazione match e spiegazione."
+    },
+    "hashGenerator": {
+      "description": "Genera hash crittografici online. Generatore hash MD5, SHA-1, SHA-256, SHA-512 per testo e file."
+    },
+    "urlEncoder": {
+      "description": "Encoder e decoder URL gratuito. Codifica URL per il web o decodifica URL codificati istantaneamente."
+    },
+    "markdownConverter": {
+      "description": "Converti Markdown in HTML online. Editor markdown con anteprima live e supporto GitHub-flavored markdown."
+    },
+    "colorConverter": {
+      "description": "Converti colori tra formati HEX, RGB e HSL. Color picker e generatore palette per designer."
+    },
+    "loremIpsum": {
+      "description": "Genera testo placeholder Lorem Ipsum. Generatore personalizzabile di parole, frasi e paragrafi."
+    },
+    "diffChecker": {
+      "description": "Confronta due testi e trova le differenze. Diff checker side-by-side con evidenziazione."
+    },
+    "cronBuilder": {
+      "description": "Costruisci espressioni cron visualmente. Cron job scheduler con validazione sintassi e descrizione leggibile."
+    },
+    "jsonSchema": {
+      "description": "Genera JSON Schema da JSON. Generazione automatica schema per validazione API e documentazione."
+    },
+    "xmlWsdlViewer": {
+      "description": "Formatta, valida e visualizza file XML e WSDL online. Formattatore XML con parser WSDL e convertitore XML-JSON. 100% privacy-first."
+    },
+    "pdfTools": {
+      "description": "Strumenti PDF online gratuiti. Unisci, dividi, comprimi, ruota e converti file PDF. Converti immagini in PDF e PDF in immagini. 100% privacy-first, funziona offline."
+    },
+    "uuidGenerator": {
+      "description": "Genera UUID online. Crea identificatori UUID v1 (timestamp) e v4 (random). Valida e analizza UUID esistenti. 100% privacy-first."
+    }
   }
 }

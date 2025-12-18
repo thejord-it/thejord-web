@@ -1012,5 +1012,49 @@
       "use3": "File naming",
       "use4": "Distributed systems"
     }
+  },
+  "toolsMeta": {
+    "jsonFormatter": {
+      "description": "Free online JSON formatter and validator. Format, validate, minify JSON with syntax highlighting. Tree view, diff checker, convert to CSV/XML/YAML."
+    },
+    "base64": {
+      "description": "Free Base64 encoder and decoder. Encode text to Base64 or decode Base64 to text instantly in your browser."
+    },
+    "regexTester": {
+      "description": "Test regular expressions online. Real-time regex testing with matches highlighting and explanation."
+    },
+    "hashGenerator": {
+      "description": "Generate cryptographic hashes online. MD5, SHA-1, SHA-256, SHA-512 hash generator for text and files."
+    },
+    "urlEncoder": {
+      "description": "Free URL encoder and decoder. Encode URLs for web use or decode encoded URLs instantly."
+    },
+    "markdownConverter": {
+      "description": "Convert Markdown to HTML online. Live preview markdown editor with GitHub-flavored markdown support."
+    },
+    "colorConverter": {
+      "description": "Convert colors between HEX, RGB, and HSL formats. Color picker and palette generator for designers."
+    },
+    "loremIpsum": {
+      "description": "Generate Lorem Ipsum placeholder text. Customizable word, sentence, and paragraph generator."
+    },
+    "diffChecker": {
+      "description": "Compare two texts and find differences. Side-by-side diff checker with highlighting."
+    },
+    "cronBuilder": {
+      "description": "Build cron expressions visually. Cron job scheduler with syntax validation and human-readable description."
+    },
+    "jsonSchema": {
+      "description": "Generate JSON Schema from JSON. Automatic schema generation for API validation and documentation."
+    },
+    "xmlWsdlViewer": {
+      "description": "Format, validate, and view XML and WSDL files online. XML formatter with WSDL parser and XML to JSON converter. 100% privacy-first."
+    },
+    "pdfTools": {
+      "description": "Free online PDF tools. Merge, split, compress, rotate and convert PDF files. Convert images to PDF and PDF to images. 100% privacy-first, works offline."
+    },
+    "uuidGenerator": {
+      "description": "Generate UUIDs online. Create UUID v1 (timestamp) and v4 (random) identifiers. Validate and parse existing UUIDs. 100% privacy-first."
+    }
   }
 }
