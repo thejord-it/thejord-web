@@ -26,17 +26,38 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // SEO FIX: Permanent redirect from root to default locale
-  // This ensures Google treats /it as the canonical URL, not /
-  // next-intl uses 307 (temporary) by default, but we need 301 (permanent) for SEO
-  // See: https://github.com/amannn/next-intl/discussions/544
+  // SEO FIX: Redirects for legacy URLs and locale handling
   async redirects() {
     return [
-      {
-        source: '/',
-        destination: '/it',
-        permanent: true, // Returns 308 Permanent Redirect
-      },
+      { source: '/', destination: '/it', permanent: true },
+      // Legacy tool URLs without /tools/ prefix
+      { source: '/json-formatter', destination: '/it/tools/json-formatter', permanent: true },
+      { source: '/base64', destination: '/it/tools/base64', permanent: true },
+      { source: '/regex-tester', destination: '/it/tools/regex-tester', permanent: true },
+      { source: '/regex', destination: '/it/tools/regex-tester', permanent: true },
+      { source: '/hash-generator', destination: '/it/tools/hash-generator', permanent: true },
+      { source: '/hash', destination: '/it/tools/hash-generator', permanent: true },
+      { source: '/url-encoder', destination: '/it/tools/url-encoder', permanent: true },
+      { source: '/url-tool', destination: '/it/tools/url-encoder', permanent: true },
+      { source: '/url', destination: '/it/tools/url-encoder', permanent: true },
+      { source: '/markdown-converter', destination: '/it/tools/markdown-converter', permanent: true },
+      { source: '/markdown', destination: '/it/tools/markdown-converter', permanent: true },
+      { source: '/color-converter', destination: '/it/tools/color-converter', permanent: true },
+      { source: '/color', destination: '/it/tools/color-converter', permanent: true },
+      { source: '/lorem-ipsum', destination: '/it/tools/lorem-ipsum', permanent: true },
+      { source: '/diff-checker', destination: '/it/tools/diff-checker', permanent: true },
+      { source: '/diff', destination: '/it/tools/diff-checker', permanent: true },
+      { source: '/cron-builder', destination: '/it/tools/cron-builder', permanent: true },
+      { source: '/json-schema', destination: '/it/tools/json-schema', permanent: true },
+      { source: '/xml-wsdl-viewer', destination: '/it/tools/xml-wsdl-viewer', permanent: true },
+      { source: '/pdf-tools', destination: '/it/pdf-tools', permanent: true },
+      { source: '/uuid-generator', destination: '/it/tools/uuid-generator', permanent: true },
+      // Legacy /tools/slug without locale
+      { source: '/tools/:slug', destination: '/it/tools/:slug', permanent: true },
+      // Legacy /blog/slug without locale
+      { source: '/blog/:slug', destination: '/it/blog/:slug', permanent: true },
+      // Non-existent tools redirect to tools page
+      { source: '/tools/qr-code', destination: '/it/tools', permanent: false },
     ]
   },
 
