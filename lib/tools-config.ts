@@ -165,3 +165,25 @@ export function getToolsByCategory(category: string): ToolConfig[] {
 export function getAllCategories(): string[] {
   return Array.from(new Set(TOOLS.map(t => t.category)))
 }
+
+// Map tool slugs to translation keys (used in messages/*.json)
+const SLUG_TO_TRANSLATION_KEY: Record<string, string> = {
+  'json-formatter': 'jsonFormatter',
+  'base64': 'base64',
+  'regex-tester': 'regexTester',
+  'hash-generator': 'hashGenerator',
+  'url-encoder': 'urlEncoder',
+  'markdown-converter': 'markdownConverter',
+  'color-converter': 'colorConverter',
+  'lorem-ipsum': 'loremIpsum',
+  'diff-checker': 'diffChecker',
+  'cron-builder': 'cronBuilder',
+  'json-schema': 'jsonSchema',
+  'xml-wsdl-viewer': 'xmlWsdlViewer',
+  'pdf-tools': 'pdfTools',
+  'uuid-generator': 'uuidGenerator',
+}
+
+export function getToolTranslationKey(slug: string): string {
+  return SLUG_TO_TRANSLATION_KEY[slug] || slug
+}
