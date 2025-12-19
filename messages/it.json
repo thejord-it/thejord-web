@@ -1021,13 +1021,13 @@
       "description": "Encoder e decoder Base64 gratuito. Codifica testo in Base64 o decodifica Base64 in testo istantaneamente nel browser."
     },
     "regexTester": {
-      "description": "Testa espressioni regolari online. Test regex in tempo reale con evidenziazione match e spiegazione."
+      "description": "Tester espressioni regolari online gratuito. Valida e testa regex in tempo reale con evidenziazione match, gruppi di cattura e spiegazione pattern. Supporta JavaScript, Python e PCRE."
     },
     "hashGenerator": {
-      "description": "Genera hash crittografici online. Generatore hash MD5, SHA-1, SHA-256, SHA-512 per testo e file."
+      "description": "Generatore hash online gratuito. Calcola MD5, SHA-1, SHA-256, SHA-512 per testo e file. Verifica checksum e integrità file. 100% privacy-first, elaborazione locale nel browser."
     },
     "urlEncoder": {
-      "description": "Encoder e decoder URL gratuito. Codifica URL per il web o decodifica URL codificati istantaneamente."
+      "description": "Encoder e decoder URL online gratuito. Codifica e decodifica URL, query string e percent encoding. Supporta URI components e caratteri speciali. Strumento essenziale per sviluppatori web."
     },
     "markdownConverter": {
       "description": "Converti Markdown in HTML online. Editor markdown con anteprima live e supporto GitHub-flavored markdown."
@@ -1036,10 +1036,10 @@
       "description": "Converti colori tra formati HEX, RGB e HSL. Color picker e generatore palette per designer."
     },
     "loremIpsum": {
-      "description": "Genera testo placeholder Lorem Ipsum. Generatore personalizzabile di parole, frasi e paragrafi."
+      "description": "Generatore Lorem Ipsum online gratuito. Crea testo segnaposto personalizzato per design, mockup e prototipi. Genera parole, frasi o paragrafi. Testo finto italiano per web e grafica."
     },
     "diffChecker": {
-      "description": "Confronta due testi e trova le differenze. Diff checker side-by-side con evidenziazione."
+      "description": "Confronta testi online e trova le differenze. Diff checker side-by-side con evidenziazione righe modificate, aggiunte e rimosse. Confronta codice, documenti e file. Strumento merge gratuito."
     },
     "cronBuilder": {
       "description": "Costruisci espressioni cron visualmente. Cron job scheduler con validazione sintassi e descrizione leggibile."

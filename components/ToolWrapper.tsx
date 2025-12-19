@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import type { ToolConfig } from '@/lib/tools-config'
 import { ToastProvider } from './ToastProvider'
+import RelatedTools from './RelatedTools'
 
 // Lazy load all tool components
 const JsonFormatter = lazy(() => import('./tools/pages/JsonFormatter'))
@@ -104,6 +105,11 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
           <ToolComponent />
         </Suspense>
       </ToastProvider>
+
+      {/* Related Tools section */}
+      <div className="max-w-7xl mx-auto px-4">
+        <RelatedTools currentSlug={toolSlug} />
+      </div>
 
       {/* Footer with privacy notice */}
       <div className="bg-bg-dark border-t border-border mt-8 md:mt-12">
