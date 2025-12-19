@@ -5,6 +5,37 @@ All notable changes to the THEJORD web platform will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-12-20
+
+### Multilingua e Nuovi Tool
+
+Supporto completo italiano/inglese e 3 nuovi strumenti.
+
+### Added
+
+#### Multilingua
+- **Italiano e Inglese** - Tutto il sito disponibile in entrambe le lingue
+- **Switcher lingua** - Cambia lingua da header o footer
+- **Blog bilingue** - Articoli tradotti con link alla versione alternativa
+
+#### Nuovi Tool (14 totali)
+- **PDF Tools** - Unisci, dividi, comprimi, ruota e converti PDF
+- **XML & WSDL Viewer** - Formatta, valida e visualizza file XML e WSDL
+- **UUID Generator** - Genera UUID v1 e v4, valida UUID esistenti
+
+#### Contact Form
+- **Form di contatto** funzionante con notifiche email
+
+### Changed
+- **Tool correlati** - Ogni tool mostra strumenti simili in fondo alla pagina
+- **14 tool** invece di 11
+
+### Fixed
+- Miglioramenti SEO e indicizzazione Google
+- Correzioni varie di stabilita
+
+---
+
 ## [2.1.0] - 2025-11-28
 
 ### Mobile Responsive Update
@@ -190,9 +221,9 @@ All tools process data 100% client-side for maximum privacy:
 - [ ] RSS feed for blog
 - [x] Search functionality for blog posts
 - [ ] Dark/Light theme toggle
-- [ ] More developer tools
+- [x] More developer tools - Now 14 tools
 - [ ] API documentation
-- [ ] Internationalization (i18n)
+- [x] Internationalization (i18n) - Italiano & English
 - [ ] Progressive Web App (PWA) support
 
 ### Under Consideration
