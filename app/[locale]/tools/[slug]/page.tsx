@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { TOOLS, getToolBySlug, getToolTranslationKey } from '@/lib/tools-config'
+import { getFAQSchema } from '@/lib/tools-faq'
 import ToolWrapper from '@/components/ToolWrapper'
 import { getTranslations } from 'next-intl/server'
 
@@ -74,16 +75,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ToolPage({ params }: Props) {
   const { slug, locale } = await params
   const tool = getToolBySlug(slug)
+  const t = await getTranslations({ locale, namespace: 'tools' })
 
   if (!tool) {
     notFound()
   }
 
+  // Get translation key for this tool
+  const translationKey = getToolTranslationKey(slug)
+  const toolName = t.has('list.' + translationKey + '.name')
+    ? t('list.' + translationKey + '.name')
+    : tool.name
+
   // Schema.org JSON-LD for WebApplication with dynamic language
-  const jsonLd = {
+  const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: tool.name,
+    name: toolName,
     description: tool.metaDescription,
     url: 'https://thejord.it/' + locale + '/tools/' + tool.slug,
     applicationCategory: 'DeveloperApplication',
@@ -97,13 +105,52 @@ export default async function ToolPage({ params }: Props) {
     inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
   }
 
+  // BreadcrumbList schema for better navigation in search results
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://thejord.it/' + locale,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: locale === 'it' ? 'Strumenti' : 'Tools',
+        item: 'https://thejord.it/' + locale + '/tools',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: toolName,
+        item: 'https://thejord.it/' + locale + '/tools/' + tool.slug,
+      },
+    ],
+  }
+
+  // FAQ schema for rich snippets
+  const faqSchema = getFAQSchema(slug, locale)
+
   return (
     <>
       {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {/* Tool component wrapper */}
       <ToolWrapper toolSlug={slug} toolConfig={tool} />
