@@ -57,3 +57,6 @@ app/api/analytics/
 
 # test files
 __tests__/*.pdf
+
+# Claude Code - sensitive docs (IPs, tokens, credentials)
+.claude/
