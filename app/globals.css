@@ -200,3 +200,116 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* React DatePicker Dark Theme Styles */
+.react-datepicker {
+  @apply !bg-gray-800 !border-gray-600 !font-sans !rounded-lg shadow-xl;
+}
+
+.react-datepicker__header {
+  @apply !bg-gray-700 !border-b !border-gray-600;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker__day-name {
+  @apply !text-white;
+}
+
+.react-datepicker__day {
+  @apply !text-gray-300 hover:!bg-gray-600 !rounded;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  @apply !bg-blue-600 !text-white hover:!bg-blue-700;
+}
+
+.react-datepicker__day--today {
+  @apply !font-bold !text-blue-400;
+}
+
+.react-datepicker__day--disabled {
+  @apply !text-gray-500 hover:!bg-transparent cursor-not-allowed;
+}
+
+.react-datepicker__time-container {
+  @apply !border-l !border-gray-600;
+}
+
+.react-datepicker__time {
+  @apply !bg-gray-800;
+}
+
+.react-datepicker__time-box {
+  @apply !bg-gray-800;
+}
+
+.react-datepicker__time-list-item {
+  @apply !text-gray-300 hover:!bg-gray-600;
+}
+
+.react-datepicker__time-list-item--selected {
+  @apply !bg-blue-600 !text-white hover:!bg-blue-700;
+}
+
+.react-datepicker__navigation-icon::before {
+  @apply !border-gray-400;
+}
+
+.react-datepicker__navigation:hover *::before {
+  @apply !border-white;
+}
+
+/* FullCalendar Dark Theme Styles */
+.fc {
+  @apply !text-gray-300;
+}
+
+.fc .fc-toolbar-title {
+  @apply !text-white;
+}
+
+.fc .fc-button-primary {
+  @apply !bg-blue-600 !border-blue-600 hover:!bg-blue-700 hover:!border-blue-700;
+}
+
+.fc .fc-button-primary:disabled {
+  @apply !bg-gray-600 !border-gray-600;
+}
+
+.fc .fc-daygrid-day {
+  @apply !bg-gray-800;
+}
+
+.fc .fc-daygrid-day:hover {
+  @apply !bg-gray-700;
+}
+
+.fc .fc-daygrid-day-frame {
+  @apply !border-gray-700;
+}
+
+.fc .fc-col-header-cell {
+  @apply !bg-gray-700 !border-gray-600;
+}
+
+.fc .fc-scrollgrid {
+  @apply !border-gray-600;
+}
+
+.fc .fc-daygrid-day-number {
+  @apply !text-gray-400;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  @apply !bg-blue-900/30;
+}
+
+.fc .fc-event {
+  @apply !bg-blue-600 !border-blue-600 cursor-pointer;
+}
+
+.fc .fc-event:hover {
+  @apply !bg-blue-700;
+}

@@ -74,6 +74,7 @@ export interface BlogPost {
   // Publishing
   published: boolean
   publishedAt?: string
+  scheduledAt?: string | null
   createdAt: string
   updatedAt: string
 
@@ -272,4 +273,14 @@ export async function bulkPublishPosts(ids: string[]): Promise<void> {
 
 export async function bulkUnpublishPosts(ids: string[]): Promise<void> {
   await Promise.all(ids.map(id => updatePost(id, { published: false })))
+}
+
+export async function getScheduledPosts(): Promise<BlogPost[]> {
+  const res = await fetch(API_URL + '/api/posts/scheduled/list', {
+    headers: getAuthHeader(),
+    cache: 'no-store',
+  })
+  if (!res.ok) throw new Error('Failed to fetch scheduled posts')
+  const data = await res.json()
+  return data.data || []
 }
