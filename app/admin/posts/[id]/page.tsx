@@ -10,6 +10,7 @@ import ImageUpload from '@/components/ImageUpload'
 import TagInput from '@/components/TagInput'
 import ErrorModal from '@/components/ErrorModal'
 import IconPicker from '@/components/IconPicker'
+import DateTimePicker from '@/components/admin/DateTimePicker'
 
 type EditorType = 'markdown' | 'wysiwyg'
 
@@ -43,6 +44,7 @@ export default function EditPostPage() {
     ogImage: '',
     canonicalUrl: '',
     published: false,
+    scheduledAt: null as Date | null,
   })
 
   useEffect(() => {
@@ -70,6 +72,7 @@ export default function EditPostPage() {
         ogImage: post.ogImage || '',
         canonicalUrl: post.canonicalUrl || '',
         published: post.published,
+        scheduledAt: post.scheduledAt ? new Date(post.scheduledAt) : null,
       })
       // Set editor type from post if available
       if (post.editorType) {
@@ -83,7 +86,7 @@ export default function EditPostPage() {
     }
   }
 
-  const handleChange = (field: string, value: string | boolean | string[]) => {
+  const handleChange = (field: string, value: string | boolean | string[] | Date | null) => {
     setFormData(prev => ({ ...prev, [field]: value }))
 
     // Clear error for this field if value is provided
@@ -124,9 +127,15 @@ export default function EditPostPage() {
     return newErrors
   }
 
-  const handleSubmit = async (publish: boolean) => {
+  const handleSubmit = async (mode: 'draft' | 'publish' | 'schedule') => {
     // Validate form
     const newErrors = validateFormAndGetErrors()
+
+    // If scheduling, also validate scheduledAt
+    if (mode === 'schedule' && !formData.scheduledAt) {
+      newErrors.scheduledAt = 'Please select a date and time for scheduling'
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       setShowErrorModal(true)
@@ -145,8 +154,14 @@ export default function EditPostPage() {
         ...formData,
         icon: formData.icon || undefined,
         editorType: editorType,
-        published: publish,
-        publishedAt: publish && !formData.published ? new Date().toISOString() : undefined,
+        published: mode === 'publish',
+        publishedAt: mode === 'publish' && !formData.published ? new Date().toISOString() : undefined,
+        scheduledAt: mode === 'schedule' && formData.scheduledAt ? formData.scheduledAt.toISOString() : null,
+      }
+
+      // If publishing or saving as draft, clear any scheduled date
+      if (mode !== 'schedule') {
+        post.scheduledAt = null
       }
 
       await updatePost(postId, post)
@@ -571,6 +586,71 @@ export default function EditPostPage() {
           </div>
         </div>
 
+        {/* Scheduling */}
+        <div className="bg-bg-surface border border-border rounded-lg p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-4">Scheduling</h2>
+
+          <div className="space-y-4">
+            {formData.scheduledAt && !formData.published && (
+              <div className="flex items-center gap-2 p-3 bg-yellow-900/30 border border-yellow-600/50 rounded-lg">
+                <span className="text-yellow-400">📅</span>
+                <span className="text-yellow-200">
+                  Scheduled for: {formData.scheduledAt.toLocaleString('it-IT', {
+                    dateStyle: 'full',
+                    timeStyle: 'short'
+                  })}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleChange('scheduledAt', null)}
+                  className="ml-auto text-yellow-400 hover:text-yellow-200 text-sm"
+                >
+                  Cancel schedule
+                </button>
+              </div>
+            )}
+
+            {formData.published && (
+              <div className="flex items-center gap-2 p-3 bg-green-900/30 border border-green-600/50 rounded-lg">
+                <span className="text-green-400">✓</span>
+                <span className="text-green-200">This post is published</span>
+              </div>
+            )}
+
+            {!formData.published && (
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">
+                  Schedule Publication
+                </label>
+                <div className="flex flex-col md:flex-row gap-4 items-start md:items-end">
+                  <div className="flex-1">
+                    <DateTimePicker
+                      selected={formData.scheduledAt}
+                      onChange={(date) => handleChange('scheduledAt', date)}
+                      placeholder="Select date and time..."
+                      minDate={new Date()}
+                    />
+                  </div>
+                  {formData.scheduledAt && (
+                    <button
+                      type="button"
+                      onClick={() => handleSubmit('schedule')}
+                      disabled={saving}
+                      className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium px-6 py-2 rounded-lg transition-colors disabled:opacity-50"
+                    >
+                      {saving ? 'Scheduling...' : 'Schedule Post'}
+                    </button>
+                  )}
+                </div>
+                {errors.scheduledAt && <p className="text-red-500 text-sm mt-1">{errors.scheduledAt}</p>}
+                <p className="text-text-muted text-xs mt-2">
+                  The post will be automatically published at the selected time.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Actions */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-bg-surface border border-border rounded-lg p-4 md:p-6">
           <button
@@ -590,14 +670,14 @@ export default function EditPostPage() {
               Preview
             </button>
             <button
-              onClick={() => handleSubmit(false)}
+              onClick={() => handleSubmit('draft')}
               disabled={saving}
               className="bg-bg-dark hover:bg-bg-darkest text-text-primary font-medium px-4 md:px-6 py-2 rounded-lg transition-colors disabled:opacity-50 text-sm md:text-base"
             >
               {saving ? 'Saving...' : 'Save as Draft'}
             </button>
             <button
-              onClick={() => handleSubmit(true)}
+              onClick={() => handleSubmit('publish')}
               disabled={saving}
               className="bg-primary hover:bg-primary-dark text-bg-darkest font-medium px-4 md:px-6 py-2 rounded-lg transition-colors disabled:opacity-50 text-sm md:text-base"
             >

@@ -26,6 +26,7 @@ export default function AdminLayout({
     { href: '/admin', label: 'Dashboard', icon: '📊' },
     { href: '/admin/posts', label: 'Posts', icon: '📝' },
     { href: '/admin/posts/new', label: 'New Post', icon: '➕' },
+    { href: '/admin/calendar', label: 'Calendar', icon: '📅' },
     { href: '/admin/tags', label: 'Tags', icon: '🏷️' },
     { href: '/admin/seo', label: 'SEO & Health', icon: '🔍' },
   ]

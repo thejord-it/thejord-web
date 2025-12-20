@@ -12,7 +12,7 @@ interface GroupedPost {
 
 export default function PostsListPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
-  const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all')
+  const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'scheduled'>('all')
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [selectedPosts, setSelectedPosts] = useState<Set<string>>(new Set())
@@ -27,7 +27,8 @@ export default function PostsListPage() {
   const groupedPosts = useMemo(() => {
     let filtered = posts
     if (filter === 'published') filtered = posts.filter(p => p.published)
-    if (filter === 'draft') filtered = posts.filter(p => !p.published)
+    if (filter === 'draft') filtered = posts.filter(p => !p.published && !p.scheduledAt)
+    if (filter === 'scheduled') filtered = posts.filter(p => !p.published && p.scheduledAt)
     if (search) {
       filtered = filtered.filter(p =>
         p.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -277,20 +278,26 @@ export default function PostsListPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary"
           />
-          <div className="flex gap-2">
-            {(['all', 'published', 'draft'] as const).map((f) => (
+          <div className="flex flex-wrap gap-2">
+            {(['all', 'published', 'draft', 'scheduled'] as const).map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2 rounded-lg capitalize transition-colors ${
                   filter === f
-                    ? 'bg-primary text-bg-darkest'
+                    ? f === 'scheduled' ? 'bg-yellow-600 text-white' : 'bg-primary text-bg-darkest'
                     : 'bg-bg-dark text-text-secondary hover:text-text-primary'
                 }`}
               >
                 {f}
               </button>
             ))}
+            <Link
+              href="/admin/calendar"
+              className="px-4 py-2 rounded-lg bg-bg-dark text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2"
+            >
+              📅 Calendar
+            </Link>
           </div>
         </div>
       </div>
@@ -418,15 +425,29 @@ export default function PostsListPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs ${
-                          group.main.published
-                            ? 'bg-green-500/10 text-green-400'
-                            : 'bg-yellow-500/10 text-yellow-400'
-                        }`}
-                      >
-                        {group.main.published ? 'Published' : 'Draft'}
-                      </span>
+                      {group.main.published ? (
+                        <span className="px-3 py-1 rounded-full text-xs bg-green-500/10 text-green-400">
+                          Published
+                        </span>
+                      ) : group.main.scheduledAt ? (
+                        <div className="flex flex-col gap-1">
+                          <span className="px-3 py-1 rounded-full text-xs bg-yellow-600/20 text-yellow-400 inline-block w-fit">
+                            📅 Scheduled
+                          </span>
+                          <span className="text-xs text-yellow-300">
+                            {new Date(group.main.scheduledAt).toLocaleDateString('it-IT', {
+                              day: '2-digit',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full text-xs bg-gray-500/10 text-gray-400">
+                          Draft
+                        </span>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`uppercase text-sm font-medium px-2 py-1 rounded ${
@@ -506,15 +527,19 @@ export default function PostsListPage() {
                           </div>
                         </td>
                         <td className="px-6 py-3">
-                          <span
-                            className={`px-2 py-0.5 rounded-full text-xs ${
-                              translation.published
-                                ? 'bg-green-500/10 text-green-400'
-                                : 'bg-yellow-500/10 text-yellow-400'
-                            }`}
-                          >
-                            {translation.published ? 'Published' : 'Draft'}
-                          </span>
+                          {translation.published ? (
+                            <span className="px-2 py-0.5 rounded-full text-xs bg-green-500/10 text-green-400">
+                              Published
+                            </span>
+                          ) : translation.scheduledAt ? (
+                            <span className="px-2 py-0.5 rounded-full text-xs bg-yellow-600/20 text-yellow-400" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
+                              📅 Scheduled
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-full text-xs bg-gray-500/10 text-gray-400">
+                              Draft
+                            </span>
+                          )}
                         </td>
                         <td className="px-6 py-3">
                           <span className={`uppercase text-xs font-medium px-2 py-0.5 rounded ${
