@@ -487,7 +487,7 @@ export default function PostsListPage() {
                             </span>
                           ) : translation.scheduledAt ? (
                             <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-yellow-600/20 text-yellow-400" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
-                              📅
+                              📅 {new Date(translation.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
                             </span>
                           ) : (
                             <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-gray-500/10 text-gray-400">
