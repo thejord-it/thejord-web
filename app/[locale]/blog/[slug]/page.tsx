@@ -50,8 +50,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = post.metaDescription || post.excerpt
   const publishedTime = post.publishedAt || post.createdAt
   const modifiedTime = post.updatedAt
-  const ogImage = post.ogImage || '/og-image.png'
   const canonical = post.canonicalUrl || `https://thejord.it/${locale}/blog/${post.slug}`
+
+  // Generate dynamic OG image URL
+  const ogImageParams = new URLSearchParams({
+    title: post.title,
+    subtitle: post.excerpt.slice(0, 120),
+    tag: post.tags[0] || '',
+    locale,
+    type: 'blog',
+  })
+  const ogImage = post.ogImage || `https://thejord.it/api/og?${ogImageParams.toString()}`
 
   // Build alternate languages with correct slugs
   const languages: Record<string, string> = {}
@@ -142,7 +151,7 @@ export default async function BlogPostPage({ params }: Props) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: post.image || post.ogImage || 'https://thejord.it/og-image.png',
+    image: post.image || ogImage,
     datePublished: post.publishedAt || post.createdAt,
     dateModified: post.updatedAt || post.publishedAt || post.createdAt,
     author: {

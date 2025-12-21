@@ -43,6 +43,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Title without | THEJORD since layout template already adds it
   const titleSuffix = locale === 'it' ? 'Strumento Online Gratuito' : 'Free Online Tool'
 
+  // Generate dynamic OG image URL
+  const ogImageParams = new URLSearchParams({
+    title: toolName,
+    subtitle: toolDescription.slice(0, 120),
+    tag: tool.category || 'Tool',
+    locale,
+    type: 'tool',
+  })
+  const ogImage = `https://thejord.it/api/og?${ogImageParams.toString()}`
+
   return {
     title: toolName + ' - ' + titleSuffix,
     description: toolDescription,
@@ -54,11 +64,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: toolDescription,
       siteName: 'THEJORD',
       locale: locale === 'it' ? 'it_IT' : 'en_US',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: toolName,
+        },
+      ],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title: toolName,
       description: toolDescription,
+      images: [ogImage],
       creator: '@thejord_it',
     },
     alternates: {
