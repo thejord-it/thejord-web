@@ -10,6 +10,8 @@ interface GroupedPost {
   translations: BlogPost[]
 }
 
+const ITEMS_PER_PAGE = 20
+
 export default function PostsListPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'scheduled'>('all')
@@ -18,6 +20,7 @@ export default function PostsListPage() {
   const [selectedPosts, setSelectedPosts] = useState<Set<string>>(new Set())
   const [bulkActionLoading, setBulkActionLoading] = useState(false)
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     loadPosts()
@@ -81,6 +84,18 @@ export default function PostsListPage() {
   const allFilteredPosts = useMemo(() => {
     return groupedPosts.flatMap(g => [g.main, ...g.translations])
   }, [groupedPosts])
+
+  // Pagination
+  const totalPages = Math.ceil(groupedPosts.length / ITEMS_PER_PAGE)
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE
+    return groupedPosts.slice(start, start + ITEMS_PER_PAGE)
+  }, [groupedPosts, currentPage])
+
+  // Reset page when filter/search changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filter, search])
 
   const loadPosts = async () => {
     try {
@@ -172,89 +187,6 @@ export default function PostsListPage() {
       setBulkActionLoading(false)
     }
   }
-
-  const renderPostRow = (post: BlogPost, isTranslation: boolean = false, isLast: boolean = false) => (
-    <tr
-      key={post.id}
-      className={`hover:bg-bg-dark transition-colors ${isTranslation ? 'bg-bg-dark/30' : ''}`}
-    >
-      <td className="px-6 py-4">
-        <input
-          type="checkbox"
-          checked={selectedPosts.has(post.id)}
-          onChange={() => toggleSelectPost(post.id)}
-          className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
-        />
-      </td>
-      <td className="px-3 py-4">
-        {post.image ? (
-          <img
-            src={post.image}
-            alt={post.title}
-            className={`object-cover rounded-lg border border-border ${isTranslation ? 'w-12 h-12' : 'w-16 h-16'}`}
-          />
-        ) : (
-          <div className={`bg-bg-darkest rounded-lg border border-border flex items-center justify-center ${isTranslation ? 'w-12 h-12' : 'w-16 h-16'}`}>
-            <span className="text-text-muted text-xs">No img</span>
-          </div>
-        )}
-      </td>
-      <td className="px-6 py-4">
-        <div className="flex items-start gap-2">
-          {isTranslation && (
-            <span className="text-text-muted mt-1">
-              {isLast ? '└─' : '├─'}
-            </span>
-          )}
-          <div>
-            <div className={`text-text-primary ${isTranslation ? 'text-sm' : 'font-medium'}`}>
-              {post.title}
-            </div>
-            <div className="text-text-muted text-sm">{post.slug}</div>
-          </div>
-        </div>
-      </td>
-      <td className="px-6 py-4">
-        <span
-          className={`px-3 py-1 rounded-full text-xs ${
-            post.published
-              ? 'bg-green-500/10 text-green-400'
-              : 'bg-yellow-500/10 text-yellow-400'
-          }`}
-        >
-          {post.published ? 'Published' : 'Draft'}
-        </span>
-      </td>
-      <td className="px-6 py-4">
-        <span className={`uppercase text-sm font-medium px-2 py-1 rounded ${
-          post.language === 'it'
-            ? 'bg-blue-500/10 text-blue-400'
-            : 'bg-purple-500/10 text-purple-400'
-        }`}>
-          {post.language}
-        </span>
-      </td>
-      <td className="px-6 py-4 text-text-secondary text-sm">
-        {new Date(post.updatedAt).toLocaleDateString()}
-      </td>
-      <td className="px-6 py-4 text-right">
-        <div className="flex items-center justify-end gap-2">
-          <Link
-            href={`/admin/posts/${post.id}`}
-            className="text-primary hover:text-primary-light text-sm"
-          >
-            Edit
-          </Link>
-          <button
-            onClick={() => handleDelete(post.id, post.title)}
-            className="text-red-400 hover:text-red-300 text-sm"
-          >
-            Delete
-          </button>
-        </div>
-      </td>
-    </tr>
-  )
 
   return (
     <div>
@@ -352,7 +284,7 @@ export default function PostsListPage() {
           <table className="w-full">
             <thead className="bg-bg-dark border-b border-border">
               <tr>
-                <th className="text-left px-6 py-4">
+                <th className="text-left px-4 py-2">
                   <input
                     type="checkbox"
                     checked={selectedPosts.size === allFilteredPosts.length && allFilteredPosts.length > 0}
@@ -360,33 +292,33 @@ export default function PostsListPage() {
                     className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
                   />
                 </th>
-                <th className="text-left px-3 py-4 text-text-secondary text-sm font-medium">Image</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Title</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Status</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Lang</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Updated</th>
-                <th className="text-right px-6 py-4 text-text-secondary text-sm font-medium">Actions</th>
+                <th className="text-left px-2 py-2 text-text-secondary text-xs font-medium">Img</th>
+                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Title</th>
+                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Status</th>
+                <th className="text-left px-3 py-2 text-text-secondary text-xs font-medium">Lang</th>
+                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Updated</th>
+                <th className="text-right px-4 py-2 text-text-secondary text-xs font-medium">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {groupedPosts.map((group) => (
+              {paginatedPosts.map((group) => (
                 <Fragment key={group.main.id}>
                   {/* Main post row */}
                   <tr
-                    className={`hover:bg-bg-dark transition-colors ${group.translations.length > 0 ? 'border-l-4 border-l-primary/50' : ''}`}
+                    className={`hover:bg-bg-dark transition-colors ${group.translations.length > 0 ? 'border-l-2 border-l-primary/50' : ''}`}
                   >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
+                    <td className="px-4 py-1.5">
+                      <div className="flex items-center gap-1">
                         <input
                           type="checkbox"
                           checked={selectedPosts.has(group.main.id)}
                           onChange={() => toggleSelectPost(group.main.id)}
-                          className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
+                          className="w-3.5 h-3.5 rounded border-border bg-bg-dark text-primary focus:ring-primary"
                         />
                         {group.translations.length > 0 && (
                           <button
                             onClick={() => toggleGroup(group.main.translationGroup!)}
-                            className="text-text-muted hover:text-text-primary text-lg"
+                            className="text-text-muted hover:text-text-primary text-sm ml-1"
                             title={expandedGroups.has(group.main.translationGroup!) ? 'Collapse' : 'Expand'}
                           >
                             {expandedGroups.has(group.main.translationGroup!) ? '▼' : '▶'}
@@ -394,63 +326,53 @@ export default function PostsListPage() {
                         )}
                       </div>
                     </td>
-                    <td className="px-3 py-4">
+                    <td className="px-2 py-1.5">
                       {group.main.image ? (
                         <img
                           src={group.main.image}
                           alt={group.main.title}
-                          className="w-16 h-16 object-cover rounded-lg border border-border"
+                          className="w-8 h-8 object-cover rounded border border-border"
                         />
                       ) : getIconEmoji(group.main.icon) ? (
-                        <div className="w-16 h-16 flex items-center justify-center">
-                          <span className="text-4xl">{getIconEmoji(group.main.icon)}</span>
+                        <div className="w-8 h-8 flex items-center justify-center">
+                          <span className="text-xl">{getIconEmoji(group.main.icon)}</span>
                         </div>
                       ) : (
-                        <div className="w-16 h-16 bg-bg-darkest rounded-lg border border-border flex items-center justify-center">
-                          <span className="text-text-muted text-xs">No img</span>
+                        <div className="w-8 h-8 bg-bg-darkest rounded border border-border flex items-center justify-center">
+                          <span className="text-text-muted text-[10px]">-</span>
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-1.5">
                       <div className="flex items-center gap-2">
-                        <div>
-                          <div className="text-text-primary font-medium">{group.main.title}</div>
-                          <div className="text-text-muted text-sm">{group.main.slug}</div>
+                        <div className="min-w-0">
+                          <div className="text-text-primary text-sm font-medium truncate max-w-[300px]">{group.main.title}</div>
+                          <div className="text-text-muted text-xs truncate max-w-[300px]">{group.main.slug}</div>
                         </div>
                         {group.translations.length > 0 && (
-                          <span className="px-2 py-0.5 bg-secondary/20 text-secondary text-xs rounded-full whitespace-nowrap">
-                            {group.translations.length + 1} langs
+                          <span className="px-1.5 py-0.5 bg-secondary/20 text-secondary text-[10px] rounded-full whitespace-nowrap flex-shrink-0">
+                            {group.translations.length + 1}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-1.5">
                       {group.main.published ? (
-                        <span className="px-3 py-1 rounded-full text-xs bg-green-500/10 text-green-400">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-green-500/10 text-green-400">
                           Published
                         </span>
                       ) : group.main.scheduledAt ? (
-                        <div className="flex flex-col gap-1">
-                          <span className="px-3 py-1 rounded-full text-xs bg-yellow-600/20 text-yellow-400 inline-block w-fit">
-                            📅 Scheduled
-                          </span>
-                          <span className="text-xs text-yellow-300">
-                            {new Date(group.main.scheduledAt).toLocaleDateString('it-IT', {
-                              day: '2-digit',
-                              month: 'short',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
-                          </span>
-                        </div>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-yellow-600/20 text-yellow-400" title={new Date(group.main.scheduledAt).toLocaleString('it-IT')}>
+                          📅 {new Date(group.main.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+                        </span>
                       ) : (
-                        <span className="px-3 py-1 rounded-full text-xs bg-gray-500/10 text-gray-400">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-gray-500/10 text-gray-400">
                           Draft
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`uppercase text-sm font-medium px-2 py-1 rounded ${
+                    <td className="px-3 py-1.5">
+                      <span className={`uppercase text-[10px] font-medium px-1.5 py-0.5 rounded ${
                         group.main.language === 'it'
                           ? 'bg-blue-500/10 text-blue-400'
                           : 'bg-purple-500/10 text-purple-400'
@@ -458,22 +380,22 @@ export default function PostsListPage() {
                         {group.main.language}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-text-secondary text-sm">
-                      {new Date(group.main.updatedAt).toLocaleDateString()}
+                    <td className="px-4 py-1.5 text-text-secondary text-xs">
+                      {new Date(group.main.updatedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-4 py-1.5 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/admin/posts/${group.main.id}`}
-                          className="text-primary hover:text-primary-light text-sm"
+                          className="text-primary hover:text-primary-light text-xs"
                         >
                           Edit
                         </Link>
                         <button
                           onClick={() => handleDelete(group.main.id, group.main.title)}
-                          className="text-red-400 hover:text-red-300 text-sm"
+                          className="text-red-400 hover:text-red-300 text-xs"
                         >
-                          Delete
+                          Del
                         </button>
                       </div>
                     </td>
@@ -484,65 +406,62 @@ export default function PostsListPage() {
                     group.translations.map((translation, idx) => (
                       <tr
                         key={translation.id}
-                        className="hover:bg-bg-dark/50 transition-colors bg-bg-dark/20 border-l-4 border-l-primary/30"
+                        className="hover:bg-bg-dark/50 transition-colors bg-bg-dark/20 border-l-2 border-l-primary/30"
                       >
-                        <td className="px-6 py-3">
-                          <div className="flex items-center gap-2 pl-6">
+                        <td className="px-4 py-1">
+                          <div className="flex items-center gap-1 pl-4">
                             <input
                               type="checkbox"
                               checked={selectedPosts.has(translation.id)}
                               onChange={() => toggleSelectPost(translation.id)}
-                              className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
+                              className="w-3 h-3 rounded border-border bg-bg-dark text-primary focus:ring-primary"
                             />
                           </div>
                         </td>
-                        <td className="px-3 py-3">
-                          <div className="flex justify-end">
-                            {translation.image ? (
-                              <img
-                                src={translation.image}
-                                alt={translation.title}
-                                className="w-12 h-12 object-cover rounded-lg border border-border"
-                              />
-                            ) : getIconEmoji(translation.icon) ? (
-                              <div className="w-12 h-12 flex items-center justify-center">
-                                <span className="text-3xl">{getIconEmoji(translation.icon)}</span>
-                              </div>
-                            ) : (
-                              <div className="w-12 h-12 bg-bg-darkest rounded-lg border border-border flex items-center justify-center">
-                                <span className="text-text-muted text-xs">No img</span>
-                              </div>
-                            )}
-                          </div>
+                        <td className="px-2 py-1">
+                          {translation.image ? (
+                            <img
+                              src={translation.image}
+                              alt={translation.title}
+                              className="w-6 h-6 object-cover rounded border border-border"
+                            />
+                          ) : getIconEmoji(translation.icon) ? (
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <span className="text-sm">{getIconEmoji(translation.icon)}</span>
+                            </div>
+                          ) : (
+                            <div className="w-6 h-6 bg-bg-darkest rounded border border-border flex items-center justify-center">
+                              <span className="text-text-muted text-[8px]">-</span>
+                            </div>
+                          )}
                         </td>
-                        <td className="px-6 py-3">
-                          <div className="flex items-start gap-2">
-                            <span className="text-text-muted">
-                              {idx === group.translations.length - 1 ? '└─' : '├─'}
+                        <td className="px-4 py-1">
+                          <div className="flex items-center gap-1">
+                            <span className="text-text-muted text-xs">
+                              {idx === group.translations.length - 1 ? '└' : '├'}
                             </span>
-                            <div>
-                              <div className="text-text-primary text-sm">{translation.title}</div>
-                              <div className="text-text-muted text-xs">{translation.slug}</div>
+                            <div className="min-w-0">
+                              <div className="text-text-primary text-xs truncate max-w-[280px]">{translation.title}</div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-3">
+                        <td className="px-4 py-1">
                           {translation.published ? (
-                            <span className="px-2 py-0.5 rounded-full text-xs bg-green-500/10 text-green-400">
-                              Published
+                            <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-green-500/10 text-green-400">
+                              Pub
                             </span>
                           ) : translation.scheduledAt ? (
-                            <span className="px-2 py-0.5 rounded-full text-xs bg-yellow-600/20 text-yellow-400" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
-                              📅 Scheduled
+                            <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-yellow-600/20 text-yellow-400" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
+                              📅
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded-full text-xs bg-gray-500/10 text-gray-400">
+                            <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-gray-500/10 text-gray-400">
                               Draft
                             </span>
                           )}
                         </td>
-                        <td className="px-6 py-3">
-                          <span className={`uppercase text-xs font-medium px-2 py-0.5 rounded ${
+                        <td className="px-3 py-1">
+                          <span className={`uppercase text-[9px] font-medium px-1 py-0.5 rounded ${
                             translation.language === 'it'
                               ? 'bg-blue-500/10 text-blue-400'
                               : 'bg-purple-500/10 text-purple-400'
@@ -550,22 +469,22 @@ export default function PostsListPage() {
                             {translation.language}
                           </span>
                         </td>
-                        <td className="px-6 py-3 text-text-secondary text-xs">
-                          {new Date(translation.updatedAt).toLocaleDateString()}
+                        <td className="px-4 py-1 text-text-secondary text-[10px]">
+                          {new Date(translation.updatedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
                         </td>
-                        <td className="px-6 py-3 text-right">
+                        <td className="px-4 py-1 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               href={`/admin/posts/${translation.id}`}
-                              className="text-primary hover:text-primary-light text-xs"
+                              className="text-primary hover:text-primary-light text-[10px]"
                             >
                               Edit
                             </Link>
                             <button
                               onClick={() => handleDelete(translation.id, translation.title)}
-                              className="text-red-400 hover:text-red-300 text-xs"
+                              className="text-red-400 hover:text-red-300 text-[10px]"
                             >
-                              Delete
+                              Del
                             </button>
                           </div>
                         </td>
@@ -576,6 +495,70 @@ export default function PostsListPage() {
               ))}
             </tbody>
           </table>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-bg-dark">
+            <div className="text-text-muted text-xs">
+              Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, groupedPosts.length)} of {groupedPosts.length} groups
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setCurrentPage(1)}
+                disabled={currentPage === 1}
+                className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
+              >
+                ««
+              </button>
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
+              >
+                «
+              </button>
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum: number
+                if (totalPages <= 5) {
+                  pageNum = i + 1
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i
+                } else {
+                  pageNum = currentPage - 2 + i
+                }
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    className={`px-2.5 py-1 text-xs rounded ${
+                      currentPage === pageNum
+                        ? 'bg-primary text-bg-darkest font-medium'
+                        : 'bg-bg-surface hover:bg-bg-darkest text-text-secondary'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              })}
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
+              >
+                »
+              </button>
+              <button
+                onClick={() => setCurrentPage(totalPages)}
+                disabled={currentPage === totalPages}
+                className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
+              >
+                »»
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
