@@ -9,16 +9,38 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'tools' })
-  const tMeta = await getTranslations({ locale, namespace: 'metadata' })
+
+  const title = t('title')
+  const description = t('description')
+
+  // Generate dynamic OG image URL
+  const ogImageParams = new URLSearchParams({
+    title,
+    subtitle: description,
+    tag: 'Tools',
+    locale,
+    type: 'tool',
+  })
+  const ogImage = `https://thejord.it/api/og?${ogImageParams.toString()}`
 
   return {
-    title: t('title'),
-    description: t('description'),
+    title,
+    description,
     keywords: ['developer tools', 'json formatter', 'base64', 'regex tester', 'hash generator', 'url encoder', 'markdown converter'],
     openGraph: {
-      title: `${t('title')} | THEJORD`,
-      description: t('description'),
+      title: `${title} | THEJORD`,
+      description,
       type: 'website',
+      url: `https://thejord.it/${locale}/tools`,
+      siteName: 'THEJORD',
+      locale: locale === 'it' ? 'it_IT' : 'en_US',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
     },
     alternates: {
       canonical: `https://thejord.it/${locale}/tools`,
