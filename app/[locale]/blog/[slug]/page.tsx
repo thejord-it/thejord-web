@@ -145,6 +145,16 @@ export default async function BlogPostPage({ params }: Props) {
   const dateLocale = locale === 'it' ? 'it-IT' : 'en-US'
   const langCode = locale === 'it' ? 'it-IT' : 'en-US'
 
+  // Generate dynamic OG image URL for fallback
+  const ogImageParams = new URLSearchParams({
+    title: post.title,
+    subtitle: post.excerpt.slice(0, 120),
+    tag: post.tags[0] || '',
+    locale,
+    type: 'blog',
+  })
+  const ogImage = post.ogImage || `https://thejord.it/api/og?${ogImageParams.toString()}`
+
   // Schema.org JSON-LD for rich snippets
   const blogPostSchema = {
     '@context': 'https://schema.org',
@@ -278,9 +288,9 @@ export default async function BlogPostPage({ params }: Props) {
           </p>
         </header>
 
-        {/* Featured Image with responsive srcset */}
-        {post.image && (post.image.startsWith('http://') || post.image.startsWith('https://')) && (
-          <div className="w-full mb-12 rounded-lg overflow-hidden">
+        {/* Featured Image - use uploaded image or dynamic OG image */}
+        <div className="w-full mb-12 rounded-lg overflow-hidden border border-border">
+          {post.image && (post.image.startsWith('http://') || post.image.startsWith('https://')) ? (
             <img
               src={post.image}
               srcSet={`
@@ -293,8 +303,15 @@ export default async function BlogPostPage({ params }: Props) {
               className="w-full h-auto object-cover"
               loading="eager"
             />
-          </div>
-        )}
+          ) : (
+            <img
+              src={ogImage}
+              alt={post.title}
+              className="w-full h-auto object-cover"
+              loading="eager"
+            />
+          )}
+        </div>
 
         {/* Article Content */}
         <div
