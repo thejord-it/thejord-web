@@ -152,6 +152,30 @@ export default function PostsListPage() {
     setExpandedGroups(newExpanded)
   }
 
+  // Get all translation groups from current page
+  const allTranslationGroups = useMemo(() => {
+    return paginatedPosts
+      .filter(g => g.translations.length > 0 && g.main.translationGroup)
+      .map(g => g.main.translationGroup!)
+  }, [paginatedPosts])
+
+  const allExpanded = allTranslationGroups.length > 0 &&
+    allTranslationGroups.every(tg => expandedGroups.has(tg))
+
+  const toggleAllGroups = () => {
+    if (allExpanded) {
+      // Collapse all
+      const newExpanded = new Set(expandedGroups)
+      allTranslationGroups.forEach(tg => newExpanded.delete(tg))
+      setExpandedGroups(newExpanded)
+    } else {
+      // Expand all
+      const newExpanded = new Set(expandedGroups)
+      allTranslationGroups.forEach(tg => newExpanded.add(tg))
+      setExpandedGroups(newExpanded)
+    }
+  }
+
   const handleBulkAction = async (action: 'delete' | 'publish' | 'unpublish') => {
     if (selectedPosts.size === 0) {
       alert('Please select at least one post')
@@ -285,12 +309,23 @@ export default function PostsListPage() {
             <thead className="bg-bg-dark border-b border-border">
               <tr>
                 <th className="text-left px-4 py-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedPosts.size === allFilteredPosts.length && allFilteredPosts.length > 0}
-                    onChange={toggleSelectAll}
-                    className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
-                  />
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="checkbox"
+                      checked={selectedPosts.size === allFilteredPosts.length && allFilteredPosts.length > 0}
+                      onChange={toggleSelectAll}
+                      className="w-4 h-4 rounded border-border bg-bg-dark text-primary focus:ring-primary"
+                    />
+                    {allTranslationGroups.length > 0 && (
+                      <button
+                        onClick={toggleAllGroups}
+                        className="text-text-muted hover:text-text-primary text-sm"
+                        title={allExpanded ? 'Collapse all' : 'Expand all'}
+                      >
+                        {allExpanded ? '▼' : '▶'}
+                      </button>
+                    )}
+                  </div>
                 </th>
                 <th className="text-left px-2 py-2 text-text-secondary text-xs font-medium">Img</th>
                 <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Title</th>
