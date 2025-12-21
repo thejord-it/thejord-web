@@ -18,6 +18,8 @@ interface Post {
   published: boolean
   createdAt: string
   updatedAt: string
+  publishedAt?: string
+  scheduledAt?: string
 }
 
 export default function PostPreviewPage() {
@@ -136,7 +138,13 @@ export default function PostPreviewPage() {
           <span>•</span>
           <span>{post.readTime || '5 min'}</span>
           <span>•</span>
-          <span>{new Date(post.updatedAt || post.createdAt).toLocaleDateString('it-IT')}</span>
+          <span>
+              {post.published && post.publishedAt
+                ? new Date(post.publishedAt).toLocaleDateString('it-IT')
+                : post.scheduledAt
+                  ? `Schedulato: ${new Date(post.scheduledAt).toLocaleDateString('it-IT')}`
+                  : new Date(post.createdAt).toLocaleDateString('it-IT')}
+            </span>
         </div>
 
         {/* Excerpt */}
