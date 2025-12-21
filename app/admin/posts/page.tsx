@@ -421,8 +421,7 @@ export default function PostsListPage() {
                     <td className="px-4 py-1.5 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <Link
-                          href={`/${group.main.language}/blog/${group.main.slug}`}
-                          target="_blank"
+                          href={`/admin/posts/${group.main.id}/preview`}
                           className="p-1.5 text-text-muted hover:text-text-primary hover:bg-bg-dark rounded transition-colors"
                           title="Preview"
                         >
@@ -527,8 +526,7 @@ export default function PostsListPage() {
                         <td className="px-4 py-1 text-right">
                           <div className="flex items-center justify-end gap-1">
                             <Link
-                              href={`/${translation.language}/blog/${translation.slug}`}
-                              target="_blank"
+                              href={`/admin/posts/${translation.id}/preview`}
                               className="p-1 text-text-muted hover:text-text-primary hover:bg-bg-dark rounded transition-colors"
                               title="Preview"
                             >
