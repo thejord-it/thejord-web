@@ -133,12 +133,7 @@ export default function PostsListPage() {
     try {
       const data = await getAllPosts()
       setPosts(data)
-      // Auto-expand all groups initially
-      const groups = new Set<string>()
-      data.forEach(p => {
-        if (p.translationGroup) groups.add(p.translationGroup)
-      })
-      setExpandedGroups(groups)
+      // Keep all groups collapsed by default (empty Set)
     } catch (error) {
       console.error('Failed to load posts:', error)
     } finally {
