@@ -12,6 +12,9 @@ interface GroupedPost {
 
 const ITEMS_PER_PAGE = 20
 
+type SortColumn = 'title' | 'status' | 'language' | 'updated' | 'scheduled'
+type SortDirection = 'asc' | 'desc'
+
 export default function PostsListPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'scheduled'>('all')
@@ -21,6 +24,8 @@ export default function PostsListPage() {
   const [bulkActionLoading, setBulkActionLoading] = useState(false)
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
   const [currentPage, setCurrentPage] = useState(1)
+  const [sortColumn, setSortColumn] = useState<SortColumn>('updated')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
 
   useEffect(() => {
     loadPosts()
@@ -72,13 +77,40 @@ export default function PostsListPage() {
       result.push({ main: post, translations: [] })
     })
 
-    // Sort by updatedAt (most recent first)
-    result.sort((a, b) =>
-      new Date(b.main.updatedAt).getTime() - new Date(a.main.updatedAt).getTime()
-    )
+    // Sort based on selected column and direction
+    result.sort((a, b) => {
+      let comparison = 0
+
+      switch (sortColumn) {
+        case 'title':
+          comparison = a.main.title.localeCompare(b.main.title)
+          break
+        case 'status':
+          const getStatusOrder = (p: BlogPost) => {
+            if (p.published) return 0
+            if (p.scheduledAt) return 1
+            return 2
+          }
+          comparison = getStatusOrder(a.main) - getStatusOrder(b.main)
+          break
+        case 'language':
+          comparison = a.main.language.localeCompare(b.main.language)
+          break
+        case 'updated':
+          comparison = new Date(a.main.updatedAt).getTime() - new Date(b.main.updatedAt).getTime()
+          break
+        case 'scheduled':
+          const aDate = a.main.scheduledAt ? new Date(a.main.scheduledAt).getTime() : Infinity
+          const bDate = b.main.scheduledAt ? new Date(b.main.scheduledAt).getTime() : Infinity
+          comparison = aDate - bDate
+          break
+      }
+
+      return sortDirection === 'asc' ? comparison : -comparison
+    })
 
     return result
-  }, [posts, filter, search])
+  }, [posts, filter, search, sortColumn, sortDirection])
 
   // Flatten for selection count
   const allFilteredPosts = useMemo(() => {
@@ -141,6 +173,38 @@ export default function PostsListPage() {
       setSelectedPosts(new Set(allFilteredPosts.map(p => p.id)))
     }
   }
+
+  const handleSort = (column: SortColumn) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortColumn(column)
+      setSortDirection('asc')
+    }
+  }
+
+  const SortIcon = ({ column }: { column: SortColumn }) => {
+    if (sortColumn !== column) {
+      return <span className="text-text-muted/40 ml-1">↕</span>
+    }
+    return (
+      <span className="text-primary ml-1">
+        {sortDirection === 'asc' ? '↑' : '↓'}
+      </span>
+    )
+  }
+
+  const SortableHeader = ({ column, children, className = '' }: { column: SortColumn; children: React.ReactNode; className?: string }) => (
+    <th
+      className={`text-left px-4 py-2 text-text-secondary text-xs font-medium cursor-pointer hover:text-text-primary select-none ${className}`}
+      onClick={() => handleSort(column)}
+    >
+      <div className="flex items-center">
+        {children}
+        <SortIcon column={column} />
+      </div>
+    </th>
+  )
 
   const toggleGroup = (translationGroup: string) => {
     const newExpanded = new Set(expandedGroups)
@@ -328,10 +392,11 @@ export default function PostsListPage() {
                   </div>
                 </th>
                 <th className="text-left px-2 py-2 text-text-secondary text-xs font-medium">Img</th>
-                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Title</th>
-                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Status</th>
-                <th className="text-left px-3 py-2 text-text-secondary text-xs font-medium">Lang</th>
-                <th className="text-left px-4 py-2 text-text-secondary text-xs font-medium">Updated</th>
+                <SortableHeader column="title">Title</SortableHeader>
+                <SortableHeader column="status">Status</SortableHeader>
+                <SortableHeader column="language" className="px-3">Lang</SortableHeader>
+                <SortableHeader column="updated">Updated</SortableHeader>
+                <SortableHeader column="scheduled">Scheduled</SortableHeader>
                 <th className="text-right px-4 py-2 text-text-secondary text-xs font-medium">Actions</th>
               </tr>
             </thead>
@@ -417,6 +482,15 @@ export default function PostsListPage() {
                     </td>
                     <td className="px-4 py-1.5 text-text-secondary text-xs">
                       {new Date(group.main.updatedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+                    </td>
+                    <td className="px-4 py-1.5 text-text-secondary text-xs">
+                      {group.main.scheduledAt ? (
+                        <span className="text-yellow-400">
+                          {new Date(group.main.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+                        </span>
+                      ) : (
+                        <span className="text-text-muted">-</span>
+                      )}
                     </td>
                     <td className="px-4 py-1.5 text-right">
                       <div className="flex items-center justify-end gap-1">
@@ -522,6 +596,15 @@ export default function PostsListPage() {
                         </td>
                         <td className="px-4 py-1 text-text-secondary text-[10px]">
                           {new Date(translation.updatedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+                        </td>
+                        <td className="px-4 py-1 text-text-secondary text-[10px]">
+                          {translation.scheduledAt ? (
+                            <span className="text-yellow-400">
+                              {new Date(translation.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+                            </span>
+                          ) : (
+                            <span className="text-text-muted">-</span>
+                          )}
                         </td>
                         <td className="px-4 py-1 text-right">
                           <div className="flex items-center justify-end gap-1">
