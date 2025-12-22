@@ -104,12 +104,12 @@ export default function PostPreviewPage() {
             >
               Edit
             </Link>
-            <Link
-              href="/admin/posts"
+            <button
+              onClick={() => router.back()}
               className="px-3 py-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
             >
               ← Back
-            </Link>
+            </button>
           </div>
         </div>
       </div>
