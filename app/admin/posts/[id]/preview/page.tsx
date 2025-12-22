@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { getToken } from '@/lib/auth'
 
 interface Post {
   id: string
@@ -32,7 +33,7 @@ export default function PostPreviewPage() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const token = localStorage.getItem('adminToken')
+        const token = getToken()
         if (!token) {
           router.push('/admin/login')
           return
