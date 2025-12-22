@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState, useMemo, Fragment } from 'react'
+import { useEffect, useState, useMemo, Fragment, useCallback } from 'react'
 import Link from 'next/link'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { getAllPosts, deletePost, bulkDeletePosts, bulkPublishPosts, bulkUnpublishPosts, BlogPost } from '@/lib/api'
 import { getIconEmoji } from '@/lib/icons'
 
@@ -457,7 +458,7 @@ export default function PostsListPage() {
                           Published
                         </span>
                       ) : group.main.scheduledAt ? (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-yellow-600/20 text-yellow-400" title={new Date(group.main.scheduledAt).toLocaleString('it-IT')}>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-yellow-600/20 text-yellow-400 whitespace-nowrap" title={new Date(group.main.scheduledAt).toLocaleString('it-IT')}>
                           📅 {new Date(group.main.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
                         </span>
                       ) : (
@@ -571,7 +572,7 @@ export default function PostsListPage() {
                               Pub
                             </span>
                           ) : translation.scheduledAt ? (
-                            <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-yellow-600/20 text-yellow-400" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
+                            <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-yellow-600/20 text-yellow-400 whitespace-nowrap" title={new Date(translation.scheduledAt).toLocaleString('it-IT')}>
                               📅 {new Date(translation.scheduledAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
                             </span>
                           ) : (
