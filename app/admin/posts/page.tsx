@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo, Fragment, useCallback } from 'react'
+import { useEffect, useState, useMemo, Fragment, useCallback, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { getAllPosts, deletePost, bulkDeletePosts, bulkPublishPosts, bulkUnpublishPosts, BlogPost } from '@/lib/api'
@@ -11,26 +11,71 @@ interface GroupedPost {
   translations: BlogPost[]
 }
 
-const ITEMS_PER_PAGE = 20
+const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
+const DEFAULT_PAGE_SIZE = 20
 
+type FilterType = 'all' | 'published' | 'draft' | 'scheduled'
 type SortColumn = 'title' | 'status' | 'language' | 'updated' | 'scheduled'
 type SortDirection = 'asc' | 'desc'
 
-export default function PostsListPage() {
+function PostsListContent() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  // Read state from URL params
+  const filter = (searchParams.get('filter') as FilterType) || 'all'
+  const search = searchParams.get('q') || ''
+  const currentPage = parseInt(searchParams.get('page') || '1', 10)
+  const sortColumn = (searchParams.get('sort') as SortColumn) || 'updated'
+  const sortDirection = (searchParams.get('dir') as SortDirection) || 'desc'
+  const pageSize = PAGE_SIZE_OPTIONS.includes(parseInt(searchParams.get('size') || '', 10))
+    ? parseInt(searchParams.get('size')!, 10)
+    : DEFAULT_PAGE_SIZE
+
   const [posts, setPosts] = useState<BlogPost[]>([])
-  const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'scheduled'>('all')
-  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [selectedPosts, setSelectedPosts] = useState<Set<string>>(new Set())
   const [bulkActionLoading, setBulkActionLoading] = useState(false)
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
-  const [currentPage, setCurrentPage] = useState(1)
-  const [sortColumn, setSortColumn] = useState<SortColumn>('updated')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
+  const [searchInput, setSearchInput] = useState(search)
+
+  // Sync searchInput with URL when it changes externally
+  useEffect(() => {
+    setSearchInput(search)
+  }, [search])
+
+  // Update URL params
+  const updateParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString())
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '' ||
+          (key === 'page' && value === '1') ||
+          (key === 'filter' && value === 'all') ||
+          (key === 'sort' && value === 'updated') ||
+          (key === 'dir' && value === 'desc') ||
+          (key === 'size' && value === String(DEFAULT_PAGE_SIZE))) {
+        params.delete(key)
+      } else {
+        params.set(key, value)
+      }
+    })
+    const newUrl = params.toString() ? `?${params.toString()}` : '/admin/posts'
+    router.replace(newUrl, { scroll: false })
+  }, [searchParams, router])
 
   useEffect(() => {
     loadPosts()
   }, [])
+
+  // Debounced search - update URL after typing stops
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchInput !== search) {
+        updateParams({ q: searchInput || null, page: '1' })
+      }
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchInput, search, updateParams])
 
   // Group posts by translationGroup
   const groupedPosts = useMemo(() => {
@@ -119,16 +164,11 @@ export default function PostsListPage() {
   }, [groupedPosts])
 
   // Pagination
-  const totalPages = Math.ceil(groupedPosts.length / ITEMS_PER_PAGE)
+  const totalPages = Math.ceil(groupedPosts.length / pageSize)
   const paginatedPosts = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE
-    return groupedPosts.slice(start, start + ITEMS_PER_PAGE)
+    const start = (currentPage - 1) * pageSize
+    return groupedPosts.slice(start, start + pageSize)
   }, [groupedPosts, currentPage])
-
-  // Reset page when filter/search changes
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [filter, search])
 
   const loadPosts = async () => {
     try {
@@ -172,11 +212,22 @@ export default function PostsListPage() {
 
   const handleSort = (column: SortColumn) => {
     if (sortColumn === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+      updateParams({ dir: sortDirection === 'asc' ? 'desc' : 'asc' })
     } else {
-      setSortColumn(column)
-      setSortDirection('asc')
+      updateParams({ sort: column, dir: 'asc' })
     }
+  }
+
+  const handleFilterChange = (newFilter: FilterType) => {
+    updateParams({ filter: newFilter, page: '1' })
+  }
+
+  const handlePageChange = (newPage: number) => {
+    updateParams({ page: String(newPage) })
+  }
+
+  const handlePageSizeChange = (newSize: number) => {
+    updateParams({ size: String(newSize), page: '1' })
   }
 
   const SortIcon = ({ column }: { column: SortColumn }) => {
@@ -290,15 +341,15 @@ export default function PostsListPage() {
           <input
             type="text"
             placeholder="Search posts..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="flex-1 px-4 py-2 bg-bg-dark border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary"
           />
           <div className="flex flex-wrap gap-2">
             {(['all', 'published', 'draft', 'scheduled'] as const).map((f) => (
               <button
                 key={f}
-                onClick={() => setFilter(f)}
+                onClick={() => handleFilterChange(f)}
                 className={`px-4 py-2 rounded-lg capitalize transition-colors ${
                   filter === f
                     ? f === 'scheduled' ? 'bg-yellow-600 text-white' : 'bg-primary text-bg-darkest'
@@ -644,21 +695,36 @@ export default function PostsListPage() {
         )}
 
         {/* Pagination */}
-        {totalPages > 1 && (
+        {totalPages > 0 && (
           <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-bg-dark">
-            <div className="text-text-muted text-xs">
-              Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, groupedPosts.length)} of {groupedPosts.length} groups
+            <div className="flex items-center gap-4">
+              <div className="text-text-muted text-xs">
+                Showing {groupedPosts.length > 0 ? ((currentPage - 1) * pageSize) + 1 : 0}-{Math.min(currentPage * pageSize, groupedPosts.length)} of {groupedPosts.length} groups
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-text-muted text-xs">Rows:</span>
+                <select
+                  value={pageSize}
+                  onChange={(e) => handlePageSizeChange(parseInt(e.target.value, 10))}
+                  className="px-2 py-1 text-xs bg-bg-surface border border-border rounded text-text-primary focus:outline-none focus:border-primary"
+                >
+                  {PAGE_SIZE_OPTIONS.map((size) => (
+                    <option key={size} value={size}>{size}</option>
+                  ))}
+                </select>
+              </div>
             </div>
+            {totalPages > 1 && (
             <div className="flex items-center gap-1">
               <button
-                onClick={() => setCurrentPage(1)}
+                onClick={() => handlePageChange(1)}
                 disabled={currentPage === 1}
                 className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
               >
                 ««
               </button>
               <button
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
                 className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
               >
@@ -678,7 +744,7 @@ export default function PostsListPage() {
                 return (
                   <button
                     key={pageNum}
-                    onClick={() => setCurrentPage(pageNum)}
+                    onClick={() => handlePageChange(pageNum)}
                     className={`px-2.5 py-1 text-xs rounded ${
                       currentPage === pageNum
                         ? 'bg-primary text-bg-darkest font-medium'
@@ -690,23 +756,32 @@ export default function PostsListPage() {
                 )
               })}
               <button
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
                 className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
               >
                 »
               </button>
               <button
-                onClick={() => setCurrentPage(totalPages)}
+                onClick={() => handlePageChange(totalPages)}
                 disabled={currentPage === totalPages}
                 className="px-2 py-1 text-xs rounded bg-bg-surface hover:bg-bg-darkest disabled:opacity-40 disabled:cursor-not-allowed text-text-secondary"
               >
                 »»
               </button>
             </div>
+            )}
           </div>
         )}
       </div>
     </div>
+  )
+}
+
+export default function PostsListPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12 text-text-muted">Loading...</div>}>
+      <PostsListContent />
+    </Suspense>
   )
 }
