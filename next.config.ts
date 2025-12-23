@@ -77,6 +77,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' data: https://maxcdn.bootstrapcdn.com https://fonts.gstatic.com",
               "worker-src 'self' blob:",
               "connect-src 'self' http://localhost:4000 https://www.google-analytics.com https://region1.google-analytics.com https://cdn.jsdelivr.net https://api-free.deepl.com https://api.mymemory.translated.net https://fonts.googleapis.com https://fonts.gstatic.com",
+              "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'"
