@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { getBlogPosts } from '@/lib/api'
 import { getIconEmoji } from '@/lib/icons'
 import BlogSearch from '@/components/blog/BlogSearch'
-import TagFilter from '@/components/blog/TagFilter'
+import TagFilterSidebar from '@/components/blog/TagFilterSidebar'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -75,7 +75,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-bg-darkest">
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
+        {/* Header */}
         <div className="mb-6 md:mb-8">
           <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 pb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             {t('title')}
@@ -85,104 +86,115 @@ export default async function BlogPage({ params, searchParams }: Props) {
           </p>
         </div>
 
-        <div className="mb-6 md:mb-8 space-y-3 md:space-y-4">
+        {/* Search bar */}
+        <div className="mb-6 md:mb-8">
           <BlogSearch initialSearch={search} locale={locale} />
-          <TagFilter availableTags={allTags} selectedTags={selectedTags} locale={locale} />
         </div>
 
-        {hasFilters && (
-          <div className="mb-4 md:mb-6 text-text-muted text-sm">
-            {posts.length === 0 ? (
-              <p>{t('noResults')}</p>
-            ) : (
-              <p>{posts.length} {posts.length === 1 ? (locale === 'it' ? 'articolo trovato' : 'article found') : (locale === 'it' ? 'articoli trovati' : 'articles found')}</p>
+        {/* Main content with sidebar */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar - Tags filter (right side on desktop) */}
+          <aside className="lg:w-64 flex-shrink-0 lg:order-last">
+            <TagFilterSidebar
+              availableTags={allTags}
+              selectedTags={selectedTags}
+              locale={locale}
+            />
+          </aside>
+
+          {/* Posts list */}
+          <main className="flex-1 min-w-0">
+            {hasFilters && (
+              <div className="mb-4 md:mb-6 text-text-muted text-sm">
+                {posts.length === 0 ? (
+                  <p>{t('noResults')}</p>
+                ) : (
+                  <p>{posts.length} {posts.length === 1 ? (locale === 'it' ? 'articolo trovato' : 'article found') : (locale === 'it' ? 'articoli trovati' : 'articles found')}</p>
+                )}
+              </div>
             )}
-          </div>
-        )}
 
-        {posts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-text-muted text-lg">
-              {hasFilters ? t('tryDifferentFilters') : t('noPostsYet')}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4 md:space-y-6">
-            {posts.map((post) => {
-              const thumbnailUrl = post.image
-                ? post.image.replace(/\.webp$/i, '-thumb.webp')
-                : null
+            {posts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-text-muted text-lg">
+                  {hasFilters ? t('tryDifferentFilters') : t('noPostsYet')}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4 md:space-y-6">
+                {posts.map((post) => {
+                  const thumbnailUrl = post.image
+                    ? post.image.replace(/\.webp$/i, '-thumb.webp')
+                    : null
 
-              return (
-                <Link
-                  key={post.id}
-                  href={`/${locale}/blog/${post.slug}`}
-                  className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
-                >
-                  <div className="flex gap-4 md:gap-6 p-4 md:p-6">
-                    {/* Image and icon are mutually exclusive - show image if present, otherwise icon */}
-                    {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) ? (
-                      <div className="flex-shrink-0">
-                        <img
-                          src={thumbnailUrl}
-                          alt={post.title}
-                          className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : getIconEmoji(post.icon) ? (
-                      <div className="flex-shrink-0 flex items-center">
-                        <span className="text-5xl md:text-6xl">{getIconEmoji(post.icon)}</span>
-                      </div>
-                    ) : null}
+                  return (
+                    <Link
+                      key={post.id}
+                      href={`/${locale}/blog/${post.slug}`}
+                      className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
+                    >
+                      <div className="flex gap-4 md:gap-6 p-4 md:p-6">
+                        {/* Image and icon are mutually exclusive */}
+                        {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) ? (
+                          <div className="flex-shrink-0">
+                            <img
+                              src={thumbnailUrl}
+                              alt={post.title}
+                              className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
+                              loading="lazy"
+                            />
+                          </div>
+                        ) : getIconEmoji(post.icon) ? (
+                          <div className="flex-shrink-0 flex items-center">
+                            <span className="text-5xl md:text-6xl">{getIconEmoji(post.icon)}</span>
+                          </div>
+                        ) : null}
 
-                    <div className="flex-1 min-w-0">
-                      <h2 className="text-lg md:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2 line-clamp-2">
-                        {post.title}
-                      </h2>
-
-                      <p className="text-text-secondary text-sm mb-3 line-clamp-2">
-                        {post.excerpt}
-                      </p>
-
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm text-text-muted">
-                        <span>{post.author}</span>
-                        <span>·</span>
-                        <span>
-                          {new Date(post.publishedAt || post.createdAt).toLocaleDateString(locale === 'it' ? 'it-IT' : 'en-US', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: 'numeric'
-                          })}
-                        </span>
-                        <span className="hidden md:inline">·</span>
-                        <span className="hidden md:inline">{post.readTime}</span>
-                        {post.tags.length > 0 && (
-                          <>
-                            <span className="hidden md:inline">·</span>
-                            <div className="flex flex-wrap gap-1.5 md:ml-0 w-full md:w-auto mt-1.5 md:mt-0">
-                              {post.tags.slice(0, 3).map((tag) => (
+                        <div className="flex-1 min-w-0">
+                          {/* Tags above title */}
+                          {post.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              {post.tags.slice(0, 4).map((tag) => (
                                 <span
                                   key={tag}
-                                  className="px-2 py-0.5 bg-bg-surface text-text-muted text-xs rounded-full border border-border"
+                                  className="px-2 py-0.5 bg-primary/20 text-primary text-xs rounded-full"
                                 >
                                   {tag}
                                 </span>
                               ))}
-                              {post.tags.length > 3 && (
-                                <span className="text-text-muted text-xs">+{post.tags.length - 3}</span>
-                              )}
                             </div>
-                          </>
-                        )}
+                          )}
+
+                          <h2 className="text-lg md:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2 line-clamp-2">
+                            {post.title}
+                          </h2>
+
+                          <p className="text-text-secondary text-sm mb-3 line-clamp-2">
+                            {post.excerpt}
+                          </p>
+
+                          <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-text-muted">
+                            <span>{post.author}</span>
+                            <span>·</span>
+                            <span>
+                              {new Date(post.publishedAt || post.createdAt).toLocaleDateString(locale === 'it' ? 'it-IT' : 'en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                              })}
+                            </span>
+                            <span className="hidden md:inline">·</span>
+                            <span className="hidden md:inline">{post.readTime}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-        )}
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   )
