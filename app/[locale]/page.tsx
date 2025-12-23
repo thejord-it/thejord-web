@@ -2,9 +2,17 @@ import Link from 'next/link'
 
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Metadata } from 'next'
+import YouTubeEmbed from '@/components/YouTubeEmbed'
 
 type Props = {
   params: Promise<{ locale: string }>
+}
+
+// YouTube video details
+const PROMO_VIDEO = {
+  id: 'vEkDQCFPSLU',
+  duration: 'PT40S', // ISO 8601 duration format
+  uploadDate: '2024-12-01',
 }
 
 // JSON-LD schemas for the home page
@@ -37,7 +45,29 @@ function getJsonLdSchemas(locale: string) {
     },
   }
 
-  return { webSiteSchema, organizationSchema }
+  const videoSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: locale === 'it' ? 'THEJORD - Strumenti per Sviluppatori' : 'THEJORD - Developer Tools',
+    description: locale === 'it'
+      ? 'Scopri THEJORD: strumenti gratuiti per sviluppatori che funzionano direttamente nel browser. Privacy first, nessun dato inviato ai server.'
+      : 'Discover THEJORD: free developer tools that work directly in your browser. Privacy first, no data sent to servers.',
+    thumbnailUrl: `https://img.youtube.com/vi/${PROMO_VIDEO.id}/maxresdefault.jpg`,
+    uploadDate: PROMO_VIDEO.uploadDate,
+    duration: PROMO_VIDEO.duration,
+    contentUrl: `https://www.youtube.com/watch?v=${PROMO_VIDEO.id}`,
+    embedUrl: `https://www.youtube.com/embed/${PROMO_VIDEO.id}`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'THEJORD',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+  }
+
+  return { webSiteSchema, organizationSchema, videoSchema }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -63,7 +93,7 @@ export default async function HomePage({ params }: Props) {
 
   const t = await getTranslations({ locale, namespace: 'home' })
   const tTools = await getTranslations({ locale, namespace: 'tools.list' })
-  const { webSiteSchema, organizationSchema } = getJsonLdSchemas(locale)
+  const { webSiteSchema, organizationSchema, videoSchema } = getJsonLdSchemas(locale)
 
   const featuredTools = [
     { key: 'jsonFormatter', icon: '{ }', href: 'tools/json-formatter', color: 'from-blue-500 to-cyan-500' },
@@ -85,6 +115,7 @@ export default async function HomePage({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }} />
 
       <div className="min-h-screen bg-bg-darkest">
         {/* Hero Section */}
@@ -124,8 +155,26 @@ export default async function HomePage({ params }: Props) {
           </div>
         </section>
 
-        {/* Featured Tools Section */}
+        {/* Video Section */}
         <section className="py-12 md:py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">
+                {locale === 'it' ? 'Guarda THEJORD in azione' : 'See THEJORD in action'}
+              </h2>
+              <p className="text-lg text-text-secondary">
+                {locale === 'it' ? '40 secondi per scoprire i nostri strumenti' : '40 seconds to discover our tools'}
+              </p>
+            </div>
+            <YouTubeEmbed
+              videoId={PROMO_VIDEO.id}
+              title={locale === 'it' ? 'THEJORD - Strumenti per Sviluppatori' : 'THEJORD - Developer Tools'}
+            />
+          </div>
+        </section>
+
+        {/* Featured Tools Section */}
+        <section className="py-12 md:py-20 border-t border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-4xl font-bold text-text-primary mb-4">{t('featuredTools.title')}</h2>
