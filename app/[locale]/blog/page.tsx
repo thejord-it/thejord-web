@@ -77,7 +77,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
     <div className="min-h-screen bg-bg-darkest">
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
         <div className="mb-6 md:mb-8">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 pb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             {t('title')}
           </h1>
           <p className="text-base md:text-xl text-text-secondary">
@@ -120,36 +120,23 @@ export default async function BlogPage({ params, searchParams }: Props) {
                   className="group block bg-bg-dark border border-border hover:border-primary rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <div className="flex gap-4 md:gap-6 p-4 md:p-6">
-                    {(thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://'))) || getIconEmoji(post.icon) ? (
-                      <div className="flex-shrink-0 flex items-center gap-2">
-                        {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) && (
-                          <img
-                            src={thumbnailUrl}
-                            alt={post.title}
-                            className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
-                            loading="lazy"
-                          />
-                        )}
-                        {getIconEmoji(post.icon) && (
-                          <span className="text-6xl md:text-7xl">{getIconEmoji(post.icon)}</span>
-                        )}
+                    {/* Image and icon are mutually exclusive - show image if present, otherwise icon */}
+                    {thumbnailUrl && (thumbnailUrl.startsWith('http://') || thumbnailUrl.startsWith('https://')) ? (
+                      <div className="flex-shrink-0">
+                        <img
+                          src={thumbnailUrl}
+                          alt={post.title}
+                          className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-xl"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : getIconEmoji(post.icon) ? (
+                      <div className="flex-shrink-0 flex items-center">
+                        <span className="text-5xl md:text-6xl">{getIconEmoji(post.icon)}</span>
                       </div>
                     ) : null}
 
                     <div className="flex-1 min-w-0">
-                      {post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-2">
-                          {post.tags.slice(0, 4).map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 bg-primary/20 text-primary text-xs rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
                       <h2 className="text-lg md:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mb-2 line-clamp-2">
                         {post.title}
                       </h2>
@@ -158,18 +145,36 @@ export default async function BlogPage({ params, searchParams }: Props) {
                         {post.excerpt}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-text-muted">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm text-text-muted">
                         <span>{post.author}</span>
-                        <span>-</span>
+                        <span>·</span>
                         <span>
                           {new Date(post.publishedAt || post.createdAt).toLocaleDateString(locale === 'it' ? 'it-IT' : 'en-US', {
                             day: 'numeric',
-                            month: 'long',
+                            month: 'short',
                             year: 'numeric'
                           })}
                         </span>
-                        <span className="hidden md:inline">-</span>
+                        <span className="hidden md:inline">·</span>
                         <span className="hidden md:inline">{post.readTime}</span>
+                        {post.tags.length > 0 && (
+                          <>
+                            <span className="hidden md:inline">·</span>
+                            <div className="flex flex-wrap gap-1.5 md:ml-0 w-full md:w-auto mt-1.5 md:mt-0">
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="px-2 py-0.5 bg-bg-surface text-text-muted text-xs rounded-full border border-border"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                              {post.tags.length > 3 && (
+                                <span className="text-text-muted text-xs">+{post.tags.length - 3}</span>
+                              )}
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
