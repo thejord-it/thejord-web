@@ -12,7 +12,7 @@ type Props = {
 const PROMO_VIDEO = {
   id: 'vEkDQCFPSLU',
   duration: 'PT40S', // ISO 8601 duration format
-  uploadDate: '2024-12-01',
+  uploadDate: '2024-12-01T00:00:00Z', // ISO 8601 with timezone for Google
 }
 
 // JSON-LD schemas for the home page
