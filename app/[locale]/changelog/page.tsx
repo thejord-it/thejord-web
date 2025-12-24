@@ -44,10 +44,53 @@ export default function Changelog() {
           </p>
         </div>
 
-        {/* Version 2.3.0 - PDF Tools */}
+        {/* Version 2.4.0 - Homepage Video & RSS */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="bg-primary px-4 py-2 rounded-lg">
+              <span className="text-white font-bold text-lg">v2.4.0</span>
+            </div>
+            <span className="text-text-muted">{formatDate('2025-12-25')}</span>
+            <span className="bg-blue-900/30 text-blue-400 px-3 py-1 rounded-full text-sm font-semibold">
+              {locale === 'it' ? 'Miglioramenti' : 'Improvements'}
+            </span>
+          </div>
+
+          <div className="bg-bg-dark rounded-xl border border-border p-6 mb-6">
+            <h3 className="text-2xl font-bold mb-4 text-green-400 flex items-center gap-2">
+              ✨ {locale === 'it' ? 'Nuove Funzionalità' : 'New Features'}
+            </h3>
+            <ul className="space-y-3 text-text-secondary">
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">{locale === 'it' ? 'Video Promozionale' : 'Promotional Video'}</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Video di presentazione THEJORD integrato nella homepage con lazy loading per performance ottimali.'
+                      : 'THEJORD presentation video integrated in homepage with lazy loading for optimal performance.'}
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-400 mt-1">●</span>
+                <div>
+                  <strong className="text-text-primary">RSS Feed</strong>
+                  <p className="text-sm mt-1">
+                    {locale === 'it'
+                      ? 'Feed RSS del blog ora facilmente accessibile dal footer. Disponibile in italiano e inglese.'
+                      : 'Blog RSS feed now easily accessible from footer. Available in Italian and English.'}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Version 2.3.0 - PDF Tools */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-secondary px-4 py-2 rounded-lg">
               <span className="text-white font-bold text-lg">v2.3.0</span>
             </div>
             <span className="text-text-muted">{formatDate('2025-12-05')}</span>
@@ -490,7 +533,18 @@ export default function Changelog() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="py-3 px-4">
-                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.3.0</span>
+                    <span className="bg-primary px-3 py-1 rounded text-white font-semibold">v2.4.0</span>
+                  </td>
+                  <td className="py-3 px-4">25 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
+                  <td className="py-3 px-4">
+                    ✨ {locale === 'it'
+                      ? 'Video promozionale homepage, RSS Feed nel footer'
+                      : 'Homepage promotional video, RSS Feed in footer'}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">
+                    <span className="bg-secondary px-3 py-1 rounded text-white font-semibold">v2.3.0</span>
                   </td>
                   <td className="py-3 px-4">5 {locale === 'it' ? 'Dic' : 'Dec'} 2025</td>
                   <td className="py-3 px-4">
