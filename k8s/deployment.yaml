@@ -25,6 +25,10 @@ spec:
               value: "production"
             - name: API_URL
               value: "http://thejord-api:4000"
+            - name: NEXT_PUBLIC_GA_MEASUREMENT_ID
+              value: "G-1LDVSZHTTB"
+            - name: GA_API_SECRET
+              value: "iyP4YlHAQh27rZBag1fjUQ"
           resources:
             requests:
               memory: "256Mi"
