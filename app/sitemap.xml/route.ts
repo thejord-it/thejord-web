@@ -5,6 +5,21 @@ import { locales } from '@/i18n/config'
 // Type for translation map: translationGroup -> { locale: slug }
 type TranslationMap = Map<string, Record<string, string>>
 
+// Video configuration for sitemap
+const PROMO_VIDEO = {
+  id: 'vEkDQCFPSLU',
+  duration: 40,
+  uploadDate: '2024-12-01T00:00:00Z',
+  title: {
+    it: 'THEJORD - Strumenti per Sviluppatori',
+    en: 'THEJORD - Developer Tools',
+  },
+  description: {
+    it: 'Scopri THEJORD: strumenti gratuiti per sviluppatori che funzionano direttamente nel browser. Privacy first, nessun dato inviato ai server.',
+    en: 'Discover THEJORD: free developer tools that work directly in your browser. Privacy first, no data sent to servers.',
+  },
+}
+
 export async function GET() {
   const baseUrl = 'https://thejord.it'
 
@@ -32,10 +47,10 @@ export async function GET() {
     }
   }
 
-  // Build XML string
+  // Build XML string with video namespace
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
   xml += '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n'
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n'
 
   // Helper to add URL entry
   const addUrl = (
@@ -43,7 +58,8 @@ export async function GET() {
     languages: Record<string, string>,
     lastmod: Date,
     changefreq: string,
-    priority: number
+    priority: number,
+    video?: { locale: string }
   ) => {
     xml += '<url>\n'
     xml += `<loc>${url}</loc>\n`
@@ -53,6 +69,21 @@ export async function GET() {
     xml += `<lastmod>${lastmod.toISOString()}</lastmod>\n`
     xml += `<changefreq>${changefreq}</changefreq>\n`
     xml += `<priority>${priority}</priority>\n`
+
+    // Add video info if provided
+    if (video) {
+      const locale = video.locale as 'it' | 'en'
+      xml += '<video:video>\n'
+      xml += `<video:thumbnail_loc>https://img.youtube.com/vi/${PROMO_VIDEO.id}/maxresdefault.jpg</video:thumbnail_loc>\n`
+      xml += `<video:title>${PROMO_VIDEO.title[locale]}</video:title>\n`
+      xml += `<video:description>${PROMO_VIDEO.description[locale]}</video:description>\n`
+      xml += `<video:content_loc>https://www.youtube.com/watch?v=${PROMO_VIDEO.id}</video:content_loc>\n`
+      xml += `<video:player_loc>https://www.youtube.com/embed/${PROMO_VIDEO.id}</video:player_loc>\n`
+      xml += `<video:duration>${PROMO_VIDEO.duration}</video:duration>\n`
+      xml += `<video:publication_date>${PROMO_VIDEO.uploadDate}</video:publication_date>\n`
+      xml += '</video:video>\n'
+    }
+
     xml += '</url>\n'
   }
 
@@ -62,11 +93,12 @@ export async function GET() {
   for (const locale of locales) {
     const posts = postsByLocale[locale]
 
-    // Static pages with alternates for hreflang (x-default points to English)
+    // Homepage with video
     addUrl(
       `${baseUrl}/${locale}`,
       { it: `${baseUrl}/it`, en: `${baseUrl}/en`, 'x-default': `${baseUrl}/en` },
-      now, 'monthly', 1
+      now, 'monthly', 1,
+      { locale }
     )
 
     addUrl(
