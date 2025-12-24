@@ -4,6 +4,37 @@ const SITE_URL = 'https://thejord.it'
 const SITE_TITLE = 'THEJORD Blog'
 const SITE_DESCRIPTION = 'Tech insights, development tools, and tutorials from THEJORD'
 
+// GA4 Measurement Protocol configuration
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+const GA_API_SECRET = process.env.GA_API_SECRET
+
+// Track RSS access via GA4 Measurement Protocol
+async function trackRssAccess(locale: string, userAgent: string) {
+  if (!GA_MEASUREMENT_ID || !GA_API_SECRET) return
+
+  try {
+    await fetch(
+      `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: `rss-${Date.now()}`,
+          events: [{
+            name: 'rss_access',
+            params: {
+              language: locale,
+              user_agent: userAgent.slice(0, 100),
+              engagement_time_msec: 1,
+            }
+          }]
+        })
+      }
+    )
+  } catch {
+    // Silently fail - don't break RSS feed for tracking errors
+  }
+}
+
 function escapeXml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -88,6 +119,10 @@ ${items}
 export async function GET(request: Request) {
   const url = new URL(request.url)
   const locale = url.searchParams.get('lang') || 'it'
+  const userAgent = request.headers.get('user-agent') || 'unknown'
+
+  // Track RSS access (non-blocking)
+  trackRssAccess(locale, userAgent)
 
   try {
     // Fetch posts for the requested locale
