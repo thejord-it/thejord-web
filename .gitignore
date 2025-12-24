@@ -47,7 +47,6 @@ demo-output/
 
 # sensitive admin pages (keep out of public repo)
 app/admin/strategy/
-app/api/analytics/
 
 # scripts with tokens/credentials (keep local only)
 /scripts/

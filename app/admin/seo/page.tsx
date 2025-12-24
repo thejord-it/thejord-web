@@ -50,11 +50,25 @@ interface HealthSummary {
   issues: Issue[]
 }
 
+interface RssStats {
+  total: number
+  byLanguage: Record<string, number>
+  period: string
+}
+
+interface RssReader {
+  userAgent: string
+  count: number
+}
+
 export default function SEOPage() {
   const [jobs, setJobs] = useState<JobResult[]>([])
   const [activeJob, setActiveJob] = useState<string | null>(null)
   const [healthSummary, setHealthSummary] = useState<HealthSummary | null>(null)
   const [loadingHealth, setLoadingHealth] = useState(false)
+  const [rssStats, setRssStats] = useState<RssStats | null>(null)
+  const [rssReaders, setRssReaders] = useState<RssReader[]>([])
+  const [loadingRss, setLoadingRss] = useState(false)
 
   // Load health summary on mount
   useEffect(() => {
@@ -80,6 +94,31 @@ export default function SEOPage() {
       setLoadingHealth(false)
     }
   }, [])
+
+  // Load RSS stats
+  const loadRssStats = useCallback(async () => {
+    setLoadingRss(true)
+    try {
+      const [statsRes, readersRes] = await Promise.all([
+        fetch('/api/analytics?action=rss-stats'),
+        fetch('/api/analytics?action=rss-readers'),
+      ])
+      const statsData = await statsRes.json()
+      const readersData = await readersRes.json()
+      
+      if (statsData.success) setRssStats(statsData.data)
+      if (readersData.success) setRssReaders(readersData.data.readers || [])
+    } catch (error) {
+      console.error('RSS stats failed:', error)
+    } finally {
+      setLoadingRss(false)
+    }
+  }, [])
+
+  // Load RSS stats on mount
+  useEffect(() => {
+    loadRssStats()
+  }, [loadRssStats])
 
   // Run a job
   const runJob = useCallback(async (type: JobResult['type']) => {
@@ -178,6 +217,70 @@ export default function SEOPage() {
         <div className="p-4 rounded-lg border bg-bg-surface border-border">
           <div className="text-3xl font-bold text-center">{healthSummary?.contentLinks?.total || '-'}</div>
           <div className="text-center text-sm text-text-muted">Internal Links</div>
+        </div>
+      </div>
+
+      {/* RSS Feed Statistics */}
+      <div className="bg-bg-surface border border-border rounded-lg overflow-hidden">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+            <span className="text-orange-500">📡</span> RSS Feed Statistics
+          </h2>
+          <button
+            onClick={loadRssStats}
+            disabled={loadingRss}
+            className="text-sm text-primary hover:text-primary-light transition-colors disabled:opacity-50"
+          >
+            {loadingRss ? 'Loading...' : 'Refresh'}
+          </button>
+        </div>
+        <div className="p-6">
+          {rssStats ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4 text-center">
+                  <div className="text-3xl font-bold text-orange-400">{rssStats.total}</div>
+                  <div className="text-sm text-text-muted">Total Accesses ({rssStats.period})</div>
+                </div>
+                <div className="bg-bg-dark rounded-lg p-4 text-center">
+                  <div className="text-3xl font-bold text-text-primary">{rssStats.byLanguage['it'] || 0}</div>
+                  <div className="text-sm text-text-muted">Italian Feed</div>
+                </div>
+                <div className="bg-bg-dark rounded-lg p-4 text-center">
+                  <div className="text-3xl font-bold text-text-primary">{rssStats.byLanguage['en'] || 0}</div>
+                  <div className="text-sm text-text-muted">English Feed</div>
+                </div>
+              </div>
+              
+              {rssReaders.length > 0 && (
+                <div>
+                  <h4 className="text-text-primary font-medium mb-2">Top RSS Readers</h4>
+                  <div className="bg-bg-dark rounded-lg overflow-hidden">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-text-muted text-left border-b border-border">
+                          <th className="px-4 py-2">User Agent</th>
+                          <th className="px-4 py-2 text-right">Requests</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {rssReaders.slice(0, 5).map((reader, i) => (
+                          <tr key={i}>
+                            <td className="px-4 py-2 text-text-secondary truncate max-w-xs">{reader.userAgent}</td>
+                            <td className="px-4 py-2 text-right text-text-muted">{reader.count}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center text-text-muted py-4">
+              {loadingRss ? 'Loading RSS statistics...' : 'No RSS data available yet'}
+            </div>
+          )}
         </div>
       </div>
 
