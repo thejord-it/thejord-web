@@ -43,7 +43,7 @@ export default function PreviewPage() {
       <article className="max-w-4xl mx-auto px-6 py-12">
         {/* Featured Image with responsive srcset */}
         {previewData.image && (previewData.image.startsWith('http://') || previewData.image.startsWith('https://')) && (
-          <div className="w-full mb-8 rounded-lg bg-white p-8 flex items-center justify-center overflow-hidden">
+          <div className="w-full mb-8 rounded-lg overflow-hidden">
             <img
               src={previewData.image}
               srcSet={`
