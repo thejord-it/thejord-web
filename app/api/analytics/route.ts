@@ -135,9 +135,42 @@ export async function GET(request: NextRequest) {
       })
     }
 
+    // Get RSS access by country
+    if (action === 'rss-countries') {
+      const [response] = await client.runReport({
+        property: `properties/${GA4_PROPERTY_ID}`,
+        dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
+        dimensions: [
+          { name: 'eventName' },
+          { name: 'customEvent:country' },
+        ],
+        metrics: [{ name: 'eventCount' }],
+        dimensionFilter: {
+          filter: {
+            fieldName: 'eventName',
+            stringFilter: {
+              value: 'rss_access',
+            },
+          },
+        },
+        orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+        limit: 20,
+      })
+
+      const countries = response.rows?.map(row => ({
+        country: row.dimensionValues?.[1]?.value || 'unknown',
+        count: parseInt(row.metricValues?.[0]?.value || '0', 10),
+      })) || []
+
+      return NextResponse.json({
+        success: true,
+        data: { countries },
+      })
+    }
+
     return NextResponse.json({
       success: false,
-      error: 'Invalid action. Available: rss-stats, rss-readers, rss-trend',
+      error: 'Invalid action. Available: rss-stats, rss-readers, rss-trend, rss-countries',
     }, { status: 400 })
 
   } catch (error: unknown) {
