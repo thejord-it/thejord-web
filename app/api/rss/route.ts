@@ -8,11 +8,33 @@ const SITE_DESCRIPTION = 'Tech insights, development tools, and tutorials from T
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 const GA_API_SECRET = process.env.GA_API_SECRET
 
+// Get country from IP using free geo-IP service
+async function getCountryFromIP(ip: string): Promise<string> {
+  if (!ip || ip === 'unknown' || ip === '127.0.0.1' || ip.startsWith('192.168.')) {
+    return 'unknown'
+  }
+  
+  try {
+    const res = await fetch(`http://ip-api.com/json/${ip}?fields=countryCode`, {
+      signal: AbortSignal.timeout(2000), // 2s timeout
+    })
+    if (res.ok) {
+      const data = await res.json()
+      return data.countryCode || 'unknown'
+    }
+  } catch {
+    // Silently fail
+  }
+  return 'unknown'
+}
+
 // Track RSS access via GA4 Measurement Protocol
-async function trackRssAccess(locale: string, userAgent: string) {
+async function trackRssAccess(locale: string, userAgent: string, ip: string) {
   if (!GA_MEASUREMENT_ID || !GA_API_SECRET) return
 
   try {
+    const country = await getCountryFromIP(ip)
+    
     await fetch(
       `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`,
       {
@@ -24,6 +46,7 @@ async function trackRssAccess(locale: string, userAgent: string) {
             params: {
               language: locale,
               user_agent: userAgent.slice(0, 100),
+              country: country,
               engagement_time_msec: 1,
             }
           }]
@@ -120,9 +143,12 @@ export async function GET(request: Request) {
   const url = new URL(request.url)
   const locale = url.searchParams.get('lang') || 'it'
   const userAgent = request.headers.get('user-agent') || 'unknown'
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() 
+    || request.headers.get('x-real-ip') 
+    || 'unknown'
 
   // Track RSS access (non-blocking)
-  trackRssAccess(locale, userAgent)
+  trackRssAccess(locale, userAgent, ip)
 
   try {
     // Fetch posts for the requested locale

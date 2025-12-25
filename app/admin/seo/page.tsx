@@ -61,6 +61,11 @@ interface RssReader {
   count: number
 }
 
+interface RssCountry {
+  country: string
+  count: number
+}
+
 export default function SEOPage() {
   const [jobs, setJobs] = useState<JobResult[]>([])
   const [activeJob, setActiveJob] = useState<string | null>(null)
@@ -68,6 +73,7 @@ export default function SEOPage() {
   const [loadingHealth, setLoadingHealth] = useState(false)
   const [rssStats, setRssStats] = useState<RssStats | null>(null)
   const [rssReaders, setRssReaders] = useState<RssReader[]>([])
+  const [rssCountries, setRssCountries] = useState<RssCountry[]>([])
   const [loadingRss, setLoadingRss] = useState(false)
 
   // Load health summary on mount
@@ -99,15 +105,18 @@ export default function SEOPage() {
   const loadRssStats = useCallback(async () => {
     setLoadingRss(true)
     try {
-      const [statsRes, readersRes] = await Promise.all([
+      const [statsRes, readersRes, countriesRes] = await Promise.all([
         fetch('/api/analytics?action=rss-stats'),
         fetch('/api/analytics?action=rss-readers'),
+        fetch('/api/analytics?action=rss-countries'),
       ])
       const statsData = await statsRes.json()
       const readersData = await readersRes.json()
+      const countriesData = await countriesRes.json()
       
       if (statsData.success) setRssStats(statsData.data)
       if (readersData.success) setRssReaders(readersData.data.readers || [])
+      if (countriesData.success) setRssCountries(countriesData.data.countries || [])
     } catch (error) {
       console.error('RSS stats failed:', error)
     } finally {
@@ -252,29 +261,55 @@ export default function SEOPage() {
                 </div>
               </div>
               
-              {rssReaders.length > 0 && (
-                <div>
-                  <h4 className="text-text-primary font-medium mb-2">Top RSS Readers</h4>
-                  <div className="bg-bg-dark rounded-lg overflow-hidden">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="text-text-muted text-left border-b border-border">
-                          <th className="px-4 py-2">User Agent</th>
-                          <th className="px-4 py-2 text-right">Requests</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-border">
-                        {rssReaders.slice(0, 5).map((reader, i) => (
-                          <tr key={i}>
-                            <td className="px-4 py-2 text-text-secondary truncate max-w-xs">{reader.userAgent}</td>
-                            <td className="px-4 py-2 text-right text-text-muted">{reader.count}</td>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {rssReaders.length > 0 && (
+                  <div>
+                    <h4 className="text-text-primary font-medium mb-2">Top RSS Readers</h4>
+                    <div className="bg-bg-dark rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="text-text-muted text-left border-b border-border">
+                            <th className="px-4 py-2">User Agent</th>
+                            <th className="px-4 py-2 text-right">Requests</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                          {rssReaders.slice(0, 5).map((reader, i) => (
+                            <tr key={i}>
+                              <td className="px-4 py-2 text-text-secondary truncate max-w-xs">{reader.userAgent}</td>
+                              <td className="px-4 py-2 text-right text-text-muted">{reader.count}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+                
+                {rssCountries.length > 0 && (
+                  <div>
+                    <h4 className="text-text-primary font-medium mb-2">Top Countries</h4>
+                    <div className="bg-bg-dark rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="text-text-muted text-left border-b border-border">
+                            <th className="px-4 py-2">Country</th>
+                            <th className="px-4 py-2 text-right">Requests</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                          {rssCountries.slice(0, 5).map((c, i) => (
+                            <tr key={i}>
+                              <td className="px-4 py-2 text-text-secondary">{c.country}</td>
+                              <td className="px-4 py-2 text-right text-text-muted">{c.count}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <div className="text-center text-text-muted py-4">
