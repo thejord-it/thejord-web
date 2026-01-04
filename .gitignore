@@ -49,7 +49,9 @@ demo-output/
 app/admin/strategy/
 
 # scripts with tokens/credentials (keep local only)
-/scripts/
+/scripts/archive/
+# Allow check-links.js for CI workflow
+!/scripts/check-links.js
 
 # claude code settings
 .claude/settings.local.json
