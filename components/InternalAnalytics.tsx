@@ -16,7 +16,7 @@ function getSessionId(): string {
 }
 
 // API base URL
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.thejord.it'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://thejord.it/api/proxy'
 
 // Track event function (exported for use in tools)
 export async function trackEvent(
