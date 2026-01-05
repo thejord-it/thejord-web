@@ -28,11 +28,6 @@ export async function trackEvent(
   }
 ): Promise<void> {
   try {
-    // Skip if in dev mode
-    if (typeof window !== 'undefined' && localStorage.getItem('thejord_dev_mode') === 'true') {
-      return
-    }
-
     const sessionId = getSessionId()
     if (!sessionId) return
 
@@ -83,12 +78,6 @@ export default function InternalAnalytics() {
   const lastPath = useRef<string>('')
 
   useEffect(() => {
-    // Skip if in dev mode
-    if (localStorage.getItem('thejord_dev_mode') === 'true') {
-      console.log('[Analytics] Developer mode - tracking disabled')
-      return
-    }
-
     // Avoid duplicate tracking for the same path
     if (pathname === lastPath.current) return
     lastPath.current = pathname
