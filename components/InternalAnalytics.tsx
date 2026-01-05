@@ -48,10 +48,8 @@ export async function trackEvent(
 
     // Use sendBeacon for non-blocking tracking (best for pageviews)
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(
-        `${API_URL}/api/analytics/track`,
-        JSON.stringify(payload)
-      )
+      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
+      navigator.sendBeacon(`${API_URL}/api/analytics/track`, blob)
     } else {
       // Fallback to fetch
       fetch(`${API_URL}/api/analytics/track`, {
