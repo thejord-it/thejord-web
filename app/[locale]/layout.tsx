@@ -6,6 +6,7 @@ import { locales, type Locale } from '@/i18n/config'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import InternalAnalytics from '@/components/InternalAnalytics'
 import CookieConsent from '@/components/CookieConsent'
 
 type Props = {
@@ -120,6 +121,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="antialiased flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
           {gaId && <GoogleAnalytics gaId={gaId} />}
+          <InternalAnalytics />
           <Header />
           <main className="flex-1">
             {children}
