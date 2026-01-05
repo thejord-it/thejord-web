@@ -10,12 +10,6 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
     // Check if this is a developer/internal access
     async function checkIfInternal() {
       try {
-        // Skip if already marked as dev in localStorage
-        if (localStorage.getItem('thejord_dev_mode') === 'true') {
-          console.log('[GA] Developer mode - tracking disabled')
-          return
-        }
-
         // Fetch IP to check if internal
         const res = await fetch('https://ipinfo.io/json', {
           signal: AbortSignal.timeout(3000)
@@ -36,10 +30,12 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
           return
         }
 
-        // Not internal - enable tracking
+        // Not internal - clear flag and enable tracking
+        localStorage.removeItem('thejord_dev_mode')
         setShouldTrack(true)
       } catch {
         // On error (timeout, blocked), enable tracking to not lose real users
+        localStorage.removeItem('thejord_dev_mode')
         setShouldTrack(true)
       }
     }
