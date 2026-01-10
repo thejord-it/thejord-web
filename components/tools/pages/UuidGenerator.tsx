@@ -52,9 +52,8 @@ function generateUuidV7(): string {
   const timeMid = timeHex.slice(8, 12);
 
   // Version 7 + 12 bits random
-  const timeHighAndVersion = '7' + Array.from(randomBytes.slice(0, 2))
-    .map(b => (b & 0x0f).toString(16))
-    .join('').slice(0, 3);
+  const rand12bits = ((randomBytes[0] << 8) | randomBytes[1]) & 0x0fff;
+  const timeHighAndVersion = '7' + rand12bits.toString(16).padStart(3, '0');
 
   // Variant (10xx) + 14 bits random
   const clockSeq = ((randomBytes[2] & 0x3f) | 0x80).toString(16).padStart(2, '0') +
