@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useToast } from '@/components/ToastProvider';
 import { trackToolUsage, trackCopy, trackButtonClick } from '@/lib/tools/analytics';
 
-type UuidVersion = 'v4' | 'v1' | 'nil';
+type UuidVersion = 'v4' | 'v1' | 'v7' | 'nil';
 
 interface GeneratedUuid {
   uuid: string;
@@ -34,6 +34,38 @@ function generateUuidV1(): string {
   ).join('');
 
   return `${timeLow}-${timeMid}-${timeHigh}-${clockSeq}-${node}`;
+}
+
+// UUID v7 (time-ordered, RFC 9562)
+function generateUuidV7(): string {
+  const now = Date.now();
+
+  // 48 bits of timestamp (milliseconds)
+  const timeHex = now.toString(16).padStart(12, '0');
+
+  // Random bits for the rest
+  const randomBytes = new Uint8Array(10);
+  crypto.getRandomValues(randomBytes);
+
+  // Build UUID parts
+  const timeLow = timeHex.slice(0, 8);
+  const timeMid = timeHex.slice(8, 12);
+
+  // Version 7 + 12 bits random
+  const timeHighAndVersion = '7' + Array.from(randomBytes.slice(0, 2))
+    .map(b => (b & 0x0f).toString(16))
+    .join('').slice(0, 3);
+
+  // Variant (10xx) + 14 bits random
+  const clockSeq = ((randomBytes[2] & 0x3f) | 0x80).toString(16).padStart(2, '0') +
+    randomBytes[3].toString(16).padStart(2, '0');
+
+  // 48 bits random node
+  const node = Array.from(randomBytes.slice(4, 10))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+
+  return `${timeLow}-${timeMid}-${timeHighAndVersion}-${clockSeq}-${node}`;
 }
 
 // Nil UUID (all zeros)
@@ -75,6 +107,9 @@ export default function UuidGenerator() {
       switch (version) {
         case 'v1':
           uuid = generateUuidV1();
+          break;
+        case 'v7':
+          uuid = generateUuidV7();
           break;
         case 'nil':
           uuid = generateNilUuid();
@@ -183,6 +218,7 @@ export default function UuidGenerator() {
                     className="w-full px-4 py-3 bg-bg-elevated border border-border rounded-lg text-text-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   >
                     <option value="v4">UUID v4 ({t('random')})</option>
+                    <option value="v7">UUID v7 ({t('timeOrdered')})</option>
                     <option value="v1">UUID v1 ({t('timestamp')})</option>
                     <option value="nil">Nil UUID ({t('allZeros')})</option>
                   </select>
@@ -317,6 +353,10 @@ export default function UuidGenerator() {
               <div className="p-3 bg-bg-elevated rounded-lg border border-border">
                 <h4 className="font-semibold text-primary-light mb-1">UUID v4</h4>
                 <p className="text-text-muted text-sm">{t('v4Description')}</p>
+              </div>
+              <div className="p-3 bg-bg-elevated rounded-lg border border-border">
+                <h4 className="font-semibold text-primary-light mb-1">UUID v7</h4>
+                <p className="text-text-muted text-sm">{t('v7Description')}</p>
               </div>
               <div className="p-3 bg-bg-elevated rounded-lg border border-border">
                 <h4 className="font-semibold text-primary-light mb-1">UUID v1</h4>

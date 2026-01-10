@@ -210,7 +210,7 @@
       },
       "uuidGenerator": {
         "name": "UUID Generator",
-        "description": "Genera e valida UUID (v1, v4)"
+        "description": "Genera e valida UUID (v1, v4, v7)"
       }
     },
     "categories": {
@@ -1002,8 +1002,10 @@
       "detectedVersion": "Versione rilevata",
       "uuidVersions": "Versioni UUID",
       "v4Description": "UUID casuale. Il più usato. 122 bit di casualità.",
+      "v7Description": "Time-ordered (RFC 9562). Timestamp Unix + random. Ideale per database, mantiene ordine cronologico.",
       "v1Description": "Basato su timestamp. Contiene indirizzo MAC e ora. Meno privato ma ordinabile.",
       "nilDescription": "UUID speciale con tutti zeri. Usato come placeholder o valore nullo.",
+      "timeOrdered": "Time-ordered",
       "aboutUuid": "Informazioni sugli UUID",
       "aboutDescription": "UUID (Universally Unique Identifier) è un identificatore a 128 bit unico nello spazio e nel tempo. Usato per generare ID unici senza coordinamento.",
       "commonUses": "Usi comuni:",
@@ -1054,7 +1056,7 @@
       "description": "Strumenti PDF online gratuiti. Unisci, dividi, comprimi, ruota e converti file PDF. Converti immagini in PDF e PDF in immagini. 100% privacy-first, funziona offline."
     },
     "uuidGenerator": {
-      "description": "Genera UUID online. Crea identificatori UUID v1 (timestamp) e v4 (random). Valida e analizza UUID esistenti. 100% privacy-first."
+      "description": "Genera UUID online. Crea identificatori UUID v1 (timestamp), v4 (random) e v7 (time-ordered). Valida e analizza UUID esistenti. 100% privacy-first."
     }
   }
 }
