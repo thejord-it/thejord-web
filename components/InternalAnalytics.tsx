@@ -3,16 +3,98 @@
 import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 
-// Session ID persists across page navigations
+// Cookie utilities
+function setCookie(name: string, value: string, minutes: number): void {
+  const expires = new Date(Date.now() + minutes * 60 * 1000).toUTCString()
+  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`
+}
+
+function getCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`))
+  return match ? match[2] : null
+}
+
+// Browser fingerprint for user identification (privacy-friendly)
+function getBrowserFingerprint(): string {
+  if (typeof window === 'undefined') return ''
+
+  const components = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + 'x' + screen.height,
+    screen.colorDepth,
+    new Date().getTimezoneOffset(),
+    navigator.hardwareConcurrency || 0,
+    // Canvas fingerprint (simplified)
+    (() => {
+      try {
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return ''
+        ctx.textBaseline = 'top'
+        ctx.font = '14px Arial'
+        ctx.fillText('thejord', 2, 2)
+        return canvas.toDataURL().slice(-50)
+      } catch {
+        return ''
+      }
+    })()
+  ]
+
+  // Simple hash function
+  const str = components.join('|')
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash
+  }
+  return Math.abs(hash).toString(36)
+}
+
+// Session ID with 30-minute sliding expiry (like GA4)
+const SESSION_DURATION_MINUTES = 30
+
 function getSessionId(): string {
   if (typeof window === 'undefined') return ''
 
-  let sessionId = sessionStorage.getItem('thejord_session_id')
+  let sessionId = getCookie('thejord_session_id')
   if (!sessionId) {
     sessionId = crypto.randomUUID()
-    sessionStorage.setItem('thejord_session_id', sessionId)
   }
+  // Refresh cookie expiry on every access (sliding window)
+  setCookie('thejord_session_id', sessionId, SESSION_DURATION_MINUTES)
   return sessionId
+}
+
+// User ID persists across sessions (365 days)
+function getUserId(): string {
+  if (typeof window === 'undefined') return ''
+
+  let userId = getCookie('thejord_user_id')
+  if (!userId) {
+    // Combine fingerprint with random for uniqueness
+    const fingerprint = getBrowserFingerprint()
+    userId = fingerprint + '_' + crypto.randomUUID().slice(0, 8)
+    setCookie('thejord_user_id', userId, 60 * 24 * 365) // 1 year
+  }
+  return userId
+}
+
+// Throttling to prevent event spam
+const eventThrottleMap = new Map<string, number>()
+const THROTTLE_MS = 1000 // 1 second between same events
+
+function shouldThrottle(eventKey: string): boolean {
+  const now = Date.now()
+  const lastTime = eventThrottleMap.get(eventKey)
+
+  if (lastTime && now - lastTime < THROTTLE_MS) {
+    return true
+  }
+
+  eventThrottleMap.set(eventKey, now)
+  return false
 }
 
 // API base URL
@@ -29,13 +111,21 @@ export async function trackEvent(
 ): Promise<void> {
   try {
     const sessionId = getSessionId()
-    if (!sessionId) return
+    const userId = getUserId()
+    if (!sessionId || !userId) return
+
+    // Throttle same events
+    const throttleKey = `${event}_${data?.toolName || ''}_${data?.path || ''}`
+    if (event !== 'pageview' && shouldThrottle(throttleKey)) {
+      return
+    }
 
     const payload = {
       path: data?.path || window.location.pathname,
       event,
       referrer: document.referrer || null,
       sessionId,
+      userId,
       language: document.documentElement.lang || 'en',
       toolName: data?.toolName,
       metadata: data?.metadata

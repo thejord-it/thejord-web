@@ -5,7 +5,7 @@ import { jsonToCSV, jsonToXML, jsonToYAML, jsonToTypeScript } from '@/lib/tools/
 import MonacoJsonEditor from '@/components/tools/MonacoJsonEditor';
 import JsonTree from '@/components/tools/JsonTree';
 import JsonDiff from '@/components/tools/JsonDiff';
-import { trackToolUsage, trackCopy, trackError, trackButtonClick } from '@/lib/tools/analytics';
+import { trackJsonFormat, trackContentCopy, trackToolError, trackToolAction } from '@/lib/tools/analytics';
 
 const DEFAULT_OPTIONS: FormatOptions = {
   indent: 4,
@@ -75,10 +75,10 @@ export default function JsonFormatter() {
     try {
       const formatted = formatJSON(input, options);
       setOutput(formatted);
-      trackToolUsage('JSON Formatter', 'format', 'success');
+      trackJsonFormat('format', new Blob([input]).size);
     } catch (error) {
       setOutput('Error: Invalid JSON');
-      trackError('format_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
+      trackToolError('JSON Formatter', 'format_error', error instanceof Error ? error.message : 'Invalid JSON');
     }
   };
 
@@ -93,10 +93,10 @@ export default function JsonFormatter() {
       const savings = ((1 - minifiedSize / originalSize) * 100).toFixed(1);
 
       console.log(`Minification complete: ${originalSize} → ${minifiedSize} bytes (${savings}% reduction)`);
-      trackToolUsage('JSON Formatter', 'minify', `${savings}% compression`);
+      trackJsonFormat('minify', originalSize);
     } catch (error) {
       setOutput('Error: Invalid JSON');
-      trackError('minify_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
+      trackToolError('JSON Formatter', 'minify_error', error instanceof Error ? error.message : 'Invalid JSON');
     }
   };
 
@@ -121,17 +121,17 @@ export default function JsonFormatter() {
       }
 
       setOutput(converted);
-      trackToolUsage('JSON Formatter', 'convert', `to_${format}`);
+      trackJsonFormat('convert', new Blob([input]).size, format);
     } catch (error) {
       setOutput('Error: Invalid JSON');
-      trackError('convert_error', error instanceof Error ? error.message : 'Invalid JSON', 'JSON Formatter');
+      trackToolError('JSON Formatter', 'convert_error', error instanceof Error ? error.message : 'Invalid JSON');
     }
   };
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(output);
-      trackCopy('formatted_json', 'JSON Formatter');
+      trackContentCopy('JSON Formatter', 'formatted_json', output.length);
       alert('Copied to clipboard!');
     } catch (error) {
       alert('Failed to copy');
@@ -146,14 +146,13 @@ export default function JsonFormatter() {
     a.download = 'formatted.json';
     a.click();
     URL.revokeObjectURL(url);
-    trackButtonClick('Download', 'JSON Formatter');
+    trackToolAction('JSON Formatter', 'download', { inputSize: output.length });
   };
 
   const handleClear = () => {
     setInput('');
     setOutput('');
     setCompareInput('');
-    trackButtonClick('Clear', 'JSON Formatter');
   };
 
   return (

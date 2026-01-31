@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@/components/ToastProvider';
-import { trackToolUsage, trackCopy, trackButtonClick } from '@/lib/tools/analytics';
+import { trackUuidGenerate, trackContentCopy, trackToolAction } from '@/lib/tools/analytics';
 
 type UuidVersion = 'v4' | 'v1' | 'v7' | 'nil';
 
@@ -134,14 +134,13 @@ export default function UuidGenerator() {
     }
 
     setGeneratedUuids(newUuids);
-    trackToolUsage('UUID Generator', 'generate', `${version}_${quantity}`);
-    trackButtonClick('generate_uuid', 'UUID Generator');
+    trackUuidGenerate(version, quantity);
   };
 
   const handleCopy = async (uuid: string) => {
     try {
       await navigator.clipboard.writeText(uuid);
-      trackCopy('uuid', 'UUID Generator');
+      trackContentCopy('UUID Generator', 'uuid', uuid.length);
       showToast(t('copied'), 'success');
     } catch {
       showToast(t('copyFailed'), 'error');
@@ -152,7 +151,7 @@ export default function UuidGenerator() {
     try {
       const allUuids = generatedUuids.map(u => u.uuid).join('\n');
       await navigator.clipboard.writeText(allUuids);
-      trackCopy('uuid_all', 'UUID Generator');
+      trackContentCopy('UUID Generator', 'uuid_batch', allUuids.length);
       showToast(t('allCopied'), 'success');
     } catch {
       showToast(t('copyFailed'), 'error');
@@ -164,7 +163,7 @@ export default function UuidGenerator() {
     const valid = isValidUuid(trimmed);
     const detectedVersion = detectUuidVersion(trimmed);
     setValidationResult({ valid, version: detectedVersion });
-    trackToolUsage('UUID Generator', 'validate', valid ? 'valid' : 'invalid');
+    trackToolAction('UUID Generator', 'validate', { result: valid ? 'success' : 'error' });
   };
 
   const handleClear = () => {
