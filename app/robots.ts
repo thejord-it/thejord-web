@@ -25,7 +25,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/', '/api/rss'],
         disallow: ['/admin/', '/api/'],
       },
     ],
