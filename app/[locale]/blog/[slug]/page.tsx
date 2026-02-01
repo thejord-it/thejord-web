@@ -5,6 +5,7 @@ import { getBlogPost, getAllBlogPostSlugs, getPostTranslations } from '@/lib/api
 import { getIconEmoji } from '@/lib/icons'
 import { locales, localeFlags, type Locale } from '@/i18n/config'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { getBlogFAQSchema } from '@/lib/blog-faq'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -213,6 +214,9 @@ export default async function BlogPostPage({ params }: Props) {
     ],
   }
 
+  // FAQ Schema based on post tags
+  const faqSchema = getBlogFAQSchema(post.tags, locale)
+
   return (
     <div className="min-h-screen bg-bg-darkest">
       {/* Schema.org JSON-LD */}
@@ -224,6 +228,12 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       <article className="max-w-4xl mx-auto px-4 py-16">
         {/* Navigation bar */}
