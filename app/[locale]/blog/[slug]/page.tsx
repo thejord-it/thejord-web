@@ -75,6 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (Object.keys(languages).length === 0) {
     languages[locale] = `https://thejord.it/${locale}/blog/${slug}`
   }
+  languages['x-default'] = languages['en'] || languages[locale] || `https://thejord.it/${locale}/blog/${slug}`
 
   return {
     title,

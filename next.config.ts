@@ -54,7 +54,18 @@ const nextConfig: NextConfig = {
       { source: '/uuid-generator', destination: '/it/tools/uuid-generator', permanent: true },
       // Legacy /tools/slug without locale
       { source: '/tools/:slug', destination: '/it/tools/:slug', permanent: true },
-      // Legacy /blog/slug without locale
+      // EN slugs without locale prefix → /en/ (must come BEFORE /blog/:slug wildcard)
+      { source: '/blog/uuid-vs-autoincrement-which-to-choose', destination: '/en/blog/uuid-vs-autoincrement-which-to-choose', permanent: true },
+      { source: '/blog/diff-merge-compare-code', destination: '/en/blog/diff-merge-compare-code', permanent: true },
+      { source: '/blog/internationalization-i18n-nextjs', destination: '/en/blog/internationalization-i18n-nextjs', permanent: true },
+      { source: '/blog/web-colors-hex-rgb-hsl', destination: '/en/blog/web-colors-hex-rgb-hsl', permanent: true },
+      { source: '/blog/git-workflow-guide-small-teams', destination: '/en/blog/git-workflow-guide-small-teams', permanent: true },
+      { source: '/blog/docker-guide-developers-2025', destination: '/en/blog/docker-guide-developers-2025', permanent: true },
+      { source: '/blog/typescript-vs-javascript-when-to-migrate', destination: '/en/blog/typescript-vs-javascript-when-to-migrate', permanent: true },
+      { source: '/blog/markdown-html-complete-syntax', destination: '/en/blog/markdown-html-complete-syntax', permanent: true },
+      { source: '/blog/xml-wsdl-viewer-formatter-validator', destination: '/en/blog/xml-wsdl-viewer-formatter-validator', permanent: true },
+      { source: '/blog/lancio-thejord-it', destination: '/it/blog/benvenuto-su-thejord-piattaforma-developer-tools', permanent: true },
+      // Legacy /blog/slug without locale (fallback wildcard)
       { source: '/blog/:slug', destination: '/it/blog/:slug', permanent: true },
       // Non-existent tools redirect to tools page
       { source: '/tools/qr-code', destination: '/it/tools', permanent: false },
@@ -150,6 +161,22 @@ const nextConfig: NextConfig = {
       { source: '/it/blog/come-validare-json-online', destination: '/it/blog/come-validare-json-guida-completa', permanent: true },
       { source: '/it/blog/regex-tester-italiano-pattern', destination: '/it/blog/regex-tester-espressioni-regolari', permanent: true },
       { source: '/it/blog/base64-encoder-decoder-guide', destination: '/it/blog/base64-encoding-guida-quando-usarlo', permanent: true },
+
+      // 2026-05-14: crosslocale slug mismatches discovered via GSC "Non trovata (404)" report
+      { source: '/it/blog/uuid-vs-autoincrement-which-to-choose', destination: '/it/blog/uuid-vs-autoincrement-quale-scegliere', permanent: true },
+      { source: '/it/blog/diff-merge-compare-code', destination: '/it/blog/diff-merge-confrontare-codice', permanent: true },
+      { source: '/it/blog/internationalization-i18n-nextjs', destination: '/it/blog/internazionalizzazione-i18n-nextjs', permanent: true },
+      { source: '/it/blog/web-colors-hex-rgb-hsl', destination: '/it/blog/colori-web-hex-rgb-hsl', permanent: true },
+      { source: '/it/blog/git-workflow-guide-small-teams', destination: '/it/blog/git-workflow-guida-team-piccoli', permanent: true },
+      { source: '/it/blog/docker-guide-developers-2025', destination: '/it/blog/docker-guida-sviluppatori-2025', permanent: true },
+      { source: '/it/blog/typescript-vs-javascript-when-to-migrate', destination: '/it/blog/typescript-vs-javascript-guida-migrazione', permanent: true },
+      { source: '/it/blog/markdown-html-complete-syntax', destination: '/it/blog/markdown-html-sintassi-completa', permanent: true },
+      { source: '/en/blog/regex-tester-espressioni-regolari', destination: '/en/blog/regex-tester-regular-expressions', permanent: true },
+      { source: '/en/blog/typescript-vs-javascript-guida-migrazione', destination: '/en/blog/typescript-vs-javascript-when-to-migrate', permanent: true },
+      { source: '/en/blog/docker-guida-sviluppatori-2025', destination: '/en/blog/docker-guide-developers-2025', permanent: true },
+      { source: '/en/blog/diff-merge-confrontare-codice', destination: '/en/blog/diff-merge-compare-code', permanent: true },
+      { source: '/en/blog/migrazione-nextjs-16-performance-turbopack', destination: '/en/blog/nextjs-16-migration-performance-turbopack', permanent: true },
+      { source: '/en/blog/how-to-validate-json-online', destination: '/en/blog/how-to-validate-json-complete-guide', permanent: true },
     ]
   },
 

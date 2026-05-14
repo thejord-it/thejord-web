@@ -98,14 +98,14 @@ export default function Header() {
     // Check if we're on a blog post and have a translation
     const isBlogPost = pathWithoutLocale.startsWith('/blog/') && pathWithoutLocale.split('/').length === 3
 
-    if (isBlogPost && blogTranslations[newLocale]) {
-      // Use the translated slug
-      const newPath = `/${newLocale}/blog/${blogTranslations[newLocale]}`
-      router.push(newPath)
+    if (isBlogPost) {
+      if (blogTranslations[newLocale]) {
+        router.push(`/${newLocale}/blog/${blogTranslations[newLocale]}`)
+      } else {
+        router.push(`/${newLocale}/blog`)
+      }
     } else {
-      // Default behavior: just change locale prefix
-      const newPath = `/${newLocale}${pathWithoutLocale}`
-      router.push(newPath)
+      router.push(`/${newLocale}${pathWithoutLocale}`)
     }
   }
 
