@@ -369,7 +369,7 @@ function getTopicFromTags(tags: string[], slug: string = ''): string | null {
   if (s.includes('immagini') || s.includes('image')) return 'images'
   if (s.includes('performance') || s.includes('web-vitals') || s.includes('web vitals')) return 'performance'
   if (s.includes('api') || s.includes('rest')) return 'api'
-  if (s.includes('security') || s.includes('sicurezza')) return 'security'
+  if (s.includes('security-header') || s.includes('security-headers')) return 'security'
   if (s.includes('risorse') || s.includes('produttivita') || s.includes('productivity') || s.includes('tool-online') || s.includes('free-tools')) return 'tools'
 
   return null
