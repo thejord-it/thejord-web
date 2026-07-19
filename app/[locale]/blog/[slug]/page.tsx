@@ -5,7 +5,7 @@ import { getBlogPost, getAllBlogPostSlugs, getPostTranslations } from '@/lib/api
 import { getIconEmoji } from '@/lib/icons'
 import { locales, localeFlags, type Locale } from '@/i18n/config'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogFAQSchema } from '@/lib/blog-faq'
+import { getBlogFAQSchema, getBlogFAQs } from '@/lib/blog-faq'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -217,6 +217,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   // FAQ Schema based on post tags
   const faqSchema = getBlogFAQSchema(post.tags, locale)
+  const blogFaqs = getBlogFAQs(post.tags, locale)
 
   return (
     <div className="min-h-screen bg-bg-darkest">
@@ -329,6 +330,23 @@ export default async function BlogPostPage({ params }: Props) {
           className="prose prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+
+        {/* FAQ section (AEO: visible Q&A matching the FAQPage schema) */}
+        {blogFaqs.length > 0 && (
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold text-text-primary mb-6">
+              {locale === 'it' ? 'Domande frequenti' : 'Frequently Asked Questions'}
+            </h2>
+            <div className="space-y-4">
+              {blogFaqs.map((faq, i) => (
+                <div key={i} className="bg-bg-dark border border-border rounded-xl p-4 md:p-6">
+                  <h3 className="text-lg font-semibold text-text-primary mb-2">{faq.question}</h3>
+                  <p className="text-text-secondary">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Article Footer */}
         <footer className="mt-16 pt-8 border-t border-border">
