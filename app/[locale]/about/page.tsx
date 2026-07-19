@@ -56,7 +56,9 @@ export default function About() {
             </span>
           </h1>
           <p className="text-base md:text-xl text-text-secondary max-w-2xl mx-auto">
-            {t('subtitle')}
+            {locale === 'it'
+              ? 'THEJORD è un progetto solo-founder che offre strumenti gratuiti per sviluppatori e guide tecniche, con un principio non negoziabile: privacy totale. Ogni tool gira al 100% nel browser, senza inviare i tuoi dati a nessun server.'
+              : 'THEJORD is a solo-founder project offering free developer tools and technical guides with one non-negotiable principle: total privacy. Every tool runs 100% in your browser, never sending your data to any server.'}
           </p>
         </div>
 
