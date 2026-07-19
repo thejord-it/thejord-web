@@ -99,6 +99,15 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
         </div>
       </div>
 
+      {/* Answer-first intro (AEO) — first <p> on the page for all tool routes */}
+      <div className="max-w-7xl mx-auto px-4 pt-4 md:pt-6">
+        <p className="text-sm md:text-base text-text-secondary max-w-3xl">
+          {locale === 'it'
+            ? `${toolName} è uno strumento per sviluppatori gratuito di THEJORD che funziona al 100% nel tuo browser: i tuoi dati non vengono mai caricati né inviati a un server. Usalo direttamente da questa pagina, senza registrazione e senza limiti.`
+            : `${toolName} is a free developer tool by THEJORD that runs 100% in your browser: your data is never uploaded or sent to any server. Use it right here on this page — no sign-up and no limits.`}
+        </p>
+      </div>
+
       {/* Tool component */}
       <ToastProvider>
         <Suspense fallback={<ToolLoader loadingText={t('loading')} />}>
