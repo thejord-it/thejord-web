@@ -79,7 +79,9 @@ export default function ContactForm() {
             </span>
           </h1>
           <p className="text-base md:text-xl text-text-secondary max-w-2xl mx-auto">
-            {t('description')}
+            {locale === 'it'
+              ? 'Hai una domanda, un bug da segnalare o una proposta di collaborazione? Scrivimi tramite il form qui sotto: leggo personalmente ogni messaggio e rispondo di norma entro un paio di giorni lavorativi. THEJORD è un progetto solo-founder.'
+              : 'Have a question, a bug to report or a collaboration in mind? Reach me through the form below: I read every message personally and usually reply within a couple of business days. THEJORD is a solo-founder project.'}
           </p>
         </div>
 

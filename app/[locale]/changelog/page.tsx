@@ -29,8 +29,23 @@ export default function Changelog() {
     })
   }
 
+  const intro = locale === 'it'
+    ? 'Questo changelog traccia ogni aggiornamento di THEJORD: nuovi strumenti, miglioramenti e correzioni, in ordine cronologico. Segui questa pagina per sapere cosa è cambiato e quando, con una riga di sintesi per ogni rilascio.'
+    : 'This changelog tracks every THEJORD update: new tools, improvements and fixes, in chronological order. Follow this page to see what changed and when, with a one-line summary for each release.'
+
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: t('title'),
+    description: t('description'),
+    url: `https://thejord.it/${locale}/changelog`,
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    isPartOf: { '@type': 'WebSite', name: 'THEJORD', url: 'https://thejord.it' },
+  }
+
   return (
     <div className="min-h-screen bg-bg-darkest">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <main className="max-w-4xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -40,7 +55,7 @@ export default function Changelog() {
             </span>
           </h1>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            {t('description')}
+            {intro}
           </p>
         </div>
 

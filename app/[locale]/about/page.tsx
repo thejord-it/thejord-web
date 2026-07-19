@@ -28,8 +28,25 @@ export default function About() {
   const t = useTranslations('about')
   const locale = useLocale()
 
+  const aboutSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: t('title'),
+    description: t('subtitle'),
+    url: `https://thejord.it/${locale}/about`,
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    about: {
+      '@type': 'Organization',
+      name: 'THEJORD',
+      url: 'https://thejord.it',
+      logo: 'https://thejord.it/android-chrome-512x512.png',
+      founder: { '@type': 'Person', name: 'Domenico Giordano' },
+    },
+  }
+
   return (
     <div className="min-h-screen bg-bg-darkest">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }} />
       <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
         {/* Hero Section */}
         <div className="text-center mb-8 md:mb-16">

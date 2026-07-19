@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import ToolsSearch from '@/components/tools/ToolsSearch'
+import { TOOLS } from '@/lib/tools-config'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -146,6 +147,32 @@ const tools = [
   },
 ]
 
-export default function ToolsPage() {
-  return <ToolsSearch tools={tools} />
+export default async function ToolsPage({ params }: Props) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'tools' })
+
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: t('title'),
+    description: t('description'),
+    url: `https://thejord.it/${locale}/tools`,
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: TOOLS.map((tool, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tool.name,
+        url: `https://thejord.it/${locale}/tools/${tool.slug}`,
+      })),
+    },
+  }
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <ToolsSearch tools={tools} />
+    </>
+  )
 }

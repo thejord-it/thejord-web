@@ -54,8 +54,22 @@ export default async function PdfToolsPage({ params }: Props) {
     },
   ]
 
+  const appSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: t('title'),
+    description: t('description'),
+    url: `https://thejord.it/${locale}/pdf-tools`,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Any',
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    publisher: { '@type': 'Organization', name: 'THEJORD', url: 'https://thejord.it' },
+  }
+
   return (
     <div className="min-h-screen bg-bg-darkest">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-12">

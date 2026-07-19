@@ -73,8 +73,33 @@ export default async function BlogPage({ params, searchParams }: Props) {
 
   const hasFilters = search || selectedTags.length > 0
 
+  const intro = locale === 'it'
+    ? 'Il blog di THEJORD raccoglie guide tecniche e tutorial pratici per sviluppatori: automazione, tooling, SEO, Linux e sviluppo web. Ogni articolo è pensato per essere applicato subito, con esempi copia-incolla e zero fronzoli.'
+    : 'The THEJORD blog gathers hands-on technical guides and tutorials for developers: automation, tooling, SEO, Linux and web development. Every article is built to be applied right away, with copy-paste examples and no fluff.'
+
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: t('title'),
+    description: t('description'),
+    url: `https://thejord.it/${locale}/blog`,
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    publisher: { '@type': 'Organization', name: 'THEJORD', url: 'https://thejord.it' },
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `https://thejord.it/${locale}` },
+      { '@type': 'ListItem', position: 2, name: t('title'), item: `https://thejord.it/${locale}/blog` },
+    ],
+  }
+
   return (
     <div className="min-h-screen bg-bg-darkest">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
         {/* Header */}
         <div className="mb-6 md:mb-8">
@@ -82,7 +107,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
             {t('title')}
           </h1>
           <p className="text-base md:text-xl text-text-secondary">
-            {t('description')}
+            {intro}
           </p>
         </div>
 

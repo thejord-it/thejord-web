@@ -23,6 +23,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function ContactPage() {
-  return <ContactForm />
+export default async function ContactPage({ params }: Props) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'contact' })
+
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: t('title'),
+    description: t('description'),
+    url: `https://thejord.it/${locale}/contact`,
+    inLanguage: locale === 'it' ? 'it-IT' : 'en-US',
+    isPartOf: { '@type': 'WebSite', name: 'THEJORD', url: 'https://thejord.it' },
+  }
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
+      <ContactForm />
+    </>
+  )
 }
