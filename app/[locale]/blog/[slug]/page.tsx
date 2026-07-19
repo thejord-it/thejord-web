@@ -216,8 +216,8 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   // FAQ Schema based on post tags
-  const faqSchema = getBlogFAQSchema(post.tags, locale)
-  const blogFaqs = getBlogFAQs(post.tags, locale)
+  const faqSchema = getBlogFAQSchema(post.tags, locale, post.slug)
+  const blogFaqs = getBlogFAQs(post.tags, locale, post.slug)
 
   return (
     <div className="min-h-screen bg-bg-darkest">
