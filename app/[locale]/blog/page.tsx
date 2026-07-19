@@ -5,6 +5,7 @@ import { getBlogPosts } from '@/lib/api'
 import { getIconEmoji } from '@/lib/icons'
 import BlogSearch from '@/components/blog/BlogSearch'
 import TagFilterSidebar from '@/components/blog/TagFilterSidebar'
+import PageFAQ from '@/components/PageFAQ'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -220,6 +221,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
             )}
           </main>
         </div>
+
+        <PageFAQ pageKey="blog" locale={locale} />
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import PageFAQ from '@/components/PageFAQ'
 import { Metadata } from 'next'
 import YouTubeEmbed from '@/components/YouTubeEmbed'
 
@@ -271,6 +272,8 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
         </section>
+
+        <PageFAQ pageKey="home" locale={locale} />
       </div>
     </>
   )

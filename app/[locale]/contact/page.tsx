@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import ContactForm from '@/components/contact/ContactForm'
+import PageFAQ from '@/components/PageFAQ'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -41,6 +42,7 @@ export default async function ContactPage({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
       <ContactForm />
+      <PageFAQ pageKey="contact" locale={locale} />
     </>
   )
 }

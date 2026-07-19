@@ -4,6 +4,7 @@ import { lazy, Suspense } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import type { ToolConfig } from '@/lib/tools-config'
+import { getToolFAQs } from '@/lib/tools-faq'
 import { ToastProvider } from './ToastProvider'
 import RelatedTools from './RelatedTools'
 
@@ -65,6 +66,7 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
   // Get tool name from translations based on component name
   const toolKey = toolConfig.component.charAt(0).toLowerCase() + toolConfig.component.slice(1)
   const toolName = tTools.has(`${toolKey}.name`) ? tTools(`${toolKey}.name`) : toolConfig.name
+  const faqs = getToolFAQs(toolSlug, locale)
 
   if (!ToolComponent) {
     return (
@@ -114,6 +116,23 @@ export default function ToolWrapper({ toolSlug, toolConfig }: ToolWrapperProps) 
           <ToolComponent />
         </Suspense>
       </ToastProvider>
+
+      {/* FAQ section (AEO: visible Q&A headings + matches FAQPage schema) */}
+      {faqs.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 mt-8 md:mt-12">
+          <h2 className="text-2xl font-bold text-text-primary mb-4">
+            {locale === 'it' ? 'Domande frequenti' : 'Frequently Asked Questions'}
+          </h2>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className="bg-bg-dark border border-border rounded-xl p-4 md:p-6">
+                <h3 className="text-lg font-semibold text-text-primary mb-2">{faq.question}</h3>
+                <p className="text-text-secondary">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Related Tools section */}
       <div className="max-w-7xl mx-auto px-4">

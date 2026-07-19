@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import PageFAQ from '@/components/PageFAQ'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -326,6 +327,8 @@ export default function About() {
             </a>
           </div>
         </section>
+
+        <PageFAQ pageKey="about" locale={locale} />
       </main>
     </div>
   )

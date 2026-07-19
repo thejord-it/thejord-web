@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import ToolsSearch from '@/components/tools/ToolsSearch'
+import PageFAQ from '@/components/PageFAQ'
 import { TOOLS } from '@/lib/tools-config'
 
 type Props = {
@@ -173,6 +174,7 @@ export default async function ToolsPage({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <ToolsSearch tools={tools} />
+      <PageFAQ pageKey="tools" locale={locale} />
     </>
   )
 }
